@@ -23,8 +23,7 @@
     "umi-utils": "1.5.0"
   },
   "files": [
-    "lib",
-    "src"
+    "lib"
   ],
   "license": "MIT",
   "publishConfig": {

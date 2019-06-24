@@ -1,0 +1,15 @@
+{
+  "name": "@umijs/plugin-style",
+  "version": "0.0.1",
+  "main": "./lib/index.js",
+  "dependencies": {
+    "umi-types": "~0.3.0"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "lib"
+  ]
+}

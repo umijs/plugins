@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "build": "umi-tools build",
+    "publish": "yarn build && lerna publish"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "lerna": "^3.13.4",
+    "umi-tools": "^0.4.0"
+  }
+}
