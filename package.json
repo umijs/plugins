@@ -7,7 +7,6 @@
     "debug": "umi-test",
     "publish": "npm run build && lerna publish"
   },
-  "license": "MIT",
   "devDependencies": {
     "@types/lodash": "^4.14.134",
     "father-build": "^1.2.0",
@@ -18,5 +17,6 @@
     "umi-test": "^1.6.0",
     "umi-types": "^0.3.9",
     "umi-utils": "^1.5.0"
-  }
+  },
+  "license": "MIT"
 }

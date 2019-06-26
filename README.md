@@ -1,4 +1,6 @@
-# umi plugins
+# @umijs/plugins
+
+Offcial umi plugins.
 
 ## Contribute
 

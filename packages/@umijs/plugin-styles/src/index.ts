@@ -17,6 +17,7 @@ export default function(api: IApi, option: StyleConfig) {
         content: aStyle,
       }));
   });
+
   api.addHTMLLink(() => {
     return option
       .filter((opt: string) => isUrl(opt))

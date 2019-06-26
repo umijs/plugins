@@ -18,7 +18,8 @@
     "@types/mkdirp": "^0.5.2"
   },
   "files": [
-    "lib"
+    "lib",
+    "src"
   ],
   "license": "MIT",
   "publishConfig": {
