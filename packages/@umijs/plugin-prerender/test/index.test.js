@@ -1,9 +1,8 @@
 import { join } from 'path';
 import { findJS } from 'umi-utils';
 import { readFileSync, existsSync, unlinkSync } from 'fs';
+import { uniq } from 'lodash';
 import preRenderPlugin, { getStaticRoutePaths } from '../src/index';
-
-const uniq = require('lodash.uniq');
 
 const absOutputPath = join(__dirname, 'examples');
 

@@ -63,9 +63,8 @@ var _default = (api, opts) => {
   api.onBuildSuccessAsync(
   /*#__PURE__*/
   _asyncToGenerator(function* () {
-    const _ref3 = api,
-          routes = _ref3.routes,
-          _ = _ref3._; // mock window
+    const routes = api.routes,
+          _ = api._; // mock window
 
     nodePolyfill(); // require serverRender function
 
@@ -102,8 +101,8 @@ var _default = (api, opts) => {
         const ReactDOMServer = serverRender.ReactDOMServer;
         debug(`react-dom version: ${ReactDOMServer.version}`);
 
-        const _ref4 = yield serverRender.default(ctx),
-              htmlElement = _ref4.htmlElement;
+        const _ref3 = yield serverRender.default(ctx),
+              htmlElement = _ref3.htmlElement;
 
         const ssrHtml = ReactDOMServer.renderToString(htmlElement); // write html file
 
