@@ -1,5 +1,8 @@
 # @umijs/plugins
 
+[![Build Status](https://img.shields.io/travis/umijs/plugins.svg?style=flat)](https://travis-ci.org/umijs/plugins)
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
+
 Offcial umi plugins.
 
 ## Contribute
