@@ -1,6 +1,16 @@
 # umi plugins
 
-#### Development
+## Contribute
+
+### Setup
+
+```bash
+$ yarn
+$ yarn bootstrap
+$ yarn build
+```
+
+### Development
 
 ```bash
 $ cd packages/xxxx
@@ -10,11 +20,12 @@ $ cd your-app
 $ yarn link @umijs/plugin-xxxx
 ```
 
-#### Publish
+### Publish
 
 ```bash
-$ yarn
-$ yarn bootstrap
-$ yarn build
 $ yarn publish
 ```
+
+## LICENSE
+
+MIT
