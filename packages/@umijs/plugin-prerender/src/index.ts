@@ -19,25 +19,37 @@ export const getStaticRoutePaths = (_, routes) => {
   );
 };
 
+type IContextFunc = (obj: NodeJS.Global) => void;
+
 export interface IOpts {
   exclude?: string[];
   // TODO just use seo, not displaym avoid flashing
   visible?: boolean;
-  // TODO mock window, enable will mock window, document, ... DOM api
-  runInMockContext?: boolean;
+  // you mock global, { g_lang: 'zh-CN' } => global.window.g_lang / global.g_lang
+  runInMockContext?: object | IContextFunc;
 }
 
-const nodePolyfill = () => {
+const nodePolyfill = (_, context) => {
   (global as any).window = {};
   (global as any).self = window;
   (global as any).document = window.document;
   (global as any).navigator = window.navigator;
   (global as any).localStorage = window.localStorage;
+  if (!_.isEmpty(context)) {
+    if (typeof context === 'object') {
+      Object.keys(context).forEach(key => {
+        // just mock global.window.bar = '';
+        (global as any).window[key] = context[key];
+      })
+    } else if (typeof context === 'function') {
+      context(global);
+    }
+  }
 };
 
 export default (api: IApi, opts: IOpts) => {
   const { debug, config, findJS } = api;
-  const { exclude = [] } = opts || {};
+  const { exclude = [], runInMockContext = {} } = opts || {};
   if (!(config as any).ssr) {
     throw new Error('config must use { ssr: true } when using umi preRender plugin');
   }
@@ -47,7 +59,7 @@ export default (api: IApi, opts: IOpts) => {
     const { routes, paths, _ } = api as any;
     const { absOutputPath } = paths;
     // mock window
-    nodePolyfill();
+    nodePolyfill(_, runInMockContext);
 
     // require serverRender function
     const umiServerFile = findJS(absOutputPath, 'umi.server');
