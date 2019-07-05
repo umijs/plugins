@@ -1,10 +1,9 @@
 /.nyc_output
 /.changelog
-/packages/*/lib
+/packages/@umijs/*/lib
 /coverage
 /node_modules
 /packages/@umijs/*/node_modules
 /yarn.lock
 /packages/@umijs/*/yarn.lock
-
 .DS_Store
