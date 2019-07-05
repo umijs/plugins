@@ -19,7 +19,7 @@ export const getStaticRoutePaths = (_, routes) => {
   );
 };
 
-type IContextFunc = (obj: NodeJS.Global) => void;
+type IContextFunc = () => object;
 
 export interface IOpts {
   exclude?: string[];
@@ -29,21 +29,24 @@ export interface IOpts {
   runInMockContext?: object | IContextFunc;
 }
 
-const nodePolyfill = (_, context) => {
+const nodePolyfill = (context) => {
   (global as any).window = {};
   (global as any).self = window;
   (global as any).document = window.document;
   (global as any).navigator = window.navigator;
   (global as any).localStorage = window.localStorage;
-  if (!_.isEmpty(context)) {
+  if (context) {
+    let params = {};
     if (typeof context === 'object') {
-      Object.keys(context).forEach(key => {
-        // just mock global.window.bar = '';
-        (global as any).window[key] = context[key];
-      })
+      params = context;
     } else if (typeof context === 'function') {
-      context(global);
+      params = context();
     }
+    Object.keys(params).forEach(key => {
+      // just mock global.window.bar = '';
+      (global as any).window[key] = params[key];
+      global[key] = params[key];
+    })
   }
 };
 
@@ -59,7 +62,7 @@ export default (api: IApi, opts: IOpts) => {
     const { routes, paths, _ } = api as any;
     const { absOutputPath } = paths;
     // mock window
-    nodePolyfill(_, runInMockContext);
+    nodePolyfill(runInMockContext);
 
     // require serverRender function
     const umiServerFile = findJS(absOutputPath, 'umi.server');
