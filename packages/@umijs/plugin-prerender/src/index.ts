@@ -36,16 +36,16 @@ const nodePolyfill = () => {
 };
 
 export default (api: IApi, opts: IOpts) => {
-  const { paths, debug, config, findJS } = api;
+  const { debug, config, findJS } = api;
   const { exclude = [] } = opts || {};
-  const { absOutputPath } = paths;
   if (!(config as any).ssr) {
     throw new Error('config must use { ssr: true } when using umi preRender plugin');
   }
 
   // onBuildSuccess hook
   api.onBuildSuccessAsync(async () => {
-    const { routes, _ } = api as any;
+    const { routes, paths, _ } = api as any;
+    const { absOutputPath } = paths;
     // mock window
     nodePolyfill();
 
