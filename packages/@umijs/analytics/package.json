@@ -1,0 +1,19 @@
+{
+  "name": "@umijs/analytics",
+  "version": "1.0.0",
+  "description": "analytics for baidu tongji and google analytics",
+  "authors": {
+    "name": "xiaohuoni",
+    "email": "448627663@qq.com"
+  },
+  "repository": "https://github.com/umijs/plugins",
+  "peerDependencies": {
+    "umi": "2.x"
+  },
+  "main": "lib/index.js",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "license": "MIT"
+}
