@@ -6,7 +6,7 @@
     "test": "umi-test --coverage",
     "debug": "umi-test",
     "publish": "npm run build && lerna publish",
-    "publish:beta": "npm run build && lerna publish --npm-tag=beta"
+    "publish:beta": "npm run build && lerna publish --dist-tag=beta"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.134",
