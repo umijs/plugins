@@ -57,6 +57,14 @@ export default (api: IApi, opts: IOpts) => {
     throw new Error('config must use { ssr: true } when using umi preRender plugin');
   }
 
+  api.modifyDefaultConfig(memo => ({
+    ...memo,
+    exportStatic: {
+      htmlSuffix: true,
+      dynamicRoot: false,
+    },
+  }))
+
   // onBuildSuccess hook
   api.onBuildSuccessAsync(async () => {
     const { routes, paths, _ } = api as any;
@@ -71,7 +79,10 @@ export default (api: IApi, opts: IOpts) => {
     }
     const serverRender = require(umiServerFile);
 
-    const routePaths: string[] = getStaticRoutePaths(_, routes);
+
+    const routePaths: string[] = getStaticRoutePaths(_, routes)
+      // filter (.html)? router
+      .filter(path => !/(\?|\)|\()/g.test(path));
 
     // exclude render paths
     const renderPaths = routePaths.filter(path => !exclude.includes(path));
@@ -92,10 +103,12 @@ export default (api: IApi, opts: IOpts) => {
       debug(`react-dom version: ${ReactDOMServer.version}`);
       const { htmlElement } = await serverRender.default(ctx);
       const ssrHtml = ReactDOMServer.renderToString(htmlElement);
+      const dir = url.substring(0, url.lastIndexOf('/'));
+      const filename = url.substring(url.lastIndexOf('/') + 1, url.length);
       // write html file
-      const outputRoutePath = path.join(absOutputPath, url);
+      const outputRoutePath = path.join(absOutputPath, dir);
       mkdirp.sync(outputRoutePath);
-      fs.writeFileSync(path.join(outputRoutePath, 'index.html'), ssrHtml);
+      fs.writeFileSync(path.join(outputRoutePath, filename.indexOf('.html') > -1 ? filename : `${filename || 'index'}.html`), ssrHtml);
     }
   });
 };
