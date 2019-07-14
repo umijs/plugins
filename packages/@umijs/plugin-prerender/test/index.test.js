@@ -12,6 +12,7 @@ const api = {
   },
   findJS,
   _modifyConfig() {},
+  modifyDefaultConfig() {},
   paths: {
     absOutputPath,
   },
@@ -93,7 +94,7 @@ describe('test getStaticRoutePaths', () => {
 
 describe('test plugin', () => {
   const indexPath = join(absOutputPath, 'index.html');
-  const userPath = join(absOutputPath, 'users', 'index.html');
+  const userPath = join(absOutputPath, 'users.html');
 
   const cleanDist = () => {
     if (existsSync(indexPath)) {
