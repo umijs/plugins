@@ -5,10 +5,6 @@ export default function (api, opts) {
   const { baidu, ga, judge } = opts;
   api.log.success("insert analytics");
 
-  if (judge && !judge()) {
-    return false;
-  }
-
   const baiduTpl = function (code) {
     return `
     (function() {

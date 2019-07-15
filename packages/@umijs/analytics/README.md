@@ -12,7 +12,6 @@ export default {
     ['@umijs/analytics', {
       ga:'google analytics code',
       baidu: '5a66cxxxxxxxxxx9e13',
-      judge: ()=>true // true or false
     }],
   ],
 }
