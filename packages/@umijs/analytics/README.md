@@ -1,4 +1,4 @@
-# @umijs/analytics
+# @umijs/plugin-analytics
 
 analytics for baidu tongji and google analytics
 
@@ -9,7 +9,7 @@ Configure in `.umirc.js`,
 ```js
 export default {
   plugins: [
-    ['@umijs/analytics', {
+    ['@umijs/plugin-analytics', {
       ga:'google analytics code',
       baidu: '5a66cxxxxxxxxxx9e13',
     }],
