@@ -1,11 +1,11 @@
 // ref:
 // - https://umijs.org/plugin/develop.html
 
-export default function (api, opts) {
+export default function(api, opts) {
   const { baidu, ga, judge } = opts;
   api.log.success('insert analytics');
 
-  const baiduTpl = function (code) {
+  const baiduTpl = function(code) {
     return `
     (function() {
       var hm = document.createElement('script');
@@ -16,7 +16,7 @@ export default function (api, opts) {
   `;
   };
 
-  const gaTpl = function (code) {
+  const gaTpl = function(code) {
     return `
     (function(){
       if (!location.port) {
@@ -47,14 +47,13 @@ export default function (api, opts) {
   if (process.env.NODE_ENV === 'production') {
     if (baidu) {
       api.addHTMLHeadScript({
-        content: baiduTpl(baidu)
+        content: baiduTpl(baidu),
       });
     }
     if (ga) {
       api.addHTMLScript({
-        content: gaTpl(ga)
+        content: gaTpl(ga),
       });
     }
   }
-
-};
+}
