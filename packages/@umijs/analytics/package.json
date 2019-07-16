@@ -1,5 +1,5 @@
 {
-  "name": "@umijs/analytics",
+  "name": "@umijs/plugin-analytics",
   "version": "1.0.0",
   "description": "analytics for baidu tongji and google analytics",
   "authors": {

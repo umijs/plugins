@@ -3,14 +3,14 @@
 
 export default function (api, opts) {
   const { baidu, ga, judge } = opts;
-  api.log.success("insert analytics");
+  api.log.success('insert analytics');
 
   const baiduTpl = function (code) {
     return `
     (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?${code}";
-      var s = document.getElementsByTagName("script")[0];
+      var hm = document.createElement('script');
+      hm.src = 'https://hm.baidu.com/hm.js?${code}';
+      var s = document.getElementsByTagName('script')[0];
       s.parentNode.insertBefore(hm, s);
     })();
   `;
@@ -40,11 +40,11 @@ export default function (api, opts) {
 
   if (baidu) {
     api.addHTMLHeadScript({
-      content: 'var _hmt = _hmt || [];'
+      content: 'var _hmt = _hmt || [];',
     });
   }
 
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === 'production') {
     if (baidu) {
       api.addHTMLHeadScript({
         content: baiduTpl(baidu)
