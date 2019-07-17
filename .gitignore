@@ -7,3 +7,6 @@
 /yarn.lock
 /packages/@umijs/*/yarn.lock
 .DS_Store
+**/dist
+.umi
+.umi-production
