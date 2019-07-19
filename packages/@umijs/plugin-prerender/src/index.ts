@@ -2,7 +2,7 @@ import { IApi } from 'umi-types';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
-import { getStaticRoutePaths, getSuffix, nodePolyfill } from './utils';
+import { getStaticRoutePaths, getSuffix, nodePolyfill, fixHtmlSuffix, findJSON, injectChunkMaps, removeSuffixHtml } from './utils';
 
 type IContextFunc = () => object;
 
@@ -19,21 +19,29 @@ export interface IApiPlus extends IApi {
 }
 
 export default (api: IApiPlus, opts: IOpts) => {
-  const { debug, config, findJS } = api;
+  const { debug, config, findJS, _, log } = api;
   const { exclude = [], runInMockContext = {} } = opts || {};
   if (!config.ssr) {
     throw new Error('config must use { ssr: true } when using umi preRender plugin');
   }
 
+  api.onPatchRoute(({ route }) => {
+    debug(`route before, ${JSON.stringify(route)}`);
+    fixHtmlSuffix(route);
+    debug(`route after, ${JSON.stringify(route)}`);
+  })
+
   // onBuildSuccess hook
   api.onBuildSuccessAsync(async () => {
-    const { routes, paths, _, log } = api;
+    const { routes, paths } = api;
     const { absOutputPath } = paths;
+    const { manifestFileName = 'ssr-client-mainifest.json' } = config.ssr as any;
     // mock window
     nodePolyfill(runInMockContext);
 
     // require serverRender function
     const umiServerFile = findJS(absOutputPath, 'umi.server');
+    const manifestFile = findJSON(absOutputPath, manifestFileName)
     if (!umiServerFile) {
       throw new Error(`can't find umi.server.js file`);
     }
@@ -41,12 +49,12 @@ export default (api: IApiPlus, opts: IOpts) => {
 
 
     const routePaths: string[] = getStaticRoutePaths(_, routes)
-      // filter (.html)? router
       .filter(path => !/(\?|\)|\()/g.test(path));
 
     // exclude render paths
     const renderPaths = routePaths.filter(path => !exclude.includes(path));
     debug(`renderPaths: ${renderPaths.join(',')}`);
+    console.log('renderPaths', renderPaths);
     (log as any).start('umiJS prerender start');
     // loop routes
     for (const url of renderPaths) {
@@ -64,7 +72,17 @@ export default (api: IApiPlus, opts: IOpts) => {
       const { ReactDOMServer } = serverRender;
       debug(`react-dom version: ${ReactDOMServer.version}`);
       const { htmlElement } = await serverRender.default(ctx);
-      const ssrHtml = ReactDOMServer.renderToString(htmlElement);
+      let ssrHtml = ReactDOMServer.renderToString(htmlElement);
+      try {
+        const manifest = require(manifestFile);
+
+        const chunk = manifest[removeSuffixHtml(url)];
+        if (chunk) {
+          ssrHtml = injectChunkMaps(ssrHtml, chunk, config.publicPath || '/')
+        }
+      } catch (e) {
+        log.warn(`${url} reading get chunkMaps failed` ,e);
+      }
       const dir = url.substring(0, url.lastIndexOf('/'));
       const filename = getSuffix(url.substring(url.lastIndexOf('/') + 1, url.length));
       try {

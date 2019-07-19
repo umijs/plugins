@@ -12,9 +12,11 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
     "mkdirp": "^0.5.1"
   },
   "devDependencies": {
+    "@types/cheerio": "^0.22.12",
     "@types/mkdirp": "^0.5.2"
   },
   "files": [
