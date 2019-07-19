@@ -2,22 +2,7 @@ import { IApi } from 'umi-types';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
-
-// for test
-export const getStaticRoutePaths = (_, routes) => {
-  return _.uniq(
-    routes.reduce((memo, route) => {
-      // filter dynamic Routing like /news/:id, etc.
-      if (route.path && route.path.indexOf(':') === -1) {
-        memo.push(route.path);
-        if (route.routes) {
-          memo = memo.concat(getStaticRoutePaths(_, route.routes));
-        }
-      }
-      return memo;
-    }, []),
-  );
-};
+import { getStaticRoutePaths, getSuffix, nodePolyfill } from './utils';
 
 type IContextFunc = () => object;
 
@@ -29,45 +14,20 @@ export interface IOpts {
   runInMockContext?: object | IContextFunc;
 }
 
-const nodePolyfill = (context) => {
-  (global as any).window = {};
-  (global as any).self = window;
-  (global as any).document = window.document;
-  (global as any).navigator = window.navigator;
-  (global as any).localStorage = window.localStorage;
-  if (context) {
-    let params = {};
-    if (typeof context === 'object') {
-      params = context;
-    } else if (typeof context === 'function') {
-      params = context();
-    }
-    Object.keys(params).forEach(key => {
-      // just mock global.window.bar = '';
-      (global as any).window[key] = params[key];
-      global[key] = params[key];
-    })
-  }
-};
+export interface IApiPlus extends IApi {
+  _: any;
+}
 
-export default (api: IApi, opts: IOpts) => {
+export default (api: IApiPlus, opts: IOpts) => {
   const { debug, config, findJS } = api;
   const { exclude = [], runInMockContext = {} } = opts || {};
-  if (!(config as any).ssr) {
+  if (!config.ssr) {
     throw new Error('config must use { ssr: true } when using umi preRender plugin');
   }
 
-  api.modifyDefaultConfig(memo => ({
-    ...memo,
-    exportStatic: {
-      htmlSuffix: true,
-      dynamicRoot: false,
-    },
-  }))
-
   // onBuildSuccess hook
   api.onBuildSuccessAsync(async () => {
-    const { routes, paths, _ } = api as any;
+    const { routes, paths, _, log } = api;
     const { absOutputPath } = paths;
     // mock window
     nodePolyfill(runInMockContext);
@@ -87,6 +47,7 @@ export default (api: IApi, opts: IOpts) => {
     // exclude render paths
     const renderPaths = routePaths.filter(path => !exclude.includes(path));
     debug(`renderPaths: ${renderPaths.join(',')}`);
+    (log as any).start('umiJS prerender start');
     // loop routes
     for (const url of renderPaths) {
       const ctx = {
@@ -98,17 +59,24 @@ export default (api: IApi, opts: IOpts) => {
           url,
         },
       };
+
       // throw umi.server.js error stack, not catch
       const { ReactDOMServer } = serverRender;
       debug(`react-dom version: ${ReactDOMServer.version}`);
       const { htmlElement } = await serverRender.default(ctx);
       const ssrHtml = ReactDOMServer.renderToString(htmlElement);
       const dir = url.substring(0, url.lastIndexOf('/'));
-      const filename = url.substring(url.lastIndexOf('/') + 1, url.length);
-      // write html file
-      const outputRoutePath = path.join(absOutputPath, dir);
-      mkdirp.sync(outputRoutePath);
-      fs.writeFileSync(path.join(outputRoutePath, filename.indexOf('.html') > -1 ? filename : `${filename || 'index'}.html`), ssrHtml);
+      const filename = getSuffix(url.substring(url.lastIndexOf('/') + 1, url.length));
+      try {
+        // write html file
+        const outputRoutePath = path.join(absOutputPath, dir);
+        mkdirp.sync(outputRoutePath);
+        fs.writeFileSync(path.join(outputRoutePath, filename), ssrHtml);
+        log.complete(`${path.join(dir, filename)}`);
+      } catch (e) {
+        log.fatal(`${url} render ${filename} failed` ,e);
+      }
     }
+    log.success('umiJS prerender success!')
   });
 };
