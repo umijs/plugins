@@ -49,9 +49,7 @@ export const findJSON = (baseDir, fileName) => {
 
 export const fixHtmlSuffix = (route) => {
   if (route.path
-    && route.exact
     && route.path !== '/'
-    && !route.routes
     && !isHtmlPath(route.path)
     && !isDynamicRoute(route.path)
     && !route.redirect

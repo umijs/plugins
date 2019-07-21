@@ -54,7 +54,6 @@ export default (api: IApiPlus, opts: IOpts) => {
     // exclude render paths
     const renderPaths = routePaths.filter(path => !exclude.includes(path));
     debug(`renderPaths: ${renderPaths.join(',')}`);
-    console.log('renderPaths', renderPaths);
     (log as any).start('umiJS prerender start');
     // loop routes
     for (const url of renderPaths) {
@@ -71,12 +70,13 @@ export default (api: IApiPlus, opts: IOpts) => {
       // throw umi.server.js error stack, not catch
       const { ReactDOMServer } = serverRender;
       debug(`react-dom version: ${ReactDOMServer.version}`);
-      const { htmlElement } = await serverRender.default(ctx);
+      const { htmlElement, matchPath } = await serverRender.default(ctx);
       let ssrHtml = ReactDOMServer.renderToString(htmlElement);
       try {
         const manifest = require(manifestFile);
-
-        const chunk = manifest[removeSuffixHtml(url)];
+        const chunk = manifest[matchPath];
+        debug('matchPath', matchPath);
+        debug('chunk', chunk);
         if (chunk) {
           ssrHtml = injectChunkMaps(ssrHtml, chunk, config.publicPath || '/')
         }
