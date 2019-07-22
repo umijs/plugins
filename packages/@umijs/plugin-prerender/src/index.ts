@@ -2,7 +2,7 @@ import { IApi } from 'umi-types';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
-import { getStaticRoutePaths, getSuffix, nodePolyfill, fixHtmlSuffix, findJSON, injectChunkMaps, removeSuffixHtml } from './utils';
+import { getStaticRoutePaths, getSuffix, nodePolyfill, fixHtmlSuffix, findJSON, injectChunkMaps, patchWindow } from './utils';
 
 type IContextFunc = () => object;
 
@@ -66,6 +66,12 @@ export default (api: IApiPlus, opts: IOpts) => {
           url,
         },
       };
+      patchWindow({
+        location: {
+          pathname: url,
+          search: '',
+        }
+      })
 
       // throw umi.server.js error stack, not catch
       const { ReactDOMServer } = serverRender;

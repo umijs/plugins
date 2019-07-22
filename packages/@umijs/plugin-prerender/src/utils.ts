@@ -98,6 +98,23 @@ export const nodePolyfill = (context) => {
   }
 };
 
+export const patchWindow = (context) => {
+  let params = {};
+  if (typeof context === 'object') {
+    params = context;
+  }
+  Object.keys(params).forEach(key => {
+    // just mock global.window.bar = '';
+    (global as any).window[key] = typeof params[key] === 'object'
+      ? {
+          ...(global as any).window[key],
+          ...params[key],
+        }
+      : params[key];
+    global[key] = (global as any).window[key];
+  })
+}
+
 export const getSuffix = (filename: string): string => {
   return `${filename || 'index'}.html`;
 }
