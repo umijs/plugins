@@ -28,6 +28,7 @@ export default {
 - [x] friendly log shows like `▶  start`, `☒  complete`, `✔  success`
 - [x] runInMockContext for users can custom your global variables.
 - [x] use `jsdom` for mock Bom in Node env.
+- [ ] more test cases, add coverage badge
 - [ ] register command `umi render-preview` to run a static server for prerendered site.
 
 ## LICENSE
