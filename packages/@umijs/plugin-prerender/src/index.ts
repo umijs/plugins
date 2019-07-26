@@ -14,12 +14,9 @@ export interface IOpts {
   runInMockContext?: object | IContextFunc;
 }
 
-export interface IApiPlus extends IApi {
-  _: any;
-}
-
-export default (api: IApiPlus, opts: IOpts) => {
+export default (api: IApi, opts: IOpts) => {
   const { debug, config, findJS, _, log } = api;
+  global.UMI_LODASH = _;
   const { exclude = [], runInMockContext = {} } = opts || {};
   if (!config.ssr) {
     throw new Error('config must use { ssr: true } when using umi preRender plugin');
@@ -36,8 +33,7 @@ export default (api: IApiPlus, opts: IOpts) => {
     const { routes, paths } = api;
     const { absOutputPath } = paths;
     const { manifestFileName = 'ssr-client-mainifest.json' } = config.ssr as any;
-    // mock window
-    nodePolyfill(runInMockContext);
+
 
     // require serverRender function
     const umiServerFile = findJS(absOutputPath, 'umi.server');
@@ -45,16 +41,17 @@ export default (api: IApiPlus, opts: IOpts) => {
     if (!umiServerFile) {
       throw new Error(`can't find umi.server.js file`);
     }
+    // mock window
+    nodePolyfill('http://localhost', runInMockContext);
     const serverRender = require(umiServerFile);
 
-
-    const routePaths: string[] = getStaticRoutePaths(_, routes)
+    const routePaths: string[] = getStaticRoutePaths( routes)
       .filter(path => !/(\?|\)|\()/g.test(path));
 
     // exclude render paths
     const renderPaths = routePaths.filter(path => !exclude.includes(path));
     debug(`renderPaths: ${renderPaths.join(',')}`);
-    (log as any).start('umiJS prerender start');
+    log.start('umiJS prerender start');
     // loop routes
     for (const url of renderPaths) {
       const ctx = {
@@ -66,13 +63,8 @@ export default (api: IApiPlus, opts: IOpts) => {
           url,
         },
       };
-      patchWindow({
-        location: {
-          pathname: url,
-          search: '',
-        }
-      })
-
+      // init window BOM
+      nodePolyfill(`http://localhost${url}`, runInMockContext);
       // throw umi.server.js error stack, not catch
       const { ReactDOMServer } = serverRender;
       debug(`react-dom version: ${ReactDOMServer.version}`);
@@ -101,6 +93,6 @@ export default (api: IApiPlus, opts: IOpts) => {
         log.fatal(`${url} render ${filename} failed` ,e);
       }
     }
-    log.success('umiJS prerender success!')
+    log.success('umiJS prerender success!');
   });
 };

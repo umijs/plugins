@@ -1,12 +1,12 @@
 import { join } from 'path';
 import { findJS } from 'umi-utils';
 import { readFileSync, existsSync, unlinkSync } from 'fs';
-import { uniq } from 'lodash';
+import lodash from 'lodash';
 import preRenderPlugin from '../src';
 import { getStaticRoutePaths } from '../src/utils';
 
 const absOutputPath = join(__dirname, 'examples');
-
+global.UMI_LODASH = lodash;
 const api = {
   onBuildSuccessAsync(fn) {
     fn();
@@ -46,9 +46,6 @@ const api = {
       _title_default: 'defaultPage',
     },
   ],
-  _: {
-    uniq,
-  },
   debug: info => {
     console.debug(info);
   },
@@ -89,7 +86,7 @@ describe('test getStaticRoutePaths', () => {
         _title_default: 'defaultPage',
       },
     ];
-    expect(getStaticRoutePaths(api._, routes)).toEqual(['/', '/users']);
+    expect(getStaticRoutePaths(routes)).toEqual(['/', '/users']);
   });
 });
 

@@ -17,10 +17,18 @@ export default {
 ## Options
 
 ```
-{ exclude: [] } = Options
+{ exclude: [], runInMockContext: {} | () => object } = Options
 ```
 
-exclude: exclude routes not pre render
+- exclude: exclude routes not pre render
+- runInMockContext: you mock global
+
+## TODO
+- [x] support dynamicImport for chunkMap assets, render chunk styles and prefetch scripts.
+- [x] friendly log shows like `▶  start`, `☒  complete`, `✔  success`
+- [x] runInMockContext for users can custom your global variables.
+- [x] use `jsdom` for mock Bom in Node env.
+- [ ] register command `umi render-preview` to run a static server for prerendered site.
 
 ## LICENSE
 

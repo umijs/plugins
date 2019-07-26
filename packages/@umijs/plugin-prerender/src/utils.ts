@@ -1,4 +1,5 @@
 import cheerio from 'cheerio';
+import { JSDOM } from 'jsdom';
 
 export const isDynamicRoute = (path: string): boolean => {
   return path.split('/').some(snippet => snippet.startsWith(':'));
@@ -58,7 +59,8 @@ export const fixHtmlSuffix = (route) => {
   }
 }
 
-export const getStaticRoutePaths = (_, routes) => {
+export const getStaticRoutePaths = (routes) => {
+  const _ = global.UMI_LODASH;
   return _.uniq(
     routes.reduce((memo, route) => {
       // filter dynamic Routing like /news/:id, etc.
@@ -69,7 +71,7 @@ export const getStaticRoutePaths = (_, routes) => {
       ) {
         memo.push(removeSuffixHtml(route.path));
         if (route.routes) {
-          memo = memo.concat(getStaticRoutePaths(_, route.routes));
+          memo = memo.concat(getStaticRoutePaths(route.routes));
         }
       }
       return memo;
@@ -77,25 +79,40 @@ export const getStaticRoutePaths = (_, routes) => {
   );
 };
 
-export const nodePolyfill = (context) => {
-  (global as any).window = {};
-  (global as any).self = window;
-  (global as any).document = window.document;
-  (global as any).navigator = window.navigator;
-  (global as any).localStorage = window.localStorage;
+export const nodePolyfill = (url, context): any => {
+  const _ = global.UMI_LODASH;
+  let dom = new JSDOM('<body><div id="root"></div></body>', {
+    url: url || 'http://localhost/',
+  });
+
+  let params = {};
   if (context) {
-    let params = {};
     if (typeof context === 'object') {
       params = context;
     } else if (typeof context === 'function') {
       params = context();
     }
-    Object.keys(params).forEach(key => {
-      // just mock global.window.bar = '';
-      (global as any).window[key] = params[key];
-      global[key] = params[key];
-    })
   }
+  // { window }
+  const mockDom = _.defaultsDeep(dom, {
+    window: params,
+  });
+
+  global.window = mockDom.window;
+  global.document = mockDom.window.document;
+  global.location = mockDom.window.location;
+  global.navigation = mockDom.window.navigation;
+  global.Image = mockDom.window.Image;
+
+  // return {
+  //   window: {
+  //     ...mockDom.window,
+  //   },
+  //   document: mockDom.window.document,
+  //   location: mockDom.window.location,
+  //   navigation: mockDom.window.navigation,
+  //   Image: mockDom.window.Image,
+  // }
 };
 
 export const patchWindow = (context) => {
@@ -105,13 +122,13 @@ export const patchWindow = (context) => {
   }
   Object.keys(params).forEach(key => {
     // just mock global.window.bar = '';
-    (global as any).window[key] = typeof params[key] === 'object'
+    global.window[key] = typeof params[key] === 'object'
       ? {
-          ...(global as any).window[key],
+          ...global.window[key],
           ...params[key],
         }
       : params[key];
-    global[key] = (global as any).window[key];
+    global[key] = global.window[key];
   })
 }
 
