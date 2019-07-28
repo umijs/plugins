@@ -97,25 +97,29 @@ export const nodePolyfill = (url, context): any => {
     }
   }
   // { window }
-  const mockDom = _.defaultsDeep(dom, {
+  const mockGlobal = _.merge(dom, {
     window: params,
-  });
+  })
+  // mock first
+  global.window = mockGlobal.window;
+  // mock global
+  const mountGlobal = ['document', 'location', 'navigation', 'Image'];
+  mountGlobal.forEach(mount => {
+    global[mount] = mockGlobal.window[mount];
+  })
 
-  global.window = mockDom.window;
-  global.document = mockDom.window.document;
-  global.location = mockDom.window.location;
-  global.navigation = mockDom.window.navigation;
-  global.Image = mockDom.window.Image;
+  // merge user global params
+  Object.keys(params).forEach(key => {
+    // just mount global key (filter mountGlobal)
+    // like { USER_BAR: "foo" }
+    // => global.USER_BAR = "foo";
+    // => global.window.USER_BAR = "foo";
+    if (!mountGlobal.includes(key)) {
+      global[key] = params[key];
+    }
+  })
 
-  // return {
-  //   window: {
-  //     ...mockDom.window,
-  //   },
-  //   document: mockDom.window.document,
-  //   location: mockDom.window.location,
-  //   navigation: mockDom.window.navigation,
-  //   Image: mockDom.window.Image,
-  // }
+  return mockGlobal.window;
 };
 
 export const patchWindow = (context) => {
