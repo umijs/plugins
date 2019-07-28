@@ -7,7 +7,7 @@ const styles = {
 function Page(props) {
   return (
     <div className={styles.normal}>
-      <h1>Page index</h1>
+      <h1>Page index {window.context.siteName}</h1>
       <h2>csr: {props.data && props.data.csr}</h2>
     </div>
   );

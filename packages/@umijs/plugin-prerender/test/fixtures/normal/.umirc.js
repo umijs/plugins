@@ -1,6 +1,12 @@
 export default {
   ssr: true,
   plugins: [
-    ['../../../lib/index.js']
+    ['../../../lib/index.js', {
+      runInMockContext: {
+        context: {
+          siteName: 'Umi SSR'
+        }
+      }
+    }]
   ]
 }
