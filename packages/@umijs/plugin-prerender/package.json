@@ -21,6 +21,8 @@
     "@types/deepmerge": "^2.2.0",
     "@types/jsdom": "^12.2.4",
     "@types/mkdirp": "^0.5.2",
+    "fs-extra": "^8.1.0",
+    "glob": "^7.1.4",
     "test-build-result": "^1.1.2",
     "umi": "^2.8.15",
     "umi-types": "^0.3.15"

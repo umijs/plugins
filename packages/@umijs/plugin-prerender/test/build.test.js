@@ -34,7 +34,7 @@ async function umiBuild(cwd) {
 }
 
 describe('build', () => {
-  require('test-build-result')({
+  require('./test-build-result')({
     root: join(__dirname, './fixtures'),
     build: async ({ cwd, dir }) => {
       await umiBuild(cwd);
