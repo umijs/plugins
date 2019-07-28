@@ -1,3 +1,4 @@
+// fork https://github.com/sorrycc/test-build-result/blob/master/index.js to test all *.html
 const assert = require('assert');
 const { readdirSync, readFileSync, existsSync } = require('fs');
 const { copy } = require('fs-extra');
