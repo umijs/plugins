@@ -16,11 +16,14 @@ export const injectChunkMaps = (html: string, chunkMap: IChunkMap, publicPath: s
     decodeEntities: false,
     recognizeSelfClosing: true,
   });
-  css.slice(1).forEach(style => {
+  // filter umi.css and umi.*.css, htmlMap have includes
+  const styles = css.filter(style => !/^umi\.\w+\.css$/g.test(style)) || [];
+  styles.forEach(style => {
     $('head').append(`<link rel="stylesheet" href="${publicPath}${style}" />`)
   });
-
-  js.slice(1).forEach(script => {
+  // filter umi.js and umi.*.js
+  const scripts = js.filter(script => !/^umi([.\w]*)?\.js$/g.test(script)) || [];
+  scripts.forEach(script => {
     $('head').append(`<link rel="preload" href="${publicPath}${script}" as="script"/>`)
 
   })
