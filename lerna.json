@@ -8,6 +8,17 @@
       "conventionalCommits": true
     }
   },
+  "changelog": {
+    "labels": {
+      "pr(enhancement)": ":rocket: Enhancement",
+      "pr(bug)": ":bug: Bug Fix",
+      "pr(documentation)": ":book: Documentation",
+      "pr(dependency)": ":deciduous_tree: Dependency",
+      "pr(chore)": ":turtle: Chore"
+    },
+    "repo": "umijs/plugins",
+    "cacheDir": ".changelog"
+  },
   "npmClient": "yarn",
   "version": "independent"
 }

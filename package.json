@@ -5,6 +5,7 @@
     "build": "father-build --cjs babel --target node",
     "test": "umi-test --coverage",
     "debug": "umi-test",
+    "changelog": "lerna-changelog",
     "publish": "npm run build && lerna publish",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "publish:beta": "npm run build && lerna publish --dist-tag=beta"
@@ -15,6 +16,7 @@
     "coveralls": "^3.0.5",
     "father-build": "^1.2.0",
     "lerna": "^3.13.4",
+    "lerna-changelog": "^0.8.2",
     "lodash": "^4.17.11",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
