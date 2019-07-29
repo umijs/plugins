@@ -17,11 +17,12 @@ export default {
 ## Options
 
 ```
-{ exclude: [], runInMockContext: {} | () => object } = Options
+{ exclude: [], runInMockContext: {} | () => object, staticMarkup: false } = Options
 ```
 
 - exclude: exclude routes not pre render
 - runInMockContext: you mock global
+- staticMarkup: use `renderToStaticMarkup`, default use `renderToString`
 
 ## TODO
 - [x] support dynamicImport for chunkMap assets, render chunk styles and prefetch scripts.

@@ -12,12 +12,18 @@ export interface IOpts {
   visible?: boolean;
   // you mock global, { g_lang: 'zh-CN' } => global.window.g_lang / global.g_lang
   runInMockContext?: object | IContextFunc;
+  // use renderToStaticMarkup
+  staticMarkup?: boolean;
 }
 
 export default (api: IApi, opts: IOpts) => {
   const { debug, config, findJS, _, log } = api;
   global.UMI_LODASH = _;
-  const { exclude = [], runInMockContext = {} } = opts || {};
+  const {
+    exclude = [],
+    runInMockContext = {},
+    staticMarkup = false,
+  } = opts || {};
   if (!config.ssr) {
     throw new Error('config must use { ssr: true } when using umi preRender plugin');
   }
@@ -69,7 +75,7 @@ export default (api: IApi, opts: IOpts) => {
       const { ReactDOMServer } = serverRender;
       debug(`react-dom version: ${ReactDOMServer.version}`);
       const { htmlElement, matchPath } = await serverRender.default(ctx);
-      let ssrHtml = ReactDOMServer.renderToString(htmlElement);
+      let ssrHtml = ReactDOMServer[staticMarkup ? 'renderToStaticMarkup' : 'renderToString'](htmlElement);
       try {
         const manifest = require(manifestFile);
         const chunk = manifest[matchPath];
