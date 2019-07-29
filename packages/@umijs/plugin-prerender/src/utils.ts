@@ -25,7 +25,6 @@ export const injectChunkMaps = (html: string, chunkMap: IChunkMap, publicPath: s
   const scripts = js.filter(script => !/^umi([.\w]*)?\.js$/g.test(script)) || [];
   scripts.forEach(script => {
     $('head').append(`<link rel="preload" href="${publicPath}${script}" as="script"/>`)
-
   })
 
   return $.html();
@@ -103,7 +102,7 @@ export const nodePolyfill = (url, context): any => {
   // mock first
   global.window = mockGlobal.window;
   // mock global
-  const mountGlobal = ['document', 'location', 'navigation', 'Image'];
+  const mountGlobal = ['document', 'location', 'navigator', 'Image'];
   mountGlobal.forEach(mount => {
     global[mount] = mockGlobal.window[mount];
   })
