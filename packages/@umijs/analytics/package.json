@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-analytics",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "analytics for baidu tongji and google analytics",
   "authors": {
     "name": "xiaohuoni",

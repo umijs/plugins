@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/umijs/plugins/compare/@umijs/plugin-prerender@1.0.6...@umijs/plugin-prerender@1.1.0) (2019-07-29)
+
+
+### Bug Fixes
+
+* filter umi.css umi.js ([a3d0db2](https://github.com/umijs/plugins/commit/a3d0db2))
+* just test *.html ([bb32aae](https://github.com/umijs/plugins/commit/bb32aae))
+* router match ([4a2e36f](https://github.com/umijs/plugins/commit/4a2e36f))
+* test cases unit ([b199e33](https://github.com/umijs/plugins/commit/b199e33))
+* test ci ([1dc7038](https://github.com/umijs/plugins/commit/1dc7038))
+* use runInMockContext ([e61a4ac](https://github.com/umijs/plugins/commit/e61a4ac))
+* 优化 prerender output 日志 ([2effdfd](https://github.com/umijs/plugins/commit/2effdfd))
+
+
+### Features
+
+* patchWindow when render pages ([8e8c041](https://github.com/umijs/plugins/commit/8e8c041))
+* preload chunkMaps ([611202b](https://github.com/umijs/plugins/commit/611202b))
+* staticMarkup option ([625dd5b](https://github.com/umijs/plugins/commit/625dd5b))
+* use jsdom mock bom in node env, ([49066f6](https://github.com/umijs/plugins/commit/49066f6))
+
+
+
+
+
 ## [1.0.6](https://github.com/umijs/plugins/compare/@umijs/plugin-prerender@1.0.5...@umijs/plugin-prerender@1.0.6) (2019-07-14)
 
 
