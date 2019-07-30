@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/umijs/plugins/compare/@umijs/plugin-prerender@1.2.0...@umijs/plugin-prerender@1.2.1) (2019-07-30)
+
+
+### Bug Fixes
+
+* add polyfill ([626c944](https://github.com/umijs/plugins/commit/626c944))
+* add self ([2d585b2](https://github.com/umijs/plugins/commit/2d585b2))
+
+
+
+
+
 # [1.2.0](https://github.com/umijs/plugins/compare/@umijs/plugin-prerender@1.1.0...@umijs/plugin-prerender@1.2.0) (2019-07-30)
 
 
