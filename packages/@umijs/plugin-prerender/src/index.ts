@@ -76,6 +76,13 @@ export default (api: IApi, opts: IOpts) => {
       debug(`react-dom version: ${ReactDOMServer.version}`);
       const { htmlElement, matchPath } = await serverRender.default(ctx);
       let ssrHtml = ReactDOMServer[staticMarkup ? 'renderToStaticMarkup' : 'renderToString'](htmlElement);
+      // try {
+      //   const DocumentTitle = require('react-document-title');
+      //   const title = DocumentTitle.rewind();
+      //   ssrHtml = modifyTitle(ssrHtml, title);
+      // } catch (e) {
+      //   log.warn(`${url} reading get title failed` ,e);
+      // }
       try {
         const manifest = require(manifestFile);
         const chunk = manifest[matchPath];

@@ -10,12 +10,17 @@ interface IChunkMap {
   css: string[];
 }
 
-export const injectChunkMaps = (html: string, chunkMap: IChunkMap, publicPath: string): string => {
-  const { js, css } = chunkMap;
-  const $ = cheerio.load(html, {
+const _getDocumentHandler = (html: string, option?: object) => {
+  return cheerio.load(html, {
     decodeEntities: false,
     recognizeSelfClosing: true,
+    ...option,
   });
+}
+
+export const injectChunkMaps = (html: string, chunkMap: IChunkMap, publicPath: string): string => {
+  const { js, css } = chunkMap;
+  const $ = _getDocumentHandler(html);
   // filter umi.css and umi.*.css, htmlMap have includes
   const styles = css.filter(style => !/^umi\.\w+\.css$/g.test(style)) || [];
   styles.forEach(style => {
@@ -27,6 +32,14 @@ export const injectChunkMaps = (html: string, chunkMap: IChunkMap, publicPath: s
     $('head').append(`<link rel="preload" href="${publicPath}${script}" as="script"/>`)
   })
 
+  return $.html();
+}
+
+export const modifyTitle = (html: string, title: string) => {
+  const $ = _getDocumentHandler(html);
+  if (html && title) {
+    $('title').text(title);
+  }
   return $.html();
 }
 
