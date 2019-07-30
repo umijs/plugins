@@ -115,7 +115,7 @@ export const nodePolyfill = (url, context): any => {
   // mock first
   global.window = mockGlobal.window;
   // mock global
-  const mountGlobal = ['document', 'location', 'navigator', 'Image'];
+  const mountGlobal = ['document', 'location', 'navigator', 'Image', 'self'];
   mountGlobal.forEach(mount => {
     global[mount] = mockGlobal.window[mount];
   })
