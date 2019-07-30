@@ -100,13 +100,21 @@ export const nodePolyfill = (url, context): any => {
     url: url || 'http://localhost/',
   });
 
-  let params = {};
-  if (context) {
-    if (typeof context === 'object') {
-      params = context;
-    } else if (typeof context === 'function') {
-      params = context();
-    }
+  let params = {
+    // https://github.com/akiran/react-slick/issues/742
+    matchMedia: query => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: () => {},
+      removeListener: () => {},
+    }),
+  };
+
+  if (typeof context === 'object') {
+    params = _.merge(context, params);
+  } else if (typeof context === 'function') {
+    params = _.merge(context(), params);
   }
   // { window }
   const mockGlobal = _.merge(dom, {
