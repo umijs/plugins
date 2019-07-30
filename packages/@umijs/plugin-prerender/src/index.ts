@@ -14,6 +14,8 @@ export interface IOpts {
   runInMockContext?: object | IContextFunc;
   // use renderToStaticMarkup
   staticMarkup?: boolean;
+  // htmlSuffix
+  htmlSuffix?: boolean;
 }
 
 export default (api: IApi, opts: IOpts) => {
@@ -23,6 +25,7 @@ export default (api: IApi, opts: IOpts) => {
     exclude = [],
     runInMockContext = {},
     staticMarkup = false,
+    htmlSuffix = false,
   } = opts || {};
   if (!config.ssr) {
     throw new Error('config must use { ssr: true } when using umi preRender plugin');
@@ -30,7 +33,9 @@ export default (api: IApi, opts: IOpts) => {
 
   api.onPatchRoute(({ route }) => {
     debug(`route before, ${JSON.stringify(route)}`);
-    fixHtmlSuffix(route);
+    if (htmlSuffix) {
+      fixHtmlSuffix(route);
+    }
     debug(`route after, ${JSON.stringify(route)}`);
   })
 
