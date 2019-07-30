@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/umijs/plugins/compare/@umijs/plugin-prerender@1.1.0...@umijs/plugin-prerender@1.2.0) (2019-07-30)
+
+
+### Features
+
+* add htmlSuffix ([3002a34](https://github.com/umijs/plugins/commit/3002a34))
+
+
+
+
+
 # [1.1.0](https://github.com/umijs/plugins/compare/@umijs/plugin-prerender@1.0.6...@umijs/plugin-prerender@1.1.0) (2019-07-29)
 
 
