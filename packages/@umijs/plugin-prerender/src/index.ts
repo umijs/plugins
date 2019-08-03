@@ -8,6 +8,8 @@ type IContextFunc = () => object;
 
 export interface IOpts {
   exclude?: string[];
+  /** disable ssr BOM polyfill */
+  disablePolyfill?: boolean;
   // TODO just use seo, not displaym avoid flashing
   visible?: boolean;
   // you mock global, { g_lang: 'zh-CN' } => global.window.g_lang / global.g_lang
@@ -26,6 +28,7 @@ export default (api: IApi, opts: IOpts) => {
     runInMockContext = {},
     staticMarkup = false,
     htmlSuffix = false,
+    disablePolyfill = false,
   } = opts || {};
   if (!config.ssr) {
     throw new Error('config must use { ssr: true } when using umi preRender plugin');
@@ -53,7 +56,7 @@ export default (api: IApi, opts: IOpts) => {
       throw new Error(`can't find umi.server.js file`);
     }
     // mock window
-    nodePolyfill('http://localhost', runInMockContext);
+    nodePolyfill('http://localhost', runInMockContext, disablePolyfill);
     const serverRender = require(umiServerFile);
 
     const routePaths: string[] = getStaticRoutePaths( routes)
@@ -75,7 +78,7 @@ export default (api: IApi, opts: IOpts) => {
         },
       };
       // init window BOM
-      nodePolyfill(`http://localhost${url}`, runInMockContext);
+      nodePolyfill(`http://localhost${url}`, runInMockContext, disablePolyfill);
       // throw umi.server.js error stack, not catch
       const { ReactDOMServer } = serverRender;
       debug(`react-dom version: ${ReactDOMServer.version}`);

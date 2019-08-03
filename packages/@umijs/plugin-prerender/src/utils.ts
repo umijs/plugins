@@ -94,8 +94,16 @@ export const getStaticRoutePaths = (routes) => {
   );
 };
 
-export const nodePolyfill = (url, context): any => {
+export const nodePolyfill = (url, context, disablePolyfill = false): any => {
+  const mountGlobal = ['document', 'location', 'navigator', 'Image', 'self'];
 
+  if (disablePolyfill) {
+    global.window = {};
+    mountGlobal.forEach(mount => {
+      global[mount] = mockWin[mount];
+    })
+    return global.window;
+  }
   let params = {};
   if (typeof context === 'object') {
     params = context;
@@ -111,7 +119,6 @@ export const nodePolyfill = (url, context): any => {
   global.window = mockWin;
 
   // mock global
-  const mountGlobal = ['document', 'location', 'navigator', 'Image', 'self'];
   mountGlobal.forEach(mount => {
     global[mount] = mockWin[mount];
   })
