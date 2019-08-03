@@ -13,13 +13,12 @@
   "main": "lib/index.js",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
-    "jsdom": "^15.1.1",
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^0.5.1",
+    "ssr-polyfill": "^1.0.0"
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.12",
     "@types/deepmerge": "^2.2.0",
-    "@types/jsdom": "^12.2.4",
     "@types/mkdirp": "^0.5.2",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.4",

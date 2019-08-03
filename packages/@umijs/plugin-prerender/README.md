@@ -16,11 +16,22 @@ export default {
 
 ## Options
 
-```
-{ exclude: [], runInMockContext: {} | () => object, staticMarkup: false, htmlSuffix: false } = Options
+```typescript
+export interface IOpts {
+  exclude?: string[];
+  /** disable ssr BOM polyfill */
+  disablePolyfill?: boolean;
+  // you mock global, { g_lang: 'zh-CN' } => global.window.g_lang / global.g_lang
+  runInMockContext?: object | IContextFunc;
+  // use renderToStaticMarkup
+  staticMarkup?: boolean;
+  // htmlSuffix
+  htmlSuffix?: boolean;
+}
 ```
 
 - exclude: exclude routes not pre render
+- disablePolyfill: disable `ssr-polyfill` for client window object
 - runInMockContext: you mock global
 - staticMarkup: use `renderToStaticMarkup`, default use `renderToString`
 - htmlSuffix: route Enable the `.html` suffix.

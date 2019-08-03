@@ -1,5 +1,5 @@
 import cheerio from 'cheerio';
-import { JSDOM } from 'jsdom';
+import ssrPolyfill from 'ssr-polyfill';
 
 export const isDynamicRoute = (path: string): boolean => {
   return path.split('/').some(snippet => snippet.startsWith(':'));
@@ -94,38 +94,33 @@ export const getStaticRoutePaths = (routes) => {
   );
 };
 
-export const nodePolyfill = (url, context): any => {
-  const _ = global.UMI_LODASH;
-  let dom = new JSDOM('<body><div id="root"></div></body>', {
-    url: url || 'http://localhost/',
-  });
+export const nodePolyfill = (url, context, disablePolyfill = false): any => {
+  const mountGlobal = ['document', 'location', 'navigator', 'Image', 'self'];
 
-  let params = {
-    // https://github.com/akiran/react-slick/issues/742
-    matchMedia: query => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: () => {},
-      removeListener: () => {},
-    }),
-  };
-
-  if (typeof context === 'object') {
-    params = _.merge(context, params);
-  } else if (typeof context === 'function') {
-    params = _.merge(context(), params);
+  if (disablePolyfill) {
+    global.window = {};
+    mountGlobal.forEach(mount => {
+      global[mount] = mockWin[mount];
+    })
+    return global.window;
   }
-  // { window }
-  const mockGlobal = _.merge(dom, {
-    window: params,
+  let params = {};
+  if (typeof context === 'object') {
+    params = context;
+  } else if (typeof context === 'function') {
+    params = context();
+  }
+
+  const mockWin = ssrPolyfill({
+    url,
+    ...params,
   })
   // mock first
-  global.window = mockGlobal.window;
+  global.window = mockWin;
+
   // mock global
-  const mountGlobal = ['document', 'location', 'navigator', 'Image', 'self'];
   mountGlobal.forEach(mount => {
-    global[mount] = mockGlobal.window[mount];
+    global[mount] = mockWin[mount];
   })
 
   // merge user global params
@@ -139,7 +134,7 @@ export const nodePolyfill = (url, context): any => {
     }
   })
 
-  return mockGlobal.window;
+  return mockWin;
 };
 
 export const patchWindow = (context) => {
