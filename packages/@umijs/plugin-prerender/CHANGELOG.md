@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/umijs/plugins/compare/@umijs/plugin-prerender@1.2.1...@umijs/plugin-prerender@1.3.0) (2019-08-03)
+
+
+### Features
+
+* disablePolyfill ([1dc92a4](https://github.com/umijs/plugins/commit/1dc92a4))
+
+
+
+
+
 ## [1.2.1](https://github.com/umijs/plugins/compare/@umijs/plugin-prerender@1.2.0...@umijs/plugin-prerender@1.2.1) (2019-07-30)
 
 
