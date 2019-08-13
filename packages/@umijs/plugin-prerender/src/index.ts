@@ -108,7 +108,7 @@ export default (api: IApi, opts: IOpts) => {
         // write html file
         const outputRoutePath = path.join(absOutputPath, dir);
         mkdirp.sync(outputRoutePath);
-        fs.writeFileSync(path.join(outputRoutePath, filename), ssrHtml);
+        fs.writeFileSync(path.join(outputRoutePath, filename), `<!DOCTYPE html>${ssrHtml}`);
         log.complete(`${path.join(dir, filename)}`);
       } catch (e) {
         log.fatal(`${url} render ${filename} failed` ,e);
