@@ -22,9 +22,9 @@ export default {
         const meta = helmet.meta.toString();
         const link = helmet.link.toString();
 
-        console.log('title', title, meta, link);
-
-        $('title').html() ? $('title').html(title) : $('html head').prepend(title);
+        if (title !== '<title data-react-helmet="true"></title>') {
+          $('html head').prepend(title);
+        }
         $('html head').append(meta)
         $('html head').append(link)
 
