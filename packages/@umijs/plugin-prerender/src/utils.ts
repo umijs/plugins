@@ -10,7 +10,7 @@ interface IChunkMap {
   css: string[];
 }
 
-const _getDocumentHandler = (html: string, option?: object) => {
+export const _getDocumentHandler = (html: string, option?: object): CheerioStatic => {
   return cheerio.load(html, {
     decodeEntities: false,
     recognizeSelfClosing: true,

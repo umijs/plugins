@@ -27,6 +27,8 @@ export interface IOpts {
   staticMarkup?: boolean;
   // htmlSuffix
   htmlSuffix?: boolean;
+  // postProcessHtml
+  postProcessHtml?: ($: CheerioStatic, path: string) => CheerioStatic;
 }
 ```
 

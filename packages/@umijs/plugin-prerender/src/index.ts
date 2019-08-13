@@ -2,7 +2,7 @@ import { IApi } from 'umi-types';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
-import { getStaticRoutePaths, getSuffix, nodePolyfill, fixHtmlSuffix, findJSON, injectChunkMaps, patchWindow } from './utils';
+import { getStaticRoutePaths, getSuffix, nodePolyfill, fixHtmlSuffix, findJSON, injectChunkMaps, _getDocumentHandler } from './utils';
 
 type IContextFunc = () => object;
 
@@ -18,6 +18,8 @@ export interface IOpts {
   staticMarkup?: boolean;
   // htmlSuffix
   htmlSuffix?: boolean;
+  // modify render html function
+  postProcessHtml?: ($: CheerioStatic, path: string) => CheerioStatic;
 }
 
 export default (api: IApi, opts: IOpts) => {
@@ -29,6 +31,7 @@ export default (api: IApi, opts: IOpts) => {
     staticMarkup = false,
     htmlSuffix = false,
     disablePolyfill = false,
+    postProcessHtml,
   } = opts || {};
   if (!config.ssr) {
     throw new Error('config must use { ssr: true } when using umi preRender plugin');
@@ -84,13 +87,18 @@ export default (api: IApi, opts: IOpts) => {
       debug(`react-dom version: ${ReactDOMServer.version}`);
       const { htmlElement, matchPath } = await serverRender.default(ctx);
       let ssrHtml = ReactDOMServer[staticMarkup ? 'renderToStaticMarkup' : 'renderToString'](htmlElement);
-      // try {
-      //   const DocumentTitle = require('react-document-title');
-      //   const title = DocumentTitle.rewind();
-      //   ssrHtml = modifyTitle(ssrHtml, title);
-      // } catch (e) {
-      //   log.warn(`${url} reading get title failed` ,e);
-      // }
+
+      if (postProcessHtml) {
+        try {
+          const $ = _getDocumentHandler(ssrHtml);
+          console.log('565666',url, postProcessHtml($, url).html());
+          // avoid user not return $
+          ssrHtml = (postProcessHtml($, url) || $).html();
+        } catch (e) {
+          log.warn(`${url} postProcessHtml` ,e);
+        }
+      }
+
       try {
         const manifest = require(manifestFile);
         const chunk = manifest[matchPath];
