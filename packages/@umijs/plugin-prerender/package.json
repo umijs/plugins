@@ -22,6 +22,8 @@
     "@types/mkdirp": "^0.5.2",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.4",
+    "react-document-title": "^2.0.3",
+    "react-helmet": "^5.2.1",
     "test-build-result": "^1.1.2",
     "umi": "^2.8.15",
     "umi-types": "^0.3.15"

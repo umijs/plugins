@@ -28,7 +28,7 @@ export interface IOpts {
   // htmlSuffix
   htmlSuffix?: boolean;
   // postProcessHtml
-  postProcessHtml?: ($: CheerioStatic, path: string) => CheerioStatic;
+  postProcessHtml?: ($: CheerioStatic, path: string) => CheerioStatic | undefined;
 }
 ```
 
@@ -43,8 +43,8 @@ export interface IOpts {
 - [x] friendly log shows like `▶  start`, `☒  complete`, `✔  success`
 - [x] runInMockContext for users can custom your global variables.
 - [x] use `jsdom` for mock Bom in Node env.
+- [x] support `react-document-title`, `react-helmet` to dynamic title.
 - [ ] dynamic route prerender
-- [ ] support `react-document-title`, `react-helmet` to dynamic title.
 - [ ] more test cases, add coverage badge
 - [ ] register command `umi render-preview` to run a static server for prerendered site.
 

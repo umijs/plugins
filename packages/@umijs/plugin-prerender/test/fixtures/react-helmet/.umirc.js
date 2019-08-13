@@ -1,8 +1,13 @@
+const { Helmet } = require('react-helmet');
 
 export default {
-  ssr: true,
-  externals: {
-    'react-helmet': 'react-helmet',
+  ssr: {
+    // for other test, you could not use
+    disableExternal: true,
+    disableExternalWhiteList: ['react-helmet', 'react-document-title'],
+    nodeExternalsOpts: {
+      modulesDir: '../../../node_modules',
+    }
   },
   plugins: [
     ['../../../lib/index.js', {
@@ -12,16 +17,17 @@ export default {
         }
       },
       postProcessHtml: ($, path) => {
-        const { Helmet } = require('react-helmet');
-        Helmet.canUseDOM = false;
-        console.log('HelmetHelmet', Helmet.contextType)
-        console.log('peekpeekpeek', Helmet.peek());
         const helmet = Helmet.renderStatic();
-        console.log('aaaa', helmet.title.toString());
-        console.log('title origin', $('title').text());
+        const title = helmet.title.toString();
+        const meta = helmet.meta.toString();
+        const link = helmet.link.toString();
 
-        console.log('hhhh', helmet.title.toString(), path);
-        // $('title').html(title.toString());
+        console.log('title', title, meta, link);
+
+        $('title').html() ? $('title').html(title) : $('html head').prepend(title);
+        $('html head').append(meta)
+        $('html head').append(link)
+
         return $;
       }
     }]

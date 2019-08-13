@@ -91,9 +91,9 @@ export default (api: IApi, opts: IOpts) => {
       if (postProcessHtml) {
         try {
           const $ = _getDocumentHandler(ssrHtml);
-          console.log('565666',url, postProcessHtml($, url).html());
           // avoid user not return $
           ssrHtml = (postProcessHtml($, url) || $).html();
+          debug(`ssrHtml: ${ssrHtml}`);
         } catch (e) {
           log.warn(`${url} postProcessHtml` ,e);
         }

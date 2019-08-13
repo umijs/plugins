@@ -1,5 +1,5 @@
 import React from 'react';
-import Helmet from 'react-helmet';
+import DocumentTitle from 'react-document-title';
 const styles = {
   normal: 'normal___1KMnC',
 };
@@ -9,10 +9,7 @@ function Page(props) {
     <div className={styles.normal}>
       <h1>Page users111</h1>
       <h2>users</h2>
-      <Helmet>
-        <title>React Helmet Users index</title>
-        <meta name="description" content="React Helmet title Users description" />
-      </Helmet>
+      <DocumentTitle title="Hello Umi SSR Helmet user title" />
       <ul>
         {(props.list || []).map(user => (
           <li key={user}>{user}</li>
