@@ -1,6 +1,6 @@
 export default (props) => {
-  const { id } = props.route.params;
+  const { id } = props.params || {};
   return (
-    <div>Hello {id}</div>
+    <div>Hello {id || ''}</div>
   )
 }
