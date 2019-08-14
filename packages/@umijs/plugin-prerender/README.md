@@ -41,6 +41,7 @@ export interface IOpts {
 ## TODO
 - [x] support dynamicImport for chunkMap assets, render chunk styles and prefetch scripts.
 - [x] friendly log shows like `▶  start`, `☒  complete`, `✔  success`
+- [x] Check server-side render content hash code, whether help re-render if client not sync with server.
 - [x] runInMockContext for users can custom your global variables.
 - [x] use `jsdom` for mock Bom in Node env.
 - [x] support `react-document-title`, `react-helmet` to dynamic title.

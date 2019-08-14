@@ -1,6 +1,7 @@
 import { IApi } from 'umi-types';
 import * as path from 'path';
 import * as fs from 'fs';
+import { getCode } from 'react-ssr-checksum';
 import * as mkdirp from 'mkdirp';
 import { getStaticRoutePaths, getSuffix, nodePolyfill, fixHtmlSuffix, findJSON, injectChunkMaps, _getDocumentHandler } from './utils';
 
@@ -23,7 +24,7 @@ export interface IOpts {
 }
 
 export default (api: IApi, opts: IOpts) => {
-  const { debug, config, findJS, _, log } = api;
+  const { debug, config, findJS, _, log, paths } = api;
   global.UMI_LODASH = _;
   const {
     exclude = [],
@@ -44,6 +45,18 @@ export default (api: IApi, opts: IOpts) => {
     }
     debug(`route after, ${JSON.stringify(route)}`);
   })
+
+  api.addRendererWrapperWithComponent(() => {
+    const modulePath = path.join(paths.absTmpDirPath, './CheckSum.js');
+    fs.writeFileSync(
+      modulePath,
+      `import CheckSum from 'react-ssr-checksum';
+        export default (props) => (
+          <CheckSum checksumCode={window.UMI_PRERENDER_SUM_CODE}>{props.children}</CheckSum>
+        )`
+    )
+    return modulePath;
+  });
 
   // onBuildSuccess hook
   api.onBuildSuccessAsync(async () => {
@@ -87,6 +100,16 @@ export default (api: IApi, opts: IOpts) => {
       debug(`react-dom version: ${ReactDOMServer.version}`);
       const { htmlElement, matchPath } = await serverRender.default(ctx);
       let ssrHtml = ReactDOMServer[staticMarkup ? 'renderToStaticMarkup' : 'renderToString'](htmlElement);
+
+      try {
+        const hashCode = getCode(ssrHtml);
+        debug(`hashCode: ${hashCode}`);
+
+        ssrHtml = ssrHtml.replace('</head>', `<script>window.UMI_PRERENDER_SUM_CODE = "${hashCode}";</script></head>`);
+      } catch (e) {
+        log.warn('getHashCode error', e);
+      }
+
 
       if (postProcessHtml) {
         try {
