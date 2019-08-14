@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-prerender@1.3.1...@umijs/plugin-prerender@1.4.0) (2019-08-14)
+
+
+### Bug Fixes
+
+* test ([8280ad9](https://github.com/umijs/plugins/commit/8280ad9))
+* trigger ([10c1a72](https://github.com/umijs/plugins/commit/10c1a72))
+
+
+### Features
+
+* postProcessHtml ([fcf7efe](https://github.com/umijs/plugins/commit/fcf7efe))
+* support `react-document-title`, `react-helmet` to dynamic title. ([0f086d3](https://github.com/umijs/plugins/commit/0f086d3))
+* support dynamic export ([d2fe3f5](https://github.com/umijs/plugins/commit/d2fe3f5))
+
+
+
+
+
 ## [1.3.1](https://github.com/umijs/plugins/compare/@umijs/plugin-prerender@1.3.0...@umijs/plugin-prerender@1.3.1) (2019-08-13)
 
 **Note:** Version bump only for package @umijs/plugin-prerender
