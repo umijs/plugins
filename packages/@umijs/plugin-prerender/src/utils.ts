@@ -1,9 +1,9 @@
 import cheerio from 'cheerio';
 import ssrPolyfill from 'ssr-polyfill';
 
-// export const isDynamicRoute = (path: string): boolean => {
-//   return path.split('/').some(snippet => snippet.startsWith(':'));
-// }
+export const isDynamicRoute = (path: string): boolean => {
+  return path.split('/').some(snippet => snippet.startsWith(':'));
+}
 
 interface IChunkMap {
   js: string[];
@@ -67,6 +67,7 @@ export const fixHtmlSuffix = (route) => {
   if (route.path
     && route.path !== '/'
     && !isHtmlPath(route.path)
+    && !isDynamicRoute(route.path)
     && !route.redirect
   ) {
     route.path = `${route.path}(.html)?`;
@@ -80,6 +81,7 @@ export const getStaticRoutePaths = (routes) => {
       // filter dynamic Routing like /news/:id, etc.
       if (
         route.path
+        && !isDynamicRoute(route.path)
         && !route.redirect
       ) {
         memo.push(removeSuffixHtml(route.path));
