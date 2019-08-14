@@ -3,6 +3,9 @@
     "packages/@umijs/*"
   ],
   "command": {
+    "version": {
+      "exact": true
+    },
     "publish": {
       "allowBranch": "master",
       "conventionalCommits": true
