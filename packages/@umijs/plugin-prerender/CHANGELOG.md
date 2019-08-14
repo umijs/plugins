@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/umijs/plugins/compare/@umijs/plugin-prerender@1.4.0...@umijs/plugin-prerender@1.5.0) (2019-08-14)
+
+
+### Features
+
+* checkSum ([a5d8842](https://github.com/umijs/plugins/commit/a5d8842))
+
+
+
+
+
 # [1.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-prerender@1.3.1...@umijs/plugin-prerender@1.4.0) (2019-08-14)
 
 
