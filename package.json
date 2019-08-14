@@ -6,9 +6,9 @@
     "test": "umi-test --coverage",
     "debug": "umi-test",
     "changelog": "lerna-changelog",
-    "publish": "npm run build && lerna publish",
+    "publish": "node ./scripts/publish.js",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "publish:beta": "npm run build && lerna publish --dist-tag=beta"
+    "publish:beta": "node ./scripts/publish.js --dist-tag=beta"
   },
   "devDependencies": {
     "@types/jest": "^24.0.15",
@@ -20,6 +20,7 @@
     "lodash": "^4.17.11",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "shelljs": "^0.8.3",
     "umi-test": "^1.6.0",
     "umi-types": "^0.3.9",
     "umi-utils": "^1.5.0"
