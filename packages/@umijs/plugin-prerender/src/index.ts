@@ -19,6 +19,8 @@ export interface IOpts {
   staticMarkup?: boolean;
   // htmlSuffix
   htmlSuffix?: boolean;
+  // checkSum, default: false
+  checkSum?: boolean;
   // modify render html function
   postProcessHtml?: ($: CheerioStatic, path: string) => CheerioStatic;
 }
@@ -32,6 +34,7 @@ export default (api: IApi, opts: IOpts) => {
     staticMarkup = false,
     htmlSuffix = false,
     disablePolyfill = false,
+    checkSum = false,
     postProcessHtml,
   } = opts || {};
   if (!config.ssr) {
@@ -46,17 +49,19 @@ export default (api: IApi, opts: IOpts) => {
     debug(`route after, ${JSON.stringify(route)}`);
   })
 
-  api.addRendererWrapperWithComponent(() => {
-    const modulePath = path.join(paths.absTmpDirPath, './CheckSum.js');
-    fs.writeFileSync(
-      modulePath,
-      `import CheckSum from 'react-ssr-checksum';
-        export default (props) => (
-          <CheckSum checksumCode={window.UMI_PRERENDER_SUM_CODE}>{props.children}</CheckSum>
-        )`
-    )
-    return modulePath;
-  });
+  if (checkSum) {
+    api.addRendererWrapperWithComponent(() => {
+      const modulePath = path.join(paths.absTmpDirPath, './CheckSum.js');
+      fs.writeFileSync(
+        modulePath,
+        `import CheckSum from 'react-ssr-checksum';
+          export default (props) => (
+            <CheckSum checksumCode={window.UMI_PRERENDER_SUM_CODE}>{props.children}</CheckSum>
+          )`
+      )
+      return modulePath;
+    });
+  }
 
   // onBuildSuccess hook
   api.onBuildSuccessAsync(async () => {
@@ -101,13 +106,15 @@ export default (api: IApi, opts: IOpts) => {
       const { htmlElement, matchPath } = await serverRender.default(ctx);
       let ssrHtml = ReactDOMServer[staticMarkup ? 'renderToStaticMarkup' : 'renderToString'](htmlElement);
 
-      try {
-        const hashCode = getCode(ssrHtml);
-        debug(`hashCode: ${hashCode}`);
+      if (checkSum) {
+        try {
+          const hashCode = getCode(ssrHtml);
+          debug(`hashCode: ${hashCode}`);
 
-        ssrHtml = ssrHtml.replace('</head>', `<script>window.UMI_PRERENDER_SUM_CODE = "${hashCode}";</script></head>`);
-      } catch (e) {
-        log.warn('getHashCode error', e);
+          ssrHtml = ssrHtml.replace('</head>', `<script>window.UMI_PRERENDER_SUM_CODE = "${hashCode}";</script></head>`);
+        } catch (e) {
+          log.warn('getHashCode error', e);
+        }
       }
 
 

@@ -21,14 +21,18 @@ export interface IOpts {
   exclude?: string[];
   /** disable ssr BOM polyfill */
   disablePolyfill?: boolean;
+  // TODO just use seo, not displaym avoid flashing
+  visible?: boolean;
   // you mock global, { g_lang: 'zh-CN' } => global.window.g_lang / global.g_lang
   runInMockContext?: object | IContextFunc;
   // use renderToStaticMarkup
   staticMarkup?: boolean;
   // htmlSuffix
   htmlSuffix?: boolean;
-  // postProcessHtml
-  postProcessHtml?: ($: CheerioStatic, path: string) => CheerioStatic | undefined;
+  // checkSum, default: false
+  checkSum?: boolean;
+  // modify render html function
+  postProcessHtml?: ($: CheerioStatic, path: string) => CheerioStatic;
 }
 ```
 
