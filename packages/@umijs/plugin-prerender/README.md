@@ -51,3 +51,4 @@ export interface IOpts {
 ## LICENSE
 
 MIT
+
