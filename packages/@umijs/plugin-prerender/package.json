@@ -6,7 +6,11 @@
     "name": "ycjcl868",
     "email": "45808948@qq.com"
   },
-  "repository": "https://github.com/umijs/plugins",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/umijs/plugins",
+    "directory": "packages/@umijs/plugin-prerender"
+  },
   "peerDependencies": {
     "umi": "2.x"
   },
