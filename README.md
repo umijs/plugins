@@ -1,7 +1,6 @@
 # @umijs/plugins
 
-[![Coverage Status](https://coveralls.io/repos/github/umijs/plugins/badge.svg)](https://coveralls.io/github/umijs/plugins) [![Build Status](https://img.shields.io/travis/umijs/plugins.svg?style=flat)](https://travis-ci.org/umijs/plugins)
-[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
+[![codecov](https://codecov.io/gh/umijs/plugins/branch/master/graph/badge.svg)](https://codecov.io/gh/umijs/plugins) [![NPM version](https://img.shields.io/npm/v/@umijs/cli.svg?style=flat)](https://npmjs.org/package/@umijs/cli) [![CircleCI](https://circleci.com/gh/umijs/plugins/tree/master.svg?style=svg)](https://circleci.com/gh/umijs/plugins/tree/master) [![Build Status](https://dev.azure.com/umijs/umi/_apis/build/status/umijs.plugins?branchName=master)](https://dev.azure.com/umijs/umi/_build/latest?definitionId=1&branchName=master) [![GitHub Actions status](https://github.com/umijs/plugins/workflows/Node%20CI/badge.svg)](https://github.com/umijs/plugins) [![NPM downloads](http://img.shields.io/npm/dm/@umijs/cli.svg?style=flat)](https://npmjs.org/package/@umijs/cli)
 
 Offcial umi plugins.
 
@@ -11,24 +10,14 @@ Offcial umi plugins.
 
 ```bash
 $ yarn
-$ yarn bootstrap
+```
+
+### Common Tasks
+
+```bash
 $ yarn build
-```
-
-### Development
-
-```bash
-$ cd packages/xxxx
-$ yarn link
-
-$ cd your-app
-$ yarn link @umijs/plugin-xxxx
-```
-
-### Publish
-
-```bash
-$ yarn publish
+$ yarn build --watch
+$ yarn test
 ```
 
 ## LICENSE
