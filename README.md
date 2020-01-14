@@ -8,16 +8,33 @@ Offcial umi plugins.
 
 ### Setup
 
+Install dependencies,
+
 ```bash
 $ yarn
 ```
 
+Link `umi@3`, `@umijs/utils` and `@umijs/test`,
+
+```bash
+$ yarn link
+```
+
 ### Common Tasks
+
+Build,
 
 ```bash
 $ yarn build
 $ yarn build --watch
+```
+
+Test,
+
+```bash
 $ yarn test
+$ yarn test --coverage
+$ yarn test --package plugin-dva
 ```
 
 ## LICENSE
