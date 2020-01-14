@@ -1,29 +1,40 @@
 {
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "build": "father-build --cjs babel --target node",
-    "test": "umi-test --coverage",
-    "debug": "umi-test",
-    "changelog": "lerna-changelog",
-    "publish": "node ./scripts/publish.js",
-    "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "publish:beta": "node ./scripts/publish.js --dist-tag=beta"
+    "bootstrap": "node ./scripts/bootstrap.js",
+    "build": "father-build",
+    "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
+    "link": "yarn link umi && yarn link @umijs/test && yarn link @umijs/utils",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage",
+    "test:update": "umi-test --updateSnapshot"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged",
+    "commit-msg": "node scripts/verifyCommit.js"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write",
+      "git add"
+    ]
   },
   "devDependencies": {
-    "@types/jest": "^24.0.15",
-    "@types/lodash": "^4.14.134",
-    "coveralls": "^3.0.5",
-    "father-build": "^1.2.0",
-    "lerna": "^3.13.4",
-    "lerna-changelog": "^0.8.2",
-    "lodash": "^4.17.11",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "shelljs": "^0.8.3",
-    "umi-test": "^1.6.0",
-    "umi-types": "^0.3.9",
-    "umi-utils": "^1.5.0"
+    "@types/jest": "^24.0.25",
+    "@types/node": "^13.1.6",
+    "father-build": "^1.17.2",
+    "lerna": "^3.20.2",
+    "lint-staged": "^9.5.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.19.1",
+    "yorkie": "^2.0.0"
   },
   "license": "MIT"
 }

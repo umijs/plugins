@@ -1,13 +1,9 @@
 {
-  "packages": [
-    "packages/@umijs/*"
-  ],
-  "command": {
-    "version": {
-      "exact": true
-    }
-  },
+  "version": "independent",
+  "npmClient": "yarn",
+  "useWorkspaces": true,
   "changelog": {
+    "repo": "umijs/plugins",
     "labels": {
       "pr(enhancement)": ":rocket: Enhancement",
       "pr(bug)": ":bug: Bug Fix",
@@ -15,9 +11,6 @@
       "pr(dependency)": ":deciduous_tree: Dependency",
       "pr(chore)": ":turtle: Chore"
     },
-    "repo": "umijs/plugins",
     "cacheDir": ".changelog"
-  },
-  "npmClient": "yarn",
-  "version": "independent"
+  }
 }
