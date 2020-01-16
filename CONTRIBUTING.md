@@ -11,15 +11,21 @@ $ yarn
 Link `umi@3`, `@umijs/utils` and `@umijs/test`,
 
 ```bash
-$ yarn link
+$ yarn run link
 ```
 
 ## Common Tasks
 
-Monitor file changes and transform with babel and rollup.
+Transform with babel and rollup.
 
 ```bash
+$ yarn build
+
+# Build and monitor file changes
 $ yarn build --watch
+
+# Build specified package only
+$ PACKAGE=plugin-antd yarn build --watch
 ```
 
 Run test.
