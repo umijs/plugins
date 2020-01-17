@@ -20,5 +20,11 @@
   ],
   "license": "MIT",
   "bugs": "http://github.com/umijs/plugins/issues",
-  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-dva#readme"
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-dva#readme",
+  "dependencies": {
+    "babel-plugin-dva-hmr": "^0.4.2",
+    "dva": "^2.6.0-beta.20",
+    "dva-immer": "^0.4.19",
+    "dva-loading": "^3.0.20"
+  }
 }
