@@ -1,5 +1,5 @@
 import { IApi } from 'umi';
-import { join, basename, extname } from 'path';
+import { basename, extname, join } from 'path';
 import { readFileSync } from 'fs';
 import { getModels } from './getModels/getModels';
 
@@ -13,13 +13,14 @@ export default (api: IApi, opts: IOpts = {}) => {
     utils: { Mustache, lodash, winPath },
   } = api;
 
+  function getBase() {
+    return join(paths.absSrcPath!, api.config!.singular ? 'model' : 'models');
+  }
+
   // 生成临时文件
   api.onGenerateFiles(() => {
     const dvaTpl = readFileSync(join(__dirname, 'dva.tpl'), 'utf-8');
-    const base = join(
-      paths.absSrcPath!,
-      api.config!.singular ? 'model' : 'models',
-    );
+    const base = getBase();
     const models = getModels({
       base,
     }).map(p => winPath(join(base, p)));
@@ -60,4 +61,6 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
   api.addEntryCodeAhead(() =>
     `require('@@/plugin-dva/dva')._onCreate();`.trim(),
   );
+
+  api.addTmpGenerateWatcherPaths(() => [getBase()]);
 };
