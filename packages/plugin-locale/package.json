@@ -8,6 +8,9 @@
     "lib",
     "src"
   ],
+  "peerDependencies": {
+    "umi": "3.x"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/umijs/plugins"
@@ -15,6 +18,9 @@
   "keywords": [
     "umi"
   ],
+  "dependencies": {
+    "react-intl": "3.11.0"
+  },
   "authors": [
     "chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)"
   ],
