@@ -14,7 +14,7 @@ export default (api: IApi, opts: IOpts = {}) => {
   } = api;
 
   function getBase() {
-    return join(paths.absSrcPath!, api.config?.singular ? 'model' : 'models');
+    return join(paths.absSrcPath!, api.config.singular ? 'model' : 'models');
   }
 
   // 生成临时文件
