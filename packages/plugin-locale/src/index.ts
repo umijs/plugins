@@ -70,13 +70,6 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
         LocaleList: localeList,
       }),
     });
-
-    api.addUmiExports(() => {
-      return {
-        exportAll: true,
-        source: `${paths.aliasedTmpPath}/plugin-locale/localeExports.ts`,
-      };
-    });
   });
 
   // Runtime Plugin
@@ -88,4 +81,11 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
   );
 
   api.addTmpGenerateWatcherPaths(() => exactLocalePaths(localeList));
+
+  api.addUmiExports(() => {
+    return {
+      exportAll: true,
+      source: `${paths.aliasedTmpPath}/plugin-locale/localeExports.ts`,
+    };
+  });
 };
