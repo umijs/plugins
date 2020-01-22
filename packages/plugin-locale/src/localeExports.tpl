@@ -1,5 +1,7 @@
-
 import { createIntl } from 'react-intl';
+import { event, LANG_CHANGE_EVENT } from './locale';
+
+export * from 'react-intl';
 
 let g_intl;
 
@@ -15,11 +17,11 @@ const localeInfo = {
   {{/LocaleList}}
 };
 
-const getIntl = (locale) => {
+export const getIntl = (locale) => {
   return g_intl || createIntl(localeInfo[locale]);
 }
 
-const setIntl = (locale) => {
+export const setIntl = (locale) => {
   if (localeInfo[locale]) {
     g_intl = createIntl(localeInfo[locale]);
   }
@@ -47,16 +49,18 @@ export const setLocale = (lang, realReload = true) => {
     if (typeof window.localStorage !== 'undefined') {
       window.localStorage.setItem('umi_locale', lang || '');
     }
+    setIntl(lang);
     if (realReload) {
       window.location.reload();
+    } else {
+      event.emit(LANG_CHANGE_EVENT, lang);
     }
     // chrome 不支持这个事件。所以人肉触发一下
     if (window.dispatchEvent) {
       const event = new Event('languagechange');
       window.dispatchEvent(event);
     }
-    setIntl(lang);
   }
 }
 
-export * from 'react-intl';
+export const getAllLocales = () => Object.keys(localeInfo);
