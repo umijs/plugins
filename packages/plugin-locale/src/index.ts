@@ -55,9 +55,27 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
         DefaultLocale: defaultLocale,
         DefaultLang: defaultLocale,
         DefaultMomentLocale: getMomentLocale(lang, country),
-        LocaleList: localeList,
       }),
       path: 'plugin-locale/locale.tsx',
+    });
+
+    const localeExportsTpl = readFileSync(
+      join(__dirname, 'localeExports.tpl'),
+      'utf-8',
+    );
+    api.writeTmpFile({
+      path: 'plugin-locale/localeExports.ts',
+      content: Mustache.render(localeExportsTpl, {
+        BaseSeparator: baseSeparator,
+        LocaleList: localeList,
+      }),
+    });
+
+    api.addUmiExports(() => {
+      return {
+        exportAll: true,
+        source: `${paths.aliasedTmpPath}/plugin-locale/localeExports.ts`,
+      };
     });
   });
 
@@ -70,11 +88,4 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
   );
 
   api.addTmpGenerateWatcherPaths(() => exactLocalePaths(localeList));
-
-  api.addUmiExports(() => {
-    return {
-      exportAll: true,
-      source: `${paths.aliasedTmpPath}/plugin-locale/locale`,
-    };
-  });
 };
