@@ -1,6 +1,12 @@
 import { IApi } from 'umi';
 import { join } from 'path';
-import { getLocaleList, isNeedPolyfill, exactLocalePaths } from './utils';
+import { readFileSync } from 'fs';
+import {
+  getLocaleList,
+  isNeedPolyfill,
+  exactLocalePaths,
+  getMomentLocale,
+} from './utils';
 
 interface IOpts {
   default?: string;
@@ -9,7 +15,7 @@ interface IOpts {
   baseSeparator?: string;
 }
 
-type ILocaleOpts = IOpts | boolean;
+type ILocaleOpts = IOpts;
 
 export default (api: IApi, opts: ILocaleOpts = {}) => {
   const {
@@ -28,19 +34,47 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
   });
 
   const localeFolder = config?.singular ? 'locale' : 'locales';
-  const separator = config?.locale?.separator || '-';
+  const { baseSeparator = '-' } = opts;
+  const defaultLocale = opts.default || `zh${baseSeparator}CN`;
+  const [lang, country] = defaultLocale?.split(baseSeparator) || [];
 
   const localeList = getLocaleList({
     localeFolder,
-    separator,
+    separator: baseSeparator,
     absSrcPath: paths.absSrcPath,
     absPagesPath: paths.absPagesPath,
   });
 
-  const localeFileList = exactLocalePaths(localeList);
+  // 生成临时文件
+  api.onGenerateFiles(() => {
+    const localeTpl = readFileSync(join(__dirname, 'locale.tpl'), 'utf-8');
 
-  api.babelRegister.setOnlyMap({
-    key: 'locale',
-    value: localeFileList,
+    api.writeTmpFile({
+      content: Mustache.render(localeTpl, {
+        BaseSeparator: baseSeparator,
+        DefaultLocale: defaultLocale,
+        DefaultLang: defaultLocale,
+        DefaultMomentLocale: getMomentLocale(lang, country),
+        LocaleList: localeList,
+      }),
+      path: 'plugin-locale/locale.tsx',
+    });
+  });
+
+  // Runtime Plugin
+  api.addRuntimePlugin(() => join(__dirname, '../src/runtime.tsx'));
+
+  // Modify entry js
+  api.addEntryCodeAhead(() =>
+    `require('@@/plugin-locale/locale')._onCreate();`.trim(),
+  );
+
+  api.addTmpGenerateWatcherPaths(() => exactLocalePaths(localeList));
+
+  api.addUmiExports(() => {
+    return {
+      exportAll: true,
+      source: `${paths.aliasedTmpPath}/plugin-locale/locale`,
+    };
   });
 };
