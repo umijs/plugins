@@ -1,5 +1,6 @@
 import { Button } from 'antd';
 import { connect } from 'dva';
+import { formatMessage } from 'umi/locale';
 import styles from './index.css';
 
 export default connect(state => {
@@ -10,7 +11,16 @@ export default connect(state => {
       <h1>
         Page index {props.count} {props.foo + 2}
       </h1>
-      <Button type="primary">Hi</Button>
+      <Button type="primary">
+        {formatMessage(
+          {
+            id: 'test',
+          },
+          {
+            name: 'antd',
+          },
+        )}
+      </Button>
     </div>
   );
 });

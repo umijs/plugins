@@ -9,7 +9,11 @@ import webpack from 'webpack';
 // https://github.com/webpack/webpack/issues/9802
 export default (api: IApi) => {
   api.describe({
-    key: 'webpack5',
+    config: {
+      schema(joi) {
+        return joi.boolean();
+      },
+    },
   });
 
   api.modifyBundlerImplementor(() => {

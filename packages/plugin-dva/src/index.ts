@@ -41,6 +41,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
       path: 'plugin-dva/dva.ts',
     });
   });
+  api.addTmpGenerateWatcherPaths(() => [getBase()]);
 
   // Babel Plugin for HMR
   api.modifyBabelOpts(babelOpts => {
@@ -61,6 +62,4 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
   api.addEntryCodeAhead(() =>
     `require('@@/plugin-dva/dva')._onCreate();`.trim(),
   );
-
-  api.addTmpGenerateWatcherPaths(() => [getBase()]);
 };
