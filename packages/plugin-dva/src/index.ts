@@ -3,11 +3,7 @@ import { basename, extname, join } from 'path';
 import { readFileSync } from 'fs';
 import { getModels } from './getModels/getModels';
 
-interface IOpts {
-  hmr?: object | boolean;
-}
-
-export default (api: IApi, opts: IOpts = {}) => {
+export default (api: IApi) => {
   const {
     paths,
     utils: { Mustache, lodash, winPath },
@@ -16,6 +12,15 @@ export default (api: IApi, opts: IOpts = {}) => {
   function getBase() {
     return join(paths.absSrcPath!, api.config!.singular ? 'model' : 'models');
   }
+
+  // 配置
+  api.describe({
+    config: {
+      schema(joi) {
+        return joi.object();
+      },
+    },
+  });
 
   // 生成临时文件
   api.onGenerateFiles(() => {
@@ -45,10 +50,12 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
 
   // Babel Plugin for HMR
   api.modifyBabelOpts(babelOpts => {
-    if (opts.hmr) {
+    const hmr = (api.config as any).dva?.hmr;
+    if (hmr) {
+      const hmrOpts = lodash.isPlainObject(hmr) ? hmr : {};
       babelOpts.plugins.push([
         require.resolve('babel-plugin-dva-hmr'),
-        opts.hmr,
+        hmrOpts,
       ]);
     }
     return babelOpts;

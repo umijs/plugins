@@ -2,6 +2,14 @@ import { dirname } from 'path';
 import { IApi } from 'umi';
 
 export default (api: IApi) => {
+  api.describe({
+    config: {
+      schema(joi) {
+        return joi.object();
+      },
+    },
+  });
+
   api.modifyBabelPresetOpts(opts => {
     return {
       ...opts,

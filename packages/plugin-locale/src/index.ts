@@ -79,7 +79,6 @@ export default (api: IApi) => {
 
   // 配置
   api.describe({
-    key: 'locale',
     config: {
       schema(joi) {
         return joi.object();
