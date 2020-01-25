@@ -68,7 +68,15 @@ export function getLocaleFileList(
   });
 }
 
-export default (api: IApi) => {
+export interface IOpts {
+  baseSeparator?: string;
+  default?: string;
+  antd?: boolean;
+  baseNavigator?: boolean;
+  useLocalStorage?: boolean;
+}
+
+export default (api: IApi, opts: IOpts) => {
   const {
     paths,
     utils: { Mustache, lodash, winPath },
@@ -88,9 +96,8 @@ export default (api: IApi) => {
 
   // 生成临时文件
   api.onGenerateFiles(() => {
-    const localeConfig = (api.config as any).locale;
-    const baseSeparator = localeConfig?.baseSeparator || '-';
-    const defaultLocale = localeConfig?.default || `zh${baseSeparator}CN`;
+    const baseSeparator = opts?.baseSeparator || '-';
+    const defaultLocale = opts?.default || `zh${baseSeparator}CN`;
     const [lang, country] = defaultLocale.split(baseSeparator);
     const localeFileList = getLocaleFileList(
       paths.absSrcPath!,
@@ -105,9 +112,9 @@ export default (api: IApi) => {
         {
           baseSeparator,
           localeList: localeFileList,
-          antd: localeConfig?.antd !== false,
-          baseNavigator: localeConfig?.baseNavigator !== false,
-          useLocalStorage: localeConfig?.useLocalStorage !== false,
+          antd: opts?.antd !== false,
+          baseNavigator: opts?.baseNavigator !== false,
+          useLocalStorage: opts?.useLocalStorage !== false,
           defaultLocale,
           defaultLang: lang,
           defaultAntdLocale: `${lang}_${country}`,
