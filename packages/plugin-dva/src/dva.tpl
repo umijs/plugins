@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { plugin, history, ApplyPluginsType } from 'umi';
 import dva from 'dva';
-import createLoading from 'dva-loading';
+import createLoading from '{{{ dvaLoadingPath }}}';
 
 let app = null;
 

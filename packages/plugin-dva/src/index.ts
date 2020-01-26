@@ -42,6 +42,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
           `.trim();
           })
           .join('\r\n'),
+        dvaLoadingPath: require.resolve('dva-loading'),
       }),
       path: 'plugin-dva/dva.ts',
     });
