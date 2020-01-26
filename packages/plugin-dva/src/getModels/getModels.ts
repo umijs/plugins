@@ -15,6 +15,20 @@ export function getModels({ base }: { base: string }) {
     });
 }
 
+function getIdentifierDeclaration(
+  node: utils.traverse.Node,
+  path: utils.traverse.NodePath,
+) {
+  if (utils.t.isIdentifier(node) && path.scope.hasBinding(node.name)) {
+    let bindingNode = path.scope.getBinding(node.name)!.path.node;
+    if (utils.t.isVariableDeclarator(bindingNode)) {
+      bindingNode = bindingNode.init!;
+    }
+    return bindingNode;
+  }
+  return node;
+}
+
 export function isValidModel({ content }: { content: string }) {
   const { parser } = utils;
   const ast = parser.parse(content, {
@@ -30,9 +44,11 @@ export function isValidModel({ content }: { content: string }) {
   utils.traverse.default(ast as any, {
     ExportDefaultDeclaration(path: utils.traverse.NodePath) {
       const { node } = path as { node: utils.t.ExportDefaultDeclaration };
+      const target = getIdentifierDeclaration(node.declaration, path);
+
       if (
-        utils.t.isObjectExpression(node.declaration) &&
-        node.declaration.properties.some(property => {
+        utils.t.isObjectExpression(target) &&
+        target.properties.some(property => {
           return [
             'state',
             'reducers',
