@@ -9,6 +9,15 @@ export default (api: IApi) => {
     utils: { Mustache, lodash, winPath },
   } = api;
 
+  api.describe({
+    key: 'dva',
+    config: {
+      schema(joi) {
+        return joi.object();
+      },
+    },
+  });
+
   function getBase() {
     return join(paths.absSrcPath!, api.config!.singular ? 'model' : 'models');
   }
