@@ -15,7 +15,6 @@ export default (api: IApi) => {
 
   // 配置
   api.describe({
-    key: 'dva',
     config: {
       schema(joi) {
         return joi.object();
