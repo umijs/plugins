@@ -4,7 +4,9 @@ export default (api: IApi) => {
   api.addUmiExports(() => {
     return [
       {
-        source: require.resolve('../../src/plugins/historyAdapater.ts'),
+        source: require.resolve(
+          '../../../src/plugins/router/historyAdapater.ts',
+        ),
         exportAll: true,
       },
     ];
