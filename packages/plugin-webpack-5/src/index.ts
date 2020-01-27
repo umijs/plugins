@@ -28,7 +28,10 @@ export default (api: IApi) => {
     delete memo.node;
 
     // url polyfill for mini-css-extract-plugin's dep
-    memo.resolve?.modules?.push(join(__dirname, '../node_modules'));
+    memo.resolve!.modules?.push(join(__dirname, '../node_modules'));
+
+    // antd-pro 的依赖里，intl-messageformat 用了 jsnext:main
+    memo.resolve!.mainFields = ['browser', 'module', 'jsnext:main', 'main'];
 
     // cache
     memo.cache = {
