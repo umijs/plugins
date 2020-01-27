@@ -25,6 +25,6 @@
     "@ant-design/create-react-context": "0.2.4",
     "moment": "2.x",
     "intl": "1.2.5",
-    "react-intl": "2.7.2"
+    "react-intl": "2.9.0"
   }
 }
