@@ -37,6 +37,7 @@ export default (api: IApi) => {
     memo.cache = {
       type: 'filesystem',
       buildDependencies: {},
+      cacheDirectory: join(api.paths.absTmpPath!, '.cache', 'webpack'),
     };
 
     return memo;
