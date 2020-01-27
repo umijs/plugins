@@ -16,7 +16,15 @@ export default (api: IApi) => {
     },
   });
 
-  api.modifyBundlerImplementor(() => {
+  api.modifyBundleConfigOpts(memo => {
+    memo.miniCSSExtractPluginPath = require.resolve('mini-css-extract-plugin');
+    memo.miniCSSExtractPluginLoaderPath = require.resolve(
+      'mini-css-extract-plugin/dist/loader',
+    );
+    return memo;
+  });
+
+  api.modifyBundleImplementor(() => {
     return webpack;
   });
 
