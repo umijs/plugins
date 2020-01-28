@@ -37,3 +37,11 @@ test('isValidModel', () => {
     }),
   ).toEqual(false);
 });
+
+test('isValidModel with variable declaration', () => {
+  expect(
+    isValidModel({
+      content: `const Foo = { state: {} }; export default Foo;`,
+    }),
+  ).toEqual(true);
+});

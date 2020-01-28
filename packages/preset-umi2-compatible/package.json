@@ -1,7 +1,7 @@
 {
-  "name": "@umijs/plugin-webpack-5",
+  "name": "@umijs/preset-umi2-compatible",
   "version": "0.0.1-alpha.1",
-  "description": "@umijs/plugin-webpack-5",
+  "description": "@umijs/preset-umi2-compatible",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -20,10 +20,5 @@
   ],
   "license": "MIT",
   "bugs": "http://github.com/umijs/plugins/issues",
-  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-webpack-5#readme",
-  "dependencies": {
-    "url": "0.11.0",
-    "webpack": "5.0.0-beta.12",
-    "mini-css-extract-plugin": "0.9.0"
-  }
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/preset-umi2-compatible#readme"
 }
