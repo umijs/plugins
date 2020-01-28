@@ -19,7 +19,7 @@ export default (api: IApi, opts: IOpts = {}) => {
 
   // 生成临时文件
   api.onGenerateFiles(() => {
-    const dvaTpl = readFileSync(join(__dirname, 'dva.tpl'), 'utf-8');
+    const dvaTpl = readFileSync(winPath(join(__dirname, 'dva.tpl')), 'utf-8');
     const base = getBase();
     const models = getModels({
       base,
@@ -54,7 +54,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
   });
 
   // Runtime Plugin
-  api.addRuntimePlugin(() => join(__dirname, '../src/runtime.tsx'));
+  api.addRuntimePlugin(() => winPath(join(__dirname, '../lib/runtime.js')));
   api.addRuntimePluginKey(() => 'dva');
 
   // Modify entry js

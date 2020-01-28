@@ -1,6 +1,12 @@
 import React from 'react';
 import EventEmitter from 'events';
-import { RawIntlProvider, getLocale, setIntl, getIntl, setLocale } from './localeExports';
+import {
+  RawIntlProvider,
+  getLocale,
+  setIntl,
+  getIntl,
+  setLocale,
+} from './localeExports';
 
 export const event = new EventEmitter();
 event.setMaxListeners(5);
@@ -11,24 +17,19 @@ export function _onCreate() {
   setIntl(locale);
 }
 
-export const _LocaleContainer = (props) => {
+export const _LocaleContainer = props => {
   const [intl, setContainerIntl] = React.useState(() => getIntl());
 
   const handleLangChange = () => {
     setContainerIntl(getIntl());
-  }
+  };
 
   React.useEffect(() => {
     event.on(LANG_CHANGE_EVENT, handleLangChange);
     return () => {
       event.off(LANG_CHANGE_EVENT, handleLangChange);
-    }
+    };
   }, []);
 
-
-  return (
-    <RawIntlProvider value={intl}>
-      {props.children}
-    </RawIntlProvider>
-  )
-}
+  return <RawIntlProvider value={intl}>{props.children}</RawIntlProvider>;
+};

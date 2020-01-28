@@ -1,4 +1,11 @@
+body,
+html,
+#root {
+  height: 100%;
+}
 
 .normal {
-  background: #E079F2;
+  background: #ddd;
+  height: 100vh;
+  padding: 48px;
 }

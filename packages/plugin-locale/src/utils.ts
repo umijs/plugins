@@ -2,7 +2,7 @@ import { glob, winPath, lodash } from '@umijs/utils';
 import { join, basename } from 'path';
 import { existsSync } from 'fs';
 
-interface IGetLocaleFileListOpts {
+export interface IGetLocaleFileListOpts {
   localeFolder: string;
   separator?: string;
   absSrcPath?: string;
@@ -26,7 +26,7 @@ export const getMomentLocale = (lang: string, country: string) => {
   return '';
 };
 
-interface IGetLocaleFileListResult {
+export interface IGetLocaleFileListResult {
   lang: string;
   country: string;
   name: string;
@@ -49,7 +49,7 @@ export const getLocaleList = (
 
   const localeFiles = glob
     .sync('*.{ts,js,json}', {
-      cwd: join(absSrcPath, localeFolder),
+      cwd: winPath(join(absSrcPath, localeFolder)),
     })
     .map(name => winPath(join(absSrcPath, localeFolder, name)))
     .concat(
@@ -60,17 +60,18 @@ export const getLocaleList = (
         .map(name => winPath(join(absPagesPath, name))),
     )
     .filter(p => localeFileMath.test(basename(p)) && existsSync(p))
-    .map(fullname => {
-      const fileName = basename(fullname);
+    .map(fullName => {
+      const fileName = basename(fullName);
       const fileInfo = localeFileMath
         .exec(fileName)
         ?.slice(1, 3)
         ?.filter(Boolean);
       return {
         name: (fileInfo || []).join(separator),
-        path: fullname,
+        path: fullName,
       };
     });
+
   const groups = lodash.groupBy(localeFiles, 'name');
 
   return Object.keys(groups).map(name => {

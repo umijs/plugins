@@ -1,5 +1,6 @@
 import { IApi } from 'umi';
 import { join } from 'path';
+import { winPath } from '@umijs/utils';
 import { readFileSync } from 'fs';
 import {
   getLocaleList,
@@ -47,7 +48,10 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
 
   // 生成临时文件
   api.onGenerateFiles(() => {
-    const localeTpl = readFileSync(join(__dirname, 'locale.tpl'), 'utf-8');
+    const localeTpl = readFileSync(
+      winPath(join(__dirname, 'locale.tpl')),
+      'utf-8',
+    );
 
     api.writeTmpFile({
       content: Mustache.render(localeTpl, {
@@ -60,7 +64,7 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
     });
 
     const localeExportsTpl = readFileSync(
-      join(__dirname, 'localeExports.tpl'),
+      winPath(join(__dirname, 'localeExports.tpl')),
       'utf-8',
     );
     api.writeTmpFile({
@@ -73,7 +77,7 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
   });
 
   // Runtime Plugin
-  api.addRuntimePlugin(() => join(__dirname, '../src/runtime.tsx'));
+  api.addRuntimePlugin(() => winPath(join(__dirname, '../lib/runtime.js')));
 
   // Modify entry js
   api.addEntryCodeAhead(() =>
@@ -85,7 +89,7 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
   api.addUmiExports(() => {
     return {
       exportAll: true,
-      source: `${paths.aliasedTmpPath}/plugin-locale/localeExports.ts`,
+      source: `${paths.aliasedTmpPath}/plugin-locale/localeExports`,
     };
   });
 };
