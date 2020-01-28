@@ -76,6 +76,7 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
     });
   });
 
+  api.addRuntimePluginKey(() => 'locale');
   // Runtime Plugin
   api.addRuntimePlugin(() => winPath(join(__dirname, '../lib/runtime.js')));
 
