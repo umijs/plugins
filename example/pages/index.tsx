@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from 'antd';
 import { connect } from 'dva';
-import { useIntl, getLocale, getAllLocales, setLocale } from 'umi';
+import { useIntl, addLocale, getLocale, getAllLocales, setLocale } from 'umi';
 import styles from './index.css';
 
 export default connect(state => {
   return { count: state.count, foo: state.foo };
 })(function(props) {
   const intl = useIntl();
-  const [list] = useState<string[]>(getAllLocales());
+  const [list, setList] = useState<string[]>(getAllLocales());
+
+  useEffect(() => {
+    addLocale('zh-TW', {
+      name: '妳好，{name}',
+    });
+    setList(getAllLocales());
+  }, []);
+
   const locale = getLocale();
 
   return (
@@ -17,7 +25,7 @@ export default connect(state => {
       {list.map(locale => (
         <a
           onClick={() => {
-            setLocale(locale);
+            setLocale(locale, false);
           }}
           style={{
             margin: 8,

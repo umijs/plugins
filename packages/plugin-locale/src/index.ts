@@ -85,6 +85,7 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
     `require('@@/plugin-locale/locale')._onCreate();`.trim(),
   );
 
+  // watch locale files
   api.addTmpGenerateWatcherPaths(() => exactLocalePaths(localeList));
 
   api.addUmiExports(() => {
