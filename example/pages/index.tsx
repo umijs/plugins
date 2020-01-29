@@ -11,9 +11,11 @@ export default connect(state => {
   const [list, setList] = useState<string[]>(getAllLocales());
 
   useEffect(() => {
+    // 动态增加新语言
     addLocale('zh-TW', {
       name: '妳好，{name}',
     });
+    // 刷新列表
     setList(getAllLocales());
   }, []);
 
