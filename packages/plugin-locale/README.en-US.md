@@ -161,6 +161,6 @@ setLocale('zh-TW', false);
 
 ## FAQ
 
-### 为什么不要使用 formatMessage 这个语法糖？
+### Why no use formatMessage?
 
-虽然 formatMessage 使用起来会非常方便，但是它脱离了 react 的生命周期，最严重的问题就是切换语言时无法触发 dom 重新渲染。为了解决这个问题，我们切换语言时会刷新一下浏览器，用户体验很差，所以推荐大家使用 [`useIntl`](./#useIntl) 或者 [`injectIntl`](https://github.com/formatjs/react-intl/blob/master/docs/API.md#injectintl-hoc)，可以实现同样的功能
+Although formatMessage is very convenient to use, it is out of the react life cycle. The most serious problem is that it cannot trigger dom re-rendering when switching languages. In order to solve this problem, we will refresh the browser when switching languages. The user experience is poor, so it is recommended that you use [`useIntl`](./#useIntl) or [`injectIntl`](https://github.com/formatjs/react-intl/blob/master/docs/API.md#injectintl-hoc), can achieve the same thing.
