@@ -129,6 +129,8 @@ export const formatMessage: IntlShape['formatMessage'] = (
       `Using this API will cause automatic refresh when switching languages, please use useIntl or injectIntl.
       
 使用此 api 会造成切换语言的时候无法自动刷新，请使用 useIntl 或 injectIntl。
+
+http://j.mp/37Fkd5Q
       `,
     );
     firstWaring = false;
