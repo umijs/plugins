@@ -1,12 +1,6 @@
 import React from 'react';
 import EventEmitter from 'events';
-import {
-  RawIntlProvider,
-  getLocale,
-  setIntl,
-  getIntl,
-  setLocale,
-} from './localeExports';
+import { RawIntlProvider, getLocale, setIntl, getIntl } from './localeExports';
 
 export const event = new EventEmitter();
 event.setMaxListeners(5);

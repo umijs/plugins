@@ -157,3 +157,9 @@ setLocale('zh-TW', true);
 // 不刷新页面
 setLocale('zh-TW', false);
 ```
+
+## FAQ
+
+### Why no use formatMessage?
+
+Although formatMessage is very convenient to use, it is out of the react life cycle. The most serious problem is that it cannot trigger dom re-rendering when switching languages. In order to solve this problem, we will refresh the browser when switching languages. The user experience is poor, so it is recommended that you use [`useIntl`](./#useIntl) or [`injectIntl`](https://github.com/formatjs/react-intl/blob/master/docs/API.md#injectintl-hoc), can achieve the same thing.

@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'antd';
 import { connect } from 'dva';
-import { useIntl, addLocale, getLocale, getAllLocales, setLocale } from 'umi';
+import {
+  useIntl,
+  formatMessage,
+  addLocale,
+  getLocale,
+  getAllLocales,
+  setLocale,
+} from 'umi';
+import { Table } from 'antd';
 import styles from './index.css';
 
 export default connect(state => {
@@ -26,6 +33,7 @@ export default connect(state => {
       <h1>当前语言：{locale}</h1>
       {list.map(locale => (
         <a
+          key={locale}
           onClick={() => {
             setLocale(locale, false);
           }}
@@ -39,7 +47,17 @@ export default connect(state => {
       <h1>
         Page index {props.count} {props.foo + 2}
       </h1>
-      <Button type="primary">
+      <button>
+        {formatMessage(
+          {
+            id: 'name',
+          },
+          {
+            name: '过期 api',
+          },
+        )}
+      </button>{' '}
+      <button>
         {intl.formatMessage(
           {
             id: 'name',
@@ -48,7 +66,7 @@ export default connect(state => {
             name: '旅行者',
           },
         )}
-      </Button>
+      </button>
     </div>
   );
 });

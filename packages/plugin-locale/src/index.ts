@@ -1,6 +1,5 @@
 import { IApi } from 'umi';
 import { join } from 'path';
-import { winPath } from '@umijs/utils';
 import { readFileSync } from 'fs';
 import {
   getLocaleList,

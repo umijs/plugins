@@ -2220,6 +2220,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/warning@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/@types/warning/download/@types/warning-3.0.0.tgz#0d2501268ad8f9962b740d387c4654f5f8e23e52"
+  integrity sha1-DSUBJorY+ZYrdA04fEZU9fjiPlI=
+
 "@types/yargs-parser@*":
   version "15.0.0"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-15.0.0.tgz#cb3f9f741869e20cce330ffbeb9271590483882d"
