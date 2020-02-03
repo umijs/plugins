@@ -47,10 +47,7 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
 
   // 生成临时文件
   api.onGenerateFiles(() => {
-    const localeTpl = readFileSync(
-      winPath(join(__dirname, 'locale.tpl')),
-      'utf-8',
-    );
+    const localeTpl = readFileSync(join(__dirname, 'locale.tpl'), 'utf-8');
 
     api.writeTmpFile({
       content: Mustache.render(localeTpl, {
@@ -63,7 +60,7 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
     });
 
     const localeExportsTpl = readFileSync(
-      winPath(join(__dirname, 'localeExports.tpl')),
+      join(__dirname, 'localeExports.tpl'),
       'utf-8',
     );
     api.writeTmpFile({
@@ -77,7 +74,7 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
 
   api.addRuntimePluginKey(() => 'locale');
   // Runtime Plugin
-  api.addRuntimePlugin(() => winPath(join(__dirname, '../lib/runtime.js')));
+  api.addRuntimePlugin(() => join(__dirname, '../lib/runtime.js'));
 
   // Modify entry js
   api.addEntryCodeAhead(() =>
