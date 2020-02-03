@@ -20,5 +20,8 @@
   ],
   "license": "MIT",
   "bugs": "http://github.com/umijs/plugins/issues",
-  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-model#readme"
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-model#readme",
+  "dependencies": {
+    "lodash.isequal": "4.5.0"
+  }
 }

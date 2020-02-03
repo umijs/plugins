@@ -5,5 +5,6 @@ export default defineConfig({
     require.resolve('../packages/plugin-antd/lib'),
     require.resolve('../packages/plugin-dva/lib'),
     require.resolve('../packages/plugin-locale/lib'),
+    require.resolve('../packages/plugin-model/lib'),
   ],
 });

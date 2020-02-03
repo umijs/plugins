@@ -7,6 +7,7 @@ import webpack from 'webpack';
 // https://blog.logrocket.com/new-features-in-webpack-5-2559755adf5e/
 // https://webpack.js.org/migrate/5/
 // https://github.com/webpack/webpack/issues/9802
+// https://github.com/webpack/changelog-v5/blob/master/guides/persistent-caching.md
 export default (api: IApi) => {
   api.describe({
     config: {
