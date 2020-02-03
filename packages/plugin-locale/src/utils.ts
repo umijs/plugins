@@ -1,6 +1,8 @@
-import { glob, winPath, lodash } from '@umijs/utils';
+import { utils } from 'umi';
 import { join, basename } from 'path';
 import { existsSync } from 'fs';
+
+const { glob, winPath, lodash } = utils;
 
 export interface IGetLocaleFileListOpts {
   localeFolder: string;
