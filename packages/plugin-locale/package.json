@@ -2,29 +2,37 @@
   "name": "@umijs/plugin-locale",
   "version": "0.0.1-alpha.1",
   "description": "@umijs/plugin-locale",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "files": [
-    "lib",
-    "src"
+  "keywords": [
+    "umi"
   ],
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-locale#readme",
+  "bugs": "http://github.com/umijs/plugins/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/umijs/plugins"
   },
-  "keywords": [
-    "umi"
+  "license": "MIT",
+  "files": [
+    "lib",
+    "src"
   ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "@formatjs/intl-pluralrules": "^1.5.0",
+    "@formatjs/intl-relativetimeformat": "^4.5.7",
+    "intl": "1.2.5",
+    "moment": "2.x",
+    "react-intl": "3.11.0",
+    "warning": "^4.0.3"
+  },
+  "peerDependencies": {
+    "umi": "3.x"
+  },
   "authors": [
     "chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)"
   ],
-  "license": "MIT",
-  "bugs": "http://github.com/umijs/plugins/issues",
-  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-locale#readme",
-  "dependencies": {
-    "@ant-design/create-react-context": "0.2.4",
-    "moment": "2.x",
-    "intl": "1.2.5",
-    "react-intl": "2.9.0"
+  "devDependencies": {
+    "@types/warning": "^3.0.0"
   }
 }

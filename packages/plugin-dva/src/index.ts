@@ -10,7 +10,7 @@ export default (api: IApi) => {
   } = api;
 
   function getBase() {
-    return join(paths.absSrcPath!, api.config!.singular ? 'model' : 'models');
+    return join(paths.absSrcPath!, api.config.singular ? 'model' : 'models');
   }
 
   // 配置
@@ -24,7 +24,7 @@ export default (api: IApi) => {
 
   // 生成临时文件
   api.onGenerateFiles(() => {
-    const dvaTpl = readFileSync(join(__dirname, 'dva.tpl'), 'utf-8');
+    const dvaTpl = readFileSync(winPath(join(__dirname, 'dva.tpl')), 'utf-8');
     const base = getBase();
     const models = getModels({
       base,
@@ -42,7 +42,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
           `.trim();
           })
           .join('\r\n'),
-        dvaLoadingPath: require.resolve('dva-loading'),
+        dvaLoadingPath: winPath(require.resolve('dva-loading')),
       }),
       path: 'plugin-dva/dva.ts',
     });
@@ -63,7 +63,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
   });
 
   // Runtime Plugin
-  api.addRuntimePlugin(() => join(__dirname, '../src/runtime.tsx'));
+  api.addRuntimePlugin(() => winPath(join(__dirname, '../lib/runtime.js')));
   api.addRuntimePluginKey(() => 'dva');
 
   // Modify entry js

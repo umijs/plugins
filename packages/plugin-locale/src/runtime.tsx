@@ -1,7 +1,7 @@
 import React from 'react';
 // @ts-ignore
-import LocaleWrapper from '@@/plugin-locale/LocaleWrapper';
+import { _LocaleContainer } from '@@/plugin-locale/locale';
 
-export function rootContainer(container) {
-  return React.createElement(LocaleWrapper, null, container);
+export function rootContainer(container: Element) {
+  return React.createElement(_LocaleContainer, null, container);
 }

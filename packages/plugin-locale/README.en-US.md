@@ -1,16 +1,14 @@
-[English](./README.en-US.md)
-
 # @umijs/plugin-locale
 
 ## Use
 
-安装
+installation
 
 ```bash
 npm i @umijs/plugin-locale --save
 ```
 
-在 umirc.js，或 config/config.js 中配置
+Configure in `umirc.js`, or `config/config.js|ts`
 
 ```tsx
 plugins: ['@umijs/plugin-locale'];
@@ -27,17 +25,17 @@ export default function() {
   const locale = getLocale();
 
   useEffect(() => {
-    // 动态增加新语言
+    // Dynamically add new languages
     addLocale('zh-TW', {
       name: '妳好，{name}',
     });
-    // 刷新列表
+    // refresh the list
     setList(getAllLocales());
   }, []);
 
   return (
     <div className={styles.normal}>
-      <h1>当前语言：{locale}</h1>
+      <h1>Current language:{locale}</h1>
       {list.map(locale => (
         <a
           onClick={() => {
@@ -56,7 +54,7 @@ export default function() {
             id: 'name',
           },
           {
-            name: '旅行者',
+            name: 'Traveler',
           },
         )}
       </button>
@@ -67,31 +65,34 @@ export default function() {
 
 ## API
 
-@umijs/plugin-locale 基于 react-intl 封装，支持其所有的 api，详情可以看[这里](https://github.com/formatjs/react-intl/blob/master/docs/API.md)。为了方便使用我们也添加了一些其他的功能，这里将会列举所有的 api，并且展示它的功能。
+`@umijs/plugin-locale` is based on react-intl package and supports all its APIs. For details, see [here](https://github.com/formatjs/react-intl/blob/master/docs/API.md)。For the convenience of use, we have also added some other functions. Here we will list all the APIs and show their functions.
 
 ### addLocale
 
-动态的增加语言，增加语言之后可以通过 getAllLocales 获得列表。addLocale 三个参数。
+Add languages dynamically. After adding languages, you can get the list by `getAllLocales`. `addLocale` three parameters.
 
-- name 语言的 key。例如 zh-TW
-- message 语言的 id 列表。 例如：{ // id 列表 name: '妳好，{name}', }
-- momentLocale 相应的 moment 配置
+- name The key of the language. E.g zh-TW
+- message A list of ids for the language. E.g:{ // id 列表 name: '妳好，{name}', }
+- momentLocale Corresponding moment configuration
 
 ```tsx
-// 动态增加新语言
+// Adding new languages dynamically
 addLocale(
+  // name
   'zh-TW',
+  // message
   {
     // id 列表
     name: '妳好，{name}',
   },
+  // momentLocale
   '',
 );
 ```
 
 ### getAllLocales
 
-获取当前获得所有国际化文件的列表，默认会在 locales 文件夹下寻找类似 en-US.(js|json|ts) 文件。
+Get the current list of all internationalization files. By default, it looks for `en-US.(js|json|ts)` files in the locales folder.
 
 ```tsx
 import { getAllLocales } from 'umi';
@@ -101,7 +102,7 @@ console.log(getAllLocales()); // [en-US,zh-CN,...]
 
 ### getLocale
 
-`getLocale` 将获得当前选择的语言。
+`getLocale` will get the currently selected language.
 
 ```tsx
 import { getLocale } from 'umi';
@@ -111,7 +112,7 @@ console.log(getLocale()); // en-US | zh-CN
 
 ### useIntl
 
-useIntl 是最常用的 api,它可以获得 formatMessage 等 api 来进行具体的值绑定。
+useIntl is the most commonly used API, and it can obtain APIs such as formatMessage for specific value binding.
 
 ```ts
 // en-US.json
@@ -146,7 +147,7 @@ export default function() {
 
 ### setLocale
 
-设置切换语言，默认会刷新页面，可以通过设置第二个参数为 false，来动态切换。
+Set the switching language. The page will be refreshed by default. You can dynamically switch by setting the second parameter to false.
 
 ```tsx
 import { setLocale } from 'umi';
@@ -160,6 +161,6 @@ setLocale('zh-TW', false);
 
 ## FAQ
 
-### 为什么不要使用 formatMessage 这个语法糖？
+### Why no use formatMessage?
 
-虽然 formatMessage 使用起来会非常方便，但是它脱离了 react 的生命周期，最严重的问题就是切换语言时无法触发 dom 重新渲染。为了解决这个问题，我们切换语言时会刷新一下浏览器，用户体验很差，所以推荐大家使用 [`useIntl`](./#useIntl) 或者 [`injectIntl`](https://github.com/formatjs/react-intl/blob/master/docs/API.md#injectintl-hoc)，可以实现同样的功能。
+Although formatMessage is very convenient to use, it is out of the react life cycle. The most serious problem is that it cannot trigger dom re-rendering when switching languages. In order to solve this problem, we will refresh the browser when switching languages. The user experience is poor, so it is recommended that you use [`useIntl`](./#useIntl) or [`injectIntl`](https://github.com/formatjs/react-intl/blob/master/docs/API.md#injectintl-hoc), can achieve the same thing.
