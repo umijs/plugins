@@ -18,6 +18,11 @@ function logStep(name) {
   console.log(`${chalk.gray('>> Release:')} ${chalk.magenta.bold(name)}`);
 }
 
+function packageExists({ name, version }) {
+  const { stdout } = execa.sync('npm', ['info', `${name}@${version}`]);
+  return stdout.length > 0;
+}
+
 async function release() {
   // Check git status
   if (!args.skipGitStatusCheck) {
@@ -116,12 +121,23 @@ async function release() {
     const pkgPath = join(cwd, 'packages', pkg);
     const { name, version } = require(join(pkgPath, 'package.json'));
     const isNext = isNextVersion(version);
-    console.log(`Publish package ${name} ${isNext ? 'with next tag' : ''}`);
-    const cliArgs = isNext ? ['publish', '--tag', 'next'] : ['publish'];
-    const { stdout } = execa.sync('npm', cliArgs, {
-      cwd: pkgPath,
-    });
-    console.log(stdout);
+    let isPackageExist = null;
+    if (args.publishOnly) {
+      isPackageExist = packageExists({ name, version });
+      if (isPackageExist) {
+        console.log(
+          `package ${name}@${version} is already exists on npm, skip.`,
+        );
+      }
+    }
+    if (!args.publishOnly || !isPackageExist) {
+      console.log(`Publish package ${name} ${isNext ? 'with next tag' : ''}`);
+      const cliArgs = isNext ? ['publish', '--tag', 'next'] : ['publish'];
+      const { stdout } = execa.sync('npm', cliArgs, {
+        cwd: pkgPath,
+      });
+      console.log(stdout);
+    }
   });
 
   logStep('done');
