@@ -43,6 +43,15 @@ $ yarn test --package core
 $ yarn test --coverage
 ```
 
+## Release
+
+```bash
+$ npm run release
+$ npm run release -- --publish-only
+$ npm run release -- --skip-git-status-check
+$ npm run release -- --skip-build
+```
+
 ## Create new package
 
 Such as creating package `foo`.
