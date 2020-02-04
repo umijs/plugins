@@ -98,14 +98,13 @@ async function release() {
         // '--no-commit-hooks',
         // '--no-git-tag-version',
         // '--no-push',
+        '--message',
+        'chore(release): Publish',
         '--conventional-commits',
       ]
         .concat(conventionalGraduate)
         .concat(conventionalPrerelease),
     );
-
-    logStep('done');
-    return;
   }
 
   // Publish
@@ -124,6 +123,8 @@ async function release() {
     });
     console.log(stdout);
   });
+
+  logStep('done');
 }
 
 release().catch(err => {
