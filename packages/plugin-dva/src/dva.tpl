@@ -1,7 +1,8 @@
 import { Component } from 'react';
-import { plugin, history, ApplyPluginsType } from 'umi';
+import { ApplyPluginsType } from 'umi';
 import dva from 'dva';
-import createLoading from '{{{ dvaLoadingPath }}}';
+import createLoading from '{{{ dvaLoadingPkgPath }}}';
+import { plugin, history } from '../core/umiExports';
 
 let app = null;
 

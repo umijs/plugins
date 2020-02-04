@@ -1,5 +1,5 @@
 import { IApi } from 'umi';
-import { basename, extname, join } from 'path';
+import { basename, dirname, extname, join } from 'path';
 import { readFileSync } from 'fs';
 import { getModels } from './getModels/getModels';
 
@@ -43,11 +43,18 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
           `.trim();
           })
           .join('\r\n'),
-        dvaLoadingPath: winPath(require.resolve('dva-loading')),
+        // use esm version
+        dvaLoadingPkgPath: winPath(
+          require.resolve('dva-loading/dist/index.esm.js'),
+        ),
       }),
     });
   });
   api.addTmpGenerateWatcherPaths(() => [getBase()]);
+
+  api.addProjectFirstLibraries(() => [
+    { name: 'dva', path: dirname(require.resolve('dva/package.json')) },
+  ]);
 
   // Babel Plugin for HMR
   api.modifyBabelOpts(babelOpts => {

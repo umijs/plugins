@@ -1,8 +1,8 @@
-import { createIntl, IntlShape, MessageDescriptor } from 'react-intl';
+import { createIntl, IntlShape, MessageDescriptor } from '{{{ reactIntlPkgPath }}}';
 import { event, LANG_CHANGE_EVENT } from './locale';
-import warning from 'warning';
+import warning from '{{{ warningPkgPath }}}';
 
-export * from 'react-intl';
+export * from '{{{ reactIntlPkgPath }}}';
 
 let g_intl: IntlShape;
 
@@ -127,7 +127,7 @@ export const formatMessage: IntlShape['formatMessage'] = (
     warning(
       false,
       `Using this API will cause automatic refresh when switching languages, please use useIntl or injectIntl.
-      
+
 使用此 api 会造成切换语言的时候无法自动刷新，请使用 useIntl 或 injectIntl。
 
 http://j.mp/37Fkd5Q

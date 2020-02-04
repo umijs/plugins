@@ -68,6 +68,8 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
       content: Mustache.render(localeExportsTpl, {
         BaseSeparator: baseSeparator,
         LocaleList: localeList,
+        warningPkgPath: winPath(require.resolve('warning')),
+        reactIntlPkgPath: winPath(require.resolve('react-intl')),
       }),
     });
   });
