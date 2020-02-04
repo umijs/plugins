@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.1.0...@umijs/plugin-locale@0.1.1) (2020-02-04)
+
+### Bug Fixes
+
+- dep not found in tpl ([797c450](https://github.com/umijs/plugins/commit/797c450b4fb6f77c4ac0041092d328896c9dce20))
+
 # 0.1.0 (2020-02-04)
 
 ### Bug Fixes
