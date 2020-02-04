@@ -1,0 +1,36 @@
+{
+  "name": "@umijs/preset-react",
+  "version": "0.0.1",
+  "description": "@umijs/preset-react",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/umijs/plugins"
+  },
+  "keywords": [
+    "umi"
+  ],
+  "authors": [
+    "chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/umijs/plugins/issues",
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/preset-react#readme",
+  "peerDependencies": {
+    "umi": "3.x"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@umijs/plugin-antd": "0.1.0",
+    "@umijs/plugin-dva": "0.1.0",
+    "@umijs/plugin-locale": "0.1.0",
+    "@umijs/plugin-model": "2.0.0"
+  }
+}
