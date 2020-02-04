@@ -21,6 +21,9 @@
   "license": "MIT",
   "bugs": "http://github.com/umijs/plugins/issues",
   "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-locale#readme",
+  "peerDependencies": {
+    "umi": "3.x"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -34,8 +37,5 @@
   },
   "devDependencies": {
     "@types/warning": "^3.0.0"
-  },
-  "peerDependencies": {
-    "umi": "3.x"
   }
 }

@@ -38,6 +38,9 @@ const { yParser } = require('@umijs/utils');
         license: 'MIT',
         bugs: 'http://github.com/umijs/plugins/issues',
         homepage: `https://github.com/umijs/plugins/tree/master/packages/${shortName}#readme`,
+        peerDependencies: {
+          umi: '3.x',
+        },
         publishConfig: {
           access: 'public',
         },
