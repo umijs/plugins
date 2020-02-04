@@ -4,7 +4,7 @@ const { yParser } = require('@umijs/utils');
 
 (async () => {
   const args = yParser(process.argv);
-  const version = '0.0.1-alpha.1';
+  const version = '0.0.1';
 
   const pkgs = readdirSync(join(__dirname, '../packages')).filter(
     pkg => pkg.charAt(0) !== '.',
