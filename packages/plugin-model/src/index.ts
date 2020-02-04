@@ -11,7 +11,7 @@ export default (api: IApi) => {
   } = api;
 
   function getModelsPath() {
-    return join(paths.absSrcPath!, api.config.singular ? 'model' : 'models');
+    return join(paths.absSrcPath!, api.config!.singular ? 'model' : 'models');
   }
 
   // Add provider wrapper with rootContainer
