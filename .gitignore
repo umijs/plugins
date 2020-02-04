@@ -3,3 +3,6 @@
 /coverage
 /packages/*/lib
 .changelog
+.umi
+.umi-test
+.umi-production

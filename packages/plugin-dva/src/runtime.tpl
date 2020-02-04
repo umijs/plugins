@@ -1,6 +1,5 @@
 import React from 'react';
-// @ts-ignore
-import { _DvaContainer } from '@@/plugin-dva/dva';
+import { _DvaContainer } from './dva';
 
 export function rootContainer(container) {
   return React.createElement(_DvaContainer, null, container);

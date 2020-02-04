@@ -24,6 +24,7 @@ export default (api: IApi) => {
 
   // 生成临时文件
   api.onGenerateFiles(() => {
+    // dva.ts
     const dvaTpl = readFileSync(join(__dirname, 'dva.tpl'), 'utf-8');
     const base = getBase();
     const models = getModels({
@@ -49,6 +50,13 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
         ),
       }),
     });
+
+    // runtime.tsx
+    const runtimeTpl = readFileSync(join(__dirname, 'runtime.tpl'), 'utf-8');
+    api.writeTmpFile({
+      path: 'plugin-dva/runtime.tsx',
+      content: Mustache.render(runtimeTpl, {}),
+    });
   });
   api.addTmpGenerateWatcherPaths(() => [getBase()]);
 
@@ -70,11 +78,11 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
   });
 
   // Runtime Plugin
-  api.addRuntimePlugin(() => join(__dirname, '../lib/runtime.js'));
+  api.addRuntimePlugin(() => join(paths.absTmpPath!, 'plugin-dva/runtime.tsx'));
   api.addRuntimePluginKey(() => 'dva');
 
   // Modify entry js
   api.addEntryCodeAhead(() =>
-    `require('@@/plugin-dva/dva')._onCreate();`.trim(),
+    `require('./plugin-dva/dva')._onCreate();`.trim(),
   );
 };
