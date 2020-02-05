@@ -28,7 +28,7 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
     key: 'locale',
     config: {
       schema(joi) {
-        return joi.object();
+        return joi.alternatives(joi.object(), joi.boolean());
       },
     },
   });

@@ -17,7 +17,7 @@ export default (api: IApi) => {
   api.describe({
     config: {
       schema(joi) {
-        return joi.object();
+        return joi.alternatives(joi.object(), joi.boolean());
       },
     },
   });
