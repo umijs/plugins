@@ -89,7 +89,7 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
   api.addUmiExports(() => {
     return {
       exportAll: true,
-      source: `${paths.aliasedTmpPath}/plugin-locale/localeExports`,
+      source: `../plugin-locale/localeExports`,
     };
   });
 };
