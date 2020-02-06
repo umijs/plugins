@@ -1,6 +1,23 @@
 import { join } from 'path';
 import { Service } from 'umi';
 import { render, fireEvent } from '@testing-library/react';
+import IntlPolyfill from 'intl';
+import 'intl/locale-data/jsonp/zh-Hans-CN';
+import 'intl/locale-data/jsonp/en-US';
+import 'intl/locale-data/jsonp/zh-Hant-TW';
+import 'intl/locale-data/jsonp/sk';
+
+const setupTests = () => {
+  // https://formatjs.io/guides/runtime-environments/#server
+  if (global.Intl) {
+    Intl.NumberFormat = IntlPolyfill.NumberFormat;
+    Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
+  } else {
+    global.Intl = IntlPolyfill;
+  }
+};
+
+setupTests();
 
 const fixtures = join(__dirname, '..', 'fixtures');
 
