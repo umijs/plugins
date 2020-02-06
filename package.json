@@ -10,8 +10,8 @@
     "link": "yarn link umi && yarn link @umijs/test && yarn link @umijs/utils && yarn link @umijs/types",
     "release": "node ./scripts/release.js",
     "test": "NODE_ICU_DATA=node_modules/full-icu umi-test",
-    "test:coverage": "umi-test --coverage",
-    "test:update": "umi-test --updateSnapshot"
+    "test:coverage": "NODE_ICU_DATA=node_modules/full-icu umi-test --coverage",
+    "test:update": "NODE_ICU_DATA=node_modules/full-icu umi-test --updateSnapshot"
   },
   "gitHooks": {
     "pre-commit": "lint-staged",
