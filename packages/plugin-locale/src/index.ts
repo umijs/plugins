@@ -72,15 +72,23 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
         reactIntlPkgPath: winPath(require.resolve('react-intl')),
       }),
     });
+    // runtime.tsx
+    const runtimeTpl = readFileSync(join(__dirname, 'runtime.tpl'), 'utf-8');
+    api.writeTmpFile({
+      path: 'plugin-locale/runtime.tsx',
+      content: Mustache.render(runtimeTpl, {}),
+    });
   });
 
   api.addRuntimePluginKey(() => 'locale');
   // Runtime Plugin
-  api.addRuntimePlugin(() => join(__dirname, '../lib/runtime.js'));
+  api.addRuntimePlugin(() =>
+    join(paths.absTmpPath!, 'plugin-locale/runtime.tsx'),
+  );
 
   // Modify entry js
   api.addEntryCodeAhead(() =>
-    `require('@@/plugin-locale/locale')._onCreate();`.trim(),
+    `require('./plugin-locale/locale')._onCreate();`.trim(),
   );
 
   // watch locale files
