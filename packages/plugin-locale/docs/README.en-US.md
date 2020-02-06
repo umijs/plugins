@@ -15,7 +15,7 @@ plugins: ['@umijs/plugin-locale'];
 ```
 
 ```tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useIntl, getLocale, addLocale, getAllLocales, setLocale } from 'umi';
 import styles from './index.css';
 
@@ -38,6 +38,7 @@ export default function() {
       <h1>Current language:{locale}</h1>
       {list.map(locale => (
         <a
+          key={locale}
           onClick={() => {
             setLocale(locale);
           }}
