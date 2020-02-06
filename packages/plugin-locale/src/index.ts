@@ -1,5 +1,5 @@
 import { IApi } from 'umi';
-import { join } from 'path';
+import { join, dirname } from 'path';
 import { readFileSync } from 'fs';
 import {
   getLocaleList,
@@ -69,7 +69,11 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
         BaseSeparator: baseSeparator,
         LocaleList: localeList,
         warningPkgPath: winPath(require.resolve('warning')),
-        reactIntlPkgPath: winPath(require.resolve('react-intl/lib/index.js')),
+        // react-intl main use `dist/index.js`
+        // use dirname let webpack identify main or module
+        reactIntlPkgPath: winPath(
+          dirname(require.resolve('react-intl/package')),
+        ),
       }),
     });
     // runtime.tsx
