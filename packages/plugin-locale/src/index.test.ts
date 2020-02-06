@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { Service } from 'umi';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, cleanup } from '@testing-library/react';
 import IntlPolyfill from 'intl';
 import 'intl/locale-data/jsonp/zh-Hans-CN';
 import 'intl/locale-data/jsonp/en-US';
@@ -17,9 +17,13 @@ const setupTests = () => {
   }
 };
 
-setupTests();
-
 const fixtures = join(__dirname, '..', 'fixtures');
+
+beforeEach(() => {
+  setupTests();
+});
+
+afterEach(cleanup);
 
 test('normal', async () => {
   const cwd = join(fixtures, 'base');
