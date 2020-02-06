@@ -69,7 +69,7 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
         BaseSeparator: baseSeparator,
         LocaleList: localeList,
         warningPkgPath: winPath(require.resolve('warning')),
-        reactIntlPkgPath: winPath(require.resolve('react-intl')),
+        reactIntlPkgPath: winPath(require.resolve('react-intl/lib/index.js')),
       }),
     });
     // runtime.tsx
