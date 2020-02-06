@@ -1,5 +1,5 @@
 import { IApi } from 'umi';
-import { join } from 'path';
+import { join, dirname } from 'path';
 import { readFileSync } from 'fs';
 import {
   getLocaleList,
@@ -69,18 +69,30 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
         BaseSeparator: baseSeparator,
         LocaleList: localeList,
         warningPkgPath: winPath(require.resolve('warning')),
-        reactIntlPkgPath: winPath(require.resolve('react-intl')),
+        // react-intl main use `dist/index.js`
+        // use dirname let webpack identify main or module
+        reactIntlPkgPath: winPath(
+          dirname(require.resolve('react-intl/package')),
+        ),
       }),
+    });
+    // runtime.tsx
+    const runtimeTpl = readFileSync(join(__dirname, 'runtime.tpl'), 'utf-8');
+    api.writeTmpFile({
+      path: 'plugin-locale/runtime.tsx',
+      content: Mustache.render(runtimeTpl, {}),
     });
   });
 
   api.addRuntimePluginKey(() => 'locale');
   // Runtime Plugin
-  api.addRuntimePlugin(() => join(__dirname, '../lib/runtime.js'));
+  api.addRuntimePlugin(() =>
+    join(paths.absTmpPath!, 'plugin-locale/runtime.tsx'),
+  );
 
   // Modify entry js
   api.addEntryCodeAhead(() =>
-    `require('@@/plugin-locale/locale')._onCreate();`.trim(),
+    `require('./plugin-locale/locale')._onCreate();`.trim(),
   );
 
   // watch locale files

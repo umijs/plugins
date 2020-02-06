@@ -32,9 +32,14 @@ export const addLocale = (
   if (!name) {
     return;
   }
+  // 可以合并
+  const mergeMessages = localeInfo[name]?.messages
+    ? Object.assign({}, localeInfo[name].messages, messages)
+    : messages;
+
   localeInfo[name] = {
-    messages: messages,
-    locale: 'zh-CN',
+    messages: mergeMessages,
+    locale: name,
     momentLocale: momentLocale,
   };
 };
