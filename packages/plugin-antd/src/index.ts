@@ -15,6 +15,7 @@ export default (api: IApi) => {
       ...opts,
       import: (opts.import || []).concat([
         { libraryName: 'antd', libraryDirectory: 'es', style: true },
+        { libraryName: 'antd-mobile', libraryDirectory: 'es', style: true },
       ]),
     };
   });
@@ -23,6 +24,10 @@ export default (api: IApi) => {
     {
       name: 'antd',
       path: dirname(require.resolve('antd/package.json')),
+    },
+    {
+      name: 'antd-mobile',
+      path: dirname(require.resolve('antd-mobile/package.json')),
     },
   ]);
 };
