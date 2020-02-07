@@ -5,6 +5,7 @@ export default () => {
       require.resolve('@umijs/plugin-dva'),
       require.resolve('@umijs/plugin-locale'),
       require.resolve('@umijs/plugin-model'),
+      require.resolve('./plugins/crossorigin/crossorigin'),
     ],
   };
 };
