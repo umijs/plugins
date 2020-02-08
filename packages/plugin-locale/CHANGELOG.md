@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.1.1...@umijs/plugin-locale@0.1.2) (2020-02-08)
+
+### Bug Fixes
+
+- **plugin-locale:** use relative path for umiExports ([d029edd](https://github.com/umijs/plugins/commit/d029edd30672e5ba439b343ba50257f9ea70aadb))
+- plugin locale export all module ([#21](https://github.com/umijs/plugins/issues/21)) ([5e2270b](https://github.com/umijs/plugins/commit/5e2270ba71c12202fb22d346799f1e12275d2631))
+
 ## [0.1.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.1.0...@umijs/plugin-locale@0.1.1) (2020-02-04)
 
 ### Bug Fixes
