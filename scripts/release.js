@@ -117,7 +117,7 @@ async function release() {
   const pkgs = args.publishOnly ? getPackages() : updated;
   logStep(`publish packages: ${chalk.blue(pkgs.join(', '))}`);
 
-  pkgs.forEach(pkg => {
+  pkgs.forEach((pkg, index) => {
     const pkgPath = join(cwd, 'packages', pkg);
     const { name, version } = require(join(pkgPath, 'package.json'));
     const isNext = isNextVersion(version);
@@ -131,7 +131,11 @@ async function release() {
       }
     }
     if (!args.publishOnly || !isPackageExist) {
-      console.log(`Publish package ${name} ${isNext ? 'with next tag' : ''}`);
+      console.log(
+        `[${index + 1}/${pkgs.length}] Publish package ${name} ${
+          isNext ? 'with next tag' : ''
+        }`,
+      );
       const cliArgs = isNext ? ['publish', '--tag', 'next'] : ['publish'];
       const { stdout } = execa.sync('npm', cliArgs, {
         cwd: pkgPath,
