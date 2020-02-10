@@ -1,15 +1,21 @@
 import pluginFunc from '../src/index';
 
 describe('plugin-request', () => {
-  const getMockAPI = (writeTmpFile = () => {}) => {
+  const getMockAPI = (writeTmpFile = () => {}, config) => {
     return {
       addRuntimePluginKey() {},
       onGenerateFiles(handler) {
         handler();
       },
+      config: {
+        request: config || {
+          dataField: 'data',
+        },
+      },
       paths: {
         absTmpPath: '/test/page/.umi',
       },
+      describe: () => {},
       utils: {
         winPath() {
           return '/winpathtest';
@@ -22,9 +28,11 @@ describe('plugin-request', () => {
 
   test('dataField', () => {
     const writeTmpFile = jest.fn();
-    pluginFunc(getMockAPI(writeTmpFile), {
-      dataField: 'result',
-    });
+    pluginFunc(
+      getMockAPI(writeTmpFile, {
+        dataField: 'result',
+      }),
+    );
 
     expect(writeTmpFile).toHaveBeenLastCalledWith({
       path: 'plugin-request/request.ts',
@@ -49,9 +57,11 @@ describe('plugin-request', () => {
 
   test('dataField format', () => {
     const writeTmpFile = jest.fn();
-    pluginFunc(getMockAPI(writeTmpFile), {
-      dataField: '',
-    });
+    pluginFunc(
+      getMockAPI(writeTmpFile, {
+        dataField: '',
+      }),
+    );
     expect(writeTmpFile).toHaveBeenCalled();
 
     expect(writeTmpFile).toHaveBeenLastCalledWith({
@@ -77,9 +87,11 @@ describe('plugin-request', () => {
     });
 
     try {
-      pluginFunc(getMockAPI(), {
-        dataField: '&12',
-      });
+      pluginFunc(
+        getMockAPI(undefined, {
+          dataField: '&12',
+        }),
+      );
     } catch (e) {
       expect(e.message).not.toBeNull();
     }

@@ -4,5 +4,9 @@ export default {
     data: {
       name: 'yutingzhao1991',
     },
+    result: {
+      name: 'name in result',
+    },
+    name: 'name outside',
   },
 };

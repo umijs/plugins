@@ -1,13 +1,12 @@
 import { IApi } from 'umi';
 import { join, dirname } from 'path';
-import assert from 'assert';
 import { readFileSync } from 'fs';
 
 export interface RequestOptions {
   dataField?: string;
 }
 
-export default function(api: IApi, options: RequestOptions) {
+export default function(api: IApi) {
   const {
     paths,
     utils: { winPath },
@@ -15,13 +14,29 @@ export default function(api: IApi, options: RequestOptions) {
 
   api.addRuntimePluginKey(() => 'request');
 
-  const { dataField = 'data' } = options || {};
+  // 配置
+  api.describe({
+    config: {
+      schema(joi) {
+        return joi.object({
+          dataField: joi
+            .string()
+            .pattern(/^[a-zA-Z]*$/)
+            .allow(''),
+        });
+      },
+      default: {
+        dataField: 'data',
+      },
+    },
+  });
+
   const source = join(__dirname, '..', 'src', 'request.ts');
   const requestTemplate = readFileSync(source, 'utf-8');
   const namespace = 'plugin-request';
-  assert(/^[a-zA-Z]*$/.test(dataField), 'dataField should match /^[a-zA-Z]*$/');
 
   api.onGenerateFiles(() => {
+    const { dataField = 'data' } = api.config.request as RequestOptions;
     try {
       // Write .umi/plugin-request/request.ts
       let formatResultStr;
