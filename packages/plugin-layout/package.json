@@ -1,0 +1,41 @@
+{
+  "name": "@umijs/plugin-layout",
+  "version": "0.0.1",
+  "description": "@umijs/plugin-layout",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/umijs/plugins"
+  },
+  "keywords": [
+    "umi"
+  ],
+  "authors": [
+    "chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/umijs/plugins/issues",
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-layout#readme",
+  "peerDependencies": {
+    "umi": "2.x",
+    "@umijs/plugin-initial-state": "^1.0.1",
+    "@umijs/plugin-model": "^1.0.1",
+    "react": "^16.0.0"
+  },
+  "dependencies": {
+    "@ant-design/pro-layout": "^4.9.9",
+    "antd": "^3.26.7",
+    "lodash": "^4.17.15",
+    "memoize-one": "^5.1.1",
+    "path-to-regexp": "1.x",
+    "umi-plugin-locale": "^2.11.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
