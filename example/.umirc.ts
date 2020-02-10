@@ -6,5 +6,6 @@ export default defineConfig({
     require.resolve('../packages/plugin-locale/lib'),
     require.resolve('../packages/plugin-dva/lib'),
     require.resolve('../packages/plugin-model/lib'),
+    require.resolve('../packages/plugin-request/lib'),
   ],
 });

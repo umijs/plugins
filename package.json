@@ -28,10 +28,13 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^3.2.1",
     "@testing-library/react": "^9.4.0",
     "@types/jest": "^24.0.25",
     "@types/node": "^13.1.6",
     "@umijs/test": "^3.0.0-beta.7",
+    "react-test-renderer": "^16.9.0",
+    "create-test-server": "^3.0.1",
     "father-build": "^1.17.2",
     "lerna": "^3.20.2",
     "lint-staged": "^9.5.0",
