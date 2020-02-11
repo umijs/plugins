@@ -1,5 +1,11 @@
+/**
+ * @jest-environment node
+ */
 import createTestServer from 'create-test-server';
 import { request } from '../src/request';
+
+jest.mock('umi', () => require('./mocks/umi'));
+jest.mock('antd', () => require('./mocks/antd'));
 
 jest.mock(
   'runtimeConfig',

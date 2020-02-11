@@ -1,3 +1,6 @@
+/**
+ * @jest-environment node
+ */
 import pluginFunc from '../src/index';
 
 describe('plugin-request', () => {

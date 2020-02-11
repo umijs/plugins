@@ -1,6 +1,12 @@
+/**
+ * @jest-environment node
+ */
 import createTestServer from 'create-test-server';
 import { renderHook } from '@testing-library/react-hooks';
 import { request, useRequest } from '../src/request';
+
+jest.mock('umi', () => require('./mocks/umi'));
+jest.mock('antd', () => require('./mocks/antd'));
 
 jest.mock(
   'runtimeConfig',

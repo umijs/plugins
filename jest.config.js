@@ -5,5 +5,4 @@ module.exports = {
       '^react-dom$': require.resolve('react-dom'),
     });
   },
-  testEnvironment: 'node',
 };
