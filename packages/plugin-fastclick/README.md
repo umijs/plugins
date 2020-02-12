@@ -14,7 +14,7 @@ export default {
 
 更多配置
 
-```json
+```js
 {
   /** fastClick 配置 */
   touchBoundary: 10,

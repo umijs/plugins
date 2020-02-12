@@ -14,7 +14,7 @@ export default {
 
 `hd` more options:
 
-```json
+```js
 {
   // same as config.theme, default set @hd: 2px
   "theme": {},
