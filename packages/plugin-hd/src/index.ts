@@ -11,17 +11,19 @@ export default (api: IApi) => {
   const {
     utils: { getFile },
   } = api;
+
+  if (!api.userConfig.hd) {
+    return;
+  }
+
   api.describe({
     key: 'hd',
     config: {
       schema(joi) {
-        return joi.alternatives(joi.object(), joi.boolean());
+        return joi.boolean();
       },
     },
   });
-  if (!api.userConfig.hd) {
-    return;
-  }
 
   api.modifyDefaultConfig(config => {
     const draftConfig = config;

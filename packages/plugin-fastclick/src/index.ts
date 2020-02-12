@@ -24,7 +24,7 @@ export default (api: IApi) => {
     key: 'fastclick',
     config: {
       schema(joi) {
-        return joi.alternatives(joi.object(), joi.boolean());
+        return joi.object();
       },
     },
   });
