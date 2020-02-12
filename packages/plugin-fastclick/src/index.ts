@@ -40,7 +40,7 @@ export default (api: IApi) => {
   api.addEntryCodeAhead(() => {
     const { libraryPath, ...restOpts } = (api.config.fastClick ||
       {}) as FastClickOptions;
-    const tpl = readFileSync(join(__dirname, 'entryCode.tpl'), 'utf-8');
+    const tpl = readFileSync(join(__dirname, 'fastClick.tpl'), 'utf-8');
     return Mustache.render(tpl, {
       Options: JSON.stringify(restOpts || {}),
     });
