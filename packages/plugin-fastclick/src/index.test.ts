@@ -1,9 +1,10 @@
 import { join } from 'path';
 import { readFileSync } from 'fs';
-import { Service } from 'umi';
+import { Service, utils } from 'umi';
 import { render, fireEvent, cleanup } from '@testing-library/react';
 
 const fixtures = join(__dirname, 'fixtures');
+const { winPath } = utils;
 
 afterEach(cleanup);
 
@@ -42,8 +43,8 @@ test('customFastClick', async () => {
   const umiPath = join(cwd, 'src', '.umi-test', 'umi.ts');
   const reactNode = require(umiPath).default;
   expect(readFileSync(umiPath, 'utf-8')).toContain(
-    `import FastClick from '${require.resolve(
-      join(__dirname, './fixtures/customFastClick/fastClick'),
+    `import FastClick from '${winPath(
+      require.resolve(join(__dirname, './fixtures/customFastClick/fastClick')),
     )}'`,
   );
   const { container } = render(reactNode);

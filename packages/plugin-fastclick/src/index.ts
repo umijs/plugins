@@ -14,6 +14,11 @@ export default (api: IApi) => {
   const {
     utils: { Mustache },
   } = api;
+
+  if (!api.userConfig.fastClick) {
+    return;
+  }
+
   api.describe({
     key: 'fastClick',
     config: {
@@ -22,9 +27,6 @@ export default (api: IApi) => {
       },
     },
   });
-  if (!api.userConfig.fastClick) {
-    return;
-  }
 
   api.addEntryImports(() => {
     const { libraryPath = '' } = (api.config.fastClick ||
