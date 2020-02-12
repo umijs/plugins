@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Button } from 'antd';
-import history from '@@/history';
+import { history } from 'umi';
 import './index.less';
 import { IRouteLayoutConfig } from '../../types/interface.d';
 

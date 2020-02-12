@@ -1,4 +1,4 @@
-import { formatMessage, getLocale } from 'umi-plugin-locale';
+import { useIntl, getLocale } from 'umi';
 import zhCN from '../locale/zh-CN';
 import enUS from '../locale/en-US';
 
@@ -22,7 +22,8 @@ export function intl({
   id: string;
   value?: { [key: string]: any };
 }) {
+  const intl = useIntl();
   const localeMessages: { [key: string]: string } =
     getLocale() === 'zh-CN' ? zhCN : enUS;
-  return formatMessage({ id }, value) || localeMessages[id] || id;
+  return intl.formatMessage({ id }, value) || localeMessages[id] || id;
 }

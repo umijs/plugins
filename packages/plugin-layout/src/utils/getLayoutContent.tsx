@@ -4,9 +4,15 @@ export default (
   userConfig: LayoutConfig,
   path: string,
 ) => `import React from 'react';
+import { ApplyPluginsType } from 'umi';
+import { plugin } from '../core/umiExports';
 
 export default (props) => {
-  const runtimeConfig = require('umi/_runtimePlugin').mergeConfig('layout') || {};
+  const runtimeConfig = plugin.applyPlugins({
+    key: 'layout',
+    type: ApplyPluginsType.modify,
+    initialValue: {},
+  }) || {};
   const userConfig = {
     ...${JSON.stringify(userConfig).replace(/"/g, "'")},
     ...runtimeConfig

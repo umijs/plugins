@@ -1,8 +1,6 @@
 import React from 'react';
-import { Link, useModel } from 'umi';
+import { Link, useModel, history, useIntl } from 'umi';
 import pathToRegexp from 'path-to-regexp';
-import history from '@@/history';
-import { formatMessage } from 'umi-plugin-locale';
 import ProLayout from '@ant-design/pro-layout';
 import './style.less';
 import ErrorBoundary from '../component/ErrorBoundary';
@@ -14,7 +12,8 @@ import getMenuDataFromRoutes from '../utils/getMenuFromRoute';
 const BasicLayout = (props: any) => {
   const { children, userConfig, location } = props;
   const { initialState = {}, loading } = useModel('@@initialState');
-  const _routes = require('@@/router').routes;
+  const _routes = require('@@/core/routes').routes;
+  const intl = useIntl();
   const rightContentRender = useRightContent(userConfig, loading, initialState);
   const layoutConfig = getLayoutConfigFromRoute(_routes);
   const menus = getMenuDataFromRoutes(_routes[0].routes);
@@ -53,7 +52,7 @@ const BasicLayout = (props: any) => {
       }}
       menu={{ locale: userConfig.locale }}
       menuDataRender={() => menus}
-      formatMessage={formatMessage}
+      formatMessage={intl.formatMessage}
       logo={
         initialState.avatar ||
         'https://gw-office.alipayobjects.com/basement_prod/c83c53ab-515e-43e2-85d0-4d0da16f11ef.svg'
