@@ -28,23 +28,10 @@
     "webpack": "^4.41.0"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.19",
-    "@types/react-dom": "^16.8.4",
-    "@umijs/fabric": "^1.1.10",
-    "check-prettier": "^1.0.3",
     "concurrently": "^4.1.2",
-    "coveralls": "3",
-    "father-build": "^1.2.0",
-    "husky": "1",
-    "lint-staged": "8",
     "mockjs": "^1.0.1-beta3",
     "np": "5",
-    "prettier": "1",
-    "umi": "^2.12.0",
-    "umi-plugin-react": "^1.9.13",
-    "umi-request": "^1.1.0",
-    "umi-test": "^1.8.2",
-    "umi-types": "^0.5.0"
+    "umi-request": "^1.1.0"
   },
   "files": [
     "lib",
