@@ -11846,7 +11846,7 @@ postcss-place@^4.0.1:
     postcss "^7.0.2"
     postcss-values-parser "^2.0.0"
 
-postcss-plugin-px2rem@^0.8.1:
+postcss-plugin-px2rem@0.8.1:
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/postcss-plugin-px2rem/-/postcss-plugin-px2rem-0.8.1.tgz#e8adf28fd2befbc079a119126b5c62a88905d5e1"
   integrity sha512-gNxhrnR57pnGrPLLqVNWY9+BWgj46kYkphw+0gpRJf9tjgwI7/tLqQPK7KdlksB2SSAddOb11otDVwri8b8mXw==
@@ -15127,7 +15127,7 @@ umask@^1.1.0:
   resolved "https://registry.yarnpkg.com/umask/-/umask-1.1.0.tgz#f29cebf01df517912bb58ff9c4e50fde8e33320d"
   integrity sha1-8pzr8B31F5ErtY/5xOUP3o4zMg0=
 
-umi-hd@^5.0.1:
+umi-hd@5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/umi-hd/-/umi-hd-5.0.1.tgz#59061d3f4aad70491b7c853525aced91afbe1e21"
   integrity sha512-NFTTzrJArwdqtwZRNo5rF7F+NR95unQUAMkHAgcOGuuaJBnUey5w7lgpDR6K7/mV1bDwY2O3CLXSyLR1wxZyCw==
