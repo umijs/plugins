@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'dva';
 import {
   useIntl,
   formatMessage,
@@ -11,9 +10,7 @@ import {
 import { Table } from 'antd';
 import styles from './index.css';
 
-export default connect(state => {
-  return { count: state.count, foo: state.foo };
-})(function(props) {
+export default function(props) {
   const intl = useIntl();
   const [list, setList] = useState<string[]>(getAllLocales());
 
@@ -69,4 +66,4 @@ export default connect(state => {
       </button>
     </div>
   );
-});
+}

@@ -8,7 +8,7 @@ import {
   OnionMiddleware,
 } from 'umi-request';
 // @ts-ignore
-import { ApplyPluginsType, history, plugin } from 'umi';
+import { ApplyPluginsType } from 'umi';
 import { message, notification } from 'antd';
 import useUmiRequest from '@umijs/use-request';
 import {
@@ -27,6 +27,7 @@ import {
   PaginatedParams,
   PaginatedResult,
 } from '@umijs/use-request/lib/types';
+import { plugin, history } from '../core/umiExports';
 
 type ResultWithData<T = any> = { data: T; [key: string]: any };
 

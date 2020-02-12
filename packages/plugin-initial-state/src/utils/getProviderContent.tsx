@@ -1,6 +1,6 @@
 export default `
 import React, { useRef, useEffect } from 'react';
-import { useModel } from 'umi';
+import { useModel } from '../core/umiExports';
 if (typeof useModel !== 'function') {
   throw new Error('[plugin-initial-state]: useModel is not a function, @umijs/plugin-model is required.')
 }

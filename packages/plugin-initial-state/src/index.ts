@@ -1,4 +1,5 @@
 import { IApi } from 'umi';
+import { readFileSync } from 'fs';
 import { join, relative } from 'path';
 import providerContent from './utils/getProviderContent';
 import getModelContent from './utils/getModelContent';
@@ -19,10 +20,16 @@ export default (api: IApi) => {
   // 注册 getInitialState 方法
   api.addRuntimePluginKey(() => 'getInitialState');
 
-  // Add provider to prevent render
-  api.addRuntimePlugin(() => join(winPath(__dirname), './runtime'));
-
   api.onGenerateFiles(() => {
+    const runtimeContent = readFileSync(
+      require.resolve(join(__dirname, 'runtime')),
+      'utf-8',
+    );
+    api.writeTmpFile({
+      path: join(DIR_NAME, 'runtime.tsx'),
+      content: runtimeContent,
+    });
+
     api.writeTmpFile({
       path: join(DIR_NAME, 'Provider.tsx'),
       content: providerContent,
@@ -56,6 +63,9 @@ export default (api: IApi) => {
       source: winPath(join(paths.absTmpPath || '', RELATIVE_EXPORT)),
     },
   ]);
+
+  // Add provider to prevent render
+  api.addRuntimePlugin(() => join(paths.absTmpPath!, DIR_NAME, 'runtime.tsx'));
 
   api.register({
     key: 'addExtraModels',
