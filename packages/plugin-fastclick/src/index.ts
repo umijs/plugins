@@ -42,7 +42,7 @@ export default (api: IApi) => {
       {}) as FastClickOptions;
     const tpl = readFileSync(join(__dirname, 'entryCode.tpl'), 'utf-8');
     return Mustache.render(tpl, {
-      Options: JSON.stringify(restOpts),
+      Options: JSON.stringify(restOpts || {}),
     });
   });
 };
