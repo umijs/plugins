@@ -15,7 +15,7 @@ export default (api: IApi) => {
     utils: { Mustache },
   } = api;
 
-  if (!api.userConfig.fastClick) {
+  if (!api.userConfig.fastclick) {
     return;
   }
 
