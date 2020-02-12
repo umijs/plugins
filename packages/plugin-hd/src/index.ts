@@ -25,7 +25,7 @@ export default (api: IApi) => {
 
   api.modifyDefaultConfig(config => {
     const draftConfig = config;
-    const { theme, px2rem: configPx2rem } = api.config?.hd || {};
+    const { theme, px2rem: configPx2rem } = api.userConfig?.hd || {};
     draftConfig.theme = {
       ...(draftConfig.theme || {}),
       '@hd': '2px',
