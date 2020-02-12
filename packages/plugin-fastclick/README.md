@@ -8,7 +8,7 @@
 // .umirc.ts
 export default {
   plugins: ['@umijs/plugin-fastclick'],
-  fastClick: true,
+  fastclick: true,
 };
 ```
 
@@ -16,7 +16,7 @@ export default {
 
 ```js
 {
-  /** fastClick 配置 */
+  /** fastclick 配置 */
   touchBoundary: 10,
   tapDelay: 200,
   // 可自定义 fastClick 库路径

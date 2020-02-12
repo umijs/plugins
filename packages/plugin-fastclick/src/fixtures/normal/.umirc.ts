@@ -6,7 +6,7 @@ export default {
       initialEntries: ['/'],
     },
   },
-  fastClick: {
+  fastclick: {
     touchBoundary: 300,
     tapDelay: 300,
   },

@@ -8,7 +8,7 @@ export default {
       initialEntries: ['/'],
     },
   },
-  fastClick: {
+  fastclick: {
     libraryPath: join(__dirname, 'fastClick'),
   },
   mountElementId: '',

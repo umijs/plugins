@@ -19,8 +19,9 @@ export default (api: IApi) => {
     return;
   }
 
+  // [Bread Change] 原配置为 fastClick
   api.describe({
-    key: 'fastClick',
+    key: 'fastclick',
     config: {
       schema(joi) {
         return joi.alternatives(joi.object(), joi.boolean());
@@ -29,7 +30,7 @@ export default (api: IApi) => {
   });
 
   api.addEntryImports(() => {
-    const { libraryPath = '' } = (api.config.fastClick ||
+    const { libraryPath = '' } = (api.config.fastclick ||
       {}) as FastClickOptions;
     return {
       source: libraryPath
@@ -40,7 +41,7 @@ export default (api: IApi) => {
   });
 
   api.addEntryCodeAhead(() => {
-    const { libraryPath, ...restOpts } = (api.config.fastClick ||
+    const { libraryPath, ...restOpts } = (api.config.fastclick ||
       {}) as FastClickOptions;
     const tpl = readFileSync(join(__dirname, 'fastClick.tpl'), 'utf-8');
     return Mustache.render(tpl, {
