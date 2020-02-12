@@ -23,9 +23,7 @@ export default (api: IApi) => {
     return;
   }
 
-  // TODO: use modifyBundleConfigOpts,
-  // but should add theme and extraPostCSSPlugins options
-  api.modifyConfig(config => {
+  api.modifyDefaultConfig(config => {
     const draftConfig = config;
     const { theme, px2rem: configPx2rem } = api.config?.hd || {};
     draftConfig.theme = {
