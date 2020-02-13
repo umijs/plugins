@@ -24,6 +24,7 @@ async function getMasterRuntime() {
     key: 'qiankun',
     type: ApplyPluginsType.modify,
     initialValue: {},
+    async: true,
   });
   const { master } = config;
   return master || config;
