@@ -20,8 +20,6 @@ export default function(api: IApi) {
   // disable if routes if configured
   if (api.userConfig.routes) return;
 
-  const routesExtend = api.userConfig.routesExtend;
-
   api.describe({
     key: 'routesExtend',
     config: {
@@ -32,6 +30,7 @@ export default function(api: IApi) {
   });
 
   api.modifyRoutes(routes => {
+    const { routesExtend } = api.config;
     routes = exclude(routes, optsToArray(routesExtend.exclude));
 
     if (routesExtend.update) {
