@@ -1,6 +1,6 @@
 import React from 'react';
 import EventEmitter from 'events';
-import { RawIntlProvider, getLocale, setIntl, getIntl } from './localeExports';
+import { IntlProvider, getLocale, setIntl, getIntl } from './localeExports';
 
 export const event = new EventEmitter();
 event.setMaxListeners(5);
@@ -25,5 +25,5 @@ export const _LocaleContainer = props => {
     };
   }, []);
 
-  return <RawIntlProvider value={intl}>{props.children}</RawIntlProvider>;
+  return <IntlProvider value={intl}>{props.children}</IntlProvider>;
 };
