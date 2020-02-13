@@ -38,7 +38,10 @@ export default {
 
   reducers: {
     getAppsSuccess(state, { payload }) {
-      state.apps = payload.apps;
+      return {
+        ...state,
+        apps: payload.apps,
+      };
     },
   },
 };

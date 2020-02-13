@@ -31,7 +31,7 @@ export default function(api: IApi, options: Options) {
   }));
 
   // // 如果没有手动关闭 runtimePublicPath，则直接使用 qiankun 注入的 publicPath
-  // // TODO
+  // // TODO 等 umi 节后 ready 后加上
   // if (api.config.runtimePublicPath !== false) {
   //   api.modifyPublicPathStr(
   //     `window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || "${
@@ -53,24 +53,11 @@ export default function(api: IApi, options: Options) {
       .library(`${api.pkg.name}-[name]`)
       .jsonpFunction(`webpackJsonp_${api.pkg.name}`);
     // 配置 publicPath，支持 hot update
-    if (process.env.NODE_ENV === 'development' && port) {
-      config.output.publicPath(`${protocol}://${localIpAddress}:${port}/`);
-    }
-    return config;
+    // TODO 这段打开会报错，要确认下问题
+    // if (process.env.NODE_ENV === 'development' && port) {
+    //   config.output.publicPath(`${protocol}://${localIpAddress}:${port}/`);
+    // }
   });
-
-  // TODO remove
-  // api.modifyWebpackConfig(memo => {
-  //   memo.output!.libraryTarget = 'umd';
-  //   assert(api.pkg.name, 'You should have name in package.json');
-  //   memo.output!.library = `${api.pkg.name}-[name]`;
-  //   memo.output!.jsonpFunction = `webpackJsonp_${api.pkg.name}`;
-  //   // 配置 publicPath，支持 hot update
-  //   if (process.env.NODE_ENV === 'development' && port) {
-  //     memo.output!.publicPath = `${protocol}://${localIpAddress}:${port}/`;
-  //   }
-  //   return memo;
-  // });
 
   // umi bundle 添加 entry 标记
   api.modifyHTML($ => {

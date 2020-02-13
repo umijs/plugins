@@ -2,7 +2,7 @@
 import { existsSync } from 'fs';
 import { join } from 'path';
 // eslint-disable-next-line import/no-unresolved
-import { IApi, IConfig, IRoute } from 'umi';
+import { IApi, IRoute } from 'umi';
 import {
   defaultHistoryMode,
   defaultMasterRootId,
@@ -24,9 +24,6 @@ export default function(api: IApi, options: Options) {
     disableGlobalVariables: true,
   }));
 
-  const {
-    config: { history = defaultHistoryMode },
-  } = api;
   // apps 可能在构建期为空
   const { apps = [] } = options || {};
   if (apps.length) {
@@ -48,8 +45,12 @@ export default function(api: IApi, options: Options) {
       return null;
     };
 
-    const modifyAppRoutes = (masterHistory: IConfig['history']) => {
+    const modifyAppRoutes = () => {
       api.modifyRoutes(routes => {
+        const {
+          config: { history: masterHistory = defaultHistoryMode },
+        } = api;
+
         const newRoutes = routes.map(route => {
           if (route.path === '/' && route.routes && route.routes.length) {
             apps.forEach(({ history: slaveHistory = history, base }) => {
@@ -89,7 +90,7 @@ export default function(api: IApi, options: Options) {
       });
     };
 
-    modifyAppRoutes(history);
+    modifyAppRoutes();
   }
 
   const rootExportsFile = join(api.paths.absSrcPath!, 'rootExports.js');
@@ -97,15 +98,20 @@ export default function(api: IApi, options: Options) {
   api.addTmpGenerateWatcherPaths(() => rootExportsFile);
 
   api.onGenerateFiles(() => {
+    const {
+      config: { history = defaultHistoryMode },
+    } = api;
     const rootExports = `
 window.g_rootExports = ${
       existsSync(rootExportsFile) ? `require('@/rootExports')` : `{}`
     };
     `.trim();
+
     api.writeTmpFile({
       path: 'qiankunRootExports.js',
       content: rootExports,
     });
+
     api.writeTmpFile({
       path: 'subAppsConfig.json',
       content: JSON.stringify({
@@ -113,11 +119,10 @@ window.g_rootExports = ${
         ...options,
       }),
     });
-  });
 
-  api.writeTmpFile({
-    path: 'qiankunDefer.js',
-    content: `
+    api.writeTmpFile({
+      path: 'qiankunDefer.js',
+      content: `
       class Deferred {
         constructor() {
           this.promise = new Promise(resolve => this.resolve = resolve);
@@ -126,12 +131,13 @@ window.g_rootExports = ${
       export const deferred = new Deferred();
       export const qiankunStart = deferred.resolve;
     `.trim(),
+    });
   });
 
   api.addUmiExports(() => [
     {
       specifiers: ['qiankunStart'],
-      source: '@tmp/qiankunDefer',
+      source: '@/.umi/qiankunDefer',
     },
   ]);
 }

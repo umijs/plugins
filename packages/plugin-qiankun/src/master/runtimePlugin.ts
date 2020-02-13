@@ -1,26 +1,30 @@
 /* eslint-disable import/no-unresolved, import/extensions */
 
-import { deferred } from '@tmp/qiankunDefer.js';
-import '@tmp/qiankunRootExports.js';
-import subAppConfig from '@tmp/subAppsConfig.json';
+// @ts-ignore
+import { deferred } from '@/.umi/qiankunDefer.js';
+import '@/.umi/qiankunRootExports.js';
+// @ts-ignore
+import subAppConfig from '@/.umi/subAppsConfig.json';
 import assert from 'assert';
 import { registerMicroApps, start } from 'qiankun';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { IConfig } from 'umi-types';
+// @ts-ignore
+import { IConfig, plugin, ApplyPluginsType } from 'umi';
 import {
   defaultMountContainerId,
   noop,
   testPathWithPrefix,
   toArray,
 } from '../common';
-import { App, GlobalOptions, Options } from '../types';
+import { App, Options } from '../types';
 
 async function getMasterRuntime() {
-  // eslint-disable-next-line import/no-extraneous-dependencies, global-require
-  const plugins = require('umi/_runtimePlugin');
-  const config: GlobalOptions =
-    (await plugins.mergeConfigAsync('qiankun')) || {};
+  const config = plugin.applyPlugins({
+    key: 'qiankun',
+    type: ApplyPluginsType.modify,
+    initialValue: {},
+  });
   const { master } = config;
   return master || config;
 }
@@ -35,7 +39,8 @@ export async function render(oldRender: typeof noop) {
   ) {
     const baseConfig = toArray(base);
 
-    switch (history) {
+    // @ts-ignore TODO，umi 的 type 定义现在有问题
+    switch (history.type || history) {
       case 'hash':
         return baseConfig.some(pathPrefix =>
           testPathWithPrefix(`#${pathPrefix}`, location.hash),
