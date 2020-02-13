@@ -93,8 +93,8 @@ export default function(api: IApi, options: Options) {
   }
 
   const rootExportsFile = join(api.paths.absSrcPath!, 'rootExports.js');
-  // TODO
-  // api.addPageWatcher(rootExportsFile);
+
+  api.addTmpGenerateWatcherPaths(() => rootExportsFile);
 
   api.onGenerateFiles(() => {
     const rootExports = `

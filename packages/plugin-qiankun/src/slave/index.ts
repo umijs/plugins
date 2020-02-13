@@ -45,7 +45,21 @@ export default function(api: IApi, options: Options) {
 
   const port = process.env.PORT;
   const protocol = process.env.HTTPS ? 'https' : 'http';
-  // TODO
+
+  api.chainWebpack(config => {
+    assert(api.pkg.name, 'You should have name in package.json');
+    config.output
+      .libraryTarget('umd')
+      .library(`${api.pkg.name}-[name]`)
+      .jsonpFunction(`webpackJsonp_${api.pkg.name}`);
+    // 配置 publicPath，支持 hot update
+    if (process.env.NODE_ENV === 'development' && port) {
+      config.output.publicPath(`${protocol}://${localIpAddress}:${port}/`);
+    }
+    return config;
+  });
+
+  // TODO remove
   // api.modifyWebpackConfig(memo => {
   //   memo.output!.libraryTarget = 'umd';
   //   assert(api.pkg.name, 'You should have name in package.json');
