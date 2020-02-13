@@ -53,7 +53,7 @@ export default (api: IApi) => {
   api.addUmiExports(() => [
     {
       exportAll: true,
-      source: winPath(join(paths.absTmpPath || '', RELATIVE_EXPORT)),
+      source: `../${RELATIVE_EXPORT}`,
     },
   ]);
 

@@ -49,7 +49,7 @@ export default (api: IApi) => {
   api.addUmiExports(() => [
     {
       exportAll: true,
-      source: winPath(join(paths.absTmpPath!, DIR_NAME_IN_TMP, 'useModel')),
+      source: `../${DIR_NAME_IN_TMP}/useModel`,
     },
   ]);
 };

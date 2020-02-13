@@ -1,8 +1,8 @@
 export default (
   relEntryFile: string,
 ) => `import { useState, useEffect } from 'react';
-import { Models } from 'umi';
-import * as app from '@/app';
+import { Models } from '../../plugin-model/useModel';
+// import * as app from '@/app';
 
 export type InitialState = Models<'@@initialState'>;
 async function getInitialState() {
