@@ -54,7 +54,7 @@ export default (api: IApi) => {
     ]);
   }
 
-  if (process.env.NODE_ENV !== 'development') {
+  if (api.env !== 'development') {
     if (baidu) {
       api.addHTMLHeadScripts(() => [
         {
