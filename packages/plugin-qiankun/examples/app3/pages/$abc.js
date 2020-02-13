@@ -1,5 +1,4 @@
-import { useRootExports } from 'umi';
-import Link from 'umi/link';
+import { useRootExports, Link } from 'umi';
 
 export default function(props) {
   const rootExports = useRootExports();

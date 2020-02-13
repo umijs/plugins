@@ -1,5 +1,7 @@
 import { query } from '@/services/user';
 
+// TODO 移动到 user/model.js 测试动态加载 dva model 的场景
+
 export default {
   namespace: 'user',
 

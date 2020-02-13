@@ -1,11 +1,10 @@
-import { useRootExports } from 'umi';
-import Link from 'umi/link';
+import { useRootExports, Link } from 'umi';
 
 export default function() {
   const rootExports = useRootExports();
   return (
     <div>
-      <h1>Dashboard</h1>
+      <h1>Dashboard 3</h1>
     </div>
   );
 }
