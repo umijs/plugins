@@ -2,7 +2,7 @@
 import { existsSync } from 'fs';
 import { join } from 'path';
 // eslint-disable-next-line import/no-unresolved
-import { IApi, IConfig, IRoute } from 'umi-types';
+import { IApi, IConfig, IRoute } from 'umi';
 import {
   defaultHistoryMode,
   defaultMasterRootId,
@@ -13,9 +13,9 @@ import { Options } from '../types';
 
 export default function(api: IApi, options: Options) {
   const { registerRuntimeKeyInIndex = false } = options || {};
-  api.addRuntimePlugin(require.resolve('./runtimePlugin'));
+  api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
   if (!registerRuntimeKeyInIndex) {
-    api.addRuntimePluginKey('qiankun');
+    api.addRuntimePluginKey(() => 'qiankun');
   }
 
   api.modifyDefaultConfig(config => ({
@@ -92,8 +92,9 @@ export default function(api: IApi, options: Options) {
     modifyAppRoutes(history);
   }
 
-  const rootExportsFile = join(api.paths.absSrcPath, 'rootExports.js');
-  api.addPageWatcher(rootExportsFile);
+  const rootExportsFile = join(api.paths.absSrcPath!, 'rootExports.js');
+  // TODO
+  // api.addPageWatcher(rootExportsFile);
 
   api.onGenerateFiles(() => {
     const rootExports = `
@@ -101,19 +102,22 @@ window.g_rootExports = ${
       existsSync(rootExportsFile) ? `require('@/rootExports')` : `{}`
     };
     `.trim();
-    api.writeTmpFile('qiankunRootExports.js', rootExports);
-    api.writeTmpFile(
-      'subAppsConfig.json',
-      JSON.stringify({
+    api.writeTmpFile({
+      path: 'qiankunRootExports.js',
+      content: rootExports,
+    });
+    api.writeTmpFile({
+      path: 'subAppsConfig.json',
+      content: JSON.stringify({
         masterHistory: history,
         ...options,
       }),
-    );
+    });
   });
 
-  api.writeTmpFile(
-    'qiankunDefer.js',
-    `
+  api.writeTmpFile({
+    path: 'qiankunDefer.js',
+    content: `
       class Deferred {
         constructor() {
           this.promise = new Promise(resolve => this.resolve = resolve);
@@ -122,9 +126,9 @@ window.g_rootExports = ${
       export const deferred = new Deferred();
       export const qiankunStart = deferred.resolve;
     `.trim(),
-  );
+  });
 
-  api.addUmiExports([
+  api.addUmiExports(() => [
     {
       specifiers: ['qiankunStart'],
       source: '@tmp/qiankunDefer',

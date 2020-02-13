@@ -1,5 +1,6 @@
-// @ts-ignore
 import ReactDOM from 'react-dom';
+// @ts-ignore
+import { plugin, ApplyPluginsType } from 'umi';
 import { noop } from '../common';
 
 type Defer = {
@@ -19,9 +20,11 @@ let hasMountedAtLeastOnce = false;
 export default () => defer.promise;
 
 function getSlaveRuntime() {
-  // eslint-disable-next-line import/no-extraneous-dependencies, global-require
-  const plugins = require('umi/_runtimePlugin');
-  const config = plugins.mergeConfig('qiankun') || {};
+  const config = plugin.applyPlugins({
+    key: 'qiankun',
+    type: ApplyPluginsType.modify,
+    initialValue: {},
+  });
   const { slave } = config;
   return slave || config;
 }

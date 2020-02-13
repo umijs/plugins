@@ -3,7 +3,8 @@
   "version": "2.0.0-alpha.0",
   "description": "umi plugin for qiankun",
   "repository": "umijs/umi-plugin-qiankun",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "keywords": [
     "umi-plugin",
     "micro frontend",
@@ -15,6 +16,13 @@
       "email": "sorrycc@gmail.com"
     }
   ],
+  "scripts": {
+    "start": "concurrently \"npm run start:master\" \"npm run start:app1\" \"npm run start:app2\" \"npm run start:app3\"",
+    "start:master": "cd examples/master && umi dev",
+    "start:app1": "cd examples/app1 && umi dev",
+    "start:app2": "cd examples/app2 && umi dev",
+    "start:app3": "cd examples/app3 && umi dev"
+  },
   "dependencies": {
     "@babel/runtime": "^7.4.5",
     "address": "^1.1.2",
