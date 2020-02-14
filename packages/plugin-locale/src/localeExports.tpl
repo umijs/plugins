@@ -1,4 +1,8 @@
-import { createIntl, IntlShape, MessageDescriptor } from '{{{ reactIntlPkgPath }}}';
+import {
+  createIntl,
+  IntlShape,
+  MessageDescriptor,
+} from '{{{ reactIntlPkgPath }}}';
 import { event, LANG_CHANGE_EVENT } from './locale';
 import warning from '{{{ warningPkgPath }}}';
 
@@ -46,14 +50,32 @@ export const addLocale = (
 
 /**
  * 获取当前的 intl 对象，可以在 node 中使用
- * @param locale
+ * @param locale 需要切换的语言类型
+ * @param changeIntl 是否不使用 g_intl
  * @returns IntlShape
  */
-export const getIntl = (locale?: string) => {
-  if(!locale){
+export const getIntl = (locale?: string, changeIntl?: boolean) => {
+  // 如果全局的 g_intl 存在，且不是 setIntl 调用
+  if (g_intl && !changeIntl && !locale) {
     return g_intl;
   }
-  return g_intl || createIntl(localeInfo[locale]);
+  // 如果存在于 localeInfo 中
+  if (localeInfo[locale]) {
+    return createIntl(localeInfo[locale]);
+  }
+  // 不存在需要一个报错提醒
+  warning(
+    !!localeInfo[locale],
+    `The current popular language does not exist, please check the locale folder!`,
+  );
+  // 使用 zh-CN
+  if (localeInfo[DefaultLocale]) return createIntl(localeInfo[DefaultLocale]);
+
+  // 如果还没有，返回一个空的
+  return createIntl({
+    name: DefaultLocale,
+    messages: {},
+  });
 };
 
 /**
@@ -61,9 +83,7 @@ export const getIntl = (locale?: string) => {
  * @param locale 语言的key
  */
 export const setIntl = (locale: string) => {
-  if (localeInfo[locale]) {
-    g_intl = createIntl(localeInfo[locale]);
-  }
+  g_intl = getIntl(locale, true);
 };
 
 /**
