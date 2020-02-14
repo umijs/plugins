@@ -1,0 +1,33 @@
+.umi-plugin-layout-exception-container {
+  min-width: 750px;
+  height: 624px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 24px;
+
+  .umi-plugin-layout-exception-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+
+    .umi-plugin-layout-exception-rightContent {
+      margin-left: 120px;
+
+      :global(h1.ant-typography) {
+        font-size: 56px;
+        line-height: 56px;
+        margin-bottom: 0;
+      }
+
+      .umi-plugin-layout-exception-desc {
+        margin: 8px 0 24px 0;
+        font-size: 16px;
+        color: rgba(0, 0, 0, 0.45);
+        max-width: 350px;
+      }
+    }
+  }
+}
