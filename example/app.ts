@@ -8,11 +8,11 @@ export function render(oldRender: Function) {
 //   };
 // }
 
-export const layout = {
-  logout: () => {
-    console.log('logout success');
-  }, // do something
-};
+// export const layout = {
+//   logout: () => {
+//     console.log('logout success');
+//   }, // do something
+// };
 
 export const locale = {
   default: 'zh-CN',
