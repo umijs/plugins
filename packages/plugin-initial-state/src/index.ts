@@ -1,4 +1,4 @@
-import { IApi } from 'umi';
+import { IApi, utils } from 'umi';
 import { join, relative } from 'path';
 import providerContent from './utils/getProviderContent';
 import getModelContent from './utils/getModelContent';
@@ -11,11 +11,10 @@ import {
   RELATIVE_EXPORT_PATH,
 } from './constants';
 
+const { winPath, getFile } = utils;
+
 export default (api: IApi) => {
-  const {
-    paths,
-    utils: { winPath, getFile },
-  } = api;
+  const { paths } = api;
   // 注册 getInitialState 方法
   api.addRuntimePluginKey(() => 'getInitialState');
 

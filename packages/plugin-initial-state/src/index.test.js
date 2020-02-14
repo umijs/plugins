@@ -3,7 +3,7 @@ import pluginFunc from './index';
 
 const examplePath = join(__dirname, '../example');
 
-describe('plugin-request', () => {
+describe('plugin-initial-state', () => {
   const getMockAPI = (writeTmpFile = () => {}) => {
     return {
       addRuntimePluginKey() {},
