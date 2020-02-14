@@ -7,6 +7,8 @@ import {
   getLocale,
   getAllLocales,
   setLocale,
+  Access,
+  useAccess,
 } from 'umi';
 import { Table } from 'antd';
 import styles from './index.css';
@@ -15,6 +17,7 @@ export default connect(state => {
   return { count: state.count, foo: state.foo };
 })(function(props) {
   const intl = useIntl();
+  const access = useAccess();
   const [list, setList] = useState<string[]>(getAllLocales());
 
   useEffect(() => {
@@ -67,6 +70,17 @@ export default connect(state => {
           },
         )}
       </button>
+      <div>
+        <Access accessible={access.readArticle}>
+          <button type="button">Read Article</button>
+        </Access>
+        <Access
+          accessible={access.updateArticle()}
+          fallback={<button type="button">Cannot Update Article</button>}
+        >
+          <button type="button">Update Article</button>
+        </Access>
+      </div>
     </div>
   );
 });
