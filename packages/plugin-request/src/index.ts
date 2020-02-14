@@ -58,6 +58,13 @@ export default function(api: IApi) {
           .replace(
             /@umijs\/use-request/g,
             winPath(dirname(require.resolve('@umijs/use-request/package'))),
+          )
+          .replace(
+            `import { ApplyPluginsType, history, plugin } from 'umi';`,
+            `
+import { ApplyPluginsType } from 'umi';
+import { history, plugin } from '../core/umiExports';
+            `,
           ),
       });
     } catch (e) {
@@ -69,7 +76,7 @@ export default function(api: IApi) {
     return [
       {
         exportAll: true,
-        source: winPath(join(paths.absTmpPath!, namespace, 'request')),
+        source: `../${namespace}/request`,
       },
     ];
   });
