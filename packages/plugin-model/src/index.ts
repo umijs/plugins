@@ -1,8 +1,7 @@
 import { join } from 'path';
 import { IApi } from 'umi';
 import { DIR_NAME_IN_TMP } from './constants';
-import getProviderContent from './utils/getProviderContent';
-import getUseModelContent from './utils/getUseModelContent';
+import { getTmpFile } from './utils/getTmpFile';
 
 export default (api: IApi) => {
   const {
@@ -25,14 +24,17 @@ export default (api: IApi) => {
         type: api.ApplyPluginsType.add,
         initialValue: [],
       });
+
+      const tmpFiles = getTmpFile(modelsPath, additionalModels);
+
       // Write models/provider.tsx
       api.writeTmpFile({
         path: `${DIR_NAME_IN_TMP}/Provider.tsx`,
-        content: getProviderContent(modelsPath, additionalModels),
+        content: tmpFiles.providerContent,
       });
       // Write models/useModel.tsx
       api.writeTmpFile({
-        content: getUseModelContent(),
+        content: tmpFiles.useModelContent,
         path: `${DIR_NAME_IN_TMP}/useModel.tsx`,
       });
     } catch (e) {
