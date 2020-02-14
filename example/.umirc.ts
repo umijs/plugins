@@ -20,6 +20,6 @@ export default defineConfig({
     require.resolve('../packages/plugin-initial-state/lib'),
     require.resolve('../packages/plugin-model/lib'),
     require.resolve('../packages/plugin-request/lib'),
-    //    require.resolve('../packages/plugin-layout/lib'),
+    // require.resolve('../packages/plugin-layout/lib'),
   ],
 });
