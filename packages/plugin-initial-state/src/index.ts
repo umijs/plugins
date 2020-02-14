@@ -14,7 +14,6 @@ import {
 const { winPath, getFile } = utils;
 
 export default (api: IApi) => {
-  const { paths } = api;
   // 注册 getInitialState 方法
   api.addRuntimePluginKey(() => 'getInitialState');
 
@@ -27,13 +26,13 @@ export default (api: IApi) => {
       content: providerContent,
     });
     const entryFile = getFile({
-      base: paths.absSrcPath || '',
+      base: api.paths.absSrcPath!,
       type: 'javascript',
       fileNameWithoutExt: 'app',
     })?.path;
 
     if (entryFile) {
-      const relEntryFile = relative(paths.cwd || '', entryFile);
+      const relEntryFile = relative(api.paths.cwd!, entryFile);
       api.writeTmpFile({
         path: RELATIVE_MODEL_PATH,
         content: getModelContent(relEntryFile),
@@ -43,7 +42,7 @@ export default (api: IApi) => {
         content: getExportContent(RELATIVE_MODEL),
       });
     } else {
-      api.logger.warn(
+      api.logger.info(
         '[@umijs/plugin-initial-state]: 检测到 @umijs/plugin-initial-state 插件已经开启，但是不存在 app.ts/js 入口文件。',
       );
     }
@@ -60,7 +59,7 @@ export default (api: IApi) => {
     key: 'addExtraModels',
     fn: () => [
       {
-        absPath: winPath(join(paths.absTmpPath || '', RELATIVE_MODEL_PATH)),
+        absPath: winPath(join(api.paths.absTmpPath!, RELATIVE_MODEL_PATH)),
         namespace: '@@initialState',
       },
     ],
