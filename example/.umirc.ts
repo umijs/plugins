@@ -8,6 +8,11 @@ export default defineConfig({
       component: './plugin-model',
     },
     {
+      name: 'initial-state 测试',
+      path: '/plugin-initial-state',
+      component: './plugin-initial-state',
+    },
+    {
       name: '首页',
       path: '/',
       component: './index',
