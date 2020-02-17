@@ -1,9 +1,9 @@
-// import { name } from './package';
+import { name } from './package';
 
 export default {
-  // base: name,
+  base: name,
   publicPath: '/app2/',
-  // outputPath: './dist/app2',
+  outputPath: './dist/app2',
   mountElementId: 'app2',
   qiankun: {
     slave: {},

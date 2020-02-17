@@ -21,7 +21,10 @@ export default {
 
   reducers: {
     querySuccess(state, { payload }) {
-      state.list = payload.list;
+      return {
+        ...state,
+        list: payload.list,
+      };
     },
   },
 };

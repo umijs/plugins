@@ -1,16 +1,15 @@
 export default {
-  // TODO 等 umi3 支持相关配置
-  // base: '/app1',
+  base: '/app1',
   publicPath: '/app1/',
-  // outputPath: './dist/app1',
+  outputPath: './dist/app1',
   mountElementId: 'app1',
   routes: [
     {
-      path: '/app1/user',
+      path: '/user',
       component: './user',
     },
     {
-      path: '/app1',
+      path: '/',
       component: './index',
     },
   ],
