@@ -1,8 +1,7 @@
-/node_modules
-/packages/*/node_modules
 /coverage
 /packages/*/lib
 /packages/**/fixtures/**/dist
+node_modules
 .changelog
 .umi
 .umi-test
