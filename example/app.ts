@@ -26,7 +26,7 @@ export const getInitialState = async () => {
           name: 'troy',
           email: 'troy.lty@alipay.com',
         });
-      }, 2000),
+      }, 300),
     );
   const userInfo = await mockService();
 
