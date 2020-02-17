@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.0.1...@umijs/plugin-model@2.1.0) (2020-02-17)
+
+### Features
+
+- disable plugin-model when no hooks model is defined ([#30](https://github.com/umijs/plugins/issues/30)) ([16ea6ed](https://github.com/umijs/plugins/commit/16ea6ed2e891d16ee6c01c2895a9f8fd82d44a9c))
+- migrate plugin-initial-state ([#27](https://github.com/umijs/plugins/issues/27)) ([e20c7df](https://github.com/umijs/plugins/commit/e20c7df769411d003366c150bb38ff438b9d56fc))
+
 ## [2.0.1](https://github.com/umijs/plugins/compare/@umijs/plugin-model@0.1.0...@umijs/plugin-model@2.0.1) (2020-02-04)
 
 **Note:** Version bump only for package @umijs/plugin-model

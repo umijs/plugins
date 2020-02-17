@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/umijs/plugins/compare/@umijs/preset-react@0.2.0...@umijs/preset-react@0.3.0) (2020-02-17)
+
+### Bug Fixes
+
+- make preset-react and example work ([682dacf](https://github.com/umijs/plugins/commit/682dacf4ba42a04035d1cc4e3c0e9d5bc86de8d8))
+
+### Features
+
+- plugin access ([869117e](https://github.com/umijs/plugins/commit/869117ee34272ac77bf35a620384376950d7cd0a))
+- plugin layout ([ce36d43](https://github.com/umijs/plugins/commit/ce36d4327ded684af5c5846e574b5af20d0c708a))
+
 # [0.2.0](https://github.com/umijs/plugins/compare/@umijs/preset-react@0.1.0...@umijs/preset-react@0.2.0) (2020-02-08)
 
 ### Features
