@@ -30,6 +30,7 @@
   "dependencies": {
     "@umijs/plugin-access": "2.1.0",
     "@umijs/plugin-antd": "0.2.0",
+    "@umijs/plugin-crossorigin": "1.0.0",
     "@umijs/plugin-dva": "0.1.2",
     "@umijs/plugin-initial-state": "2.1.0",
     "@umijs/plugin-layout": "0.2.0",
