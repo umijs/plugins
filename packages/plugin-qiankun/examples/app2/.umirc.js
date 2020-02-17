@@ -1,4 +1,4 @@
-import { name } from './package';
+import { name } from './package.json';
 
 export default {
   base: name,
@@ -16,11 +16,11 @@ export default {
   // TODO 测试约定式路由下的情况
   routes: [
     {
-      path: '/app2/user',
+      path: '/user',
       component: './user',
     },
     {
-      path: '/app2',
+      path: '/',
       component: './index',
     },
   ],

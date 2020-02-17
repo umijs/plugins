@@ -1,7 +1,6 @@
-import { Link } from 'umi';
+import React from 'react';
 
 export default function() {
-  // const rootExports = useRootExports();
   return (
     <div>
       <h1>Dashboard 1</h1>

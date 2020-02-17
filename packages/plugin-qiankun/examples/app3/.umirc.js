@@ -12,10 +12,10 @@ export default {
   ],
   // TODO 测试约定式路由
   routes: [
-    { path: '/app3', exact: true, component: './index.js' },
-    { path: '/app3/:abc', component: './$abc.js' },
-    { path: '/app3/users', component: './user/index.js' },
+    { path: '/', exact: true, component: './index.js' },
+    { path: '/:abc', component: './$abc.js' },
+    { path: '/users', component: './user/index.js' },
   ],
-  // TODO 测试动态加载的场景
+  // TODO 测试 dynamicImport
   // dynamicImport: true,
 };

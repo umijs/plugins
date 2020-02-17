@@ -22,26 +22,24 @@ export default function(api: IApi, options: Options) {
   const { name: pkgName } = require(join(api.cwd, 'package.json'));
   api.modifyDefaultConfig(memo => ({
     ...memo,
-    // TODO 临时关闭，等这个 pr 合并 https://github.com/umijs/umi/pull/2866
-    // disableGlobalVariables: true,
+    disableGlobalVariables: true,
     base: `/${pkgName}`,
     mountElementId: defaultSlaveRootId,
     // 默认开启 runtimePublicPath，避免出现 dynamic import 场景子应用资源地址出问题
     runtimePublicPath: true,
   }));
 
-  // // 如果没有手动关闭 runtimePublicPath，则直接使用 qiankun 注入的 publicPath
-  // // TODO 等 umi 节后 ready 后加上
-  // if (api.config.runtimePublicPath !== false) {
-  //   api.modifyPublicPathStr(
-  //     `window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || "${
-  //       // 开发阶段 publicPath 配置无效，默认为 /
-  //       process.env.NODE_ENV !== 'development'
-  //         ? api.config.publicPath || '/'
-  //         : '/'
-  //     }"`,
-  //   );
-  // }
+  if (api.service.userConfig.runtimePublicPath !== false) {
+    api.modifyPublicPathStr(
+      () =>
+        `window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || "${
+          // 开发阶段 publicPath 配置无效，默认为 /
+          process.env.NODE_ENV !== 'development'
+            ? api.config.publicPath || '/'
+            : '/'
+        }"`,
+    );
+  }
 
   const port = process.env.PORT;
   const protocol = process.env.HTTPS ? 'https' : 'http';
@@ -52,11 +50,6 @@ export default function(api: IApi, options: Options) {
       .libraryTarget('umd')
       .library(`${api.pkg.name}-[name]`)
       .jsonpFunction(`webpackJsonp_${api.pkg.name}`);
-    // 配置 publicPath，支持 hot update
-    // TODO 这段打开会报错，要确认下问题
-    // if (process.env.NODE_ENV === 'development' && port) {
-    //   config.output.publicPath(`${protocol}://${localIpAddress}:${port}/`);
-    // }
   });
 
   // umi bundle 添加 entry 标记
