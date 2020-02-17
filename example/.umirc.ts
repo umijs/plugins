@@ -18,13 +18,6 @@ export default defineConfig({
       component: './index',
     },
   ],
-  plugins: [
-    require.resolve('../packages/plugin-antd/lib'),
-    require.resolve('../packages/plugin-locale/lib'),
-    require.resolve('../packages/plugin-dva/lib'),
-    require.resolve('../packages/plugin-initial-state/lib'),
-    require.resolve('../packages/plugin-model/lib'),
-    require.resolve('../packages/plugin-request/lib'),
-    // require.resolve('../packages/plugin-layout/lib'),
-  ],
+  presets: [require.resolve('../packages/preset-react/lib')],
+  // layout: false,
 });
