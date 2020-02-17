@@ -51,4 +51,12 @@ export default (api: IApi) => {
 
     return memo;
   });
+
+  api.modifyDefaultConfig(memo => {
+    // dev 模式开启 styleLoader，因为 mini-css-extract-plugin 和 webpack@5 的物理缓存有冲突
+    if (api.env === 'development') {
+      memo.styleLoader = {};
+    }
+    return memo;
+  });
 };

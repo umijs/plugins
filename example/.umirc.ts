@@ -19,5 +19,5 @@ export default defineConfig({
     },
   ],
   presets: [require.resolve('../packages/preset-react/lib')],
-  // layout: false,
+  // plugins: [require.resolve('../packages/plugin-webpack-5/lib')],
 });
