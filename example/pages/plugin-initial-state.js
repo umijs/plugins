@@ -6,7 +6,9 @@ export default () => {
   console.log(initialState, loading);
   return (
     <div>
-      <h1 className={styles.title}>Page plugin-model {bar.description}</h1>
+      <h1>
+        initial-state: {loading ? 'loading...' : JSON.stringify(initialState)}
+      </h1>
     </div>
   );
 };

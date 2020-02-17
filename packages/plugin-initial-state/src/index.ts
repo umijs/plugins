@@ -18,7 +18,7 @@ export default (api: IApi) => {
   api.addRuntimePluginKey(() => 'getInitialState');
 
   // Add provider to prevent render
-  api.addRuntimePlugin(() => join(winPath(__dirname), './runtime'));
+  api.addRuntimePlugin(() => join(__dirname, 'runtime'));
 
   api.onGenerateFiles(() => {
     api.writeTmpFile({

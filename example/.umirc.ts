@@ -8,19 +8,16 @@ export default defineConfig({
       component: './plugin-model',
     },
     {
+      name: 'initial-state 测试',
+      path: '/plugin-initial-state',
+      component: './plugin-initial-state',
+    },
+    {
       name: '首页',
       path: '/',
       component: './index',
     },
   ],
-  plugins: [
-    require.resolve('../packages/plugin-antd/lib'),
-    require.resolve('../packages/plugin-locale/lib'),
-    require.resolve('../packages/plugin-dva/lib'),
-    require.resolve('../packages/plugin-access/lib'),
-    require.resolve('../packages/plugin-initial-state/lib'),
-    require.resolve('../packages/plugin-model/lib'),
-    require.resolve('../packages/plugin-request/lib'),
-    // require.resolve('../packages/plugin-layout/lib'),
-  ],
+  presets: [require.resolve('../packages/preset-react/lib')],
+  // layout: false,
 });
