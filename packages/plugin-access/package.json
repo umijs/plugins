@@ -15,20 +15,11 @@
     "url": "https://github.com/umijs/plugin-access/issues"
   },
   "peerDependencies": {
-    "@umijs/plugin-initial-state": "^2.0.0",
-    "@umijs/plugin-model": "^2.0.0",
-    "react": "^16.0.0",
+    "@umijs/plugin-initial-state": "2.x",
+    "@umijs/plugin-model": "2.x",
     "umi": "3.x"
   },
   "main": "lib/index.js",
-  "scripts": {
-    "test": "umi-test"
-  },
-  "devDependencies": {
-    "@umijs/plugin-initial-state": "^2.0.0",
-    "@umijs/plugin-model": "^2.0.0",
-    "cross-env": "^6.0.3"
-  },
   "files": [
     "lib",
     "src"
