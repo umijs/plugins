@@ -23,10 +23,9 @@
   "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-layout#readme",
   "peerDependencies": {
     "umi": "3.x",
-    "@umijs/plugin-initial-state": "^1.0.1",
-    "@umijs/plugin-model": "^1.0.1",
-    "@umijs/plugin-locale": "^0.1.2",
-    "react": "^16.0.0"
+    "@umijs/plugin-initial-state": "2.x",
+    "@umijs/plugin-model": "2.x",
+    "@umijs/plugin-locale": "0.x"
   },
   "dependencies": {
     "@ant-design/pro-layout": "^5.0.0",
