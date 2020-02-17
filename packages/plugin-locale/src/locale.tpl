@@ -18,7 +18,7 @@ export const _LocaleContainer = props => {
     setContainerIntl(getIntl());
   };
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     event.on(LANG_CHANGE_EVENT, handleLangChange);
     return () => {
       event.off(LANG_CHANGE_EVENT, handleLangChange);
