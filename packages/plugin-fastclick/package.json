@@ -1,0 +1,33 @@
+{
+  "name": "@umijs/plugin-fastclick",
+  "version": "0.0.1",
+  "description": "@umijs/plugin-fastclick",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/umijs/plugins"
+  },
+  "keywords": [
+    "umi"
+  ],
+  "authors": [
+    "ycjcl868"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/umijs/plugins/issues",
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-fastclick#readme",
+  "peerDependencies": {
+    "umi": "3.x"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "fastclick": "1.0.6"
+  }
+}
