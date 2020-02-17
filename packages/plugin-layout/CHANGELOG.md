@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.2.0...@umijs/plugin-layout@0.2.1) (2020-02-17)
+
+**Note:** Version bump only for package @umijs/plugin-layout
+
 # 0.2.0 (2020-02-17)
 
 ### Bug Fixes

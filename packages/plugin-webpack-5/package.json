@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-webpack-5",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "@umijs/plugin-webpack-5",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
