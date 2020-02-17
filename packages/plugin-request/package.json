@@ -24,11 +24,11 @@
   "peerDependencies": {
     "umi": "3.x"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@umijs/use-request": "^1.0.0",
     "umi-request": "^1.2.14"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

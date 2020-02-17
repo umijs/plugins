@@ -27,14 +27,14 @@
     "@umijs/plugin-model": "2.x",
     "umi": "3.x"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@ant-design/pro-layout": "^5.0.0",
     "antd": "^4.0.0-rc.4",
     "lodash": "^4.17.15",
     "memoize-one": "^5.1.1",
     "path-to-regexp": "1.x"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

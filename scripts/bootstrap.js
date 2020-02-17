@@ -4,7 +4,7 @@ const { yParser } = require('@umijs/utils');
 
 (async () => {
   const args = yParser(process.argv);
-  const version = '0.0.1';
+  const version = '1.0.0';
 
   const pkgs = readdirSync(join(__dirname, '../packages')).filter(
     pkg => pkg.charAt(0) !== '.',
@@ -59,6 +59,7 @@ const { yParser } = require('@umijs/utils');
           'sideEffects',
           'main',
           'module',
+          'description',
         ].forEach(key => {
           if (pkg[key]) json[key] = pkg[key];
         });
