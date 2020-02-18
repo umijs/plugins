@@ -20,10 +20,10 @@ export function _onCreate() {
   });
   {{{ EnhanceApp }}}
   app.use(createLoading());
+  {{{ RegisterPlugins }}}
   (runtimeDva.plugins || []).forEach(plugin => {
     app.use(plugin);
   });
-  {{{ RegisterPlugins }}}
   {{{ RegisterModels }}}
   return app;
 }

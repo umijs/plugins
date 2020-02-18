@@ -15,6 +15,7 @@ export default (api: IApi) => {
 
   // 配置
   api.describe({
+    key: 'dva',
     config: {
       schema(joi) {
         return joi.object();
@@ -35,7 +36,12 @@ export default (api: IApi) => {
       content: Mustache.render(dvaTpl, {
         ExtendDvaConfig: '',
         EnhanceApp: '',
-        RegisterPlugins: '',
+        RegisterPlugins: [
+          api.config.dva?.immer &&
+            `app.use(require('${winPath(require.resolve('dva-immer'))}')());`,
+        ]
+          .filter(Boolean)
+          .join('\n'),
         RegisterModels: models
           .map(path => {
             // prettier-ignore
