@@ -2,16 +2,18 @@ import { utils } from 'umi';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
-export function getModels({ base }: { base: string }) {
+export function getModels(opts: { base: string; pattern?: string }) {
   return utils.glob
-    .sync('**/*.{ts,tsx,js,jsx}', {
-      cwd: base,
+    .sync(opts.pattern || '**/*.{ts,tsx,js,jsx}', {
+      cwd: opts.base,
     })
     .filter(f => {
       if (/\.d.ts$/.test(f)) return false;
       if (/\.(test|spec).(j|t)sx?$/.test(f)) return false;
       // TODO: fs cache for performance
-      return isValidModel({ content: readFileSync(join(base, f), 'utf-8') });
+      return isValidModel({
+        content: readFileSync(join(opts.base, f), 'utf-8'),
+      });
     });
 }
 

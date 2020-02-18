@@ -27,6 +27,27 @@ test('normal', async () => {
   );
 });
 
+test('page models', async () => {
+  const cwd = join(fixtures, 'page-models');
+  const service = new Service({
+    cwd,
+    plugins: [require.resolve('./')],
+  });
+  await service.run({
+    name: 'g',
+    args: {
+      _: ['g', 'tmp'],
+    },
+  });
+
+  const { container } = render(
+    require(join(cwd, '.umi-test', 'umi.ts')).default,
+  );
+  expect(container.innerHTML).toEqual(
+    '<div><h1 class="title">Page index foo 0 bar 1</h1></div>',
+  );
+});
+
 test('with-immer', async () => {
   const cwd = join(fixtures, 'with-immer');
   const service = new Service({

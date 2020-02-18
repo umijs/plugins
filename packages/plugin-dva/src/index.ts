@@ -6,11 +6,12 @@ import { getModels } from './getModels/getModels';
 const { Mustache, lodash, winPath } = utils;
 
 export default (api: IApi) => {
-  function getBase() {
-    return join(
-      api.paths.absSrcPath!,
-      api.config.singular ? 'model' : 'models',
-    );
+  function getModelDir() {
+    return api.config.singular ? 'model' : 'models';
+  }
+
+  function getSrcModelsPath() {
+    return join(api.paths.absSrcPath!, getModelDir());
   }
 
   // 配置
@@ -18,7 +19,10 @@ export default (api: IApi) => {
     key: 'dva',
     config: {
       schema(joi) {
-        return joi.object();
+        return joi.object({
+          immer: joi.boolean().optional(),
+          hmr: joi.boolean().optional(),
+        });
       },
     },
   });
@@ -27,10 +31,16 @@ export default (api: IApi) => {
   api.onGenerateFiles(() => {
     // dva.ts
     const dvaTpl = readFileSync(join(__dirname, 'dva.tpl'), 'utf-8');
-    const base = getBase();
-    const models = getModels({
-      base,
-    }).map(p => winPath(join(base, p)));
+    const srcModelsPath = getSrcModelsPath();
+    const models = [
+      ...getModels({
+        base: srcModelsPath,
+      }).map(p => winPath(join(srcModelsPath, p))),
+      ...getModels({
+        base: api.paths.absPagesPath!,
+        pattern: `**/${getModelDir()}/**/*.{ts,tsx,js,jsx}`,
+      }).map(p => winPath(join(api.paths.absPagesPath!, p))),
+    ];
     api.writeTmpFile({
       path: 'plugin-dva/dva.ts',
       content: Mustache.render(dvaTpl, {
@@ -66,7 +76,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
   });
 
   // src/models 下的文件变化会触发临时文件生成
-  api.addTmpGenerateWatcherPaths(() => [getBase()]);
+  api.addTmpGenerateWatcherPaths(() => [getSrcModelsPath()]);
 
   // dva 优先读用户项目的依赖
   api.addProjectFirstLibraries(() => [
