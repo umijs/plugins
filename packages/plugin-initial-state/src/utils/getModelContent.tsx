@@ -1,8 +1,11 @@
+import { utils } from 'umi';
+const { winPath } = utils;
+
 export default (
   relEntryFile: string,
 ) => `import { useState, useEffect } from 'react';
-import { Models } from '../../plugin-model/useModel';
-import * as app from '@/app';
+import { Models } from '${winPath('../../plugin-model/useModel')}';
+import * as app from '${winPath('@/app')}';
 
 export type InitialState = Models<'@@initialState'>;
 async function getInitialState() {

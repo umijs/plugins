@@ -17,51 +17,51 @@ export default (api: IApi) => {
   // 注册 getInitialState 方法
   api.addRuntimePluginKey(() => 'getInitialState');
 
-  // Add provider to prevent render
-  api.addRuntimePlugin(() => join(__dirname, 'runtime'));
+  const entryFile = getFile({
+    base: winPath(api.paths.absSrcPath!),
+    type: 'javascript',
+    fileNameWithoutExt: 'app',
+  })?.path;
+
+  if (entryFile) {
+    // Add provider to prevent render
+    api.addRuntimePlugin(() => winPath(join(__dirname, 'runtime')));
+    api.addUmiExports(() => [
+      {
+        exportAll: true,
+        source: winPath(`../${RELATIVE_EXPORT}`),
+      },
+    ]);
+    api.register({
+      key: 'addExtraModels',
+      fn: () => [
+        {
+          absPath: winPath(join(api.paths.absTmpPath!, RELATIVE_MODEL_PATH)),
+          namespace: '@@initialState',
+        },
+      ],
+    });
+  }
 
   api.onGenerateFiles(() => {
-    api.writeTmpFile({
-      path: join(DIR_NAME, 'Provider.tsx'),
-      content: providerContent,
-    });
-    const entryFile = getFile({
-      base: api.paths.absSrcPath!,
-      type: 'javascript',
-      fileNameWithoutExt: 'app',
-    })?.path;
-
     if (entryFile) {
-      const relEntryFile = relative(api.paths.cwd!, entryFile);
       api.writeTmpFile({
-        path: RELATIVE_MODEL_PATH,
-        content: getModelContent(relEntryFile),
+        path: winPath(join(DIR_NAME, 'Provider.tsx')),
+        content: providerContent,
       });
       api.writeTmpFile({
-        path: RELATIVE_EXPORT_PATH,
+        path: winPath(RELATIVE_EXPORT_PATH),
         content: getExportContent(RELATIVE_MODEL),
+      });
+      const relEntryFile = relative(api.paths.cwd!, entryFile);
+      api.writeTmpFile({
+        path: winPath(RELATIVE_MODEL_PATH),
+        content: getModelContent(relEntryFile),
       });
     } else {
       api.logger.info(
         '[@umijs/plugin-initial-state]: 检测到 @umijs/plugin-initial-state 插件已经开启，但是不存在 app.ts/js 入口文件。',
       );
     }
-  });
-
-  api.addUmiExports(() => [
-    {
-      exportAll: true,
-      source: `../${RELATIVE_EXPORT}`,
-    },
-  ]);
-
-  api.register({
-    key: 'addExtraModels',
-    fn: () => [
-      {
-        absPath: winPath(join(api.paths.absTmpPath!, RELATIVE_MODEL_PATH)),
-        namespace: '@@initialState',
-      },
-    ],
   });
 };

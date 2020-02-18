@@ -1,6 +1,9 @@
+import { utils } from 'umi';
+const { winPath } = utils;
+
 export default `
 import React, { useRef, useEffect } from 'react';
-import { useModel } from '../plugin-model/useModel';
+import { useModel } from '${winPath('../plugin-model/useModel')}';
 if (typeof useModel !== 'function') {
   throw new Error('[plugin-initial-state]: useModel is not a function, @umijs/plugin-model is required.')
 }
