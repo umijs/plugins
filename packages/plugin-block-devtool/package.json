@@ -26,5 +26,11 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "uppercamelcase": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/uppercamelcase": "^3.0.0"
   }
 }

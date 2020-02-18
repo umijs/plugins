@@ -10,8 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "umi": "^2.7.0",
-    "umi-plugin-react": "^1.8.1"
+    "umi": "^2.7.0"
   },
   "dependencies": {
     "umi-request": "^1.0.7"

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import logo from './logo.svg';
 import { BasicLayout, SettingDrawer } from '@ant-design/pro-layout';
-import SelectLang from './SelectLang';
+// TODO support selectLang
+// import SelectLang from './SelectLang';
 
 export default props => {
   const { children } = props;
@@ -12,7 +13,7 @@ export default props => {
         logo={logo}
         {...props}
         {...settings}
-        rightContentRender={props => <SelectLang {...props} />}
+        // rightContentRender={props => <SelectLang {...props} />}
       >
         {children}
       </BasicLayout>

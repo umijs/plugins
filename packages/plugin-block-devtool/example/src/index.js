@@ -1,6 +1,4 @@
 import styles from './index.css';
-import { connect } from 'dva';
-import { formatMessage } from 'umi-plugin-react/locale';
 
 import React from 'react';
 
@@ -14,10 +12,7 @@ const Welcome = () => (
     >
       use block
     </a>
-    {formatMessage({ id: '.', defaultMessage: '.' })}
   </div>
 );
 
-export default connect(({ test }) => ({
-  test
-}))(Welcome);
+export default Welcome;

@@ -14,13 +14,13 @@ const SelectLang = props => {
     'zh-CN': '简体中文',
     'zh-TW': '繁体中文',
     'en-US': 'English',
-    'pt-BR': 'Português'
+    'pt-BR': 'Português',
   };
   const languageIcons = {
     'zh-CN': '🇨🇳',
     'zh-TW': '🇭🇰',
     'en-US': '🇬🇧',
-    'pt-BR': '🇧🇷'
+    'pt-BR': '🇧🇷',
   };
   const langMenu = (
     <Menu
@@ -42,7 +42,7 @@ const SelectLang = props => {
     <div
       style={{
         float: 'right',
-        padding: '0 20px'
+        padding: '0 20px',
       }}
     >
       <HeaderDropdown overlay={langMenu} placement="bottomRight">
