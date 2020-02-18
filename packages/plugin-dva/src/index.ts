@@ -1,16 +1,16 @@
-import { IApi } from 'umi';
+import { IApi, utils } from 'umi';
 import { basename, dirname, extname, join } from 'path';
 import { readFileSync } from 'fs';
 import { getModels } from './getModels/getModels';
 
-export default (api: IApi) => {
-  const {
-    paths,
-    utils: { Mustache, lodash, winPath },
-  } = api;
+const { Mustache, lodash, winPath } = utils;
 
+export default (api: IApi) => {
   function getBase() {
-    return join(paths.absSrcPath!, api.config.singular ? 'model' : 'models');
+    return join(
+      api.paths.absSrcPath!,
+      api.config.singular ? 'model' : 'models',
+    );
   }
 
   // 配置
@@ -58,8 +58,11 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
       content: Mustache.render(runtimeTpl, {}),
     });
   });
+
+  // src/models 下的文件变化会触发临时文件生成
   api.addTmpGenerateWatcherPaths(() => [getBase()]);
 
+  // dva 优先读用户项目的依赖
   api.addProjectFirstLibraries(() => [
     { name: 'dva', path: dirname(require.resolve('dva/package.json')) },
   ]);
@@ -78,7 +81,9 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
   });
 
   // Runtime Plugin
-  api.addRuntimePlugin(() => join(paths.absTmpPath!, 'plugin-dva/runtime.tsx'));
+  api.addRuntimePlugin(() =>
+    join(api.paths.absTmpPath!, 'plugin-dva/runtime.tsx'),
+  );
   api.addRuntimePluginKey(() => 'dva');
 
   // Modify entry js
