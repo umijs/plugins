@@ -32,10 +32,7 @@
     "@testing-library/react-hooks": "^3.2.1",
     "@types/jest": "^24.0.25",
     "@types/node": "^13.1.6",
-    "@umijs/plugin-initial-state": "^1.0.1",
-    "@umijs/plugin-locale": "^0.1.2",
-    "@umijs/plugin-model": "^1.0.1",
-    "@umijs/test": "^3.0.0-beta.16",
+    "@umijs/test": "^3.0.0-beta.17",
     "create-test-server": "^3.0.1",
     "father-build": "^1.17.2",
     "lerna": "^3.20.2",
@@ -45,7 +42,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-test-renderer": "^16.9.0",
-    "umi": "^3.0.0-beta.16",
+    "umi": "^3.0.0-beta.17",
     "yorkie": "^2.0.0"
   },
   "license": "MIT"
