@@ -15,7 +15,8 @@ const BasicLayout = (props: any) => {
   const { initialState, loading } = (useModel &&
     useModel('@@initialState')) || { initialState: undefined, loading: false }; // plugin-initial-state 未开启
   const _routes = require('@@/core/routes').routes;
-  const intl = useIntl();
+  // 国际化插件并非默认启动
+  const intl = useIntl && useIntl();
   const rightContentRender = useRightContent(userConfig, loading, initialState);
   const layoutConfig = getLayoutConfigFromRoute(_routes);
   const menus = getMenuDataFromRoutes(_routes[0].routes);
@@ -54,7 +55,7 @@ const BasicLayout = (props: any) => {
       }}
       menu={{ locale: userConfig.locale }}
       menuDataRender={() => menus}
-      formatMessage={intl.formatMessage}
+      formatMessage={intl && intl.formatMessage}
       logo={
         (initialState && initialState.avatar) || logo // 默认 logo
       }

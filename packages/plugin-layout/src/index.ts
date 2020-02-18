@@ -29,8 +29,7 @@ export default (api: IApi) => {
       theme: 'PRO',
       locale: false,
       showBreadcrumb: true,
-      ...(api.service.userConfig as any).layout,
-      ...(api.userConfig.layout || {}),
+      ...(api.config.layout || {}),
     };
 
     // allow custom theme
