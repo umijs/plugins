@@ -27,12 +27,9 @@ export default (api: IApi) => {
     },
   });
 
-  // 生成临时文件
-  api.onGenerateFiles(() => {
-    // dva.ts
-    const dvaTpl = readFileSync(join(__dirname, 'dva.tpl'), 'utf-8');
+  function getAllModels() {
     const srcModelsPath = getSrcModelsPath();
-    const models = [
+    return [
       ...getModels({
         base: srcModelsPath,
       }).map(p => winPath(join(srcModelsPath, p))),
@@ -41,38 +38,62 @@ export default (api: IApi) => {
         pattern: `**/${getModelDir()}/**/*.{ts,tsx,js,jsx}`,
       }).map(p => winPath(join(api.paths.absPagesPath!, p))),
     ];
-    api.writeTmpFile({
-      path: 'plugin-dva/dva.ts',
-      content: Mustache.render(dvaTpl, {
-        ExtendDvaConfig: '',
-        EnhanceApp: '',
-        RegisterPlugins: [
-          api.config.dva?.immer &&
-            `app.use(require('${winPath(require.resolve('dva-immer'))}')());`,
-        ]
-          .filter(Boolean)
-          .join('\n'),
-        RegisterModels: models
-          .map(path => {
-            // prettier-ignore
-            return `
+  }
+
+  let hasModels = false;
+
+  // 初始检测一遍
+  api.onStart(() => {
+    hasModels = getAllModels().length > 0;
+  });
+
+  // 生成临时文件
+  api.onGenerateFiles({
+    fn() {
+      const models = getAllModels();
+      hasModels = models.length > 0;
+
+      // 没有 models 不生成文件
+      if (!hasModels) return;
+
+      // dva.ts
+      const dvaTpl = readFileSync(join(__dirname, 'dva.tpl'), 'utf-8');
+      api.writeTmpFile({
+        path: 'plugin-dva/dva.ts',
+        content: Mustache.render(dvaTpl, {
+          ExtendDvaConfig: '',
+          EnhanceApp: '',
+          RegisterPlugins: [
+            api.config.dva?.immer &&
+              `app.use(require('${winPath(require.resolve('dva-immer'))}')());`,
+          ]
+            .filter(Boolean)
+            .join('\n'),
+          RegisterModels: models
+            .map(path => {
+              // prettier-ignore
+              return `
 app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}').default) });
           `.trim();
-          })
-          .join('\r\n'),
-        // use esm version
-        dvaLoadingPkgPath: winPath(
-          require.resolve('dva-loading/dist/index.esm.js'),
-        ),
-      }),
-    });
+            })
+            .join('\r\n'),
+          // use esm version
+          dvaLoadingPkgPath: winPath(
+            require.resolve('dva-loading/dist/index.esm.js'),
+          ),
+        }),
+      });
 
-    // runtime.tsx
-    const runtimeTpl = readFileSync(join(__dirname, 'runtime.tpl'), 'utf-8');
-    api.writeTmpFile({
-      path: 'plugin-dva/runtime.tsx',
-      content: Mustache.render(runtimeTpl, {}),
-    });
+      // runtime.tsx
+      const runtimeTpl = readFileSync(join(__dirname, 'runtime.tpl'), 'utf-8');
+      api.writeTmpFile({
+        path: 'plugin-dva/runtime.tsx',
+        content: Mustache.render(runtimeTpl, {}),
+      });
+    },
+    // 要比 preset-built-in 靠前
+    // 在内部文件生成之前执行，这样 hasModels 设的值对其他函数才有效
+    stage: -1,
   });
 
   // src/models 下的文件变化会触发临时文件生成
@@ -98,12 +119,12 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
 
   // Runtime Plugin
   api.addRuntimePlugin(() =>
-    join(api.paths.absTmpPath!, 'plugin-dva/runtime.tsx'),
+    hasModels ? [join(api.paths.absTmpPath!, 'plugin-dva/runtime.tsx')] : [],
   );
-  api.addRuntimePluginKey(() => 'dva');
+  api.addRuntimePluginKey(() => (hasModels ? ['dva'] : []));
 
   // Modify entry js
   api.addEntryCodeAhead(() =>
-    `require('./plugin-dva/dva')._onCreate();`.trim(),
+    hasModels ? `require('./plugin-dva/dva')._onCreate();`.trim() : '',
   );
 };
