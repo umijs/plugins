@@ -69,11 +69,11 @@ export const getIntl = (locale?: string, changeIntl?: boolean) => {
     `The current popular language does not exist, please check the locales folder!`,
   );
   // 使用 zh-CN
-  if (localeInfo[DefaultLocale]) return createIntl(localeInfo[DefaultLocale]);
+  if (localeInfo[{{{ DefaultLocale }}}]) return createIntl(localeInfo[{{{ DefaultLocale }}}]);
 
   // 如果还没有，返回一个空的
   return createIntl({
-    name: DefaultLocale,
+    name: {{{ DefaultLocale }}},
     messages: {},
   });
 };

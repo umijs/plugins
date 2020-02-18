@@ -68,7 +68,7 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
       content: Mustache.render(localeExportsTpl, {
         BaseSeparator: baseSeparator,
         LocaleList: localeList,
-        DefaultLocale: defaultLocale,
+        DefaultLocale: JSON.stringify(defaultLocale),
         warningPkgPath: winPath(require.resolve('warning')),
         // react-intl main use `dist/index.js`
         // use dirname let webpack identify main or module
