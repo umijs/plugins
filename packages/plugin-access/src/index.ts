@@ -8,13 +8,7 @@ import { checkIfHasDefaultExporting } from './utils';
 
 const ACCESS_DIR = 'plugin-access'; // plugin-access 插件创建临时文件的专有文件夹
 
-export interface Options {
-  showWarning: boolean; // 表明插件本身是否检测调用合法性并给出警告
-}
-
-const defaultOptions: Options = { showWarning: true };
-
-export default function(api: IApi, opts: Options = defaultOptions) {
+export default function(api: IApi) {
   const umiTmpDir = api.paths.absTmpPath;
   const srcDir = api.paths.absSrcPath;
   const accessFilePath = api.utils.winPath(join(srcDir!, 'access'));
@@ -45,12 +39,6 @@ export default function(api: IApi, opts: Options = defaultOptions) {
         path: `${ACCESS_DIR}/rootContainer.ts`,
         content: getRootContainerContent(),
       });
-    } else {
-      if (opts.showWarning) {
-        api.logger.warn(
-          `[plugin-access]: access.js or access.ts file should be defined at srcDir and default exporting a factory function.`,
-        );
-      }
     }
   });
 
