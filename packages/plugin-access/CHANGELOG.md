@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/umijs/plugins/compare/@umijs/plugin-access@2.1.1...@umijs/plugin-access@2.2.0) (2020-02-18)
+
+### Features
+
+- delete showWarnining option for plugin-access ([#38](https://github.com/umijs/plugins/issues/38)) ([f99169b](https://github.com/umijs/plugins/commit/f99169b18df96c544d06f48d66dad3ab10c3f8b3))
+
 ## [2.1.1](https://github.com/umijs/plugins/compare/@umijs/plugin-access@2.1.0...@umijs/plugin-access@2.1.1) (2020-02-17)
 
 **Note:** Version bump only for package @umijs/plugin-access

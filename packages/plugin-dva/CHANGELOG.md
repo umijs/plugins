@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.1.2...@umijs/plugin-dva@0.2.0) (2020-02-18)
+
+### Features
+
+- **plugin-dva:** disable dva if no valid models found ([bdd8475](https://github.com/umijs/plugins/commit/bdd8475c631c8460668562f563d19c3052876730))
+- **plugin-dva:** import connect from umi ([988cc37](https://github.com/umijs/plugins/commit/988cc3749654f21efc203b79efc56ac2c9327c29))
+- **plugin-dva:** opts.immer ([d697a98](https://github.com/umijs/plugins/commit/d697a98059f1cd73cbd66edbe424ee0fd9d39b0d))
+- **plugin-dva:** resolve page models ([066c7cd](https://github.com/umijs/plugins/commit/066c7cdafaea3a94f9c242a6d1f98a1871596440))
+
 ## [0.1.2](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.1.1...@umijs/plugin-dva@0.1.2) (2020-02-08)
 
 **Note:** Version bump only for package @umijs/plugin-dva
