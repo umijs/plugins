@@ -1,8 +1,10 @@
 import { join } from 'path';
 import { Service, utils } from 'umi';
-import { render, fireEvent, getByText } from '@testing-library/react';
+import { render, fireEvent, getByText, cleanup } from '@testing-library/react';
 
 const fixtures = join(__dirname, 'fixtures');
+
+afterEach(cleanup);
 
 test('normal', async () => {
   const cwd = join(fixtures, 'normal');
