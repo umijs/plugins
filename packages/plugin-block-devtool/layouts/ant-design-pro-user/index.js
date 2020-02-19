@@ -9,18 +9,18 @@ const links = [
   {
     key: 'help',
     title: formatMessage({ id: 'layout.user.link.help' }),
-    href: ''
+    href: '',
   },
   {
     key: 'privacy',
     title: formatMessage({ id: 'layout.user.link.privacy' }),
-    href: ''
+    href: '',
   },
   {
     key: 'terms',
     title: formatMessage({ id: 'layout.user.link.terms' }),
-    href: ''
-  }
+    href: '',
+  },
 ];
 
 const copyright = (
