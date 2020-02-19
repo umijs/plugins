@@ -18,9 +18,8 @@ export default function(api: IApi) {
     },
   });
 
-  const option = api.service.userConfig.qiankun;
-  const { master: masterOpts, slave: slaveOpts } = option || {};
-  assert(!(masterOpts && slaveOpts), '请勿同时配置 master 和 slave 配置项');
+  const { master: masterOpts, slave: slaveOpts } = api.userConfig.qiankun || {};
+  assert(!(masterOpts && slaveOpts), '请勿同时配置 master 和 slave 配置项。');
 
   if (slaveOpts) {
     slave(api, slaveOpts);
