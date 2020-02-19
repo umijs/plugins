@@ -5,14 +5,20 @@ export default defineConfig({
   // plugins: [require.resolve('../packages/plugin-webpack-5/lib')],
   routes: [
     {
-      name: 'model 测试',
-      path: '/plugin-model',
-      component: './plugin-model',
-    },
-    {
-      name: 'initial-state 测试',
-      path: '/plugin-initial-state',
-      component: './plugin-initial-state',
+      name: '测试',
+      path: '/test',
+      routes: [
+        {
+          name: 'model 测试',
+          path: '/test/plugin-model',
+          component: './plugin-model',
+        },
+        {
+          name: 'initial-state 测试',
+          path: '/test/plugin-initial-state',
+          component: './plugin-initial-state',
+        },
+      ],
     },
     {
       name: 'utils 测试',

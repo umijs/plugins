@@ -86,7 +86,7 @@ function formatter(
           }
 
           result.children = children;
-          delete result.path;
+          // delete result.path;
         }
         return result;
       }),

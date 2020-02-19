@@ -1,8 +1,8 @@
-import React from 'react';
-import { Typography, Button } from 'antd';
+import React, { useContext } from 'react';
+import { Typography, Button, Breadcrumb } from 'antd';
 import { history } from 'umi';
 import './index.less';
-import { IRouteLayoutConfig } from '../../types/interface.d';
+import { RouteContext } from '@ant-design/pro-layout';
 
 interface ExceptionProps {
   exceptionImg: string | any;
@@ -96,17 +96,26 @@ const Exception403 = () => (
  * - 无权限
  * - 404
  */
-const WithExceptionOpChildren = (
-  children: React.ReactNode,
-  currentPathConfig?: IRouteLayoutConfig,
-) => {
+const WithExceptionOpChildren = props => {
+  const { currentPathConfig, children, userConfig } = props;
+
   if (!currentPathConfig) {
     return <Exception404 />;
   }
   if (currentPathConfig.unAccessible) {
     return <Exception403 />;
   }
-  return children;
+
+  const { breadcrumb } = useContext(RouteContext) || {};
+  const { showBreadcrumb } = userConfig;
+  return (
+    <>
+      {showBreadcrumb && breadcrumb && (
+        <Breadcrumb {...breadcrumb} style={{ padding: '14px 24px' }} />
+      )}
+      {children}
+    </>
+  );
 };
 
 export default Exception;
