@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.2.2...@umijs/plugin-layout@0.2.3) (2020-02-19)
+
+### Bug Fixes
+
+- 去除 initial 插件的强依赖，做兼容处理 & 替换默认 logo ([#40](https://github.com/umijs/plugins/issues/40)) ([8b297af](https://github.com/umijs/plugins/commit/8b297af24853cafeb65fe9772dbee605d46a3d30))
+
 ## [0.2.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.2.1...@umijs/plugin-layout@0.2.2) (2020-02-18)
 
 ### Bug Fixes
