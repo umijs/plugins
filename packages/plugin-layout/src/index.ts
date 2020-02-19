@@ -3,8 +3,6 @@ import { join } from 'path';
 import getLayoutContent from './utils/getLayoutContent';
 import { LayoutConfig } from './types/interface.d';
 
-const DEFAULT_ANTFIN_LOGO =
-  'https://gw.alipayobjects.com/zos/rmsportal/VjSUcTzdEiSwfnvdapaa.png';
 const DIR_NAME = 'plugin-layout';
 
 export default (api: IApi) => {
@@ -28,12 +26,10 @@ export default (api: IApi) => {
     const { name } = api.pkg;
     layoutOpts = {
       name,
-      logo: DEFAULT_ANTFIN_LOGO,
       theme: 'PRO',
       locale: false,
       showBreadcrumb: true,
-      ...(api.service.userConfig as any).layout,
-      ...(api.userConfig.layout || {}),
+      ...(api.config.layout || {}),
     };
 
     // allow custom theme

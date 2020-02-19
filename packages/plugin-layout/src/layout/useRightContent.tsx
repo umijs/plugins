@@ -29,7 +29,7 @@ export default function useRightContent(
           size="small"
           className="umi-plugin-layout-avatar"
           src={
-            initialState.avatar ||
+            (initialState && initialState.avatar) ||
             'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png'
           }
           alt="avatar"
@@ -49,18 +49,20 @@ export default function useRightContent(
     }
 
     return (
-      <div className="umi-plugin-layout-right">
-        {runtimeLayout.logout ? (
-          <Dropdown
-            overlay={menu}
-            overlayClassName="umi-plugin-layout-container"
-          >
-            {avatar}
-          </Dropdown>
-        ) : (
-          avatar
-        )}
-      </div>
+      initialState && (
+        <div className="umi-plugin-layout-right">
+          {runtimeLayout.logout ? (
+            <Dropdown
+              overlay={menu}
+              overlayClassName="umi-plugin-layout-container"
+            >
+              {avatar}
+            </Dropdown>
+          ) : (
+            avatar
+          )}
+        </div>
+      )
     );
   }, [initialState, loading]);
 

@@ -8,12 +8,15 @@ import useRightContent from './useRightContent';
 import { WithExceptionOpChildren } from '../component/Exception';
 import getLayoutConfigFromRoute from '../utils/getLayoutConfigFromRoute';
 import getMenuDataFromRoutes from '../utils/getMenuFromRoute';
+import logo from '../assets/logo.svg';
 
 const BasicLayout = (props: any) => {
   const { children, userConfig, location } = props;
-  const { initialState = {}, loading } = useModel('@@initialState');
+  const { initialState, loading } = (useModel &&
+    useModel('@@initialState')) || { initialState: undefined, loading: false }; // plugin-initial-state 未开启
   const _routes = require('@@/core/routes').routes;
-  const intl = useIntl();
+  // 国际化插件并非默认启动
+  const intl = useIntl && useIntl();
   const rightContentRender = useRightContent(userConfig, loading, initialState);
   const layoutConfig = getLayoutConfigFromRoute(_routes);
   const menus = getMenuDataFromRoutes(_routes[0].routes);
@@ -52,10 +55,9 @@ const BasicLayout = (props: any) => {
       }}
       menu={{ locale: userConfig.locale }}
       menuDataRender={() => menus}
-      formatMessage={intl.formatMessage}
+      formatMessage={intl && intl.formatMessage}
       logo={
-        initialState.avatar ||
-        'https://gw-office.alipayobjects.com/basement_prod/c83c53ab-515e-43e2-85d0-4d0da16f11ef.svg'
+        (initialState && initialState.avatar) || logo // 默认 logo
       }
       menuItemRender={(menuItemProps, defaultDom) => {
         if (menuItemProps.isUrl || menuItemProps.children) {
