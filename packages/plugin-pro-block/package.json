@@ -22,7 +22,8 @@
   "bugs": "http://github.com/umijs/plugins/issues",
   "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-pro-block#readme",
   "peerDependencies": {
-    "umi": "3.x"
+    "umi": "3.x",
+    "@umijs/plugin-blocks": "2.x"
   },
   "publishConfig": {
     "access": "public"

@@ -2,30 +2,41 @@
 // - https://umijs.org/plugin/develop.html
 import { join } from 'path';
 import { existsSync } from 'fs';
-import { IApi } from 'umi-types';
+import { IApi } from 'umi';
 
-const debug = require('debug')('umi-plugin-pro-block');
+export default function(api: IApi) {
+  const { paths, config, logger } = api;
 
-export interface ProBlockOption {
-  moveMock?: boolean;
-  moveService?: boolean;
-  modifyRequest?: boolean;
-  autoAddMenu?: boolean;
-}
+  if (!api.hasPlugins(['@umijs/plugin-blocks'])) {
+    logger.error(
+      `plugin @umijs/plugin-blocks is required for @umijs/plugin-pro-block.`,
+    );
+    return;
+  }
 
-export default function(api: IApi, opts: ProBlockOption = {}) {
-  const { paths, config } = api;
+  api.describe({
+    key: 'proBlock',
+    config: {
+      schema(joi) {
+        return joi.object({
+          moveMock: joi.boolean(),
+          moveService: joi.boolean(),
+          modifyRequest: joi.boolean(),
+          autoAddMenu: joi.boolean(),
+        });
+      },
+    },
+  });
 
-  debug('options', opts);
-
-  let hasUtil, hasService, newFileName;
+  let hasUtil: boolean, hasService: boolean, newFileName: string;
   api.beforeBlockWriting(({ sourcePath, blockPath }) => {
-    const utilsPath = join(paths.absSrcPath, `utils`);
+    const utilsPath = join(paths.absSrcPath || '', `utils`);
     hasUtil =
-      existsSync(join(utilsPath, 'request.js')) || existsSync(join(utilsPath, 'request.ts'));
+      existsSync(join(utilsPath, 'request.js')) ||
+      existsSync(join(utilsPath, 'request.ts'));
     hasService = existsSync(join(sourcePath, './src/service.js'));
     newFileName = blockPath.replace(/^\//, '').replace(/\//g, '');
-    debug(
+    logger.debug(
       'beforeBlockWriting... hasUtil:',
       hasUtil,
       'hasService:',
@@ -36,13 +47,23 @@ export default function(api: IApi, opts: ProBlockOption = {}) {
   });
 
   api._modifyBlockTarget((target, { sourceName }) => {
-    if (sourceName === '_mock.js' && opts.moveMock !== false) {
+    const { proBlock = {} } = api.config;
+    if (sourceName === '_mock.js' && proBlock.moveMock !== false && paths.cwd) {
       // src/pages/test/t/_mock.js -> mock/test-t.js
       return join(paths.cwd, 'mock', `${newFileName}.js`);
     }
-    if (sourceName === 'service.js' && hasService && opts.moveService !== false) {
+    if (
+      sourceName === 'service.js' &&
+      hasService &&
+      proBlock.moveService !== false &&
+      paths.absSrcPath
+    ) {
       // src/pages/test/t/service.js -> services/test.t.js
-      return join(paths.absSrcPath, config.singular ? 'service' : 'services', `${newFileName}.js`);
+      return join(
+        paths.absSrcPath,
+        config.singular ? 'service' : 'services',
+        `${newFileName}.js`,
+      );
     }
     return target;
   });
@@ -50,13 +71,14 @@ export default function(api: IApi, opts: ProBlockOption = {}) {
   // umi-request -> @utils/request
   // src/pages/test/t/service.js -> services/test.t.js
   api._modifyBlockFile(content => {
-    if (hasUtil && opts.modifyRequest !== false) {
+    const { proBlock = {} } = api.config;
+    if (hasUtil && proBlock.modifyRequest !== false) {
       content = content.replace(
         /[\'\"]umi\-request[\'\"]/g,
         `'@/util${config.singular ? '' : 's'}/request'`,
       );
     }
-    if (hasService && opts.moveService !== false) {
+    if (hasService && proBlock.moveService !== false) {
       content = content.replace(
         /[\'\"][\.\/]+service[\'\"]/g,
         `'@/service${config.singular ? '' : 's'}/${newFileName}'`,
@@ -66,7 +88,8 @@ export default function(api: IApi, opts: ProBlockOption = {}) {
   });
 
   api._modifyBlockNewRouteConfig(memo => {
-    if (opts.autoAddMenu === false) {
+    const { proBlock = {} } = api.config;
+    if (proBlock.autoAddMenu === false) {
       return memo;
     }
     const icon = memo.path.indexOf('/') === 0 ? 'smile' : undefined;

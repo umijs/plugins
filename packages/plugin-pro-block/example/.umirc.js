@@ -1,11 +1,7 @@
-import { join } from 'path';
-
 export default {
   plugins: [
-    join(__dirname, '..', require('../package').main || 'index.js'),
-    ['umi-plugin-react', {
-      dva: true,
-      antd: true,
-    }],
+    '@umijs/plugin-blocks',
+    require.resolve('../../plugin-pro-block/lib'),
   ],
-}
+  proBlock: {},
+};
