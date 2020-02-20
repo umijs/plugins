@@ -1,0 +1,19 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".umirc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "antd": "^3.11.2",
+    "react": "^16.6.3",
+    "umi-request": "^1.0.0"
+  },
+  "devDependencies": {
+    "umi-plugin-react": "^1.2.3"
+  }
+}
