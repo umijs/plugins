@@ -31,6 +31,7 @@ export default function(api: IApi) {
 
   api.modifyRoutes(routes => {
     const { routesExtend } = api.config;
+    if (!routesExtend) return routes;
     routes = exclude(routes, optsToArray(routesExtend.exclude));
 
     if (routesExtend.update) {
