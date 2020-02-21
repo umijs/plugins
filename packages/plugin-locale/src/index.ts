@@ -8,21 +8,22 @@ import {
   getMomentLocale,
 } from './utils';
 
-interface IOpts {
+interface ILocaleConfig {
   default?: string;
   baseNavigator?: boolean;
   antd?: boolean;
   baseSeparator?: string;
 }
 
-type ILocaleOpts = IOpts;
-
-export default (api: IApi, opts: ILocaleOpts = {}) => {
+export default (api: IApi) => {
   const {
     paths,
     utils: { Mustache, lodash, winPath },
-    config = {},
   } = api;
+
+  if (!api.userConfig.locale) {
+    return;
+  }
 
   api.describe({
     key: 'locale',
@@ -33,21 +34,22 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
     },
   });
 
-  const localeFolder = config?.singular ? 'locale' : 'locales';
-  const { baseSeparator = '-' } = opts;
-  const defaultLocale = opts.default || `zh${baseSeparator}CN`;
-  const [lang, country] = defaultLocale?.split(baseSeparator) || [];
-
-  const localeList = getLocaleList({
-    localeFolder,
-    separator: baseSeparator,
-    absSrcPath: paths.absSrcPath,
-    absPagesPath: paths.absPagesPath,
-  });
+  const getList = () => {
+    return getLocaleList({
+      localeFolder: api.config?.singular ? 'locale' : 'locales',
+      separator: api.config.locale?.baseSeparator || '-',
+      absSrcPath: paths.absSrcPath,
+      absPagesPath: paths.absPagesPath,
+    });
+  };
 
   // 生成临时文件
   api.onGenerateFiles(() => {
     const localeTpl = readFileSync(join(__dirname, 'locale.tpl'), 'utf-8');
+    const { baseSeparator = '-', baseNavigator = true } = api.config
+      .locale as ILocaleConfig;
+    const defaultLocale = api.config.locale?.default || `zh${baseSeparator}CN`;
+    const [lang, country] = defaultLocale?.split(baseSeparator) || [];
 
     api.writeTmpFile({
       content: Mustache.render(localeTpl, {
@@ -63,10 +65,12 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
       join(__dirname, 'localeExports.tpl'),
       'utf-8',
     );
+    const localeList = getList();
     api.writeTmpFile({
       path: 'plugin-locale/localeExports.ts',
       content: Mustache.render(localeExportsTpl, {
         BaseSeparator: baseSeparator,
+        BaseNavigator: baseNavigator,
         LocaleList: localeList,
         DefaultLocale: JSON.stringify(defaultLocale),
         warningPkgPath: winPath(require.resolve('warning')),
@@ -97,7 +101,10 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
   );
 
   // watch locale files
-  api.addTmpGenerateWatcherPaths(() => exactLocalePaths(localeList));
+  api.addTmpGenerateWatcherPaths(() => {
+    const localeList = getList();
+    return exactLocalePaths(localeList);
+  });
 
   api.addUmiExports(() => {
     return {
