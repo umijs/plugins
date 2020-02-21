@@ -34,6 +34,15 @@ export default (api: IApi) => {
     },
   });
 
+  const getList = () => {
+    return getLocaleList({
+      localeFolder: api.config?.singular ? 'locale' : 'locales',
+      separator: api.config.locale?.baseSeparator || '-',
+      absSrcPath: paths.absSrcPath,
+      absPagesPath: paths.absPagesPath,
+    });
+  };
+
   // 生成临时文件
   api.onGenerateFiles(() => {
     const localeTpl = readFileSync(join(__dirname, 'locale.tpl'), 'utf-8');
@@ -56,12 +65,7 @@ export default (api: IApi) => {
       join(__dirname, 'localeExports.tpl'),
       'utf-8',
     );
-    const localeList = getLocaleList({
-      localeFolder: api.config?.singular ? 'locale' : 'locales',
-      separator: baseSeparator,
-      absSrcPath: paths.absSrcPath,
-      absPagesPath: paths.absPagesPath,
-    });
+    const localeList = getList();
     api.writeTmpFile({
       path: 'plugin-locale/localeExports.ts',
       content: Mustache.render(localeExportsTpl, {
@@ -98,13 +102,7 @@ export default (api: IApi) => {
 
   // watch locale files
   api.addTmpGenerateWatcherPaths(() => {
-    const { baseSeparator = '-' } = api.config.locale;
-    const localeList = getLocaleList({
-      localeFolder: api.config?.singular ? 'locale' : 'locales',
-      separator: baseSeparator,
-      absSrcPath: paths.absSrcPath,
-      absPagesPath: paths.absPagesPath,
-    });
+    const localeList = getList();
     return exactLocalePaths(localeList);
   });
 
