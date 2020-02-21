@@ -8,6 +8,7 @@ export default {
   },
   singular: true,
   locale: {
+    baseNavigator: false,
     default: 'zh-CN',
   },
   mountElementId: '',

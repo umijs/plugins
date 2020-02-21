@@ -38,7 +38,8 @@ export default (api: IApi) => {
   // 生成临时文件
   api.onGenerateFiles(() => {
     const localeTpl = readFileSync(join(__dirname, 'locale.tpl'), 'utf-8');
-    const { baseSeparator = '-' } = api.config.locale;
+    const { baseSeparator = '-', baseNavigator = true } = api.config
+      .locale as ILocaleConfig;
     const defaultLocale = api.config.locale?.default || `zh${baseSeparator}CN`;
     const [lang, country] = defaultLocale?.split(baseSeparator) || [];
 
@@ -62,10 +63,12 @@ export default (api: IApi) => {
       absSrcPath: paths.absSrcPath,
       absPagesPath: paths.absPagesPath,
     });
+    console.log('baseNavigator', baseNavigator);
     api.writeTmpFile({
       path: 'plugin-locale/localeExports.ts',
       content: Mustache.render(localeExportsTpl, {
         BaseSeparator: baseSeparator,
+        BaseNavigator: baseNavigator,
         LocaleList: localeList,
         DefaultLocale: JSON.stringify(defaultLocale),
         warningPkgPath: winPath(require.resolve('warning')),

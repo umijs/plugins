@@ -23,9 +23,8 @@ beforeEach(() => {
   setupTests();
 });
 
-afterEach(cleanup);
-
-afterAll(() => {
+afterEach(() => {
+  cleanup();
   window.localStorage.setItem('umi_locale', '');
 });
 
@@ -72,7 +71,7 @@ test('normal', async () => {
 });
 
 test('singular', async () => {
-  const cwd = join(fixtures, 'base');
+  const cwd = join(fixtures, 'singular');
   const service = new Service({
     cwd,
     plugins: [require.resolve('./')],
@@ -86,6 +85,11 @@ test('singular', async () => {
 
   const reactNode = require(join(cwd, 'src', '.umi-test', 'umi.ts')).default;
   const { container, getByText, rerender } = render(reactNode);
+
+  // test default: zh-CN
+  expect(container.querySelector('h1')?.textContent).toEqual(
+    'Current language:zh-CN',
+  );
 
   fireEvent.click(getByText('en-US'));
   expect(container.querySelector('h1')?.textContent).toEqual(

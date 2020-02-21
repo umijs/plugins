@@ -97,12 +97,16 @@ export const getLocale = () => {
     typeof localStorage !== 'undefined'
       ? window.localStorage.getItem('umi_locale')
       : '';
+  // support baseNavigator, default true
+  let browserLang;
+  {{#BaseNavigator}}
   const isNavigatorLanguageValid =
     typeof navigator !== 'undefined' && typeof navigator.language === 'string';
-  const browserLang = isNavigatorLanguageValid
+  browserLang = isNavigatorLanguageValid
     ? navigator.language.split('-').join('{{BaseSeparator}}')
     : '';
-  return lang || g_lang || browserLang;
+  {{/BaseNavigator}}
+  return lang || g_lang || browserLang || {{{DefaultLocale}}};
 };
 
 /**
