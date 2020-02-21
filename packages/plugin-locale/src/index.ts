@@ -21,7 +21,7 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
   const {
     paths,
     utils: { Mustache, lodash, winPath },
-    config = {},
+    userConfig = {},
   } = api;
 
   api.describe({
@@ -33,7 +33,7 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
     },
   });
 
-  const localeFolder = config?.singular ? 'locale' : 'locales';
+  const localeFolder = userConfig?.singular ? 'locale' : 'locales';
   const { baseSeparator = '-' } = opts;
   const defaultLocale = opts.default || `zh${baseSeparator}CN`;
   const [lang, country] = defaultLocale?.split(baseSeparator) || [];
