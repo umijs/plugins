@@ -8,7 +8,6 @@ export const LANG_CHANGE_EVENT = Symbol('LANG_CHANGE');
 
 export function _onCreate() {
   const locale = getLocale();
-  console.log('localelocale', locale);
   setIntl(locale);
 }
 

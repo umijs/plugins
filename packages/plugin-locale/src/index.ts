@@ -19,10 +19,9 @@ export default (api: IApi) => {
   const {
     paths,
     utils: { Mustache, lodash, winPath },
-    userConfig = {},
   } = api;
 
-  if (!userConfig.locale) {
+  if (!api.userConfig.locale) {
     return;
   }
 
@@ -63,7 +62,6 @@ export default (api: IApi) => {
       absSrcPath: paths.absSrcPath,
       absPagesPath: paths.absPagesPath,
     });
-    console.log('baseNavigator', baseNavigator);
     api.writeTmpFile({
       path: 'plugin-locale/localeExports.ts',
       content: Mustache.render(localeExportsTpl, {
