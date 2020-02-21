@@ -8,21 +8,23 @@ import {
   getMomentLocale,
 } from './utils';
 
-interface IOpts {
+interface ILocaleConfig {
   default?: string;
   baseNavigator?: boolean;
   antd?: boolean;
   baseSeparator?: string;
 }
 
-type ILocaleOpts = IOpts;
-
-export default (api: IApi, opts: ILocaleOpts = {}) => {
+export default (api: IApi) => {
   const {
     paths,
     utils: { Mustache, lodash, winPath },
     userConfig = {},
   } = api;
+
+  if (!userConfig.locale) {
+    return;
+  }
 
   api.describe({
     key: 'locale',
@@ -33,21 +35,12 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
     },
   });
 
-  const localeFolder = userConfig?.singular ? 'locale' : 'locales';
-  const { baseSeparator = '-' } = opts;
-  const defaultLocale = opts.default || `zh${baseSeparator}CN`;
-  const [lang, country] = defaultLocale?.split(baseSeparator) || [];
-
-  const localeList = getLocaleList({
-    localeFolder,
-    separator: baseSeparator,
-    absSrcPath: paths.absSrcPath,
-    absPagesPath: paths.absPagesPath,
-  });
-
   // 生成临时文件
   api.onGenerateFiles(() => {
     const localeTpl = readFileSync(join(__dirname, 'locale.tpl'), 'utf-8');
+    const { baseSeparator = '-' } = api.config.locale;
+    const defaultLocale = api.config.locale?.default || `zh${baseSeparator}CN`;
+    const [lang, country] = defaultLocale?.split(baseSeparator) || [];
 
     api.writeTmpFile({
       content: Mustache.render(localeTpl, {
@@ -63,6 +56,12 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
       join(__dirname, 'localeExports.tpl'),
       'utf-8',
     );
+    const localeList = getLocaleList({
+      localeFolder: api.config?.singular ? 'locale' : 'locales',
+      separator: baseSeparator,
+      absSrcPath: paths.absSrcPath,
+      absPagesPath: paths.absPagesPath,
+    });
     api.writeTmpFile({
       path: 'plugin-locale/localeExports.ts',
       content: Mustache.render(localeExportsTpl, {
@@ -97,7 +96,16 @@ export default (api: IApi, opts: ILocaleOpts = {}) => {
   );
 
   // watch locale files
-  api.addTmpGenerateWatcherPaths(() => exactLocalePaths(localeList));
+  api.addTmpGenerateWatcherPaths(() => {
+    const { baseSeparator = '-' } = api.config.locale;
+    const localeList = getLocaleList({
+      localeFolder: api.config?.singular ? 'locale' : 'locales',
+      separator: baseSeparator,
+      absSrcPath: paths.absSrcPath,
+      absPagesPath: paths.absPagesPath,
+    });
+    return exactLocalePaths(localeList);
+  });
 
   api.addUmiExports(() => {
     return {
