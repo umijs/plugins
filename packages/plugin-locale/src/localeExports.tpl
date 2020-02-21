@@ -10,14 +10,15 @@ export * from '{{{ reactIntlPkgPath }}}';
 
 let g_intl: IntlShape;
 
-const localeInfo = {
+export const localeInfo = {
   {{#LocaleList}}
   '{{name}}': {
     messages: {
       {{#paths}}...((locale) => locale.__esModule ? locale.default : locale)(require('{{{.}}}')),{{/paths}}
     },
     locale: '{{name}}',
-    momentLocale: '{{MomentLocale}}',
+    momentLocale: '{{momentLocale}}',
+    momentLocalePath: '{{momentLocalePath}}',
   },
   {{/LocaleList}}
 };

@@ -11,21 +11,39 @@ export interface IGetLocaleFileListOpts {
   absPagesPath?: string;
 }
 
-export const getMomentLocale = (lang: string, country: string) => {
+export const getMomentLocale = (
+  lang: string,
+  country: string,
+): { momentLocale: string; momentLocalePath: string } => {
   const momentLocation = require
     .resolve('moment/locale/zh-cn')
     .replace(/zh\-cn\.js$/, '');
+
+  // not have en-US using en
+  if (lang === 'en' && country?.toLocaleLowerCase() === 'us') {
+    return {
+      momentLocalePath: '',
+      momentLocale: 'en',
+    };
+  }
   if (
     existsSync(
-      join(momentLocation, `${lang}-${country.toLocaleLowerCase()}.js`),
+      join(momentLocation, `${lang}-${country?.toLocaleLowerCase?.()}.js`),
     )
   ) {
-    return `${lang}-${country.toLocaleLowerCase()}`;
+    const momentLocale = `${lang}-${country?.toLocaleLowerCase?.()}`;
+    return {
+      momentLocalePath: require.resolve(`moment/locale/${momentLocale}`),
+      momentLocale,
+    };
   }
   if (existsSync(join(momentLocation, `${lang}.js`))) {
-    return lang;
+    return {
+      momentLocalePath: require.resolve(`moment/locale/${lang}`),
+      momentLocale: lang,
+    };
   }
-  return '';
+  return { momentLocalePath: '', momentLocale: '' };
 };
 
 export interface IGetLocaleFileListResult {
@@ -34,6 +52,7 @@ export interface IGetLocaleFileListResult {
   name: string;
   paths: string[];
   momentLocale: string;
+  momentLocalePath: string;
 }
 
 export const getLocaleList = (
@@ -77,13 +96,15 @@ export const getLocaleList = (
   const groups = lodash.groupBy(localeFiles, 'name');
 
   return Object.keys(groups).map(name => {
-    const [lang, country = lang.toUpperCase()] = name.split(separator);
+    const [lang, country = ''] = name.split(separator);
+    const { momentLocalePath, momentLocale } = getMomentLocale(lang, country);
     return {
       lang,
       name,
       country,
       paths: groups[name].map(item => winPath(item.path)),
-      momentLocale: getMomentLocale(lang, country),
+      momentLocale,
+      momentLocalePath,
     };
   });
 };

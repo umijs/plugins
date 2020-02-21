@@ -90,10 +90,16 @@ test('singular', async () => {
   expect(container.querySelector('h1')?.textContent).toEqual(
     'Current language:zh-CN',
   );
+  expect(container.querySelector('#moment')?.textContent).toEqual(
+    '2020年3月21日',
+  );
 
   fireEvent.click(getByText('en-US'));
   expect(container.querySelector('h1')?.textContent).toEqual(
     'Current language:en-US',
+  );
+  expect(container.querySelector('#moment')?.textContent).toEqual(
+    'March 21, 2020',
   );
   expect(container.querySelector('button')?.textContent).toEqual(
     'Hello Traveler',
@@ -103,6 +109,9 @@ test('singular', async () => {
   expect(container.querySelector('h1')?.textContent).toEqual(
     'Current language:zh-CN',
   );
+  expect(container.querySelector('#moment')?.textContent).toEqual(
+    '2020年3月21日',
+  );
   expect(container.querySelector('button')?.textContent).toEqual(
     '你好 Traveler',
   );
@@ -111,6 +120,9 @@ test('singular', async () => {
   expect(container.querySelector('h1')?.textContent).toEqual(
     'Current language:zh-TW',
   );
+  expect(container.querySelector('#moment')?.textContent).toEqual(
+    '2020年3月21日',
+  );
   expect(container.querySelector('button')?.textContent).toEqual(
     '妳好 Traveler',
   );
@@ -118,6 +130,9 @@ test('singular', async () => {
   fireEvent.click(getByText('sk'));
   expect(container.querySelector('h1')?.textContent).toEqual(
     'Current language:sk',
+  );
+  expect(container.querySelector('#moment')?.textContent).toEqual(
+    '21. marec 2020',
   );
   expect(container.querySelector('button')?.textContent).toEqual('sk Traveler');
 });

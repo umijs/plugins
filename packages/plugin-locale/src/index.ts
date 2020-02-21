@@ -1,7 +1,8 @@
 import { IApi } from 'umi';
 import { join, dirname } from 'path';
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import {
+  IGetLocaleFileListResult,
   getLocaleList,
   isNeedPolyfill,
   exactLocalePaths,
@@ -34,7 +35,7 @@ export default (api: IApi) => {
     },
   });
 
-  const getList = () => {
+  const getList = (): IGetLocaleFileListResult[] => {
     return getLocaleList({
       localeFolder: api.config?.singular ? 'locale' : 'locales',
       separator: api.config.locale?.baseSeparator || '-',
@@ -49,14 +50,21 @@ export default (api: IApi) => {
     const { baseSeparator = '-', baseNavigator = true } = api.config
       .locale as ILocaleConfig;
     const defaultLocale = api.config.locale?.default || `zh${baseSeparator}CN`;
-    const [lang, country] = defaultLocale?.split(baseSeparator) || [];
+
+    const localeList = getList();
+    const momentLocalePaths = localeList
+      .map(({ momentLocalePath }) => momentLocalePath)
+      .filter(path => path);
 
     api.writeTmpFile({
       content: Mustache.render(localeTpl, {
+        MomentModule: momentLocalePaths.length
+          ? dirname(require.resolve('moment/package'))
+          : '',
+        MomentLocalePaths: momentLocalePaths,
         BaseSeparator: baseSeparator,
         DefaultLocale: defaultLocale,
         DefaultLang: defaultLocale,
-        DefaultMomentLocale: getMomentLocale(lang, country),
       }),
       path: 'plugin-locale/locale.tsx',
     });
@@ -65,7 +73,6 @@ export default (api: IApi) => {
       join(__dirname, 'localeExports.tpl'),
       'utf-8',
     );
-    const localeList = getList();
     api.writeTmpFile({
       path: 'plugin-locale/localeExports.ts',
       content: Mustache.render(localeExportsTpl, {

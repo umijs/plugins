@@ -1,6 +1,12 @@
 import React from 'react';
 import EventEmitter from 'events';
-import { RawIntlProvider, getLocale, setIntl, getIntl } from './localeExports';
+{{#MomentModule}}
+import moment from '{{{ MomentModule }}}';
+{{/MomentModule}}
+{{#MomentLocalePaths}}
+import '{{{.}}}';
+{{/MomentLocalePaths}}
+import { RawIntlProvider, getLocale, setIntl, getIntl, localeInfo } from './localeExports';
 
 export const event = new EventEmitter();
 event.setMaxListeners(5);
@@ -8,14 +14,24 @@ export const LANG_CHANGE_EVENT = Symbol('LANG_CHANGE');
 
 export function _onCreate() {
   const locale = getLocale();
+  {{#MomentModule}}
+  if (localeInfo[locale]?.momentLocale && moment?.locale) {
+    moment.locale(localeInfo[locale].momentLocale);
+  }
+  {{/MomentModule}}
   setIntl(locale);
 }
 
 export const _LocaleContainer = props => {
   const [intl, setContainerIntl] = React.useState(() => getIntl());
 
-  const handleLangChange = () => {
-    setContainerIntl(getIntl());
+  const handleLangChange = (locale) => {
+    {{#MomentModule}}
+    if (localeInfo[locale]?.momentLocale && moment?.locale) {
+      moment.locale(localeInfo[locale].momentLocale);
+    }
+    {{/MomentModule}}
+    setContainerIntl(getIntl(locale));
   };
 
   React.useLayoutEffect(() => {
