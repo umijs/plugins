@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/umijs/umi-plugin-qiankun/compare/@umijs/plugin-qiankun@2.0.0...@umijs/plugin-qiankun@2.0.1) (2020-02-21)
+
+**Note:** Version bump only for package @umijs/plugin-qiankun
+
 # [2.0.0](https://github.com/umijs/umi-plugin-qiankun/compare/@umijs/plugin-qiankun@2.0.0-alpha.1...@umijs/plugin-qiankun@2.0.0) (2020-02-19)
 
 ### Bug Fixes
