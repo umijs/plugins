@@ -46,22 +46,28 @@ export default (api: IApi) => {
 
   // 生成临时文件
   api.onGenerateFiles(() => {
-    const localeTpl = readFileSync(join(__dirname, 'locale.tpl'), 'utf-8');
-    const { baseSeparator = '-', baseNavigator = true } = api.config
+    const localeTpl = readFileSync(
+      join(__dirname, 'templates', 'locale.tpl'),
+      'utf-8',
+    );
+    const { baseSeparator = '-', baseNavigator = true, antd } = api.config
       .locale as ILocaleConfig;
     const defaultLocale = api.config.locale?.default || `zh${baseSeparator}CN`;
 
     const localeList = getList();
-    const momentLocalePaths = localeList
-      .map(({ momentLocalePath }) => momentLocalePath)
-      .filter(path => path);
+    const momentLocales = localeList
+      .map(({ momentLocale }) => momentLocale)
+      .filter(locale => locale);
+
+    const antdLocales = localeList
+      .map(({ antdLocale }) => antdLocale)
+      .filter(locale => locale);
 
     api.writeTmpFile({
       content: Mustache.render(localeTpl, {
-        MomentModule: momentLocalePaths.length
-          ? dirname(require.resolve('moment/package'))
-          : '',
-        MomentLocalePaths: momentLocalePaths,
+        MomentLocales: momentLocales,
+        Antd: !!antd,
+        AntdLocales: antdLocales,
         BaseSeparator: baseSeparator,
         DefaultLocale: defaultLocale,
         DefaultLang: defaultLocale,
@@ -70,7 +76,7 @@ export default (api: IApi) => {
     });
 
     const localeExportsTpl = readFileSync(
-      join(__dirname, 'localeExports.tpl'),
+      join(__dirname, 'templates', 'localeExports.tpl'),
       'utf-8',
     );
     api.writeTmpFile({
@@ -79,6 +85,7 @@ export default (api: IApi) => {
         BaseSeparator: baseSeparator,
         BaseNavigator: baseNavigator,
         LocaleList: localeList,
+        Antd: !!antd,
         DefaultLocale: JSON.stringify(defaultLocale),
         warningPkgPath: winPath(require.resolve('warning')),
         // react-intl main use `dist/index.js`
@@ -89,7 +96,10 @@ export default (api: IApi) => {
       }),
     });
     // runtime.tsx
-    const runtimeTpl = readFileSync(join(__dirname, 'runtime.tpl'), 'utf-8');
+    const runtimeTpl = readFileSync(
+      join(__dirname, 'templates', 'runtime.tpl'),
+      'utf-8',
+    );
     api.writeTmpFile({
       path: 'plugin-locale/runtime.tsx',
       content: Mustache.render(runtimeTpl, {}),

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { DatePicker } from 'antd';
 import moment from 'moment';
+import zhTW from 'antd/es/locale/zh_TW';
 import { useIntl, getLocale, addLocale, getAllLocales, setLocale } from '../.umi-test/plugin-locale/localeExports';
 
 export default function() {
@@ -11,6 +13,9 @@ export default function() {
     // Dynamically add new languages
     addLocale('zh-TW', {
       name: '妳好 {name}',
+    }, {
+      momentLocale: 'zh-tw',
+      antd: zhTW,
     });
     // refresh the list
     setList(getAllLocales());
@@ -19,6 +24,7 @@ export default function() {
   return (
     <div>
       <h1>Current language:{locale}</h1>
+      <DatePicker />
       <p id="moment">{moment().set({
               year: 2020,
               month: 2,

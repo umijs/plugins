@@ -90,6 +90,9 @@ test('singular', async () => {
   expect(container.querySelector('h1')?.textContent).toEqual(
     'Current language:zh-CN',
   );
+  expect(
+    container.querySelector('.ant-picker-input > input')?.placeholder,
+  ).toEqual('请选择日期');
   expect(container.querySelector('#moment')?.textContent).toEqual(
     '2020年3月21日',
   );
@@ -98,6 +101,9 @@ test('singular', async () => {
   expect(container.querySelector('h1')?.textContent).toEqual(
     'Current language:en-US',
   );
+  expect(
+    container.querySelector('.ant-picker-input > input')?.placeholder,
+  ).toEqual('Select date');
   expect(container.querySelector('#moment')?.textContent).toEqual(
     'March 21, 2020',
   );
@@ -109,6 +115,9 @@ test('singular', async () => {
   expect(container.querySelector('h1')?.textContent).toEqual(
     'Current language:zh-CN',
   );
+  expect(
+    container.querySelector('.ant-picker-input > input')?.placeholder,
+  ).toEqual('请选择日期');
   expect(container.querySelector('#moment')?.textContent).toEqual(
     '2020年3月21日',
   );
@@ -120,6 +129,9 @@ test('singular', async () => {
   expect(container.querySelector('h1')?.textContent).toEqual(
     'Current language:zh-TW',
   );
+  expect(
+    container.querySelector('.ant-picker-input > input')?.placeholder,
+  ).toEqual('請選擇日期');
   expect(container.querySelector('#moment')?.textContent).toEqual(
     '2020年3月21日',
   );
@@ -131,6 +143,9 @@ test('singular', async () => {
   expect(container.querySelector('h1')?.textContent).toEqual(
     'Current language:sk',
   );
+  expect(
+    container.querySelector('.ant-picker-input > input')?.placeholder,
+  ).toEqual('Vybrať dátum');
   expect(container.querySelector('#moment')?.textContent).toEqual(
     '21. marec 2020',
   );

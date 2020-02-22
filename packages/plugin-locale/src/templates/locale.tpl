@@ -1,11 +1,15 @@
 import React from 'react';
 import EventEmitter from 'events';
-{{#MomentModule}}
-import moment from '{{{ MomentModule }}}';
-{{/MomentModule}}
-{{#MomentLocalePaths}}
-import '{{{.}}}';
-{{/MomentLocalePaths}}
+{{#Antd}}
+import { ConfigProvider } from 'antd';
+{{/Antd}}
+
+{{#MomentLocales.length}}
+import moment from 'moment';
+{{#MomentLocales}}
+import 'moment/locale/{{.}}';
+{{/MomentLocales}}
+{{/MomentLocales.length}}
 import { RawIntlProvider, getLocale, setIntl, getIntl, localeInfo } from './localeExports';
 
 export const event = new EventEmitter();
@@ -14,24 +18,26 @@ export const LANG_CHANGE_EVENT = Symbol('LANG_CHANGE');
 
 export function _onCreate() {
   const locale = getLocale();
-  {{#MomentModule}}
-  if (localeInfo[locale]?.momentLocale && moment?.locale) {
-    moment.locale(localeInfo[locale].momentLocale);
+  {{#MomentLocales.length}}
+  if (moment?.locale) {
+    moment.locale(localeInfo[locale]?.momentLocale || 'en');
   }
-  {{/MomentModule}}
+  {{/MomentLocales.length}}
   setIntl(locale);
 }
 
 export const _LocaleContainer = props => {
   const [intl, setContainerIntl] = React.useState(() => getIntl());
+  const [locale, setLocale] = React.useState(() => getLocale());
 
   const handleLangChange = (locale) => {
-    {{#MomentModule}}
-    if (localeInfo[locale]?.momentLocale && moment?.locale) {
-      moment.locale(localeInfo[locale].momentLocale);
+    {{#MomentLocales.length}}
+    if (moment?.locale) {
+      moment.locale(localeInfo[locale]?.momentLocale || 'en');
     }
-    {{/MomentModule}}
+    {{/MomentLocales.length}}
     setContainerIntl(getIntl(locale));
+    setLocale(locale);
   };
 
   React.useLayoutEffect(() => {
@@ -40,6 +46,14 @@ export const _LocaleContainer = props => {
       event.off(LANG_CHANGE_EVENT, handleLangChange);
     };
   }, []);
+
+  {{#Antd}}
+  return (
+    <ConfigProvider locale={localeInfo[locale].antd}>
+      <RawIntlProvider value={intl}>{props.children}</RawIntlProvider>
+    </ConfigProvider>
+  )
+  {{/Antd}}
 
   return <RawIntlProvider value={intl}>{props.children}</RawIntlProvider>;
 };

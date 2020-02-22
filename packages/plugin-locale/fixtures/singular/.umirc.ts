@@ -9,6 +9,7 @@ export default {
   singular: true,
   locale: {
     baseNavigator: false,
+    antd: true,
     default: 'zh-CN',
   },
   mountElementId: '',

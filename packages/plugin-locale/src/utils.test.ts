@@ -23,6 +23,7 @@ describe('utils', () => {
           lang: 'en',
           country: 'US',
           name: 'en_US',
+          antdLocale: 'en_US',
           paths: [
             `${absSrcPath}/locales/en_US.js`,
             `${absPagesPath}/temp/locales/en_US.js`,
@@ -31,12 +32,13 @@ describe('utils', () => {
         },
         {
           lang: 'sk',
-          country: 'SK',
+          country: '',
           name: 'sk',
           paths: [
             `${absSrcPath}/locales/sk.js`,
             `${absPagesPath}/temp/locales/sk.js`,
           ],
+          antdLocale: 'sk_SK',
           momentLocale: 'sk',
         },
         {
@@ -48,6 +50,7 @@ describe('utils', () => {
             `${absPagesPath}/temp/locales/zh_CN.js`,
           ],
           momentLocale: 'zh-cn',
+          antdLocale: 'zh_CN',
         },
       ]);
 
@@ -80,6 +83,7 @@ describe('utils', () => {
           lang: 'en',
           country: 'US',
           name: 'en-US',
+          antdLocale: 'en_US',
           paths: [
             `${absSrcPath}/locale/en-US.js`,
             `${absPagesPath}/temp/locale/en-US.js`,
@@ -88,12 +92,13 @@ describe('utils', () => {
         },
         {
           lang: 'sk',
-          country: 'SK',
+          country: '',
           name: 'sk',
           paths: [
             `${absSrcPath}/locale/sk.json`,
             `${absPagesPath}/temp/locale/sk.json`,
           ],
+          antdLocale: 'sk_SK',
           momentLocale: 'sk',
         },
         {
@@ -104,6 +109,7 @@ describe('utils', () => {
             `${absSrcPath}/locale/zh-CN.ts`,
             `${absPagesPath}/temp/locale/zh-CN.ts`,
           ],
+          antdLocale: 'zh_CN',
           momentLocale: 'zh-cn',
         },
       ]);

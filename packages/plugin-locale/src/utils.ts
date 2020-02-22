@@ -14,18 +14,11 @@ export interface IGetLocaleFileListOpts {
 export const getMomentLocale = (
   lang: string,
   country: string,
-): { momentLocale: string; momentLocalePath: string } => {
+): { momentLocale: string } => {
   const momentLocation = require
     .resolve('moment/locale/zh-cn')
     .replace(/zh\-cn\.js$/, '');
 
-  // not have en-US using en
-  if (lang === 'en' && country?.toLocaleLowerCase() === 'us') {
-    return {
-      momentLocalePath: '',
-      momentLocale: 'en',
-    };
-  }
   if (
     existsSync(
       join(momentLocation, `${lang}-${country?.toLocaleLowerCase?.()}.js`),
@@ -33,17 +26,15 @@ export const getMomentLocale = (
   ) {
     const momentLocale = `${lang}-${country?.toLocaleLowerCase?.()}`;
     return {
-      momentLocalePath: require.resolve(`moment/locale/${momentLocale}`),
       momentLocale,
     };
   }
   if (existsSync(join(momentLocation, `${lang}.js`))) {
     return {
-      momentLocalePath: require.resolve(`moment/locale/${lang}`),
       momentLocale: lang,
     };
   }
-  return { momentLocalePath: '', momentLocale: '' };
+  return { momentLocale: '' };
 };
 
 export interface IGetLocaleFileListResult {
@@ -51,8 +42,8 @@ export interface IGetLocaleFileListResult {
   country: string;
   name: string;
   paths: string[];
+  antdLocale: string;
   momentLocale: string;
-  momentLocalePath: string;
 }
 
 export const getLocaleList = (
@@ -97,14 +88,14 @@ export const getLocaleList = (
 
   return Object.keys(groups).map(name => {
     const [lang, country = ''] = name.split(separator);
-    const { momentLocalePath, momentLocale } = getMomentLocale(lang, country);
+    const { momentLocale } = getMomentLocale(lang, country);
     return {
       lang,
       name,
       country,
+      antdLocale: `${lang}_${(country || lang).toLocaleUpperCase()}`,
       paths: groups[name].map(item => winPath(item.path)),
       momentLocale,
-      momentLocalePath,
     };
   });
 };
