@@ -74,9 +74,11 @@ Add languages dynamically. After adding languages, you can get the list by `getA
 
 - name The key of the language. E.g zh-TW
 - message A list of ids for the language. E.g:{ // id 列表 name: '妳好，{name}', }
-- momentLocale Corresponding moment configuration
+- extraLocales Corresponding `momentLocale` and `antd` configuration
 
 ```tsx
+import zhTW from 'antd/es/locale/zh_TW';
+
 // Adding new languages dynamically
 addLocale(
   // name
@@ -86,8 +88,11 @@ addLocale(
     // id 列表
     name: '妳好，{name}',
   },
-  // momentLocale
-  '',
+  // extraLocales
+  {
+    momentLocale: 'zh-tw',
+    antd: zhTW,
+  },
 );
 ```
 
