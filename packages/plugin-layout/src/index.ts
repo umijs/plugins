@@ -1,11 +1,13 @@
 import { IApi, utils } from 'umi';
 import { join } from 'path';
 import getLayoutContent from './utils/getLayoutContent';
-import { LayoutConfig } from './types/interface.d';
+import { LayoutConfig } from './types';
 
 const DIR_NAME = 'plugin-layout';
 
 export default (api: IApi) => {
+  if (!api.userConfig.layout) return;
+
   api.describe({
     key: 'layout',
     config: {

@@ -1,4 +1,4 @@
-import { IRoute } from 'umi-types';
+import { IRoute } from 'umi';
 
 interface Error {
   componentStack?: string;
