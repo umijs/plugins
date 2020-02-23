@@ -29,74 +29,100 @@ export default function(api: IApi) {
   });
 
   let hasUtil: boolean, hasService: boolean, newFileName: string;
-  api.beforeBlockWriting(({ sourcePath, blockPath }) => {
-    const utilsPath = join(paths.absSrcPath || '', `utils`);
-    hasUtil =
-      existsSync(join(utilsPath, 'request.js')) ||
-      existsSync(join(utilsPath, 'request.ts'));
-    hasService = existsSync(join(sourcePath, './src/service.js'));
-    newFileName = blockPath.replace(/^\//, '').replace(/\//g, '');
-    logger.debug(
-      'beforeBlockWriting... hasUtil:',
-      hasUtil,
-      'hasService:',
-      hasService,
-      'newFileName:',
-      newFileName,
-    );
+  api.registerMethod({
+    name: 'beforeBlockWriting',
+    exitsError: false,
+    fn: ({
+      sourcePath,
+      blockPath,
+    }: {
+      sourcePath: string;
+      blockPath: string;
+    }) => {
+      const utilsPath = join(paths.absSrcPath || '', `utils`);
+      hasUtil =
+        existsSync(join(utilsPath, 'request.js')) ||
+        existsSync(join(utilsPath, 'request.ts'));
+      hasService = existsSync(join(sourcePath, './src/service.js'));
+      newFileName = blockPath.replace(/^\//, '').replace(/\//g, '');
+      logger.debug(
+        'beforeBlockWriting... hasUtil:',
+        hasUtil,
+        'hasService:',
+        hasService,
+        'newFileName:',
+        newFileName,
+      );
+    },
   });
 
-  api._modifyBlockTarget((target, { sourceName }) => {
-    const { proBlock = {} } = api.config;
-    if (sourceName === '_mock.js' && proBlock.moveMock !== false && paths.cwd) {
-      // src/pages/test/t/_mock.js -> mock/test-t.js
-      return join(paths.cwd, 'mock', `${newFileName}.js`);
-    }
-    if (
-      sourceName === 'service.js' &&
-      hasService &&
-      proBlock.moveService !== false &&
-      paths.absSrcPath
-    ) {
-      // src/pages/test/t/service.js -> services/test.t.js
-      return join(
-        paths.absSrcPath,
-        config.singular ? 'service' : 'services',
-        `${newFileName}.js`,
-      );
-    }
-    return target;
+  api.registerMethod({
+    name: '_modifyBlockTarget',
+    exitsError: false,
+    fn: (target: string, { sourceName }: { sourceName: string }) => {
+      const { proBlock = {} } = api.config;
+      if (
+        sourceName === '_mock.js' &&
+        proBlock.moveMock !== false &&
+        paths.cwd
+      ) {
+        // src/pages/test/t/_mock.js -> mock/test-t.js
+        return join(paths.cwd, 'mock', `${newFileName}.js`);
+      }
+      if (
+        sourceName === 'service.js' &&
+        hasService &&
+        proBlock.moveService !== false &&
+        paths.absSrcPath
+      ) {
+        // src/pages/test/t/service.js -> services/test.t.js
+        return join(
+          paths.absSrcPath,
+          config.singular ? 'service' : 'services',
+          `${newFileName}.js`,
+        );
+      }
+      return target;
+    },
   });
 
   // umi-request -> @utils/request
   // src/pages/test/t/service.js -> services/test.t.js
-  api._modifyBlockFile(content => {
-    const { proBlock = {} } = api.config;
-    if (hasUtil && proBlock.modifyRequest !== false) {
-      content = content.replace(
-        /[\'\"]umi\-request[\'\"]/g,
-        `'@/util${config.singular ? '' : 's'}/request'`,
-      );
-    }
-    if (hasService && proBlock.moveService !== false) {
-      content = content.replace(
-        /[\'\"][\.\/]+service[\'\"]/g,
-        `'@/service${config.singular ? '' : 's'}/${newFileName}'`,
-      );
-    }
-    return content;
+  api.registerMethod({
+    name: '_modifyBlockFile',
+    exitsError: false,
+    fn: (content: string) => {
+      const { proBlock = {} } = api.config;
+      if (hasUtil && proBlock.modifyRequest !== false) {
+        content = content.replace(
+          /[\'\"]umi\-request[\'\"]/g,
+          `'@/util${config.singular ? '' : 's'}/request'`,
+        );
+      }
+      if (hasService && proBlock.moveService !== false) {
+        content = content.replace(
+          /[\'\"][\.\/]+service[\'\"]/g,
+          `'@/service${config.singular ? '' : 's'}/${newFileName}'`,
+        );
+      }
+      return content;
+    },
   });
 
-  api._modifyBlockNewRouteConfig(memo => {
-    const { proBlock = {} } = api.config;
-    if (proBlock.autoAddMenu === false) {
-      return memo;
-    }
-    const icon = memo.path.indexOf('/') === 0 ? 'smile' : undefined;
-    return {
-      name: memo.name || memo.path.split('/').pop(),
-      icon,
-      ...memo,
-    };
+  api.registerMethod({
+    name: '_modifyBlockNewRouteConfig',
+    exitsError: false,
+    fn: (memo: any) => {
+      const { proBlock = {} } = api.config;
+      if (proBlock.autoAddMenu === false) {
+        return memo;
+      }
+      const icon = memo.path.indexOf('/') === 0 ? 'smile' : undefined;
+      return {
+        name: memo.name || memo.path.split('/').pop(),
+        icon,
+        ...memo,
+      };
+    },
   });
 }
