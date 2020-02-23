@@ -1,6 +1,6 @@
-export default (
-  relEntryFile: string,
-) => `import { useState, useEffect } from 'react';
+export default (relEntryFile: string) =>
+  relEntryFile
+    ? `import { useState, useEffect } from 'react';
 import { Models } from '../../plugin-model/useModel';
 import * as app from '@/app';
 
@@ -43,4 +43,5 @@ export default () => {
     refresh,
   }
 }
-`;
+`
+    : 'export default () => ({ loading: false, refresh: () => {} })';
