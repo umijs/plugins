@@ -11,21 +11,30 @@ export interface IGetLocaleFileListOpts {
   absPagesPath?: string;
 }
 
-export const getMomentLocale = (lang: string, country: string) => {
+export const getMomentLocale = (
+  lang: string,
+  country: string,
+): { momentLocale: string } => {
   const momentLocation = require
     .resolve('moment/locale/zh-cn')
     .replace(/zh\-cn\.js$/, '');
+
   if (
     existsSync(
-      join(momentLocation, `${lang}-${country.toLocaleLowerCase()}.js`),
+      join(momentLocation, `${lang}-${country?.toLocaleLowerCase?.()}.js`),
     )
   ) {
-    return `${lang}-${country.toLocaleLowerCase()}`;
+    const momentLocale = `${lang}-${country?.toLocaleLowerCase?.()}`;
+    return {
+      momentLocale,
+    };
   }
   if (existsSync(join(momentLocation, `${lang}.js`))) {
-    return lang;
+    return {
+      momentLocale: lang,
+    };
   }
-  return '';
+  return { momentLocale: '' };
 };
 
 export interface IGetLocaleFileListResult {
@@ -33,6 +42,7 @@ export interface IGetLocaleFileListResult {
   country: string;
   name: string;
   paths: string[];
+  antdLocale: string;
   momentLocale: string;
 }
 
@@ -77,13 +87,15 @@ export const getLocaleList = (
   const groups = lodash.groupBy(localeFiles, 'name');
 
   return Object.keys(groups).map(name => {
-    const [lang, country = lang.toUpperCase()] = name.split(separator);
+    const [lang, country = ''] = name.split(separator);
+    const { momentLocale } = getMomentLocale(lang, country);
     return {
       lang,
       name,
       country,
+      antdLocale: `${lang}_${(country || lang).toLocaleUpperCase()}`,
       paths: groups[name].map(item => winPath(item.path)),
-      momentLocale: getMomentLocale(lang, country),
+      momentLocale,
     };
   });
 };

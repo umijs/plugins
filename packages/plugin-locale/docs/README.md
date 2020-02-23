@@ -76,9 +76,11 @@ export default function() {
 
 - name 语言的 key。例如 zh-TW
 - message 语言的 id 列表。 例如：{ // id 列表 name: '妳好，{name}', }
-- momentLocale 相应的 moment 配置
+- extraLocales 相应的 `momentLocale` 和 `antd` 配置
 
 ```tsx
+import zhTW from 'antd/es/locale/zh_TW';
+
 // 动态增加新语言
 addLocale(
   'zh-TW',
@@ -86,7 +88,10 @@ addLocale(
     // id 列表
     name: '妳好，{name}',
   },
-  '',
+  {
+    momentLocale: 'zh-tw',
+    antd: zhTW,
+  },
 );
 ```
 

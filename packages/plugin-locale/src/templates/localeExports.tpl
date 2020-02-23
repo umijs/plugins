@@ -10,14 +10,15 @@ export * from '{{{ reactIntlPkgPath }}}';
 
 let g_intl: IntlShape;
 
-const localeInfo = {
+export const localeInfo = {
   {{#LocaleList}}
   '{{name}}': {
     messages: {
       {{#paths}}...((locale) => locale.__esModule ? locale.default : locale)(require('{{{.}}}')),{{/paths}}
     },
     locale: '{{name}}',
-    momentLocale: '{{MomentLocale}}',
+    {{#Antd}}antd: require('antd/{{#UseSSR}}lib{{/UseSSR}}{{^UseSSR}}es{{/UseSSR}}/locale/{{antdLocale}}').default,{{/Antd}}
+    momentLocale: '{{momentLocale}}',
   },
   {{/LocaleList}}
 };
@@ -26,12 +27,12 @@ const localeInfo = {
  * 增加一个新的国际化语言
  * @param name 语言的 key
  * @param messages 对应的枚举对象
- * @param momentLocale moment 的语言设置
+ * @param extraLocale momentLocale, antd 国际化
  */
 export const addLocale = (
   name: string,
   messages: Object,
-  momentLocale = '',
+  extraLocales: Object,
 ) => {
   if (!name) {
     return;
@@ -41,10 +42,12 @@ export const addLocale = (
     ? Object.assign({}, localeInfo[name].messages, messages)
     : messages;
 
+  const { momentLocale, antd } = extraLocales || {};
   localeInfo[name] = {
     messages: mergeMessages,
     locale: name,
     momentLocale: momentLocale,
+    {{#Antd}}antd,{{/Antd}}
   };
 };
 
