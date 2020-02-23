@@ -16,13 +16,16 @@ const { winPath, getFile } = utils;
 export default (api: IApi) => {
   // 注册 getInitialState 方法
   api.addRuntimePluginKey(() => 'getInitialState');
-  api.addRuntimePlugin(() => winPath(join(__dirname, 'runtime')));
+
+  api.addRuntimePlugin(() => join(__dirname, 'runtime'));
+
   api.addUmiExports(() => [
     {
       exportAll: true,
-      source: winPath(`../${RELATIVE_EXPORT}`),
+      source: `../${RELATIVE_EXPORT}`,
     },
   ]);
+
   api.register({
     key: 'addExtraModels',
     fn: () => [
@@ -51,14 +54,15 @@ export default (api: IApi) => {
       path: winPath(join(DIR_NAME, 'Provider.tsx')),
       content: providerContent,
     });
+
     api.writeTmpFile({
       path: winPath(RELATIVE_EXPORT_PATH),
       content: getExportContent(RELATIVE_MODEL),
     });
+
     const relEntryFile = relative(api.paths.cwd!, entryFile || '');
-    console.log('1', relEntryFile);
     api.writeTmpFile({
-      path: winPath(RELATIVE_MODEL_PATH),
+      path: RELATIVE_MODEL_PATH,
       content: getModelContent(entryFile ? relEntryFile : ''),
     });
   });
