@@ -3,5 +3,11 @@ export default {
     '@umijs/plugin-blocks',
     require.resolve('../../plugin-pro-block/lib'),
   ],
-  proBlock: {},
+  proBlock: {
+    modifyRequest: true,
+    moveService: true,
+    moveMock: true,
+    moveService: true,
+    autoAddMenu: true,
+  },
 };

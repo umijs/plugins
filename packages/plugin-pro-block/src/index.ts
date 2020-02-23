@@ -5,7 +5,7 @@ import { existsSync } from 'fs';
 import { IApi } from 'umi';
 
 export default function(api: IApi) {
-  const { paths, config, logger } = api;
+  const { paths, logger } = api;
 
   if (!api.hasPlugins(['@umijs/plugin-blocks'])) {
     logger.error(
@@ -29,9 +29,8 @@ export default function(api: IApi) {
   });
 
   let hasUtil: boolean, hasService: boolean, newFileName: string;
-  api.registerMethod({
-    name: 'beforeBlockWriting',
-    exitsError: false,
+  api.register({
+    key: 'beforeBlockWriting',
     fn: ({
       sourcePath,
       blockPath,
@@ -56,29 +55,24 @@ export default function(api: IApi) {
     },
   });
 
-  api.registerMethod({
-    name: '_modifyBlockTarget',
-    exitsError: false,
+  api.register({
+    key: '_modifyBlockTarget',
     fn: (target: string, { sourceName }: { sourceName: string }) => {
       const { proBlock = {} } = api.config;
-      if (
-        sourceName === '_mock.js' &&
-        proBlock.moveMock !== false &&
-        paths.cwd
-      ) {
+      if (sourceName === '_mock.js' && proBlock.moveMock && paths.cwd) {
         // src/pages/test/t/_mock.js -> mock/test-t.js
         return join(paths.cwd, 'mock', `${newFileName}.js`);
       }
       if (
         sourceName === 'service.js' &&
         hasService &&
-        proBlock.moveService !== false &&
+        proBlock.moveService &&
         paths.absSrcPath
       ) {
         // src/pages/test/t/service.js -> services/test.t.js
         return join(
           paths.absSrcPath,
-          config.singular ? 'service' : 'services',
+          api.config.singular ? 'service' : 'services',
           `${newFileName}.js`,
         );
       }
@@ -88,33 +82,31 @@ export default function(api: IApi) {
 
   // umi-request -> @utils/request
   // src/pages/test/t/service.js -> services/test.t.js
-  api.registerMethod({
-    name: '_modifyBlockFile',
-    exitsError: false,
+  api.register({
+    key: '_modifyBlockFile',
     fn: (content: string) => {
       const { proBlock = {} } = api.config;
-      if (hasUtil && proBlock.modifyRequest !== false) {
+      if (hasUtil && proBlock.modifyRequest) {
         content = content.replace(
           /[\'\"]umi\-request[\'\"]/g,
-          `'@/util${config.singular ? '' : 's'}/request'`,
+          `'@/util${api.config.singular ? '' : 's'}/request'`,
         );
       }
-      if (hasService && proBlock.moveService !== false) {
+      if (hasService && proBlock.moveService) {
         content = content.replace(
           /[\'\"][\.\/]+service[\'\"]/g,
-          `'@/service${config.singular ? '' : 's'}/${newFileName}'`,
+          `'@/service${api.config.singular ? '' : 's'}/${newFileName}'`,
         );
       }
       return content;
     },
   });
 
-  api.registerMethod({
-    name: '_modifyBlockNewRouteConfig',
-    exitsError: false,
+  api.register({
+    key: '_modifyBlockNewRouteConfig',
     fn: (memo: any) => {
       const { proBlock = {} } = api.config;
-      if (proBlock.autoAddMenu === false) {
+      if (proBlock.autoAddMenu) {
         return memo;
       }
       const icon = memo.path.indexOf('/') === 0 ? 'smile' : undefined;
