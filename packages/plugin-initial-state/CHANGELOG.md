@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/umijs/plugins/compare/@umijs/plugin-initial-state@2.1.0...@umijs/plugin-initial-state@2.1.1) (2020-02-23)
+
+### Bug Fixes
+
+- app.ts does not exist ([#39](https://github.com/umijs/plugins/issues/39)) ([ae3b74d](https://github.com/umijs/plugins/commit/ae3b74da38da4bf2f5085aaae632dc85522dbda9))
+
 # 2.1.0 (2020-02-17)
 
 ### Bug Fixes
