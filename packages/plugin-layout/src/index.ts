@@ -6,12 +6,9 @@ import { LayoutConfig } from './types';
 const DIR_NAME = 'plugin-layout';
 
 export default (api: IApi) => {
-  if (!api.userConfig.layout) return;
-
   api.describe({
     key: 'layout',
     config: {
-      default: {},
       schema(joi) {
         return joi.object();
       },
@@ -21,9 +18,11 @@ export default (api: IApi) => {
 
   let layoutOpts: LayoutConfig = {};
 
-  api.addRuntimePluginKey(() => 'layout');
+  api.addRuntimePluginKey(() => (api.config.layout ? ['layout'] : []));
 
   api.onGenerateFiles(() => {
+    if (!api.config.layout) return;
+
     // apply default options
     const { name } = api.pkg;
     layoutOpts = {
@@ -55,11 +54,15 @@ export default (api: IApi) => {
     });
   });
 
-  api.modifyRoutes(routes => [
-    {
-      path: '/',
-      component: join(api.paths.absTmpPath || '', DIR_NAME, 'Layout.tsx'),
-      routes,
-    },
-  ]);
+  api.modifyRoutes(routes => {
+    return api.config.layout
+      ? [
+          {
+            path: '/',
+            component: join(api.paths.absTmpPath || '', DIR_NAME, 'Layout.tsx'),
+            routes,
+          },
+        ]
+      : routes;
+  });
 };
