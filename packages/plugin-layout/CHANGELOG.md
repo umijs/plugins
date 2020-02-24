@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.3.0...@umijs/plugin-layout@0.3.1) (2020-02-24)
+
+### Bug Fixes
+
+- **plugin-layout:** hot reload don't work when user changes the layout config ([6d504e2](https://github.com/umijs/plugins/commit/6d504e24deb48554e7ab9f431651be32b4cef49e))
+
 # [0.3.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.2.3...@umijs/plugin-layout@0.3.0) (2020-02-23)
 
 ### Features
