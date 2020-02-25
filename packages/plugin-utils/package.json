@@ -31,7 +31,7 @@
     "classnames": "^2.2.6",
     "debug": "^4.1.1",
     "js-cookie": "^2.2.1",
-    "lodash": "^4.17.15",
+    "lodash-es": "^4.17.15",
     "moment": "^2.24.0",
     "query-string": "^6.11.0",
     "react-helmet": "^5.2.1"
