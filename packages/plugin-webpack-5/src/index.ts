@@ -42,6 +42,9 @@ export default (api: IApi) => {
     // antd-pro 的依赖里，intl-messageformat 用了 jsnext:main
     memo.resolve!.mainFields = ['browser', 'module', 'jsnext:main', 'main'];
 
+    // polyfills
+    memo.resolve!.alias!.tty = require.resolve('tty-browserify');
+
     // cache
     memo.cache = {
       type: 'filesystem',
