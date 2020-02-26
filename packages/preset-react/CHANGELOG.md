@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.1.6...@umijs/preset-react@1.2.0) (2020-02-26)
+
+### Features
+
+- new umi plugin utils ([#47](https://github.com/umijs/plugins/issues/47)) ([b1173d7](https://github.com/umijs/plugins/commit/b1173d77d2b2b8290bc56a467d18b0bdd5416452))
+
 ## [1.1.6](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.1.5...@umijs/preset-react@1.1.6) (2020-02-24)
 
 **Note:** Version bump only for package @umijs/preset-react

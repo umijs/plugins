@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.2](https://github.com/umijs/plugins/compare/@umijs/plugin-initial-state@2.1.1...@umijs/plugin-initial-state@2.1.2) (2020-02-26)
+
+### Bug Fixes
+
+- **plugin-initial-state:** no path deps in runtime ([427dc32](https://github.com/umijs/plugins/commit/427dc329141d3fb367d60efe6849887cc9cba2d6))
+
 ## [2.1.1](https://github.com/umijs/plugins/compare/@umijs/plugin-initial-state@2.1.0...@umijs/plugin-initial-state@2.1.1) (2020-02-23)
 
 ### Bug Fixes

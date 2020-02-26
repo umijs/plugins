@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.2.0...@umijs/plugin-dva@0.3.0) (2020-02-26)
+
+### Bug Fixes
+
+- **plugin-dva:** config types ([81caca1](https://github.com/umijs/plugins/commit/81caca172913b3945ecbc9b3fb44b5cae2125eb0))
+
+### Features
+
+- following the DvaContainer lifecycle to create/destroy dva instance ([#48](https://github.com/umijs/plugins/issues/48)) ([7b75f7b](https://github.com/umijs/plugins/commit/7b75f7b5244b2eccc8d4a1adbdadf502fe58018f))
+
 # [0.2.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.1.2...@umijs/plugin-dva@0.2.0) (2020-02-18)
 
 ### Features
