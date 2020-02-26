@@ -6,7 +6,7 @@ import { useIntl, getLocale, addLocale, getAllLocales, setLocale } from '../.umi
 
 export default function() {
   const intl = useIntl();
-  const [list, setList] = useState(getAllLocales());
+  const list = getAllLocales();
   const locale = getLocale();
 
   useEffect(() => {
@@ -17,8 +17,6 @@ export default function() {
       momentLocale: 'zh-tw',
       antd: zhTW,
     });
-    // refresh the list
-    setList(getAllLocales());
   }, []);
 
   return (
