@@ -27,8 +27,8 @@ export function _onCreate() {
 }
 
 export const _LocaleContainer = props => {
-  const [intl, setContainerIntl] = React.useState(() => getIntl());
   const [locale, setLocale] = React.useState(() => getLocale());
+  const [intl, setContainerIntl] = React.useState(() => getIntl(locale, true));
 
   const handleLangChange = (locale) => {
     {{#MomentLocales.length}}
@@ -36,8 +36,8 @@ export const _LocaleContainer = props => {
       moment.locale(localeInfo[locale]?.momentLocale || 'en');
     }
     {{/MomentLocales.length}}
-    setContainerIntl(getIntl(locale));
     setLocale(locale);
+    setContainerIntl(getIntl(locale));
   };
 
   React.useLayoutEffect(() => {
@@ -49,7 +49,7 @@ export const _LocaleContainer = props => {
 
   {{#Antd}}
   return (
-    <ConfigProvider locale={localeInfo[locale].antd}>
+    <ConfigProvider locale={localeInfo[locale]?.antd}>
       <RawIntlProvider value={intl}>{props.children}</RawIntlProvider>
     </ConfigProvider>
   )
