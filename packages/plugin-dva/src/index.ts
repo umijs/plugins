@@ -128,11 +128,6 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
   );
   api.addRuntimePluginKey(() => (hasModels ? ['dva'] : []));
 
-  // Modify entry js
-  api.addEntryCodeAhead(() =>
-    hasModels ? `require('./plugin-dva/dva')._onCreate();`.trim() : '',
-  );
-
   // 有 dva 依赖时暂不导出
   // TODO: 处理有 dva 依赖的场景
   api.addUmiExports(() =>
