@@ -69,7 +69,7 @@ function useRequest<Item = any, U extends Item = any>(
 function useRequest(service: any, options: any = {}) {
   return useUmiRequest(service, {
     /*FRS*/ formatResult: res => res?.data /*FRE*/,
-    requestMehod: request,
+    requestMethod: request,
     ...options,
   });
 }

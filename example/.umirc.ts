@@ -13,11 +13,17 @@ export default defineConfig({
       component: './plugin-initial-state',
     },
     {
+      name: 'utils 测试',
+      path: '/utils',
+      component: './utils',
+    },
+    {
       name: '首页',
       path: '/',
       component: './index',
     },
   ],
+  locale: {},
   presets: [require.resolve('../packages/preset-react/lib')],
   // plugins: [require.resolve('../packages/plugin-webpack-5/lib')],
 });
