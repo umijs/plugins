@@ -44,7 +44,13 @@ export class _DvaContainer extends Component {
       app.unmodel(model.namespace);
     });
     app._models = [];
-    app = null;
+    try {
+      // 释放 app，for gc
+      // immer 场景 app 是 read-only 的，这里 try catch 一下
+      app = null;
+    } catch(e) {
+      console.error(e);
+    }
   }
 
   render() {
