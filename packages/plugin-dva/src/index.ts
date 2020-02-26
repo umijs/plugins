@@ -111,7 +111,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
 
   // Babel Plugin for HMR
   api.modifyBabelOpts(babelOpts => {
-    const hmr = (api.config as any).dva?.hmr;
+    const hmr = api.config.dva?.hmr;
     if (hmr) {
       const hmrOpts = lodash.isPlainObject(hmr) ? hmr : {};
       babelOpts.plugins.push([
