@@ -38,7 +38,6 @@
   "devDependencies": {
     "concurrently": "^4.1.2",
     "mockjs": "^1.0.1-beta3",
-    "np": "5",
     "umi-request": "^1.1.0"
   },
   "files": [

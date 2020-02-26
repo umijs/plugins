@@ -32,7 +32,7 @@
     "@formatjs/intl-relativetimeformat": "^4.5.7",
     "intl": "1.2.5",
     "moment": "2.x",
-    "react-intl": "3.11.0",
+    "react-intl": "3.12.0",
     "warning": "^4.0.3"
   },
   "devDependencies": {
