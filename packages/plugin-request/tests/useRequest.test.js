@@ -81,12 +81,12 @@ describe('normal request', () => {
       },
       errorMessage: 'test message',
     };
-    server.get('/test/failed', (req, res) => {
+    server.get('/test/failedurl', (req, res) => {
       res.send(rawData);
     });
 
     const { result, waitForValueToChange } = renderHook(() =>
-      useRequest(prefix('/test/failed')),
+      useRequest(prefix('/test/failedurl')),
     );
     await waitForValueToChange(() => result.current.error);
     expect(result.current.error.message).toEqual('test message');
