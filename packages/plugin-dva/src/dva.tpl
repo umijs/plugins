@@ -6,7 +6,7 @@ import { plugin, history } from '../core/umiExports';
 
 let app = null;
 
-export function _onCreate() {
+function _onCreate() {
   const runtimeDva = plugin.applyPlugins({
     key: 'dva',
     type: ApplyPluginsType.modify,
@@ -33,6 +33,20 @@ export function getApp() {
 }
 
 export class _DvaContainer extends Component {
+  constructor() {
+    super();
+    _onCreate();
+  }
+
+  componentWillUnmount() {
+    const app = getApp();
+    app._models.forEach(model => {
+      app.unmodel(model.namespace);
+    });
+    app._models = [];
+    app = null;
+  }
+
   render() {
     const app = getApp();
     app.router(() => this.props.children);
