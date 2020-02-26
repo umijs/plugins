@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.2.0...@umijs/preset-react@1.2.1) (2020-02-26)
+
+### Bug Fixes
+
+- **preset-react:** plugin-utils dep lost ([36fb739](https://github.com/umijs/plugins/commit/36fb739f20a01dcb6bae4e2e77d3daed1b7c9065))
+
 # [1.2.0](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.1.6...@umijs/preset-react@1.2.0) (2020-02-26)
 
 ### Features
