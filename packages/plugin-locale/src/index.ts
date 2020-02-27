@@ -6,12 +6,13 @@ import {
   getLocaleList,
   isNeedPolyfill,
   exactLocalePaths,
-  getMomentLocale,
 } from './utils';
 
 interface ILocaleConfig {
   default?: string;
   baseNavigator?: boolean;
+  /** title 开启国际化 */
+  title?: boolean;
   antd?: boolean;
   baseSeparator?: string;
 }
@@ -19,7 +20,7 @@ interface ILocaleConfig {
 export default (api: IApi) => {
   const {
     paths,
-    utils: { Mustache, lodash, winPath },
+    utils: { Mustache, winPath },
   } = api;
 
   if (!api.userConfig.locale) {
@@ -50,8 +51,8 @@ export default (api: IApi) => {
       join(__dirname, 'templates', 'locale.tpl'),
       'utf-8',
     );
-    const { baseSeparator = '-', baseNavigator = true, antd } = api.config
-      .locale as ILocaleConfig;
+    const { baseSeparator = '-', baseNavigator = true, antd, title } = api
+      .config.locale as ILocaleConfig;
     const defaultLocale = api.config.locale?.default || `zh${baseSeparator}CN`;
 
     const localeList = getList();
@@ -66,7 +67,9 @@ export default (api: IApi) => {
     api.writeTmpFile({
       content: Mustache.render(localeTpl, {
         MomentLocales: momentLocales,
+        UseSSR: !!api.config?.ssr,
         Antd: !!antd,
+        Title: title && api.config.title,
         AntdLocales: antdLocales,
         BaseSeparator: baseSeparator,
         DefaultLocale: defaultLocale,
@@ -103,7 +106,9 @@ export default (api: IApi) => {
     );
     api.writeTmpFile({
       path: 'plugin-locale/runtime.tsx',
-      content: Mustache.render(runtimeTpl, {}),
+      content: Mustache.render(runtimeTpl, {
+        Title: !!title,
+      }),
     });
   });
 
