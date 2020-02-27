@@ -15,7 +15,7 @@ export default function(api: IApi) {
         import _ from '${winPath(require.resolve('lodash-es'))}';
         import moment from '${winPath(require.resolve('moment'))}';
         import classnames from '${winPath(require.resolve('classnames'))}';
-        import debug from '${winPath(require.resolve('debug'))}';
+        import debug from '${winPath(require.resolve('debug/src/browser'))}';
         import jsCookie from '${winPath(require.resolve('js-cookie'))}';
         import queryString from '${winPath(require.resolve('query-string'))}';
         import ReactHelmet from '${winPath(require.resolve('react-helmet'))}';
