@@ -90,6 +90,7 @@ test('singular', async () => {
   expect(container.querySelector('h1')?.textContent).toEqual(
     'Current language:zh-CN',
   );
+  expect(container.querySelector('#title')?.textContent).toEqual('关于标题');
   expect(
     container.querySelector('.ant-picker-input > input')?.placeholder,
   ).toEqual('请选择日期');

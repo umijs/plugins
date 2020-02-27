@@ -42,6 +42,12 @@ export const _LocaleContainer = props => {
 
   React.useLayoutEffect(() => {
     event.on(LANG_CHANGE_EVENT, handleLangChange);
+    {{#Title}}
+    // avoid reset route title
+    if (typeof document !== 'undefined' && intl.messages['{{.}}']) {
+      document.title = intl.formatMessage({ id: '{{.}}' });
+    }
+    {{/Title}}
     return () => {
       event.off(LANG_CHANGE_EVENT, handleLangChange);
     };
