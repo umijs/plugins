@@ -36,7 +36,7 @@ export default function(props) {
           {locale}
         </Button>
       ))}
-      <button data-testid="display" type="primary">
+      <p data-testid="display" type="primary">
         {intl.formatMessage(
           {
             id: 'name',
@@ -45,7 +45,7 @@ export default function(props) {
             name: 'Traveler',
           },
         )}
-      </button>
+      </p>
     </div>
   );
 }

@@ -84,7 +84,7 @@ test('singular', async () => {
   });
 
   const reactNode = require(join(cwd, 'src', '.umi-test', 'umi.ts')).default;
-  const { container, getByText, rerender } = render(reactNode);
+  const { container, getByText, getByTestId } = render(reactNode);
 
   // test default: zh-CN
   expect(container.querySelector('h1')?.textContent).toEqual(
@@ -108,9 +108,7 @@ test('singular', async () => {
   expect(container.querySelector('#moment')?.textContent).toEqual(
     'March 21, 2020',
   );
-  expect(container.querySelector('button')?.textContent).toEqual(
-    'Hello Traveler',
-  );
+  expect(getByTestId('display')?.textContent).toEqual('Hello Traveler');
 
   fireEvent.click(getByText('zh-CN'));
   expect(container.querySelector('h1')?.textContent).toEqual(
@@ -122,9 +120,7 @@ test('singular', async () => {
   expect(container.querySelector('#moment')?.textContent).toEqual(
     '2020年3月21日',
   );
-  expect(container.querySelector('button')?.textContent).toEqual(
-    '你好 Traveler',
-  );
+  expect(getByTestId('display')?.textContent).toEqual('你好 Traveler');
 
   fireEvent.click(getByText('zh-TW'));
   expect(container.querySelector('h1')?.textContent).toEqual(
@@ -136,9 +132,7 @@ test('singular', async () => {
   expect(container.querySelector('#moment')?.textContent).toEqual(
     '2020年3月21日',
   );
-  expect(container.querySelector('button')?.textContent).toEqual(
-    '妳好 Traveler',
-  );
+  expect(getByTestId('display')?.textContent).toEqual('妳好 Traveler');
 
   fireEvent.click(getByText('sk'));
   expect(container.querySelector('h1')?.textContent).toEqual(
@@ -150,5 +144,5 @@ test('singular', async () => {
   expect(container.querySelector('#moment')?.textContent).toEqual(
     '21. marec 2020',
   );
-  expect(container.querySelector('button')?.textContent).toEqual('sk Traveler');
+  expect(getByTestId('display')?.textContent).toEqual('sk Traveler');
 });
