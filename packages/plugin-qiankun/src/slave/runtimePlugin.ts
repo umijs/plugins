@@ -9,7 +9,5 @@ export function rootContainer(container: HTMLElement) {
 }
 
 export const render = (oldRender: any) => {
-  return qiankunRender().then(() => {
-    oldRender();
-  });
+  return qiankunRender().then(oldRender);
 };

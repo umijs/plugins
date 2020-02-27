@@ -29,24 +29,19 @@ function getSlaveRuntime() {
   return slave || config;
 }
 
-export function genBootstrap(promises: Promise<any>, oldRender: typeof noop) {
+export function genBootstrap(oldRender: typeof noop) {
   return async (...args: any[]) => {
     const slaveRuntime = getSlaveRuntime();
     if (slaveRuntime.bootstrap) await slaveRuntime.bootstrap(...args);
-    render = () =>
-      promises.then(oldRender).catch(e => {
-        if (process.env.NODE_ENV === 'development') {
-          console.error('Render failed', e);
-        }
-      });
+    render = oldRender;
   };
 }
 
 export function genMount() {
   return async (...args: any[]) => {
-    defer.resolve();
     const slaveRuntime = getSlaveRuntime();
     if (slaveRuntime.mount) await slaveRuntime.mount(...args);
+    defer.resolve();
     // 第一次 mount umi 会自动触发 render，非第一次 mount 则需手动触发
     if (hasMountedAtLeastOnce) {
       render();

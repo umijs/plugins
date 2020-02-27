@@ -113,7 +113,7 @@ export default function(api: IApi, options: Options) {
   api.addEntryCode(
     () =>
       `
-    export const bootstrap = qiankun_genBootstrap(Promise.resolve(), clientRender);
+    export const bootstrap = qiankun_genBootstrap(clientRender);
     export const mount = qiankun_genMount();
     export const unmount = qiankun_genUnmount('${api.config.mountElementId}');
 
