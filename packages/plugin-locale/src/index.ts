@@ -29,8 +29,6 @@ export default (api: IApi) => {
     config: {
       schema(joi) {
         return joi.object({
-          // 兼容之前的 enable 配置，文档不需透出
-          enable: joi.boolean().optional(),
           default: joi.string().optional(),
           baseNavigator: joi.boolean().optional(),
           title: joi.boolean().optional(),
@@ -41,10 +39,6 @@ export default (api: IApi) => {
     },
     enableBy: api.EnableBy.config,
   });
-
-  if (api.userConfig.locale?.enable === false) {
-    return;
-  }
 
   const getList = (): IGetLocaleFileListResult[] => {
     return getLocaleList({
