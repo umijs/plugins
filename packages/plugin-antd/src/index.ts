@@ -32,15 +32,14 @@ export default (api: IApi) => {
     // support dark mode, user use antd 4 by default
     const darkThemeVars = require('antd/dist/dark-theme');
     api.modifyDefaultConfig(config => {
-      const draftConfig = Object.assign({}, config);
-      draftConfig.theme = {
+      config.theme = {
         hack_less_umi_plugin: `true;@import "${require.resolve(
           'antd/lib/style/color/colorPalette.less',
         )}";`,
         ...darkThemeVars,
-        ...(draftConfig.theme || {}),
+        ...(config.theme || {}),
       };
-      return draftConfig;
+      return config;
     });
   }
 
