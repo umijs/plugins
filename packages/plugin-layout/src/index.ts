@@ -14,15 +14,14 @@ export default (api: IApi) => {
       },
       onChange: api.ConfigChangeType.regenerateTmpFiles,
     },
+    enableBy: api.EnableBy.config,
   });
 
   let layoutOpts: LayoutConfig = {};
 
-  api.addRuntimePluginKey(() => (api.config.layout ? ['layout'] : []));
+  api.addRuntimePluginKey(() => ['layout']);
 
   api.onGenerateFiles(() => {
-    if (!api.config.layout) return;
-
     // apply default options
     const { name } = api.pkg;
     layoutOpts = {
@@ -55,14 +54,12 @@ export default (api: IApi) => {
   });
 
   api.modifyRoutes(routes => {
-    return api.config.layout
-      ? [
-          {
-            path: '/',
-            component: join(api.paths.absTmpPath || '', DIR_NAME, 'Layout.tsx'),
-            routes,
-          },
-        ]
-      : routes;
+    return [
+      {
+        path: '/',
+        component: join(api.paths.absTmpPath || '', DIR_NAME, 'Layout.tsx'),
+        routes,
+      },
+    ];
   });
 };
