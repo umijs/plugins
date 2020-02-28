@@ -1,4 +1,4 @@
-import { dirname } from 'path';
+import { dirname, join } from 'path';
 import { IApi } from 'umi';
 
 interface IAntdOpts {
@@ -6,6 +6,7 @@ interface IAntdOpts {
 }
 
 export default (api: IApi) => {
+  const { semver } = api.utils;
   api.describe({
     config: {
       schema(joi) {
@@ -29,18 +30,27 @@ export default (api: IApi) => {
   const opts: IAntdOpts = api.userConfig.antd || {};
 
   if (opts?.dark) {
-    // support dark mode, user use antd 4 by default
-    const darkThemeVars = require('antd/dist/dark-theme');
-    api.modifyDefaultConfig(config => {
-      config.theme = {
-        hack_less_umi_plugin: `true;@import "${require.resolve(
-          'antd/lib/style/color/colorPalette.less',
-        )}";`,
-        ...darkThemeVars,
-        ...config.theme,
-      };
-      return config;
-    });
+    const antdPkgPath = require.resolve('antd/package', { paths: [api.cwd] });
+    const { version } = require(antdPkgPath) || {};
+    if (semver.major(version) === 4) {
+      // support dark mode, user use antd 4 by default
+      const darkThemeVars = require(require.resolve('antd/dist/dark-theme', {
+        paths: [api.cwd],
+      }));
+      api.modifyDefaultConfig(config => {
+        config.theme = {
+          hack_less_umi_plugin: `true;@import "${require.resolve(
+            'antd/lib/style/color/colorPalette.less',
+            { paths: [api.cwd] },
+          )}";`,
+          ...darkThemeVars,
+          ...config.theme,
+        };
+        return config;
+      });
+    } else {
+      api.logger.warn('the `antd.dark` option only supports antd^4.0');
+    }
   }
 
   api.addProjectFirstLibraries(() => [
