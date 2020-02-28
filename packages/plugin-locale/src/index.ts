@@ -9,7 +9,6 @@ import {
 } from './utils';
 
 interface ILocaleConfig {
-  enable?: boolean;
   default?: string;
   baseNavigator?: boolean;
   /** title 开启国际化 */
