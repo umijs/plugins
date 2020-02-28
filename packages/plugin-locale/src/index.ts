@@ -9,6 +9,7 @@ import {
 } from './utils';
 
 interface ILocaleConfig {
+  enable?: boolean;
   default?: string;
   baseNavigator?: boolean;
   /** title 开启国际化 */
@@ -23,18 +24,27 @@ export default (api: IApi) => {
     utils: { Mustache, winPath },
   } = api;
 
-  if (!api.userConfig.locale) {
-    return;
-  }
-
   api.describe({
     key: 'locale',
     config: {
       schema(joi) {
-        return joi.object();
+        return joi.object({
+          // 兼容之前的 enable 配置，文档不需透出
+          enable: joi.boolean().optional(),
+          default: joi.string().optional(),
+          baseNavigator: joi.boolean().optional(),
+          title: joi.boolean().optional(),
+          antd: joi.boolean().optional(),
+          baseSeparator: joi.string().optional(),
+        });
       },
     },
+    enableBy: api.EnableBy.config,
   });
+
+  if (api.userConfig.locale?.enable === false) {
+    return;
+  }
 
   const getList = (): IGetLocaleFileListResult[] => {
     return getLocaleList({
