@@ -27,7 +27,7 @@ test('analytics', async () => {
   expect(
     removeSpace(
       $('head script')
-        .eq(1)
+        .eq(2)
         .html(),
     ),
   ).toContain(`var_hmt=_hmt||[];`);
@@ -35,7 +35,7 @@ test('analytics', async () => {
   expect(
     removeSpace(
       $('head script')
-        .eq(2)
+        .eq(3)
         .html(),
     ),
   ).toContain(
