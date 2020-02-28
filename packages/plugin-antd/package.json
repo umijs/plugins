@@ -28,7 +28,7 @@
     "access": "public"
   },
   "dependencies": {
-    "antd": "^4.0.0-rc.1",
+    "antd": "^4.0.0",
     "antd-mobile": "^2.3.1"
   }
 }
