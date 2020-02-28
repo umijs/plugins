@@ -37,7 +37,7 @@ export default (api: IApi) => {
           'antd/lib/style/color/colorPalette.less',
         )}";`,
         ...darkThemeVars,
-        ...(config.theme || {}),
+        ...config.theme,
       };
       return config;
     });
