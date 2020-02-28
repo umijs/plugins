@@ -23,17 +23,20 @@ export default (api: IApi) => {
     utils: { Mustache, winPath },
   } = api;
 
-  if (!api.userConfig.locale) {
-    return;
-  }
-
   api.describe({
     key: 'locale',
     config: {
       schema(joi) {
-        return joi.object();
+        return joi.object({
+          default: joi.string(),
+          baseNavigator: joi.boolean(),
+          title: joi.boolean(),
+          antd: joi.boolean(),
+          baseSeparator: joi.string(),
+        });
       },
     },
+    enableBy: api.EnableBy.config,
   });
 
   const getList = (): IGetLocaleFileListResult[] => {

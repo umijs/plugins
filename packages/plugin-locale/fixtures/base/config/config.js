@@ -3,7 +3,6 @@ export default {
     [
       '../../../lib/index.js',
       {
-        enable: true,
         baseNavigator: false,
         default: 'en-US',
       },

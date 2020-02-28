@@ -3,7 +3,6 @@ export default {
     require.resolve('../../../src/index'),
   ],
   locale: {
-    enable: true,
     baseNavigator: false,
     baseSeparator: '_',
     default: 'en_US',
