@@ -21,8 +21,9 @@ const { yParser } = require('@umijs/utils');
       'package.json',
     );
     const pkgJSONExists = existsSync(pkgJSONPath);
+    let json;
     if (args.force || !pkgJSONExists) {
-      const json = {
+      json = {
         name,
         version,
         description: name,
@@ -75,7 +76,29 @@ const { yParser } = require('@umijs/utils');
       'README.md',
     );
     if (args.force || !existsSync(readmePath)) {
-      writeFileSync(readmePath, `# ${name}\n`);
+      writeFileSync(
+        readmePath,
+        `# ${name}
+
+> ${json.description}.
+
+See our website [${name}](https://next.umijs.org/plugins/${shortName}) for more information.
+
+## Install
+
+Using npm:
+
+\`\`\`bash
+$ npm install --save-dev ${name}
+\`\`\`
+
+or using yarn:
+
+\`\`\`bash
+$ yarn add ${name} --dev
+\`\`\`
+`,
+      );
     }
   });
 })();

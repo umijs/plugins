@@ -12,7 +12,7 @@ export default (api: IApi) => {
   api.describe({
     config: {
       schema(joi) {
-        return joi.boolean();
+        return joi.object();
       },
     },
   });
@@ -30,7 +30,7 @@ export default (api: IApi) => {
   });
 
   api.modifyBundleConfig(memo => {
-    // futureEmitAssets is by default
+    // futureEmitAssets is enabled by default
     delete memo.output?.futureEmitAssets;
 
     // webpack 5 has no node polyfill
