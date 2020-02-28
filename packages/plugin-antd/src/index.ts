@@ -1,11 +1,17 @@
 import { dirname } from 'path';
 import { IApi } from 'umi';
 
+interface IAntdOpts {
+  dark?: boolean;
+}
+
 export default (api: IApi) => {
   api.describe({
     config: {
       schema(joi) {
-        return joi.object();
+        return joi.object({
+          dark: joi.boolean(),
+        });
       },
     },
   });
@@ -19,6 +25,23 @@ export default (api: IApi) => {
       ]),
     };
   });
+
+  const opts: IAntdOpts = api.userConfig.antd || {};
+
+  if (opts?.dark) {
+    // support dark mode, user use antd 4 by default
+    const darkThemeVars = require('antd/dist/dark-theme');
+    api.modifyDefaultConfig(config => {
+      config.theme = {
+        hack_less_umi_plugin: `true;@import "${require.resolve(
+          'antd/lib/style/color/colorPalette.less',
+        )}";`,
+        ...darkThemeVars,
+        ...config.theme,
+      };
+      return config;
+    });
+  }
 
   api.addProjectFirstLibraries(() => [
     {
