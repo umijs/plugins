@@ -28,11 +28,11 @@ export default (api: IApi) => {
     config: {
       schema(joi) {
         return joi.object({
-          default: joi.string().optional(),
-          baseNavigator: joi.boolean().optional(),
-          title: joi.boolean().optional(),
-          antd: joi.boolean().optional(),
-          baseSeparator: joi.string().optional(),
+          default: joi.string(),
+          baseNavigator: joi.boolean(),
+          title: joi.boolean(),
+          antd: joi.boolean(),
+          baseSeparator: joi.string(),
         });
       },
     },
