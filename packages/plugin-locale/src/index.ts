@@ -26,6 +26,10 @@ export default (api: IApi) => {
   api.describe({
     key: 'locale',
     config: {
+      default: {
+        baseNavigator: true,
+        baseSeparator: '-',
+      },
       schema(joi) {
         return joi.object({
           default: joi.string(),
@@ -39,14 +43,24 @@ export default (api: IApi) => {
     enableBy: api.EnableBy.config,
   });
 
+  // polyfill
+  if (isNeedPolyfill(api.userConfig?.targets || {})) {
+    api.addEntryImportsAhead(() => ({
+      source: require.resolve('intl'),
+    }));
+  }
+
   const getList = (): IGetLocaleFileListResult[] => {
     return getLocaleList({
       localeFolder: api.config?.singular ? 'locale' : 'locales',
-      separator: api.config.locale?.baseSeparator || '-',
+      separator: api.config.locale?.baseSeparator,
       absSrcPath: paths.absSrcPath,
       absPagesPath: paths.absPagesPath,
     });
   };
+
+  // add runtime locale
+  api.addRuntimePluginKey(() => 'locale');
 
   // 生成临时文件
   api.onGenerateFiles(() => {
@@ -54,8 +68,8 @@ export default (api: IApi) => {
       join(__dirname, 'templates', 'locale.tpl'),
       'utf-8',
     );
-    const { baseSeparator = '-', baseNavigator = true, antd, title } = api
-      .config.locale as ILocaleConfig;
+    const { baseSeparator, baseNavigator, antd, title } = api.config
+      .locale as ILocaleConfig;
     const defaultLocale = api.config.locale?.default || `zh${baseSeparator}CN`;
 
     const localeList = getList();

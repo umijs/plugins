@@ -3,8 +3,10 @@ import {
   IntlShape,
   MessageDescriptor,
 } from '{{{ reactIntlPkgPath }}}';
+import { ApplyPluginsType } from 'umi';
 import { event, LANG_CHANGE_EVENT } from './locale';
 import warning from '{{{ warningPkgPath }}}';
+import { plugin } from '../core/umiExports';
 
 export * from '{{{ reactIntlPkgPath }}}';
 
@@ -94,6 +96,15 @@ export const setIntl = (locale: string) => {
  * @returns string
  */
 export const getLocale = () => {
+  const runtimeLocale = plugin.applyPlugins({
+    key: 'locale',
+    type: ApplyPluginsType.modify,
+    initialValue: {},
+  });
+  // runtime getLocale for user define
+  if (typeof runtimeLocale?.getLocale === 'function') {
+    return runtimeLocale.getLocale();
+  }
   // support SSR
   const { g_lang } = window;
   const lang =
@@ -120,6 +131,20 @@ export const getLocale = () => {
  */
 export const setLocale = (lang: string, realReload: boolean = true) => {
   const localeExp = new RegExp(`^([a-z]{2}){{BaseSeparator}}?([A-Z]{2})?$`);
+
+  const runtimeLocale = plugin.applyPlugins({
+    key: 'locale',
+    type: ApplyPluginsType.modify,
+    initialValue: {},
+  });
+  if (typeof runtimeLocale?.setLocale === 'function') {
+    runtimeLocale.setLocale({
+      lang,
+      realReload,
+      updater: (updateLang = lang) => event.emit(LANG_CHANGE_EVENT, updateLang),
+    });
+    return;
+  }
   if (lang !== undefined && !localeExp.test(lang)) {
     // for reset when lang === undefined
     throw new Error('setLocale lang format error');
