@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.2.1...@umijs/plugin-locale@0.3.0) (2020-02-29)
+
+### Features
+
+- locale polyfill and runtime config ([#57](https://github.com/umijs/plugins/issues/57)) ([82503d3](https://github.com/umijs/plugins/commit/82503d36955ac26d1edd5ae29a12f2cc72e0a067))
+- support title locale ([#52](https://github.com/umijs/plugins/issues/52)) ([2b66dcd](https://github.com/umijs/plugins/commit/2b66dcdab53f4e650a266216a69a5d37d7462c16))
+
 ## [0.2.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.2.0...@umijs/plugin-locale@0.2.1) (2020-02-26)
 
 ### Bug Fixes

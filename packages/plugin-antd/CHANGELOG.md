@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.2.0...@umijs/plugin-antd@0.3.0) (2020-02-29)
+
+### Features
+
+- support antd dark ([#55](https://github.com/umijs/plugins/issues/55)) ([7554fb4](https://github.com/umijs/plugins/commit/7554fb41466706e02a0f942f370e063523d120c7))
+- **plugin-antd:** antd@4 ([e587274](https://github.com/umijs/plugins/commit/e587274d23d6e975e51d972313cc67b8e42ad050))
+
 # [0.2.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.1.1...@umijs/plugin-antd@0.2.0) (2020-02-08)
 
 ### Features

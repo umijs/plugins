@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-webpack-5",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "@umijs/plugin-webpack-5",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -29,8 +29,8 @@
   },
   "dependencies": {
     "mini-css-extract-plugin": "0.9.0",
-    "url": "0.11.0",
     "tty-browserify": "0.0.1",
+    "url": "0.11.0",
     "webpack": "5.0.0-beta.12"
   }
 }

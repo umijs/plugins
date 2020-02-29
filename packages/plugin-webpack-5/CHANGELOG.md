@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.3](https://github.com/umijs/plugins/compare/@umijs/plugin-webpack-5@0.1.2...@umijs/plugin-webpack-5@0.1.3) (2020-02-29)
+
+### Bug Fixes
+
+- **plugin-webpack-5:** add polyfilles for node ([968da50](https://github.com/umijs/plugins/commit/968da504483d2de3409ac070159ecf79954dc9b9))
+
 ## [0.1.2](https://github.com/umijs/plugins/compare/@umijs/plugin-webpack-5@0.1.1...@umijs/plugin-webpack-5@0.1.2) (2020-02-17)
 
 **Note:** Version bump only for package @umijs/plugin-webpack-5
