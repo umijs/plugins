@@ -1,11 +1,11 @@
 
 import { history } from './.umi-test/core/history';
-import qs from 'qs';
+import queryString from 'queryString';
 
 export const locale = {
   getLocale() {
     const { search } = window.location;
-    const { locale = 'sk' } = qs.parse(search, { ignoreQueryPrefix: true });
+    const { locale = 'sk' } = queryString.parse(search);
     return locale;
   },
   setLocale({ lang, realReload, updater }) {
