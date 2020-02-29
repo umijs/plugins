@@ -191,7 +191,7 @@ export const locale = {
 
 - lang: 需要切换的语言
 - realReload: 是否需要刷新页面，这个是由页面调用 `setLocale(lang, true)` 透传。
-- updater：是否需要强制更新当前组件国际化状态。
+- updater：是否触发组件 rerender 重渲染。
 
 ```js
 // src/app.js
