@@ -39,6 +39,13 @@ export default (api: IApi) => {
     enableBy: api.EnableBy.config,
   });
 
+  // polyfill
+  if (isNeedPolyfill(api.userConfig?.targets || {})) {
+    api.addEntryImportsAhead(() => ({
+      source: require.resolve('intl'),
+    }));
+  }
+
   const getList = (): IGetLocaleFileListResult[] => {
     return getLocaleList({
       localeFolder: api.config?.singular ? 'locale' : 'locales',
@@ -47,6 +54,9 @@ export default (api: IApi) => {
       absPagesPath: paths.absPagesPath,
     });
   };
+
+  // add runtime locale
+  api.addRuntimePluginKey(() => 'locale');
 
   // 生成临时文件
   api.onGenerateFiles(() => {

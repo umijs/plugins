@@ -164,6 +164,45 @@ setLocale('zh-TW', true);
 setLocale('zh-TW', false);
 ```
 
+### 运行时配置
+
+支持运行时对国际化做一些扩展与定制，例如自定义语言识别等。
+
+#### getLocale
+
+自定义语言获取逻辑，比如识别链接 `?locale=${lang}` 当做当前页面的语言。
+
+```js
+// src/app.js
+import qs from 'qs';
+
+export const locale = {
+  getLocale() {
+    const { search } = window.location;
+    const { locale = 'zh-CN' } = qs.parse(search, { ignoreQueryPrefix: true });
+    return locale;
+  },
+};
+```
+
+#### setLocale
+
+自定义语言切换逻辑。其中有三个参数：
+
+- lang: 需要切换的语言
+- realReload: 是否需要刷新页面，这个是由页面调用 `setLocale(lang, true)` 透传。
+- updater：是否需要强制更新当前组件国际化状态。
+
+```js
+// src/app.js
+export const locale = {
+  setLocale({ lang, realReload, updater }) {
+    history.push(`/?locale=${lang}`);
+    updater();
+  },
+};
+```
+
 ## FAQ
 
 ### 为什么不要使用 formatMessage 这个语法糖？

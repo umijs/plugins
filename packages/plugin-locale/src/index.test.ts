@@ -146,3 +146,30 @@ test('singular', async () => {
   );
   expect(getByTestId('display')?.textContent).toEqual('sk Traveler');
 });
+
+test('runtime', async () => {
+  const cwd = join(fixtures, 'runtime');
+  const service = new Service({
+    cwd,
+    plugins: [require.resolve('./')],
+  });
+  await service.run({
+    name: 'g',
+    args: {
+      _: ['g', 'tmp'],
+    },
+  });
+
+  const reactNode = require(join(cwd, 'src', '.umi-test', 'umi.ts')).default;
+  const { container, rerender, getByTestId, getByText } = render(reactNode);
+  expect(container.querySelector('h1')?.textContent).toEqual(
+    'Current language:sk',
+  );
+  expect(
+    container.querySelector('.ant-picker-input > input')?.placeholder,
+  ).toEqual('Vybrať dátum');
+  expect(container.querySelector('#moment')?.textContent).toEqual(
+    '21. marec 2020',
+  );
+  expect(getByTestId('display')?.textContent).toEqual('sk Traveler');
+});
