@@ -1,6 +1,6 @@
 
 import { history } from './.umi-test/core/history';
-import queryString from 'queryString';
+import queryString from 'query-string';
 
 export const locale = {
   getLocale() {
