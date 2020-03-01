@@ -1,6 +1,8 @@
 import { IApi } from 'umi';
 
 export default (api: IApi) => {
+  if (!api.userConfig.analytics) return;
+
   api.describe({
     key: 'analytics',
     config: {
