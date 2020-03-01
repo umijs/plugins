@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.2.2...@umijs/preset-react@1.3.0) (2020-03-01)
+
+### Features
+
+- add plugin-analytics to preset-react ([e9436b5](https://github.com/umijs/plugins/commit/e9436b5ebdb7f550bda3a25e6159674f5bad306d))
+
 ## [1.2.2](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.2.1...@umijs/preset-react@1.2.2) (2020-02-29)
 
 **Note:** Version bump only for package @umijs/preset-react

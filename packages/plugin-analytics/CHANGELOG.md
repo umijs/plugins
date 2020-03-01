@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/umijs/plugins/compare/@umijs/plugin-analytics@0.1.0...@umijs/plugin-analytics@0.1.1) (2020-03-01)
+
+### Bug Fixes
+
+- update umi version beta.32 ([de40fe0](https://github.com/umijs/plugins/commit/de40fe0a7bfffe5fe4333b37bb7d0a049087165f))
+
 # [0.1.0](https://github.com/umijs/plugins/compare/@umijs/plugin-analytics@1.0.1...@umijs/plugin-analytics@0.1.0) (2020-02-17)
 
 ### Features
