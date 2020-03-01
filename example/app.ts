@@ -8,11 +8,20 @@ export function getInitialState() {
   };
 }
 
-// export const layout = {
-//   logout: () => {
-//     console.log('logout success');
-//   }, // do something
-// };
+export const layout = {
+  logout: () => {
+    alert('退出登陆成功');
+  },
+  patchMenus: (menus: any) => {
+    return [
+      ...menus,
+      {
+        name: '自定义',
+        path: 'https://bigfish.alipay.com/',
+      },
+    ];
+  },
+};
 
 export const locale = {
   default: 'zh-CN',

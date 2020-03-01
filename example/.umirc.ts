@@ -1,6 +1,8 @@
 import { defineConfig } from 'umi';
 
 export default defineConfig({
+  presets: [require.resolve('../packages/preset-react/lib')],
+  // plugins: [require.resolve('../packages/plugin-webpack-5/lib')],
   routes: [
     {
       name: 'model 测试',
@@ -24,6 +26,7 @@ export default defineConfig({
     },
   ],
   locale: {},
-  presets: [require.resolve('../packages/preset-react/lib')],
-  // plugins: [require.resolve('../packages/plugin-webpack-5/lib')],
+  layout: {
+    name: 'UMI 3',
+  },
 });
