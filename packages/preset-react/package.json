@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@umijs/plugin-access": "2.2.0",
+    "@umijs/plugin-analytics": "0.1.0",
     "@umijs/plugin-antd": "0.3.0",
     "@umijs/plugin-crossorigin": "1.1.0",
     "@umijs/plugin-dva": "0.3.0",
