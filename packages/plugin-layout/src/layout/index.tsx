@@ -8,6 +8,7 @@ import useRightContent from './useRightContent';
 import { WithExceptionOpChildren } from '../component/Exception';
 import getLayoutConfigFromRoute from '../utils/getLayoutConfigFromRoute';
 import getMenuDataFromRoutes from '../utils/getMenuFromRoute';
+import { MenuItem } from '../types/interface.d';
 import logo from '../assets/logo.svg';
 
 const BasicLayout = (props: any) => {
@@ -19,7 +20,9 @@ const BasicLayout = (props: any) => {
   const intl = useIntl && useIntl();
   const rightContentRender = useRightContent(userConfig, loading, initialState);
   const layoutConfig = getLayoutConfigFromRoute(_routes);
-  const menus = getMenuDataFromRoutes(_routes[0].routes);
+  const patchMenus: (ms: MenuItem[]) => MenuItem[] =
+    userConfig.patchMenus || ((ms: MenuItem[]): MenuItem[] => ms);
+  const menus = patchMenus(getMenuDataFromRoutes(_routes[0].routes));
 
   // layout 是否渲染相关
   const pathName = location.pathname;
