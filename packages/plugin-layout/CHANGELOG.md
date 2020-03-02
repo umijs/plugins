@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.3.2...@umijs/plugin-layout@0.4.0) (2020-03-02)
+
+### Features
+
+- layout support patchMenus runtime config ([#59](https://github.com/umijs/plugins/issues/59)) ([938d746](https://github.com/umijs/plugins/commit/938d746228c951ee68de540885ec86ace40ee780))
+
 ## [0.3.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.3.1...@umijs/plugin-layout@0.3.2) (2020-02-29)
 
 ### Bug Fixes
