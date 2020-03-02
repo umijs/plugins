@@ -120,7 +120,7 @@ async function release() {
   pkgs.forEach((pkg, index) => {
     const pkgPath = join(cwd, 'packages', pkg);
     const { name, version } = require(join(pkgPath, 'package.json'));
-    const isNext = name === '@umijs/plugin-qiankun' || isNextVersion(version);
+    const isNext = isNextVersion(version);
     let isPackageExist = null;
     if (args.publishOnly) {
       isPackageExist = packageExists({ name, version });
