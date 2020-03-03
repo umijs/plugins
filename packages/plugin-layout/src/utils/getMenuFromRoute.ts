@@ -76,6 +76,7 @@ function formatter(
           /** 在菜单中隐藏子项 */
           if (hideChildren) {
             delete result.children;
+            return result;
           }
 
           const children = formatter(childrenRoutes, prefix, absolutePath);
