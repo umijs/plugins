@@ -1,5 +1,5 @@
 import { IApi, utils } from 'umi';
-import { basename, dirname, extname, join } from 'path';
+import { basename, dirname, extname, join, relative } from 'path';
 import { readFileSync } from 'fs';
 import { getModels } from './getModels/getModels';
 
@@ -140,4 +140,22 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
         ]
       : [],
   );
+
+  api.registerCommand({
+    name: 'dva',
+    fn({ args }) {
+      if (args._[0] === 'list' && args._[1] === 'model') {
+        const models = getAllModels();
+        console.log();
+        console.log(utils.chalk.bold('  Models in your project:'));
+        console.log();
+        models.forEach(model => {
+          console.log(`    - ${relative(api.cwd, model)}`);
+        });
+        console.log();
+        console.log(`  Totally ${models.length}.`);
+        console.log();
+      }
+    },
+  });
 };
