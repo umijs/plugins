@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.3.0...@umijs/plugin-dva@0.4.0) (2020-03-04)
+
+### Bug Fixes
+
+- **plugin-dva:** support more dva model write manners ([d4f79b1](https://github.com/umijs/plugins/commit/d4f79b1798c7cd73cefc69ad32eb6b7992cb578b))
+
+### Features
+
+- umi dva list model ([cf6aed4](https://github.com/umijs/plugins/commit/cf6aed4f3d8e7870c97194c57c02b6ee67c08d29))
+
 # [0.3.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.2.0...@umijs/plugin-dva@0.3.0) (2020-02-26)
 
 ### Bug Fixes
