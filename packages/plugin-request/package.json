@@ -28,7 +28,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@umijs/use-request": "^1.0.0",
+    "@umijs/use-request": "^1.2.0",
     "umi-request": "^1.2.14"
   }
 }
