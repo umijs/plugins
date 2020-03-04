@@ -73,3 +73,45 @@ test('with-immer', async () => {
     '<div><h1 class="title">Page index foo 1</h1><button>add</button></div>',
   );
 });
+
+test('runtime', async () => {
+  const cwd = join(fixtures, 'runtime');
+  const service = new Service({
+    cwd,
+    plugins: [require.resolve('./')],
+  });
+  await service.run({
+    name: 'g',
+    args: {
+      _: ['g', 'tmp'],
+    },
+  });
+
+  const { container } = render(
+    require(join(cwd, '.umi-test', 'umi.ts')).default,
+  );
+  expect(container.innerHTML).toEqual(
+    '<div><ul><li>dva</li><li>antd</li></ul></div>',
+  );
+});
+
+test('page models', async () => {
+  const cwd = join(fixtures, 'page-models');
+  const service = new Service({
+    cwd,
+    plugins: [require.resolve('./')],
+  });
+  await service.run({
+    name: 'g',
+    args: {
+      _: ['g', 'tmp'],
+    },
+  });
+
+  const { container } = render(
+    require(join(cwd, '.umi-test', 'umi.ts')).default,
+  );
+  expect(container.innerHTML).toEqual(
+    '<div><h1 class="title">Page index foo 0 bar 1</h1></div>',
+  );
+});

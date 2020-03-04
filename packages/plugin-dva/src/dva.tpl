@@ -16,7 +16,7 @@ function _onCreate() {
     history,
     {{{ ExtendDvaConfig }}}
     ...(runtimeDva.config || {}),
-    ...(window.g_useSSR ? { initialState: window.g_initialData } : {}),
+    ...(window.g_useSSR ? { initialState: runtimeDva.config || window.g_initialData } : {}),
   });
   {{{ EnhanceApp }}}
   app.use(createLoading());
