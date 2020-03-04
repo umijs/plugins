@@ -1,119 +1,34 @@
 import { utils } from 'umi';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { isValidModel } from './isValidModel';
 
-export function getModels(opts: { base: string; pattern?: string }) {
-  return utils.glob
-    .sync(opts.pattern || '**/*.{ts,tsx,js,jsx}', {
-      cwd: opts.base,
-    })
+export function getModels(opts: {
+  base: string;
+  pattern?: string;
+  skipModelValidate?: boolean;
+  extraModels?: string[];
+}) {
+  return utils.lodash
+    .uniq(
+      utils.glob
+        .sync(opts.pattern || '**/*.{ts,tsx,js,jsx}', {
+          cwd: opts.base,
+        })
+        .map(f => join(opts.base, f))
+        .concat(opts.extraModels || [])
+        .map(utils.winPath),
+    )
     .filter(f => {
       if (/\.d.ts$/.test(f)) return false;
-      if (/\.(test|spec).(j|t)sx?$/.test(f)) return false;
+      if (/\.(test|e2e|spec).(j|t)sx?$/.test(f)) return false;
+
+      // 允许通过配置下跳过 Model 校验
+      if (opts.skipModelValidate) return true;
+
       // TODO: fs cache for performance
       return isValidModel({
-        content: readFileSync(join(opts.base, f), 'utf-8'),
+        content: readFileSync(f, 'utf-8'),
       });
     });
-}
-
-function getIdentifierDeclaration(
-  node: utils.traverse.Node,
-  path: utils.traverse.NodePath,
-) {
-  if (utils.t.isIdentifier(node) && path.scope.hasBinding(node.name)) {
-    let bindingNode = path.scope.getBinding(node.name)!.path.node;
-    if (utils.t.isVariableDeclarator(bindingNode)) {
-      bindingNode = bindingNode.init!;
-    }
-    return bindingNode;
-  }
-  return node;
-}
-
-function getTSNode(node) {
-  if (
-    // <Model> {}
-    utils.t.isTSTypeAssertion(node) ||
-    // {} as Model
-    utils.t.isTSAsExpression(node)
-  ) {
-    return node.expression;
-  } else {
-    return node;
-  }
-}
-
-export function isValidModel({ content }: { content: string }) {
-  const { parser } = utils;
-  const ast = parser.parse(content, {
-    sourceType: 'module',
-    plugins: [
-      'typescript',
-      'classProperties',
-      'dynamicImport',
-      'exportDefaultFrom',
-      'exportNamespaceFrom',
-      'functionBind',
-      'nullishCoalescingOperator',
-      'objectRestSpread',
-      'optionalChaining',
-      'decorators-legacy',
-    ],
-  });
-
-  let isDvaModel = false;
-  let imports = {};
-
-  // TODO: 补充更多用例
-  // 1. typescript 用法
-  // 2. dva-model-extend 用法
-  utils.traverse.default(ast as any, {
-    ImportDeclaration(path) {
-      const { specifiers, source } = path.node;
-      specifiers.forEach(specifier => {
-        if (utils.t.isImportDefaultSpecifier(specifier)) {
-          imports[specifier.local.name] = source.value;
-        }
-      });
-    },
-    ExportDefaultDeclaration(path: utils.traverse.NodePath) {
-      let node = (path as { node: utils.t.ExportDefaultDeclaration }).node
-        .declaration;
-
-      node = getTSNode(node);
-      node = getIdentifierDeclaration(node, path);
-      node = getTSNode(node);
-
-      // 支持 dva-model-extend
-      if (
-        utils.t.isCallExpression(node) &&
-        utils.t.isIdentifier(node.callee) &&
-        imports[node.callee.name] === 'dva-model-extend'
-      ) {
-        node = node.arguments[1];
-
-        node = getTSNode(node);
-        node = getIdentifierDeclaration(node, path);
-        node = getTSNode(node);
-      }
-
-      if (
-        utils.t.isObjectExpression(node) &&
-        node.properties.some(property => {
-          return [
-            'state',
-            'reducers',
-            'subscriptions',
-            'effects',
-            'namespace',
-          ].includes((property as any).key.name);
-        })
-      ) {
-        isDvaModel = true;
-      }
-    },
-  });
-
-  return isDvaModel;
 }

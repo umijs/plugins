@@ -25,8 +25,10 @@ export default (api: IApi) => {
     config: {
       schema(joi) {
         return joi.object({
-          immer: joi.boolean().optional(),
-          hmr: joi.boolean().optional(),
+          immer: joi.boolean(),
+          hmr: joi.boolean(),
+          skipModelValidate: joi.boolean(),
+          extraModels: joi.array().items(joi.string()),
         });
       },
     },
@@ -34,14 +36,20 @@ export default (api: IApi) => {
 
   function getAllModels() {
     const srcModelsPath = getSrcModelsPath();
+    const baseOpts = {
+      skipModelValidate: api.config.skipModelValidate,
+      extraModels: api.config.extraModels,
+    };
     return [
       ...getModels({
         base: srcModelsPath,
-      }).map(p => winPath(join(srcModelsPath, p))),
+        ...baseOpts,
+      }),
       ...getModels({
         base: api.paths.absPagesPath!,
         pattern: `**/${getModelDir()}/**/*.{ts,tsx,js,jsx}`,
-      }).map(p => winPath(join(api.paths.absPagesPath!, p))),
+        ...baseOpts,
+      }),
     ];
   }
 

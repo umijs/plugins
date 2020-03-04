@@ -1,98 +1,56 @@
-import { join } from 'path';
-import { getModels, isValidModel } from './getModels';
+import { join, relative } from 'path';
+import { getModels } from './getModels';
 
 const fixtures = join(__dirname, 'fixtures');
 
 test('getModels', () => {
+  const base = join(fixtures, 'normal');
   const models = getModels({
-    base: join(fixtures, 'normal'),
+    base,
   });
-  expect(models).toEqual(['b.js', 'c.ts', 'e.jsx', 'f.tsx']);
+  expect(models.map(m => relative(base, m))).toEqual([
+    'b.js',
+    'c.ts',
+    'e.jsx',
+    'f.tsx',
+  ]);
 });
 
-test('isValidModel', () => {
-  expect(
-    isValidModel({
-      content: `export default { state: {} }`,
-    }),
-  ).toEqual(true);
-  expect(
-    isValidModel({
-      content: `export default { reducers: {} }`,
-    }),
-  ).toEqual(true);
-  expect(
-    isValidModel({
-      content: `export default { effects: {} }`,
-    }),
-  ).toEqual(true);
-  expect(
-    isValidModel({
-      content: `export default { subscriptions: {} }`,
-    }),
-  ).toEqual(true);
-  expect(
-    isValidModel({
-      content: `export default {  }`,
-    }),
-  ).toEqual(false);
+test('getModels with opts.skipModelValidate', () => {
+  const base = join(fixtures, 'skipModelValidate');
+  const models = getModels({
+    base,
+    skipModelValidate: true,
+  });
+  expect(models.map(m => relative(base, m))).toEqual(['no_content.js']);
 });
 
-test('isValidModel with variable declaration', () => {
-  expect(
-    isValidModel({
-      content: `const Foo = { state: {} }; export default Foo;`,
-    }),
-  ).toEqual(true);
+test('getModels with opts.extraModels', () => {
+  const base = join(fixtures, 'extraModels');
+  const models = getModels({
+    base,
+    extraModels: [
+      join(base, '..', 'models-for-extraModels', 'a_valid.js'),
+      join(base, '..', 'models-for-extraModels', 'b_invalid.js'),
+    ],
+  });
+  expect(models.map(m => relative(join(base, '..'), m))).toEqual([
+    'models-for-extraModels/a_valid.js',
+  ]);
 });
 
-test('isValidModel with TypeScript', () => {
-  expect(
-    isValidModel({
-      content: `export default <Model>{ namespace: 'foo' };`,
-    }),
-  ).toEqual(true);
-  expect(
-    isValidModel({
-      content: `const foo = <Model>{ namespace: 'foo' };export default foo;`,
-    }),
-  ).toEqual(true);
-  expect(
-    isValidModel({
-      content: `export default { namespace: 'foo' } as Model;`,
-    }),
-  ).toEqual(true);
-  expect(
-    isValidModel({
-      content: `export default <DvaModel<SurveyState>>{ namespace: 'foo' };`,
-    }),
-  ).toEqual(true);
-});
-
-test('isValidModel support dva-model-extend', () => {
-  expect(
-    isValidModel({
-      content: `
-import foo from 'dva-model-extend';
-export default foo(model, { namespace: 'foo' });
-      `,
-    }),
-  ).toEqual(true);
-  expect(
-    isValidModel({
-      content: `
-import foo from 'dva-model-extend';
-const m = { namespace: 'foo' };
-export default foo(model, m);
-      `,
-    }),
-  ).toEqual(true);
-  expect(
-    isValidModel({
-      content: `
-import foo from 'bar';
-export default foo(model, { namespace: 'foo' });
-      `,
-    }),
-  ).toEqual(false);
+test('getModels with opts.extraModels and opts.skipModelValidate', () => {
+  const base = join(fixtures, 'extraModels');
+  const models = getModels({
+    base,
+    extraModels: [
+      join(base, '..', 'models-for-extraModels', 'a_valid.js'),
+      join(base, '..', 'models-for-extraModels', 'b_invalid.js'),
+    ],
+    skipModelValidate: true,
+  });
+  expect(models.map(m => relative(join(base, '..'), m))).toEqual([
+    'models-for-extraModels/a_valid.js',
+    'models-for-extraModels/b_invalid.js',
+  ]);
 });
