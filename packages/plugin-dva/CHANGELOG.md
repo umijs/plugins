@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.4.0...@umijs/plugin-dva@0.5.0) (2020-03-04)
+
+### Features
+
+- **plugin-dva:** add getDvaApp exports from umi, and fix connect exports definitaion ([1cdb96a](https://github.com/umijs/plugins/commit/1cdb96a0c5b402d8260c2f5dc9afc35158dc5dec))
+- **plugin-dva:** export more hooks api form dva@2.6 ([4b9ab3a](https://github.com/umijs/plugins/commit/4b9ab3a0b63aa3ec6f8c5a79317545f09879a49c))
+- **plugin-dva:** support opts.extraModels and opts.skipModelValidate ([b374330](https://github.com/umijs/plugins/commit/b374330575da62d10743ee2cdb2950585f026163))
+- support resolve model.ts files ([fb617a8](https://github.com/umijs/plugins/commit/fb617a813289df2956a7d59760825ae5f657dfbe))
+
 # [0.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.3.0...@umijs/plugin-dva@0.4.0) (2020-03-04)
 
 ### Bug Fixes
