@@ -53,6 +53,11 @@ export default (api: IApi) => {
         pattern: `**/${getModelDir()}/**/*.{ts,tsx,js,jsx}`,
         ...baseOpts,
       }),
+      ...getModels({
+        base: api.paths.absPagesPath!,
+        pattern: `**/model.{ts,tsx,js,jsx}`,
+        ...baseOpts,
+      }),
     ];
   }
 
