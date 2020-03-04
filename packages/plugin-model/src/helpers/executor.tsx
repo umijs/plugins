@@ -10,8 +10,8 @@ export default (props: ExecutorProps) => {
   const { hook, onUpdate, namespace } = props;
 
   const updateRef = useRef(onUpdate);
-  const initialLoad = useRef(false);
   updateRef.current = onUpdate;
+  const initialLoad = useRef(false);
 
   let data: any;
   try {
@@ -25,14 +25,14 @@ export default (props: ExecutorProps) => {
 
   // 首次执行时立刻返回初始值
   useMemo(() => {
-    onUpdate(data);
+    updateRef.current(data);
     initialLoad.current = false;
   }, []);
 
   // React 16.13 后 update 函数用 useEffect 包裹
   useEffect(() => {
     if (initialLoad.current) {
-      onUpdate(data);
+      updateRef.current(data);
     } else {
       initialLoad.current = true;
     }
