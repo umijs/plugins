@@ -7,6 +7,8 @@ import { getUserLibDir } from './getUserLibDir';
 const { Mustache, lodash, winPath } = utils;
 
 export default (api: IApi) => {
+  const { logger } = api;
+
   function getModelDir() {
     return api.config.singular ? 'model' : 'models';
   }
@@ -67,6 +69,9 @@ export default (api: IApi) => {
       const models = getAllModels();
       hasModels = models.length > 0;
 
+      logger.debug('dva models:');
+      logger.debug(models);
+
       // 没有 models 不生成文件
       if (!hasModels) return;
 
@@ -113,10 +118,21 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
           pkg: api.pkg,
           cwd: api.cwd,
         }) || dirname(require.resolve('dva/package.json'));
+      const dvaVersion = require(join(dvaLibPath, 'package.json')).version;
+      const exportMethods = dvaVersion.startsWith('2.6')
+        ? ['connect', 'useDispatch', 'useStore', 'useSelector']
+        : ['connect'];
+
+      logger.debug(`dva lib path: ${dvaLibPath}`);
+      logger.debug(`dva version: ${dvaVersion}`);
+      logger.debug(`exported methods:`);
+      logger.debug(exportMethods);
+
       api.writeTmpFile({
         path: 'plugin-dva/exports.ts',
         content: Mustache.render(exportsTpl, {
           dvaLibPath,
+          exportMethods: exportMethods.join(', '),
         }),
       });
     },
