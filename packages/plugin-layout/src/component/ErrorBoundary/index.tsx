@@ -2,6 +2,8 @@ import * as React from 'react';
 import { Result, Typography } from 'antd';
 import { intl } from '../../utils/intl';
 import { Exception500 } from '../Exception';
+import { IRouteLayoutConfig } from '../../types/interface.d';
+import { WithExceptionOpChildren } from '../Exception';
 
 interface Error {
   componentStack?: string;
@@ -18,6 +20,7 @@ interface IState {
 }
 
 export interface IProps {
+  currentPathConfig: IRouteLayoutConfig;
   /** 发生错误后的回调（可做一些错误日志上报，打点等） */
   onError?: (error: Error, info: any) => void;
 }
@@ -63,21 +66,22 @@ class ErrorBoundary extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { children, ...restProps } = this.props;
     const { hasError, error, info } = this.state;
+
     if (hasError) {
       return (
         // @ts-ignore
         (process.env.NODE_ENV === 'development' && (
           <DefaultFallbackComponent
-            {...restProps}
+            {...this.props}
             componentStack={info ? info.componentStack : ''}
             error={error}
           />
         )) || <Exception500 />
       );
     }
-    return children;
+
+    return <WithExceptionOpChildren {...this.props} />;
   }
 }
 

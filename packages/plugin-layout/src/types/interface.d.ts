@@ -14,7 +14,7 @@ export interface LayoutConfig {
   logo?: string;
   theme?: string;
   locale?: any; // same with locale plugin
-  showBreadcrumb?: boolean; // TODO 面包屑功能暂不支持
+  showBreadcrumb?: boolean;
   layoutComponent?: Record<string, string>; // 自定义主题
 }
 

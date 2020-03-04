@@ -5,14 +5,13 @@ import ProLayout from '@ant-design/pro-layout';
 import './style.less';
 import ErrorBoundary from '../component/ErrorBoundary';
 import useRightContent from './useRightContent';
-import { WithExceptionOpChildren } from '../component/Exception';
 import getLayoutConfigFromRoute from '../utils/getLayoutConfigFromRoute';
 import getMenuDataFromRoutes from '../utils/getMenuFromRoute';
 import { MenuItem } from '../types/interface.d';
 import logo from '../assets/logo.svg';
 
 const BasicLayout = (props: any) => {
-  const { children, userConfig, location } = props;
+  const { userConfig, location } = props;
   const { initialState, loading } = (useModel &&
     useModel('@@initialState')) || { initialState: undefined, loading: false }; // plugin-initial-state 未开启
   const _routes = require('@@/core/routes').routes;
@@ -76,9 +75,7 @@ const BasicLayout = (props: any) => {
       {...props}
       {...layoutRender}
     >
-      <ErrorBoundary>
-        {WithExceptionOpChildren(children, currentPathConfig)}
-      </ErrorBoundary>
+      <ErrorBoundary currentPathConfig={currentPathConfig} {...props} />
     </ProLayout>
   );
 };
