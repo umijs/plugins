@@ -45,3 +45,54 @@ test('isValidModel with variable declaration', () => {
     }),
   ).toEqual(true);
 });
+
+test('isValidModel with TypeScript', () => {
+  expect(
+    isValidModel({
+      content: `export default <Model>{ namespace: 'foo' };`,
+    }),
+  ).toEqual(true);
+  expect(
+    isValidModel({
+      content: `const foo = <Model>{ namespace: 'foo' };export default foo;`,
+    }),
+  ).toEqual(true);
+  expect(
+    isValidModel({
+      content: `export default { namespace: 'foo' } as Model;`,
+    }),
+  ).toEqual(true);
+  expect(
+    isValidModel({
+      content: `export default <DvaModel<SurveyState>>{ namespace: 'foo' };`,
+    }),
+  ).toEqual(true);
+});
+
+test('isValidModel support dva-model-extend', () => {
+  expect(
+    isValidModel({
+      content: `
+import foo from 'dva-model-extend';
+export default foo(model, { namespace: 'foo' });
+      `,
+    }),
+  ).toEqual(true);
+  expect(
+    isValidModel({
+      content: `
+import foo from 'dva-model-extend';
+const m = { namespace: 'foo' };
+export default foo(model, m);
+      `,
+    }),
+  ).toEqual(true);
+  expect(
+    isValidModel({
+      content: `
+import foo from 'bar';
+export default foo(model, { namespace: 'foo' });
+      `,
+    }),
+  ).toEqual(false);
+});

@@ -31,26 +31,76 @@ function getIdentifierDeclaration(
   return node;
 }
 
+function getTSNode(node) {
+  if (
+    // <Model> {}
+    utils.t.isTSTypeAssertion(node) ||
+    // {} as Model
+    utils.t.isTSAsExpression(node)
+  ) {
+    return node.expression;
+  } else {
+    return node;
+  }
+}
+
 export function isValidModel({ content }: { content: string }) {
   const { parser } = utils;
   const ast = parser.parse(content, {
     sourceType: 'module',
-    plugins: ['jsx', 'typescript'],
+    plugins: [
+      'typescript',
+      'classProperties',
+      'dynamicImport',
+      'exportDefaultFrom',
+      'exportNamespaceFrom',
+      'functionBind',
+      'nullishCoalescingOperator',
+      'objectRestSpread',
+      'optionalChaining',
+      'decorators-legacy',
+    ],
   });
 
   let isDvaModel = false;
+  let imports = {};
 
   // TODO: 补充更多用例
   // 1. typescript 用法
   // 2. dva-model-extend 用法
   utils.traverse.default(ast as any, {
+    ImportDeclaration(path) {
+      const { specifiers, source } = path.node;
+      specifiers.forEach(specifier => {
+        if (utils.t.isImportDefaultSpecifier(specifier)) {
+          imports[specifier.local.name] = source.value;
+        }
+      });
+    },
     ExportDefaultDeclaration(path: utils.traverse.NodePath) {
-      const { node } = path as { node: utils.t.ExportDefaultDeclaration };
-      const target = getIdentifierDeclaration(node.declaration, path);
+      let node = (path as { node: utils.t.ExportDefaultDeclaration }).node
+        .declaration;
+
+      node = getTSNode(node);
+      node = getIdentifierDeclaration(node, path);
+      node = getTSNode(node);
+
+      // 支持 dva-model-extend
+      if (
+        utils.t.isCallExpression(node) &&
+        utils.t.isIdentifier(node.callee) &&
+        imports[node.callee.name] === 'dva-model-extend'
+      ) {
+        node = node.arguments[1];
+
+        node = getTSNode(node);
+        node = getIdentifierDeclaration(node, path);
+        node = getTSNode(node);
+      }
 
       if (
-        utils.t.isObjectExpression(target) &&
-        target.properties.some(property => {
+        utils.t.isObjectExpression(node) &&
+        node.properties.some(property => {
           return [
             'state',
             'reducers',
