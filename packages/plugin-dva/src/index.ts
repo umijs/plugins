@@ -2,6 +2,7 @@ import { IApi, utils } from 'umi';
 import { basename, dirname, extname, join, relative } from 'path';
 import { readFileSync } from 'fs';
 import { getModels } from './getModels/getModels';
+import { getUserLibDir } from './getUserLibDir';
 
 const { Mustache, lodash, winPath } = utils;
 
@@ -103,6 +104,21 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
         path: 'plugin-dva/runtime.tsx',
         content: Mustache.render(runtimeTpl, {}),
       });
+
+      // exports.ts
+      const exportsTpl = readFileSync(join(__dirname, 'exports.tpl'), 'utf-8');
+      const dvaLibPath =
+        getUserLibDir({
+          library: 'dva',
+          pkg: api.pkg,
+          cwd: api.cwd,
+        }) || dirname(require.resolve('dva/package.json'));
+      api.writeTmpFile({
+        path: 'plugin-dva/exports.ts',
+        content: Mustache.render(exportsTpl, {
+          dvaLibPath,
+        }),
+      });
     },
     // 要比 preset-built-in 靠前
     // 在内部文件生成之前执行，这样 hasModels 设的值对其他函数才有效
@@ -136,14 +152,13 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
   );
   api.addRuntimePluginKey(() => (hasModels ? ['dva'] : []));
 
-  // 有 dva 依赖时暂不导出
-  // TODO: 处理有 dva 依赖的场景
+  // 导出内容
   api.addUmiExports(() =>
-    hasModels && !hasDvaDependency()
+    hasModels
       ? [
           {
-            specifiers: ['connect'],
-            source: dirname(require.resolve('dva/package')),
+            exportAll: true,
+            source: '../plugin-dva/exports',
           },
         ]
       : [],
