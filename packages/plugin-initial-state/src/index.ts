@@ -61,9 +61,19 @@ export default (api: IApi) => {
     });
 
     const relEntryFile = relative(api.paths.cwd!, entryFile || '');
+
+    let hasExport = false;
+    if (entryFile) {
+      api.babelRegister.setOnlyMap({
+        key: 'model_app',
+        value: [entryFile],
+      });
+      hasExport = !!require(entryFile)?.getInitialState;
+    }
+
     api.writeTmpFile({
       path: RELATIVE_MODEL_PATH,
-      content: getModelContent(entryFile ? relEntryFile : ''),
+      content: getModelContent(entryFile && hasExport ? relEntryFile : ''),
     });
   });
 };
