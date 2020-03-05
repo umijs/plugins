@@ -43,7 +43,7 @@ export default (api: IApi) => {
       skipModelValidate: api.config.dva?.skipModelValidate,
       extraModels: api.config.dva?.extraModels,
     };
-    return [
+    return lodash.uniq([
       ...getModels({
         base: srcModelsPath,
         ...baseOpts,
@@ -58,7 +58,7 @@ export default (api: IApi) => {
         pattern: `**/model.{ts,tsx,js,jsx}`,
         ...baseOpts,
       }),
-    ];
+    ]);
   }
 
   let hasModels = false;
