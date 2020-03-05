@@ -6541,6 +6541,11 @@ es-abstract@^1.17.0-next.1, es-abstract@^1.17.2:
     string.prototype.trimleft "^2.1.1"
     string.prototype.trimright "^2.1.1"
 
+es-module-lexer@^0.3.17:
+  version "0.3.17"
+  resolved "https://registry.npm.alibaba-inc.com/es-module-lexer/download/es-module-lexer-0.3.17.tgz#a248dec2870934d9054420fead19db095ea21537"
+  integrity sha1-okjewocJNNkFRCD+rRnbCV6iFTc=
+
 es-to-primitive@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/es-to-primitive/-/es-to-primitive-1.2.1.tgz#e55cd4c9cdc188bcefb03b366c736323fc5c898a"
