@@ -6,9 +6,6 @@ import * as app from '@/app';
 
 export type InitialState = Models<'@@initialState'>;
 async function getInitialState() {
-  if (!app.getInitialState) {
-    throw new Error('getInitialState is not defined in ${relEntryFile}');
-  }
   return await app.getInitialState();
 }
 

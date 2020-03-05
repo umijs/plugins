@@ -3,6 +3,7 @@ import { join, relative } from 'path';
 import providerContent from './utils/getProviderContent';
 import getModelContent from './utils/getModelContent';
 import getExportContent from './utils/getExportContent';
+import { shouldPluginEnable } from './utils';
 import {
   DIR_NAME,
   RELATIVE_MODEL,
@@ -22,7 +23,7 @@ export default (api: IApi) => {
   api.addUmiExports(() => [
     {
       exportAll: true,
-      source: `../${RELATIVE_EXPORT}`,
+      source: winPath(`../${RELATIVE_EXPORT}`),
     },
   ]);
 
@@ -43,7 +44,7 @@ export default (api: IApi) => {
     './app.tsx',
   ]);
 
-  api.onGenerateFiles(() => {
+  api.onGenerateFiles(async () => {
     const entryFile = getFile({
       base: api.paths.absSrcPath!,
       type: 'javascript',
@@ -61,9 +62,12 @@ export default (api: IApi) => {
     });
 
     const relEntryFile = relative(api.paths.cwd!, entryFile || '');
+
+    const enable = await shouldPluginEnable(entryFile);
+
     api.writeTmpFile({
       path: RELATIVE_MODEL_PATH,
-      content: getModelContent(entryFile ? relEntryFile : ''),
+      content: getModelContent(enable ? relEntryFile : ''),
     });
   });
 };
