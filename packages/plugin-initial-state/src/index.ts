@@ -1,7 +1,7 @@
 import { IApi, utils } from 'umi';
 import { join, relative } from 'path';
 import { readFileSync } from 'fs';
-import { init, parse } from 'es-module-lexer';
+// import { init, parse } from 'es-module-lexer/dist/lexer';
 import providerContent from './utils/getProviderContent';
 import getModelContent from './utils/getModelContent';
 import getExportContent from './utils/getExportContent';
@@ -12,6 +12,8 @@ import {
   RELATIVE_EXPORT,
   RELATIVE_EXPORT_PATH,
 } from './constants';
+
+const { init, parse } = require('es-module-lexer/dist/lexer');
 
 const { winPath, getFile } = utils;
 
