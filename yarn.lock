@@ -6543,8 +6543,8 @@ es-abstract@^1.17.0-next.1, es-abstract@^1.17.2:
 
 es-module-lexer@^0.3.17:
   version "0.3.17"
-  resolved "https://registry.npm.alibaba-inc.com/es-module-lexer/download/es-module-lexer-0.3.17.tgz#a248dec2870934d9054420fead19db095ea21537"
-  integrity sha1-okjewocJNNkFRCD+rRnbCV6iFTc=
+  resolved "https://registry.yarnpkg.com/es-module-lexer/-/es-module-lexer-0.3.17.tgz#a248dec2870934d9054420fead19db095ea21537"
+  integrity sha512-nwvMtzyEB6FhlyXBlV+BW2By3Vn2sUvlQBYP4LvdK8YpdbFQUOiBoeuB7/ip1+EbjmgNydkJ8+dIlyO09VP9BA==
 
 es-to-primitive@^1.2.1:
   version "1.2.1"
