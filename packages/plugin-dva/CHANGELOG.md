@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.2](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.5.1...@umijs/plugin-dva@0.5.2) (2020-03-05)
+
+### Bug Fixes
+
+- **plugin-dva:** uniq models list ([10c620e](https://github.com/umijs/plugins/commit/10c620e0dc2b72bd75dc04ee9525b139889e0a43))
+
 ## [0.5.1](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.5.0...@umijs/plugin-dva@0.5.1) (2020-03-05)
 
 ### Bug Fixes
