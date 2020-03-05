@@ -1,6 +1,7 @@
 import { IApi, utils } from 'umi';
 import { join, relative } from 'path';
 import { readFileSync } from 'fs';
+import { init, parse } from 'es-module-lexer';
 import providerContent from './utils/getProviderContent';
 import getModelContent from './utils/getModelContent';
 import getExportContent from './utils/getExportContent';
@@ -11,7 +12,6 @@ import {
   RELATIVE_EXPORT,
   RELATIVE_EXPORT_PATH,
 } from './constants';
-const { init, parse } = require('es-module-lexer');
 
 const { winPath, getFile } = utils;
 
@@ -45,7 +45,7 @@ export default (api: IApi) => {
     './app.tsx',
   ]);
 
-  api.onGenerateFiles(() => {
+  api.onGenerateFiles(async () => {
     const entryFile = getFile({
       base: api.paths.absSrcPath!,
       type: 'javascript',
@@ -66,18 +66,14 @@ export default (api: IApi) => {
 
     let hasExport = false;
     if (entryFile) {
-      init.then(() => {
-        const fileContent = readFileSync(entryFile, { encoding: 'utf-8' });
-        const [_, exportsList] = parse(fileContent);
-        hasExport = exportsList
-          .toString()
-          .split(',')
-          .includes('getInitialState');
+      await init;
+      const fileContent = readFileSync(entryFile, 'utf-8');
+      const [_, exportsList] = parse(fileContent);
+      hasExport = exportsList.includes('getInitialState');
 
-        api.writeTmpFile({
-          path: RELATIVE_MODEL_PATH,
-          content: getModelContent(entryFile && hasExport ? relEntryFile : ''),
-        });
+      api.writeTmpFile({
+        path: RELATIVE_MODEL_PATH,
+        content: getModelContent(entryFile && hasExport ? relEntryFile : ''),
       });
     }
   });
