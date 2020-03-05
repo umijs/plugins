@@ -1,10 +1,9 @@
 import { IApi, utils } from 'umi';
 import { join, relative } from 'path';
-import { readFileSync } from 'fs';
-// import { init, parse } from 'es-module-lexer/dist/lexer';
 import providerContent from './utils/getProviderContent';
 import getModelContent from './utils/getModelContent';
 import getExportContent from './utils/getExportContent';
+import { shouldPluginEnable } from './utils';
 import {
   DIR_NAME,
   RELATIVE_MODEL,
@@ -12,8 +11,6 @@ import {
   RELATIVE_EXPORT,
   RELATIVE_EXPORT_PATH,
 } from './constants';
-
-const { init, parse } = require('es-module-lexer/dist/lexer');
 
 const { winPath, getFile } = utils;
 
@@ -66,17 +63,11 @@ export default (api: IApi) => {
 
     const relEntryFile = relative(api.paths.cwd!, entryFile || '');
 
-    let hasExport = false;
-    if (entryFile) {
-      await init;
-      const fileContent = readFileSync(entryFile, 'utf-8');
-      const [_, exportsList] = parse(fileContent);
-      hasExport = exportsList.includes('getInitialState');
+    const enable = await shouldPluginEnable(entryFile);
 
-      api.writeTmpFile({
-        path: RELATIVE_MODEL_PATH,
-        content: getModelContent(entryFile && hasExport ? relEntryFile : ''),
-      });
-    }
+    api.writeTmpFile({
+      path: RELATIVE_MODEL_PATH,
+      content: getModelContent(enable ? relEntryFile : ''),
+    });
   });
 };
