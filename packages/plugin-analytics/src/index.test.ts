@@ -45,7 +45,7 @@ test('analytics', async () => {
   expect(
     removeSpace(
       $('body script')
-        .eq(1)
+        .eq(0)
         .html(),
     ),
   ).toContain(
