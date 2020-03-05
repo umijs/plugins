@@ -23,7 +23,7 @@ export default (api: IApi) => {
   api.addUmiExports(() => [
     {
       exportAll: true,
-      source: `../${RELATIVE_EXPORT}`,
+      source: winPath(`../${RELATIVE_EXPORT}`),
     },
   ]);
 
