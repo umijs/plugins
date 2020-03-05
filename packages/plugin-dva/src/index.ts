@@ -117,12 +117,13 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
 
       // exports.ts
       const exportsTpl = readFileSync(join(__dirname, 'exports.tpl'), 'utf-8');
-      const dvaLibPath =
+      const dvaLibPath = winPath(
         getUserLibDir({
           library: 'dva',
           pkg: api.pkg,
           cwd: api.cwd,
-        }) || dirname(require.resolve('dva/package.json'));
+        }) || dirname(require.resolve('dva/package.json')),
+      );
       const dvaVersion = require(join(dvaLibPath, 'package.json')).version;
       const exportMethods = dvaVersion.startsWith('2.6')
         ? ['connect', 'useDispatch', 'useStore', 'useSelector']

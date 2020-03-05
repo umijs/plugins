@@ -1,4 +1,5 @@
 import { join, relative } from 'path';
+import { utils } from 'umi';
 import { getModels } from './getModels';
 
 const fixtures = join(__dirname, 'fixtures');
@@ -34,9 +35,9 @@ test('getModels with opts.extraModels', () => {
       join(base, '..', 'models-for-extraModels', 'b_invalid.js'),
     ],
   });
-  expect(models.map(m => relative(join(base, '..'), m))).toEqual([
-    'models-for-extraModels/a_valid.js',
-  ]);
+  expect(
+    models.map(m => utils.winPath(relative(join(base, '..'), m))),
+  ).toEqual(['models-for-extraModels/a_valid.js']);
 });
 
 test('getModels with opts.extraModels and opts.skipModelValidate', () => {
@@ -49,7 +50,9 @@ test('getModels with opts.extraModels and opts.skipModelValidate', () => {
     ],
     skipModelValidate: true,
   });
-  expect(models.map(m => relative(join(base, '..'), m))).toEqual([
+  expect(
+    models.map(m => utils.winPath(relative(join(base, '..'), m))),
+  ).toEqual([
     'models-for-extraModels/a_valid.js',
     'models-for-extraModels/b_invalid.js',
   ]);
