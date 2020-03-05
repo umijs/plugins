@@ -40,8 +40,8 @@ export default (api: IApi) => {
   function getAllModels() {
     const srcModelsPath = getSrcModelsPath();
     const baseOpts = {
-      skipModelValidate: api.config.skipModelValidate,
-      extraModels: api.config.extraModels,
+      skipModelValidate: api.config.dva?.skipModelValidate,
+      extraModels: api.config.dva?.extraModels,
     };
     return [
       ...getModels({
