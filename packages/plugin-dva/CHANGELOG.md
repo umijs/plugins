@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.5.0...@umijs/plugin-dva@0.5.1) (2020-03-05)
+
+### Bug Fixes
+
+- **plugin-dva:** config resolve problem ([7a0820f](https://github.com/umijs/plugins/commit/7a0820fee4e217ff9fd11d44df16fc97e0c99700))
+
 # [0.5.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.4.0...@umijs/plugin-dva@0.5.0) (2020-03-04)
 
 ### Features
