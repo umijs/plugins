@@ -14,22 +14,23 @@ export const shouldPluginEnable = (entryFile?: string) => {
     });
 
     ast.program.body.forEach(ele => {
-      try {
-        if (ele.type === 'ExportNamedDeclaration') {
+      if (ele.type === 'ExportNamedDeclaration') {
+        try {
           // export const xxx = () => {};
           // export function xxx(){};
           if ((ele.declaration[0].id.name = 'getInitialState')) {
             hasExport = true;
           }
+        } catch (e) {}
+
+        try {
           // export { getInitialState };
           if (
             ele.specifiers.some(exp => exp.exported.name === 'getInitialState')
           ) {
             hasExport = true;
           }
-        }
-      } catch (e) {
-        // ast parse error
+        } catch (e) {}
       }
     });
   }
