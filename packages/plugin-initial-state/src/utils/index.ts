@@ -1,7 +1,6 @@
-import { utils } from 'umi';
 import { readFileSync } from 'fs';
 // @ts-ignore
-import { init, parse } from 'es-module-lexer/dist/lexer';
+import { init, parse } from 'es-module-lexer/dist/lexer.cjs';
 
 export const shouldPluginEnable = async (entryFile?: string) => {
   let hasExport = false;

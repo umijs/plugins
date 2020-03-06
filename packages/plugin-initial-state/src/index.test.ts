@@ -23,7 +23,7 @@ afterEach(() => {
   cleanup();
 });
 
-test('default', async () => {
+test.skip('default', async () => {
   await setUp('default');
   const exportCode = require(join(
     cwd,
@@ -51,7 +51,7 @@ test('noExports', async () => {
   expect(state.initialState).toBeUndefined();
 });
 
-test('noEntry', async () => {
+test.skip('noEntry', async () => {
   await setUp('noEntry');
   const stateHook = require(join(
     cwd,
