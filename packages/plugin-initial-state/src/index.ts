@@ -44,7 +44,7 @@ export default (api: IApi) => {
     './app.tsx',
   ]);
 
-  api.onGenerateFiles(async () => {
+  api.onGenerateFiles(() => {
     const entryFile = getFile({
       base: api.paths.absSrcPath!,
       type: 'javascript',
@@ -63,7 +63,7 @@ export default (api: IApi) => {
 
     const relEntryFile = relative(api.paths.cwd!, entryFile || '');
 
-    const enable = await shouldPluginEnable(entryFile);
+    const enable = shouldPluginEnable(entryFile);
 
     api.writeTmpFile({
       path: RELATIVE_MODEL_PATH,

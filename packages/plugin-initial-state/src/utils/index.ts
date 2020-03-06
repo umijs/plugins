@@ -1,16 +1,37 @@
 import { utils } from 'umi';
 import { readFileSync } from 'fs';
-// @ts-ignore
-import { init, parse } from 'es-module-lexer/dist/lexer';
 
-export const shouldPluginEnable = async (entryFile?: string) => {
+const { parser } = utils;
+
+export const shouldPluginEnable = (entryFile?: string) => {
   let hasExport = false;
 
   if (entryFile) {
-    await init;
     const fileContent = readFileSync(entryFile, 'utf-8');
-    const [_, exportsList] = parse(fileContent);
-    hasExport = exportsList.includes('getInitialState');
+    const ast = parser.parse(fileContent, {
+      sourceType: 'module',
+      plugins: ['jsx', 'typescript'],
+    });
+
+    ast.program.body.forEach(ele => {
+      try {
+        if (ele.type === 'ExportNamedDeclaration') {
+          // export const xxx = () => {};
+          // export function xxx(){};
+          if ((ele.declaration[0].id.name = 'getInitialState')) {
+            hasExport = true;
+          }
+          // export { getInitialState };
+          if (
+            ele.specifiers.some(exp => exp.exported.name === 'getInitialState')
+          ) {
+            hasExport = true;
+          }
+        }
+      } catch (e) {
+        // ast parse error
+      }
+    });
   }
 
   return hasExport;
