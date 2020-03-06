@@ -3,7 +3,7 @@ import { join, relative } from 'path';
 import providerContent from './utils/getProviderContent';
 import getModelContent from './utils/getModelContent';
 import getExportContent from './utils/getExportContent';
-import { shouldPluginEnable } from './utils';
+import { shouldPluginEnable } from './utils/shouldPluginEnable';
 import {
   DIR_NAME,
   RELATIVE_MODEL,
@@ -62,7 +62,6 @@ export default (api: IApi) => {
     });
 
     const relEntryFile = relative(api.paths.cwd!, entryFile || '');
-
     const enable = shouldPluginEnable(entryFile);
 
     api.writeTmpFile({

@@ -1,8 +1,8 @@
 import { join } from 'path';
 import { Service } from 'umi';
-import { render, fireEvent, cleanup } from '@testing-library/react';
+import { cleanup } from '@testing-library/react';
 
-const fixtures = join(__dirname, '..', 'fixtures');
+const fixtures = join(__dirname, 'fixtures');
 let cwd = '';
 
 async function setUp(name: string) {
@@ -23,7 +23,7 @@ afterEach(() => {
   cleanup();
 });
 
-test.skip('default', async () => {
+test('default', async () => {
   await setUp('default');
   const exportCode = require(join(
     cwd,
@@ -51,7 +51,7 @@ test('noExports', async () => {
   expect(state.initialState).toBeUndefined();
 });
 
-test.skip('noEntry', async () => {
+test('noEntry', async () => {
   await setUp('noEntry');
   const stateHook = require(join(
     cwd,
