@@ -1,11 +1,14 @@
 import { IApi, utils } from 'umi';
-import { basename, dirname, extname, join } from 'path';
+import { basename, dirname, extname, join, relative } from 'path';
 import { readFileSync } from 'fs';
 import { getModels } from './getModels/getModels';
+import { getUserLibDir } from './getUserLibDir';
 
 const { Mustache, lodash, winPath } = utils;
 
 export default (api: IApi) => {
+  const { logger } = api;
+
   function getModelDir() {
     return api.config.singular ? 'model' : 'models';
   }
@@ -25,8 +28,10 @@ export default (api: IApi) => {
     config: {
       schema(joi) {
         return joi.object({
-          immer: joi.boolean().optional(),
-          hmr: joi.boolean().optional(),
+          immer: joi.boolean(),
+          hmr: joi.boolean(),
+          skipModelValidate: joi.boolean(),
+          extraModels: joi.array().items(joi.string()),
         });
       },
     },
@@ -34,15 +39,26 @@ export default (api: IApi) => {
 
   function getAllModels() {
     const srcModelsPath = getSrcModelsPath();
-    return [
+    const baseOpts = {
+      skipModelValidate: api.config.dva?.skipModelValidate,
+      extraModels: api.config.dva?.extraModels,
+    };
+    return lodash.uniq([
       ...getModels({
         base: srcModelsPath,
-      }).map(p => winPath(join(srcModelsPath, p))),
+        ...baseOpts,
+      }),
       ...getModels({
         base: api.paths.absPagesPath!,
         pattern: `**/${getModelDir()}/**/*.{ts,tsx,js,jsx}`,
-      }).map(p => winPath(join(api.paths.absPagesPath!, p))),
-    ];
+        ...baseOpts,
+      }),
+      ...getModels({
+        base: api.paths.absPagesPath!,
+        pattern: `**/model.{ts,tsx,js,jsx}`,
+        ...baseOpts,
+      }),
+    ]);
   }
 
   let hasModels = false;
@@ -57,6 +73,9 @@ export default (api: IApi) => {
     fn() {
       const models = getAllModels();
       hasModels = models.length > 0;
+
+      logger.debug('dva models:');
+      logger.debug(models);
 
       // 没有 models 不生成文件
       if (!hasModels) return;
@@ -95,6 +114,33 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
         path: 'plugin-dva/runtime.tsx',
         content: Mustache.render(runtimeTpl, {}),
       });
+
+      // exports.ts
+      const exportsTpl = readFileSync(join(__dirname, 'exports.tpl'), 'utf-8');
+      const dvaLibPath = winPath(
+        getUserLibDir({
+          library: 'dva',
+          pkg: api.pkg,
+          cwd: api.cwd,
+        }) || dirname(require.resolve('dva/package.json')),
+      );
+      const dvaVersion = require(join(dvaLibPath, 'package.json')).version;
+      const exportMethods = dvaVersion.startsWith('2.6')
+        ? ['connect', 'useDispatch', 'useStore', 'useSelector']
+        : ['connect'];
+
+      logger.debug(`dva lib path: ${dvaLibPath}`);
+      logger.debug(`dva version: ${dvaVersion}`);
+      logger.debug(`exported methods:`);
+      logger.debug(exportMethods);
+
+      api.writeTmpFile({
+        path: 'plugin-dva/exports.ts',
+        content: Mustache.render(exportsTpl, {
+          dvaLibPath,
+          exportMethods: exportMethods.join(', '),
+        }),
+      });
     },
     // 要比 preset-built-in 靠前
     // 在内部文件生成之前执行，这样 hasModels 设的值对其他函数才有效
@@ -128,16 +174,33 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
   );
   api.addRuntimePluginKey(() => (hasModels ? ['dva'] : []));
 
-  // 有 dva 依赖时暂不导出
-  // TODO: 处理有 dva 依赖的场景
+  // 导出内容
   api.addUmiExports(() =>
-    hasModels && !hasDvaDependency()
+    hasModels
       ? [
           {
-            specifiers: ['connect'],
-            source: dirname(require.resolve('dva/package')),
+            exportAll: true,
+            source: '../plugin-dva/exports',
           },
         ]
       : [],
   );
+
+  api.registerCommand({
+    name: 'dva',
+    fn({ args }) {
+      if (args._[0] === 'list' && args._[1] === 'model') {
+        const models = getAllModels();
+        console.log();
+        console.log(utils.chalk.bold('  Models in your project:'));
+        console.log();
+        models.forEach(model => {
+          console.log(`    - ${relative(api.cwd, model)}`);
+        });
+        console.log();
+        console.log(`  Totally ${models.length}.`);
+        console.log();
+      }
+    },
+  });
 };

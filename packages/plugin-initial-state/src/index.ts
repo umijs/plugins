@@ -44,7 +44,7 @@ export default (api: IApi) => {
     './app.tsx',
   ]);
 
-  api.onGenerateFiles(() => {
+  api.onGenerateFiles(async () => {
     const entryFile = getFile({
       base: api.paths.absSrcPath!,
       type: 'javascript',

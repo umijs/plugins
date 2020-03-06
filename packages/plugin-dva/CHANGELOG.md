@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.3](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.5.2...@umijs/plugin-dva@0.5.3) (2020-03-05)
+
+**Note:** Version bump only for package @umijs/plugin-dva
+
+## [0.5.2](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.5.1...@umijs/plugin-dva@0.5.2) (2020-03-05)
+
+### Bug Fixes
+
+- **plugin-dva:** uniq models list ([10c620e](https://github.com/umijs/plugins/commit/10c620e0dc2b72bd75dc04ee9525b139889e0a43))
+
+## [0.5.1](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.5.0...@umijs/plugin-dva@0.5.1) (2020-03-05)
+
+### Bug Fixes
+
+- **plugin-dva:** config resolve problem ([7a0820f](https://github.com/umijs/plugins/commit/7a0820fee4e217ff9fd11d44df16fc97e0c99700))
+
+# [0.5.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.4.0...@umijs/plugin-dva@0.5.0) (2020-03-04)
+
+### Features
+
+- **plugin-dva:** add getDvaApp exports from umi, and fix connect exports definitaion ([1cdb96a](https://github.com/umijs/plugins/commit/1cdb96a0c5b402d8260c2f5dc9afc35158dc5dec))
+- **plugin-dva:** export more hooks api form dva@2.6 ([4b9ab3a](https://github.com/umijs/plugins/commit/4b9ab3a0b63aa3ec6f8c5a79317545f09879a49c))
+- **plugin-dva:** support opts.extraModels and opts.skipModelValidate ([b374330](https://github.com/umijs/plugins/commit/b374330575da62d10743ee2cdb2950585f026163))
+- support resolve model.ts files ([fb617a8](https://github.com/umijs/plugins/commit/fb617a813289df2956a7d59760825ae5f657dfbe))
+
+# [0.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.3.0...@umijs/plugin-dva@0.4.0) (2020-03-04)
+
+### Bug Fixes
+
+- **plugin-dva:** support more dva model write manners ([d4f79b1](https://github.com/umijs/plugins/commit/d4f79b1798c7cd73cefc69ad32eb6b7992cb578b))
+
+### Features
+
+- umi dva list model ([cf6aed4](https://github.com/umijs/plugins/commit/cf6aed4f3d8e7870c97194c57c02b6ee67c08d29))
+
 # [0.3.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.2.0...@umijs/plugin-dva@0.3.0) (2020-02-26)
 
 ### Bug Fixes

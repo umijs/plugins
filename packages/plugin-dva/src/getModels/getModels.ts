@@ -1,69 +1,34 @@
 import { utils } from 'umi';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { isValidModel } from './isValidModel';
 
-export function getModels(opts: { base: string; pattern?: string }) {
-  return utils.glob
-    .sync(opts.pattern || '**/*.{ts,tsx,js,jsx}', {
-      cwd: opts.base,
-    })
+export function getModels(opts: {
+  base: string;
+  pattern?: string;
+  skipModelValidate?: boolean;
+  extraModels?: string[];
+}) {
+  return utils.lodash
+    .uniq(
+      utils.glob
+        .sync(opts.pattern || '**/*.{ts,tsx,js,jsx}', {
+          cwd: opts.base,
+        })
+        .map(f => join(opts.base, f))
+        .concat(opts.extraModels || [])
+        .map(utils.winPath),
+    )
     .filter(f => {
       if (/\.d.ts$/.test(f)) return false;
-      if (/\.(test|spec).(j|t)sx?$/.test(f)) return false;
+      if (/\.(test|e2e|spec).(j|t)sx?$/.test(f)) return false;
+
+      // 允许通过配置下跳过 Model 校验
+      if (opts.skipModelValidate) return true;
+
       // TODO: fs cache for performance
       return isValidModel({
-        content: readFileSync(join(opts.base, f), 'utf-8'),
+        content: readFileSync(f, 'utf-8'),
       });
     });
-}
-
-function getIdentifierDeclaration(
-  node: utils.traverse.Node,
-  path: utils.traverse.NodePath,
-) {
-  if (utils.t.isIdentifier(node) && path.scope.hasBinding(node.name)) {
-    let bindingNode = path.scope.getBinding(node.name)!.path.node;
-    if (utils.t.isVariableDeclarator(bindingNode)) {
-      bindingNode = bindingNode.init!;
-    }
-    return bindingNode;
-  }
-  return node;
-}
-
-export function isValidModel({ content }: { content: string }) {
-  const { parser } = utils;
-  const ast = parser.parse(content, {
-    sourceType: 'module',
-    plugins: ['jsx', 'typescript'],
-  });
-
-  let isDvaModel = false;
-
-  // TODO: 补充更多用例
-  // 1. typescript 用法
-  // 2. dva-model-extend 用法
-  utils.traverse.default(ast as any, {
-    ExportDefaultDeclaration(path: utils.traverse.NodePath) {
-      const { node } = path as { node: utils.t.ExportDefaultDeclaration };
-      const target = getIdentifierDeclaration(node.declaration, path);
-
-      if (
-        utils.t.isObjectExpression(target) &&
-        target.properties.some(property => {
-          return [
-            'state',
-            'reducers',
-            'subscriptions',
-            'effects',
-            'namespace',
-          ].includes((property as any).key.name);
-        })
-      ) {
-        isDvaModel = true;
-      }
-    },
-  });
-
-  return isDvaModel;
 }

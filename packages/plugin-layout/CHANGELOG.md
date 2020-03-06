@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.4.0...@umijs/plugin-layout@0.4.1) (2020-03-04)
+
+### Bug Fixes
+
+- 修复 layout hideChildren 配置不生效 ([#63](https://github.com/umijs/plugins/issues/63)) ([086163d](https://github.com/umijs/plugins/commit/086163d45c783d1ee6575922ff790d650c45233d))
+
 # [0.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.3.2...@umijs/plugin-layout@0.4.0) (2020-03-02)
 
 ### Features

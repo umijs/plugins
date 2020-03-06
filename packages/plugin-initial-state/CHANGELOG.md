@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.3](https://github.com/umijs/plugins/compare/@umijs/plugin-initial-state@2.1.2...@umijs/plugin-initial-state@2.1.3) (2020-03-05)
+
+### Bug Fixes
+
+- initial-state enable strategy ([#66](https://github.com/umijs/plugins/issues/66)) ([96cab23](https://github.com/umijs/plugins/commit/96cab23d6853baa268c58694806db4ecaa2824cd))
+
 ## [2.1.2](https://github.com/umijs/plugins/compare/@umijs/plugin-initial-state@2.1.1...@umijs/plugin-initial-state@2.1.2) (2020-02-26)
 
 ### Bug Fixes

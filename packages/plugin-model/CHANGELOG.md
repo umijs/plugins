@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.1.0...@umijs/plugin-model@2.1.1) (2020-03-04)
+
+### Bug Fixes
+
+- resolve warnings on React 16.13 ([#65](https://github.com/umijs/plugins/issues/65)) ([5f3f85e](https://github.com/umijs/plugins/commit/5f3f85ec3ddc24a581b09caad1c93fc14b70101b))
+
 # [2.1.0](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.0.1...@umijs/plugin-model@2.1.0) (2020-02-17)
 
 ### Features

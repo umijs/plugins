@@ -1,47 +1,59 @@
-import { join } from 'path';
-import { getModels, isValidModel } from './getModels';
+import { join, relative } from 'path';
+import { utils } from 'umi';
+import { getModels } from './getModels';
 
 const fixtures = join(__dirname, 'fixtures');
 
 test('getModels', () => {
+  const base = join(fixtures, 'normal');
   const models = getModels({
-    base: join(fixtures, 'normal'),
+    base,
   });
-  expect(models).toEqual(['b.js', 'c.ts', 'e.jsx', 'f.tsx']);
+  expect(models.map(m => relative(base, m))).toEqual([
+    'b.js',
+    'c.ts',
+    'e.jsx',
+    'f.tsx',
+  ]);
 });
 
-test('isValidModel', () => {
-  expect(
-    isValidModel({
-      content: `export default { state: {} }`,
-    }),
-  ).toEqual(true);
-  expect(
-    isValidModel({
-      content: `export default { reducers: {} }`,
-    }),
-  ).toEqual(true);
-  expect(
-    isValidModel({
-      content: `export default { effects: {} }`,
-    }),
-  ).toEqual(true);
-  expect(
-    isValidModel({
-      content: `export default { subscriptions: {} }`,
-    }),
-  ).toEqual(true);
-  expect(
-    isValidModel({
-      content: `export default {  }`,
-    }),
-  ).toEqual(false);
+test('getModels with opts.skipModelValidate', () => {
+  const base = join(fixtures, 'skipModelValidate');
+  const models = getModels({
+    base,
+    skipModelValidate: true,
+  });
+  expect(models.map(m => relative(base, m))).toEqual(['no_content.js']);
 });
 
-test('isValidModel with variable declaration', () => {
+test('getModels with opts.extraModels', () => {
+  const base = join(fixtures, 'extraModels');
+  const models = getModels({
+    base,
+    extraModels: [
+      join(base, '..', 'models-for-extraModels', 'a_valid.js'),
+      join(base, '..', 'models-for-extraModels', 'b_invalid.js'),
+    ],
+  });
   expect(
-    isValidModel({
-      content: `const Foo = { state: {} }; export default Foo;`,
-    }),
-  ).toEqual(true);
+    models.map(m => utils.winPath(relative(join(base, '..'), m))),
+  ).toEqual(['models-for-extraModels/a_valid.js']);
+});
+
+test('getModels with opts.extraModels and opts.skipModelValidate', () => {
+  const base = join(fixtures, 'extraModels');
+  const models = getModels({
+    base,
+    extraModels: [
+      join(base, '..', 'models-for-extraModels', 'a_valid.js'),
+      join(base, '..', 'models-for-extraModels', 'b_invalid.js'),
+    ],
+    skipModelValidate: true,
+  });
+  expect(
+    models.map(m => utils.winPath(relative(join(base, '..'), m))),
+  ).toEqual([
+    'models-for-extraModels/a_valid.js',
+    'models-for-extraModels/b_invalid.js',
+  ]);
 });
