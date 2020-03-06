@@ -1,4 +1,3 @@
-import { utils } from 'umi';
 import { readFileSync } from 'fs';
 
 const { parser } = utils;
