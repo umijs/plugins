@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.5](https://github.com/umijs/plugins/compare/@umijs/plugin-initial-state@2.1.4...@umijs/plugin-initial-state@2.1.5) (2020-03-06)
+
+### Bug Fixes
+
+- app.ts validate ast failed ([765da7e](https://github.com/umijs/plugins/commit/765da7e2ccd70d1056a47447b8cca692eb4d92a5))
+
 ## [2.1.4](https://github.com/umijs/plugins/compare/@umijs/plugin-initial-state@2.1.3...@umijs/plugin-initial-state@2.1.4) (2020-03-06)
 
 ### Bug Fixes
