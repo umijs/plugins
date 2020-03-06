@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, useModel, history, useIntl } from 'umi';
+import React, { useMemo } from 'react';
+import { Link, useModel, history, useIntl, InitialState } from 'umi';
 import pathToRegexp from 'path-to-regexp';
 import ProLayout from '@ant-design/pro-layout';
 import './style.less';
@@ -13,16 +13,22 @@ import logo from '../assets/logo.svg';
 
 const BasicLayout = (props: any) => {
   const { children, userConfig, location } = props;
-  const { initialState, loading } = (useModel &&
-    useModel('@@initialState')) || { initialState: undefined, loading: false }; // plugin-initial-state 未开启
+  const initialInfo = (useModel && useModel('@@initialState')) || {
+    initialState: undefined,
+    loading: false,
+  }; // plugin-initial-state 未开启
+  const { initialState, loading } = initialInfo;
   const _routes = require('@@/core/routes').routes;
   // 国际化插件并非默认启动
   const intl = useIntl && useIntl();
   const rightContentRender = useRightContent(userConfig, loading, initialState);
   const layoutConfig = getLayoutConfigFromRoute(_routes);
-  const patchMenus: (ms: MenuItem[]) => MenuItem[] =
+  const patchMenus: (ms: MenuItem[], initialInfo: InitialState) => MenuItem[] =
     userConfig.patchMenus || ((ms: MenuItem[]): MenuItem[] => ms);
-  const menus = patchMenus(getMenuDataFromRoutes(_routes[0].routes));
+  const menus = useMemo(
+    () => patchMenus(getMenuDataFromRoutes(_routes[0].routes), initialInfo),
+    [loading],
+  );
 
   // layout 是否渲染相关
   const pathName = location.pathname;
