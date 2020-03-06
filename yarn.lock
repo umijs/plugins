@@ -2683,11 +2683,6 @@
   resolved "https://registry.yarnpkg.com/@types/ejs/-/ejs-3.0.1.tgz#ef3d3d8cf1710a69c3b25dde9bbc7b21ae7c5969"
   integrity sha512-e8zAwnKg8lGy8MpAZx7gblNXY4agrAXH9YaAWYsMIfvusHdoS50WvwlcBb75JP8U2rg99PqxbEIstbiZSPAnEg==
 
-"@types/es-module-lexer@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@types/es-module-lexer/-/es-module-lexer-0.3.0.tgz#9fee3f19f64e6b3f999eeb3a70bd177a4d57a6cb"
-  integrity sha512-XI3MGSejUQIJ3wzY0i5IHy5J3eb36M/ytgG8jIOssP08ovtRPcjpjXQqrx51AHBNBOisTS/NQNWJitI17+EwzQ==
-
 "@types/estree@*":
   version "0.0.42"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.42.tgz#8d0c1f480339efedb3e46070e22dd63e0430dd11"
@@ -6487,11 +6482,6 @@ es-abstract@^1.17.0-next.1, es-abstract@^1.17.2:
     object.assign "^4.1.0"
     string.prototype.trimleft "^2.1.1"
     string.prototype.trimright "^2.1.1"
-
-es-module-lexer@^0.3.17:
-  version "0.3.17"
-  resolved "https://registry.yarnpkg.com/es-module-lexer/-/es-module-lexer-0.3.17.tgz#a248dec2870934d9054420fead19db095ea21537"
-  integrity sha512-nwvMtzyEB6FhlyXBlV+BW2By3Vn2sUvlQBYP4LvdK8YpdbFQUOiBoeuB7/ip1+EbjmgNydkJ8+dIlyO09VP9BA==
 
 es-to-primitive@^1.2.1:
   version "1.2.1"

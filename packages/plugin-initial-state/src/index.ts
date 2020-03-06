@@ -63,7 +63,7 @@ export default (api: IApi) => {
 
     const relEntryFile = relative(api.paths.cwd!, entryFile || '');
 
-    const enable = await shouldPluginEnable(entryFile);
+    const enable = shouldPluginEnable(entryFile);
 
     api.writeTmpFile({
       path: RELATIVE_MODEL_PATH,
