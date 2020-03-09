@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-sass",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "@umijs/plugin-sass",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -28,7 +28,7 @@
     "access": "public"
   },
   "dependencies": {
-    "sass-loader": "^8.0.2",
-    "sass": "^1.26.2"
+    "sass": "^1.26.2",
+    "sass-loader": "^8.0.2"
   }
 }

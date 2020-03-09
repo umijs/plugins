@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.4.1...@umijs/plugin-layout@0.5.0) (2020-03-09)
+
+### Features
+
+- layout 的 patchRoute 方法添加 initialState 参数。[#68](https://github.com/umijs/plugins/issues/68) ([#73](https://github.com/umijs/plugins/issues/73)) ([669d70c](https://github.com/umijs/plugins/commit/669d70ce90e9dab5df470175e2b54a3436262793))
+
 ## [0.4.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.4.0...@umijs/plugin-layout@0.4.1) (2020-03-04)
 
 ### Bug Fixes
