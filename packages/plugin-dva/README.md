@@ -2,7 +2,7 @@
 
 > @umijs/plugin-dva.
 
-See our website [@umijs/plugin-dva](https://next.umijs.org/plugins/plugin-dva) for more information.
+See our website [@umijs/plugin-dva](https://umijs.org/plugins/plugin-dva) for more information.
 
 ## Install
 

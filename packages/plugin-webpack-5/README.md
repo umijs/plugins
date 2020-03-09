@@ -2,7 +2,7 @@
 
 > @umijs/plugin-webpack-5.
 
-See our website [@umijs/plugin-webpack-5](https://next.umijs.org/plugins/plugin-webpack-5) for more information.
+See our website [@umijs/plugin-webpack-5](https://umijs.org/plugins/plugin-webpack-5) for more information.
 
 ## Install
 

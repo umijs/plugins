@@ -82,7 +82,7 @@ const { yParser } = require('@umijs/utils');
 
 > ${json.description}.
 
-See our website [${name}](https://next.umijs.org/plugins/${shortName}) for more information.
+See our website [${name}](https://umijs.org/plugins/${shortName}) for more information.
 
 ## Install
 

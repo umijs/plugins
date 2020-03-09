@@ -2,7 +2,7 @@
 
 > @umijs/plugin-initial-state.
 
-See our website [@umijs/plugin-initial-state](https://next.umijs.org/plugins/plugin-initial-state) for more information.
+See our website [@umijs/plugin-initial-state](https://umijs.org/plugins/plugin-initial-state) for more information.
 
 ## Install
 

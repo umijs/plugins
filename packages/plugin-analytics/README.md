@@ -2,7 +2,7 @@
 
 > analytics for baidu tongji and google analytics.
 
-See our website [@umijs/plugin-analytics](https://next.umijs.org/plugins/plugin-analytics) for more information.
+See our website [@umijs/plugin-analytics](https://umijs.org/plugins/plugin-analytics) for more information.
 
 ## Install
 

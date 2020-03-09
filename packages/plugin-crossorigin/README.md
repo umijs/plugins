@@ -2,7 +2,7 @@
 
 > @umijs/plugin-crossorigin.
 
-See our website [@umijs/plugin-crossorigin](https://next.umijs.org/plugins/plugin-crossorigin) for more information.
+See our website [@umijs/plugin-crossorigin](https://umijs.org/plugins/plugin-crossorigin) for more information.
 
 ## Install
 

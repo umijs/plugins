@@ -2,7 +2,7 @@
 
 > @umijs/preset-umi2-compatible.
 
-See our website [@umijs/preset-umi2-compatible](https://next.umijs.org/plugins/preset-umi2-compatible) for more information.
+See our website [@umijs/preset-umi2-compatible](https://umijs.org/plugins/preset-umi2-compatible) for more information.
 
 ## Install
 

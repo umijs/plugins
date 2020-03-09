@@ -2,7 +2,7 @@
 
 > umi plugin for qiankun.
 
-See our website [@umijs/plugin-qiankun](https://next.umijs.org/plugins/plugin-qiankun) for more information.
+See our website [@umijs/plugin-qiankun](https://umijs.org/plugins/plugin-qiankun) for more information.
 
 ## Install
 

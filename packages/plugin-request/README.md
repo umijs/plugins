@@ -2,7 +2,7 @@
 
 > @umijs/plugin-request.
 
-See our website [@umijs/plugin-request](https://next.umijs.org/plugins/plugin-request) for more information.
+See our website [@umijs/plugin-request](https://umijs.org/plugins/plugin-request) for more information.
 
 ## Install
 

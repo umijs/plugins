@@ -2,7 +2,7 @@
 
 > @umijs/plugin-model.
 
-See our website [@umijs/plugin-model](https://next.umijs.org/plugins/plugin-model) for more information.
+See our website [@umijs/plugin-model](https://umijs.org/plugins/plugin-model) for more information.
 
 ## Install
 

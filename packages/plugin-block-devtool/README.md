@@ -2,7 +2,7 @@
 
 > @umijs/plugin-block-devtool.
 
-See our website [@umijs/plugin-block-devtool](https://next.umijs.org/plugins/plugin-block-devtool) for more information.
+See our website [@umijs/plugin-block-devtool](https://umijs.org/plugins/plugin-block-devtool) for more information.
 
 ## Install
 

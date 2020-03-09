@@ -2,7 +2,7 @@
 
 > Umi plugin for access management..
 
-See our website [@umijs/plugin-access](https://next.umijs.org/plugins/plugin-access) for more information.
+See our website [@umijs/plugin-access](https://umijs.org/plugins/plugin-access) for more information.
 
 ## Install
 

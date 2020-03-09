@@ -2,7 +2,7 @@
 
 > @umijs/plugin-locale.
 
-See our website [@umijs/plugin-locale](https://next.umijs.org/plugins/plugin-locale) for more information.
+See our website [@umijs/plugin-locale](https://umijs.org/plugins/plugin-locale) for more information.
 
 ## Install
 

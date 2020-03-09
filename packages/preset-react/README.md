@@ -2,7 +2,7 @@
 
 > @umijs/preset-react.
 
-See our website [@umijs/preset-react](https://next.umijs.org/plugins/preset-react) for more information.
+See our website [@umijs/preset-react](https://umijs.org/plugins/preset-react) for more information.
 
 ## Install
 

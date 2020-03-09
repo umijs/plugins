@@ -2,7 +2,7 @@
 
 > @umijs/plugin-layout.
 
-See our website [@umijs/plugin-layout](https://next.umijs.org/plugins/plugin-layout) for more information.
+See our website [@umijs/plugin-layout](https://umijs.org/plugins/plugin-layout) for more information.
 
 ## Install
 
