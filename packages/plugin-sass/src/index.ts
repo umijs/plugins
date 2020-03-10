@@ -2,6 +2,7 @@ import { IApi, utils } from 'umi';
 
 export default (api: IApi) => {
   api.describe({
+    key: 'sass',
     config: {
       schema(joi) {
         return joi.object();
