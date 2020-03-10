@@ -151,14 +151,14 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
           dvaHeadExport: models
             .map(path => {
               // prettier-ignore
-              return `export * from '${winPath(dirname(path) + "/" + basename(path, extname(path)))}';`.trim();
+              return `export * from '${winPath(dirname(path) + "/" + basename(path, extname(path)))}';`;
             })
             .join('\r\n'),
           dvaLoadingModels: models
             .map(path => {
               // prettier-ignore
-              return `${basename(path, extname(path))
-                } ?: boolean; `.trim();
+              return `    ${basename(path, extname(path))
+                } ?: boolean;`;
             })
             .join('\r\n'),
         }),

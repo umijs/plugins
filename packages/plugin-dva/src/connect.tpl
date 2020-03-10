@@ -13,8 +13,7 @@ export interface Action<T = any> {
 export type Reducer<S = any, A extends Action = AnyAction> = (
   state: S | undefined,
   action: A
-) => S
-
+) => S;
 
 export type Effect = (
   action: AnyAction,
@@ -36,15 +35,14 @@ export interface Loading {
   global: boolean;
   effects: { [key: string]: boolean | undefined };
   models: {
-    {{{ dvaLoadingModels }}}
+{{{ dvaLoadingModels }}}
   };
 }
 
 /**
  * @type P: Params matched in dynamic routing
  */
-export interface ConnectProps<P extends { [K in keyof P]?: string } = {}, S = LocationState>
-  extends Partial<IRoute> {
+export interface ConnectProps<P extends { [K in keyof P]?: string } = {}, S = LocationState> {
   dispatch?: Dispatch;
   // https://github.com/umijs/umi/pull/2194
   match?: match<P>;
