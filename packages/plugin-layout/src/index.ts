@@ -57,7 +57,9 @@ export default (api: IApi) => {
     return [
       {
         path: '/',
-        component: join(api.paths.absTmpPath || '', DIR_NAME, 'Layout.tsx'),
+        component: utils.winPath(
+          join(api.paths.absTmpPath || '', DIR_NAME, 'Layout.tsx'),
+        ),
         routes,
       },
     ];
