@@ -48,7 +48,7 @@ export default (api: IApi) => {
       layoutComponent[theme] || layoutComponent['PRO'];
 
     api.writeTmpFile({
-      path: join(DIR_NAME, 'Layout.tsx'),
+      path: utils.winPath(join(DIR_NAME, 'Layout.tsx')),
       content: getLayoutContent(layoutOpts, currentLayoutComponentPath),
     });
   });
@@ -57,7 +57,9 @@ export default (api: IApi) => {
     return [
       {
         path: '/',
-        component: join(api.paths.absTmpPath || '', DIR_NAME, 'Layout.tsx'),
+        component: utils.winPath(
+          join(api.paths.absTmpPath || '', DIR_NAME, 'Layout.tsx'),
+        ),
         routes,
       },
     ];
