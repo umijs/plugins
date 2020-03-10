@@ -141,6 +141,28 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
           exportMethods: exportMethods.join(', '),
         }),
       });
+
+      // typings
+
+      const connectTpl = readFileSync(join(__dirname, 'connect.tpl'), 'utf-8');
+      api.writeTmpFile({
+        path: 'plugin-dva/connect.ts',
+        content: Mustache.render(connectTpl, {
+          alitaDvaHeadExport: models
+            .map(path => {
+              // prettier-ignore
+              return `export * from '${winPath(dirname(path) + "/" + basename(path, extname(path)))}';`.trim();
+            })
+            .join('\r\n'),
+          alitaDvaLoadingModels: models
+            .map(path => {
+              // prettier-ignore
+              return `${basename(path, extname(path))
+                } ?: boolean; `.trim();
+            })
+            .join('\r\n'),
+        }),
+      });
     },
     // 要比 preset-built-in 靠前
     // 在内部文件生成之前执行，这样 hasModels 设的值对其他函数才有效
@@ -181,6 +203,10 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
           {
             exportAll: true,
             source: '../plugin-dva/exports',
+          },
+          {
+            exportAll: true,
+            source: '../plugin-dva/connect',
           },
         ]
       : [],
