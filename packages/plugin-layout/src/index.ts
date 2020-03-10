@@ -48,7 +48,7 @@ export default (api: IApi) => {
       layoutComponent[theme] || layoutComponent['PRO'];
 
     api.writeTmpFile({
-      path: utils.winPath(join(DIR_NAME, 'Layout.tsx')),
+      path: join(DIR_NAME, 'Layout.tsx'),
       content: getLayoutContent(layoutOpts, currentLayoutComponentPath),
     });
   });
