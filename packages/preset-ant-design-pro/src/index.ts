@@ -11,7 +11,7 @@ export default (api: IApi) => {
     plugins: [
       ...getPlugin('umi-plugin-antd-icon-config'),
       ...getPlugin('umi-plugin-antd-theme'),
-      ...getPlugin('umi-plugin-pro-block'),
+      ...getPlugin('@umijs/plugin-block-devtool'),
     ],
   };
 };
