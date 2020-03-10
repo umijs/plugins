@@ -134,13 +134,30 @@ export const genModels = (imports: string[]) => {
 };
 
 export const isValidHook = (filePath: string) => {
-  const ast = parser.parse(
-    readFileSync(filePath, { encoding: 'utf-8' }).toString(),
-    {
-      sourceType: 'module',
-      plugins: ['jsx', 'typescript'],
-    },
-  );
+  const isTS = path.extname(filePath) === '.ts';
+  const isTSX = path.extname(filePath) === '.tsx';
+  const content = readFileSync(filePath, { encoding: 'utf-8' }).toString();
+
+  const ast = parser.parse(content, {
+    sourceType: 'module',
+    plugins: [
+      // .ts 不能加 jsx，因为里面可能有 `<Type>{}` 这种写法
+      // .tsx, .js, .jsx 可以加
+      isTS ? false : 'jsx',
+      // 非 ts 不解析 typescript
+      isTS || isTSX ? 'typescript' : false,
+      // 支持更多语法
+      'classProperties',
+      'dynamicImport',
+      'exportDefaultFrom',
+      'exportNamespaceFrom',
+      'functionBind',
+      'nullishCoalescingOperator',
+      'objectRestSpread',
+      'optionalChaining',
+      'decorators-legacy',
+    ].filter(Boolean) as utils.parser.ParserPlugin[],
+  });
   let valid = false;
   let identifierName = '';
   traverse.default(ast, {
