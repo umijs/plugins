@@ -1,10 +1,10 @@
 import { IRoute } from '@umijs/core';
-import { AnyAction } from 'redux'
-import { EffectsCommandMap } from 'dva'
-import { match } from 'react-router-dom'
+import { AnyAction } from 'redux';
+import { EffectsCommandMap } from 'dva';
+import { match } from 'react-router-dom';
 import { Location, LocationState } from 'history';
 
-{{{ alitaDvaHeadExport }}}
+{{{ dvaHeadExport }}}
 
 export interface Action<T = any> {
   type: T
@@ -15,21 +15,10 @@ export type Reducer<S = any, A extends Action = AnyAction> = (
   action: A
 ) => S
 
-export interface MenuDataItem {
-  authority?: string[] | string;
-  children?: MenuDataItem[];
-  hideChildrenInMenu?: boolean;
-  hideInMenu?: boolean;
-  icon?: string;
-  locale?: string;
-  name?: string;
-  path: string;
-  [key: string]: any;
-}
 
 export type Effect = (
   action: AnyAction,
-  effects: EffectsCommandMap & { select: <T>(func: (state: ConnectState) => T) => T },
+  effects: EffectsCommandMap,
 ) => void;
 
 /**
@@ -47,11 +36,8 @@ export interface Loading {
   global: boolean;
   effects: { [key: string]: boolean | undefined };
   models: {
-    {{{ alitaDvaLoadingModels }}}
+    {{{ dvaLoadingModels }}}
   };
-}
-
-export interface ConnectState {
 }
 
 /**
@@ -65,5 +51,3 @@ export interface ConnectProps<P extends { [K in keyof P]?: string } = {}, S = Lo
   location: Location<S>;
 }
 
-// eslint-disable-next-line no-undef
-export default ConnectState;

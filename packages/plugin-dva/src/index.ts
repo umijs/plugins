@@ -148,13 +148,13 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
       api.writeTmpFile({
         path: 'plugin-dva/connect.ts',
         content: Mustache.render(connectTpl, {
-          alitaDvaHeadExport: models
+          dvaHeadExport: models
             .map(path => {
               // prettier-ignore
               return `export * from '${winPath(dirname(path) + "/" + basename(path, extname(path)))}';`.trim();
             })
             .join('\r\n'),
-          alitaDvaLoadingModels: models
+          dvaLoadingModels: models
             .map(path => {
               // prettier-ignore
               return `${basename(path, extname(path))
