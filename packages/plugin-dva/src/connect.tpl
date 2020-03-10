@@ -2,7 +2,7 @@ import { IRoute } from '@umijs/core';
 import { AnyAction } from 'redux';
 import { EffectsCommandMap } from 'dva';
 import { match } from 'react-router-dom';
-import { Location, LocationState } from 'history';
+import { Location, LocationState, History } from 'history';
 
 {{{ dvaHeadExport }}}
 
@@ -49,5 +49,7 @@ export interface ConnectProps<P extends { [K in keyof P]?: string } = {}, S = Lo
   // https://github.com/umijs/umi/pull/2194
   match?: match<P>;
   location: Location<S>;
+  history: History;
+  route: IRoute;
 }
 
