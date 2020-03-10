@@ -4,10 +4,7 @@ export default (api: IApi) => {
   api.describe({
     config: {
       schema(joi) {
-        return joi.object({
-          implementation: joi.any(),
-          sassOptions: joi.object(),
-        });
+        return joi.object();
       },
     },
   });
