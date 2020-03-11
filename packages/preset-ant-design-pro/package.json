@@ -28,7 +28,7 @@
     "access": "public"
   },
   "dependencies": {
-    "umi-plugin-antd-icon-config": "^1.0.3",
+    "umi-plugin-antd-icon-config": "^2.0.0-1",
     "umi-plugin-antd-theme": "^1.2.0-0",
     "@umijs/plugin-block-devtool": "^1.1.0"
   }
