@@ -15,7 +15,7 @@ export default function(api: IApi) {
   }
 
   api.describe({
-    key: 'proBlock',
+    key: 'antDesignProBlock',
     config: {
       schema(joi) {
         return joi.object({

@@ -1,9 +1,9 @@
 export default {
   plugins: [
     '@umijs/plugin-blocks',
-    require.resolve('../../plugin-pro-block/lib'),
+    require.resolve('../../plugin-ant-design-pro-block/lib'),
   ],
-  proBlock: {
+  antDesignProBlock: {
     modifyRequest: true,
     moveService: true,
     moveMock: true,
