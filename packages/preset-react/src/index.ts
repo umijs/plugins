@@ -1,6 +1,7 @@
 export default () => {
   return {
     plugins: [
+      require.resolve('umi-plugin-antd-icon-config'),
       require.resolve('@umijs/plugin-access'),
       require.resolve('@umijs/plugin-analytics'),
       require.resolve('@umijs/plugin-antd'),

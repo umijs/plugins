@@ -37,6 +37,7 @@
     "@umijs/plugin-layout": "0.5.1",
     "@umijs/plugin-locale": "0.3.0",
     "@umijs/plugin-model": "2.1.2",
-    "@umijs/plugin-request": "2.2.1"
+    "@umijs/plugin-request": "2.2.1",
+    "umi-plugin-antd-icon-config": "^2.0.0-0"
   }
 }
