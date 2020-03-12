@@ -1,7 +1,7 @@
 {
-  "name": "@umijs/plugin-model",
-  "version": "2.1.2",
-  "description": "@umijs/plugin-model",
+  "name": "@umijs/plugin-ant-design-pro-block",
+  "version": "1.0.0",
+  "description": "@umijs/plugin-ant-design-pro-block",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -16,19 +16,16 @@
     "umi"
   ],
   "authors": [
-    "Troy Li <a@tianyi.li>",
-    "chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)"
+    "yutingzhao1991 <yutingzhao1991@sina.com> (https://github.com/yutingzhao1991)"
   ],
   "license": "MIT",
   "bugs": "http://github.com/umijs/plugins/issues",
-  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-model#readme",
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-ant-design-pro-block#readme",
   "peerDependencies": {
-    "umi": "3.x"
+    "umi": "3.x",
+    "@umijs/plugin-blocks": "2.x"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-    "lodash.isequal": "4.5.0"
   }
 }

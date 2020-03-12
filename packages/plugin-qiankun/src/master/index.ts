@@ -108,12 +108,12 @@ window.g_rootExports = ${
     `.trim();
 
     api.writeTmpFile({
-      path: 'qiankunRootExports.js',
+      path: 'plugin-qiankun/qiankunRootExports.js',
       content: rootExports,
     });
 
     api.writeTmpFile({
-      path: 'subAppsConfig.json',
+      path: 'plugin-qiankun/subAppsConfig.json',
       content: JSON.stringify({
         masterHistory: history,
         ...options,
@@ -121,7 +121,7 @@ window.g_rootExports = ${
     });
 
     api.writeTmpFile({
-      path: 'qiankunDefer.js',
+      path: 'plugin-qiankun/qiankunDefer.js',
       content: `
       class Deferred {
         constructor() {
@@ -137,7 +137,7 @@ window.g_rootExports = ${
   api.addUmiExports(() => [
     {
       specifiers: ['qiankunStart'],
-      source: '@/.umi/qiankunDefer',
+      source: '../plugin-qiankun/qiankunDefer',
     },
   ]);
 }
