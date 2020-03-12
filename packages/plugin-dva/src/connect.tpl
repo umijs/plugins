@@ -53,14 +53,8 @@ export interface ConnectProps<P extends { [K in keyof P]?: string } = {}, S = Lo
   route: IRoute;
 }
 
-
-export type ConnectRC<T = {}, U = {}> = React.ForwardRefRenderFunction<
-  any,
-  T &
-   ConnectProps & {
-      dispatch: Dispatch<AnyAction>;
-      params?: Partial<U>;
-    }
->;
-
-export type CRFC<T = {}, U = {}> = ConnectRC<T,U>
+/**
+ * @type T: React props
+ * @type U: match props types
+ */
+export type ConnectRC<T = {}, U = {}> = React.ForwardRefRenderFunction<any, T & ConnectProps<U>>;
