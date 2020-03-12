@@ -5,7 +5,7 @@ export default (api: IApi) => {
     plugins: [
       // 有 plugin-react 时不加 plugin-antd-icon-config，因为已经内置了
       // 在 ant-design-pro 5 之后，用 plugin-react，去 plugin-antd-icon-config
-      api.hasPlugins(['@umijs/plugin-react']) &&
+      !api.hasPlugins(['@umijs/plugin-react']) &&
         require.resolve('umi-plugin-antd-icon-config'),
       require.resolve('@umijs/plugin-block-devtool'),
     ].forEach(Boolean),
