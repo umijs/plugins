@@ -22,6 +22,11 @@ export default defineConfig({
       component: './utils',
     },
     {
+      name: 'request 测试',
+      path: '/request',
+      component: './request',
+    },
+    {
       name: '首页',
       path: '/',
       component: './index',

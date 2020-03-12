@@ -1,5 +1,6 @@
-import { InitialState } from 'umi';
+import { InitialState, request as umiRequest } from 'umi';
 import { MenuItem } from '@umijs/plugin-layout';
+
 export function render(oldRender: Function) {
   oldRender();
 }
@@ -30,4 +31,15 @@ export const layout = {
 
 export const locale = {
   default: 'zh-CN',
+};
+
+console.log('get request', umiRequest);
+
+export const request = {
+  errorConfig: {
+    adaptor(resData) {
+      console.log('get resData', resData);
+      return resData;
+    },
+  },
 };
