@@ -1,10 +1,10 @@
 /* eslint-disable import/no-unresolved, import/extensions */
 
 // @ts-ignore
-import { deferred } from '@/.umi/qiankunDefer.js';
-import '@/.umi/qiankunRootExports.js';
+import { deferred } from '@@/plugin-qiankun/qiankunDefer.js';
+import '@@/plugin-qiankun/qiankunRootExports.js';
 // @ts-ignore
-import subAppConfig from '@/.umi/subAppsConfig.json';
+import subAppConfig from '@@/plugin-qiankun/subAppsConfig.json';
 import assert from 'assert';
 import { registerMicroApps, start } from 'qiankun';
 import React from 'react';

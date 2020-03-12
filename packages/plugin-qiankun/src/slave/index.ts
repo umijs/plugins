@@ -84,7 +84,7 @@ export default function(api: IApi, options: Options) {
 
   api.onGenerateFiles(() => {
     api.writeTmpFile({
-      path: 'qiankunContext.js',
+      path: 'plugin-qiankun/qiankunContext.js',
       content: `
       import { createContext, useContext } from 'react';
 
@@ -99,7 +99,7 @@ export default function(api: IApi, options: Options) {
   api.addUmiExports(() => [
     {
       specifiers: ['useRootExports'],
-      source: '@/.umi/qiankunContext',
+      source: '../plugin-qiankun/qiankunContext',
     },
   ]);
 
