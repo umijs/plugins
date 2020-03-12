@@ -1,7 +1,7 @@
 /**
  * @jest-environment node
  */
-import createTestServer from 'create-test-server';
+import createTestServer from './createTestServer';
 import { request } from '../src/request';
 
 jest.mock('umi', () => require('./mocks/umi'));
