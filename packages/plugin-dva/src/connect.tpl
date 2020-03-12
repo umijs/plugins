@@ -1,6 +1,6 @@
 import { IRoute } from '@umijs/core';
 import { AnyAction } from 'redux';
-import { EffectsCommandMap } from 'dva';
+import { EffectsCommandMap, SubscriptionAPI } from 'dva';
 import { match } from 'react-router-dom';
 import { Location, LocationState, History } from 'history';
 
@@ -30,6 +30,8 @@ export type Dispatch = <P = any, C = (payload: P) => void>(action: {
   callback?: C;
   [key: string]: any;
 }) => any;
+
+export type Subscription = (api: SubscriptionAPI, done: Function) => void;
 
 export interface Loading {
   global: boolean;
