@@ -31,7 +31,7 @@ export type Dispatch = <P = any, C = (payload: P) => void>(action: {
   [key: string]: any;
 }) => any;
 
-export type Subscription = (api: SubscriptionAPI, done: Function) => void;
+export type Subscription = (api: SubscriptionAPI, done: Function) => void | Function;
 
 export interface Loading {
   global: boolean;
@@ -52,4 +52,3 @@ export interface ConnectProps<P extends { [K in keyof P]?: string } = {}, S = Lo
   history: History;
   route: IRoute;
 }
-
