@@ -1,57 +1,19 @@
 # @umijs/plugin-ant-design-pro-block
 
-[![NPM version](https://img.shields.io/npm/v/umi-plugin-ant-design-pro-block.svg?style=flat)](https://npmjs.org/package/umi-plugin-pro-block) [![NPM downloads](http://img.shields.io/npm/dm/umi-plugin-ant-design-pro-block.svg?style=flat)](https://npmjs.org/package/umi-plugin-ant-design-pro-block)
+> @umijs/plugin-ant-design-pro-block.
 
-A plugin for deliver umi block files like ant design pro structure.
+See our website [@umijs/plugin-ant-design-pro-block](https://umijs.org/plugins/plugin-ant-design-pro-block) for more information.
 
-When you use `umi block demo` to download a block, if you did not use this plugin, you will get:
+## Install
 
-```diff
-- src
-  - mock
-  - pages
-+   - demo
-+     - index.js
-+     - _mock.js
-+     - service.js
+Using npm:
+
+```bash
+$ npm install --save-dev @umijs/plugin-ant-design-pro-block
 ```
 
-And if you use it, you will get:
+or using yarn:
 
-```diff
-- src
-  - mock
-+   - demo.js
-  - service.js
-+   - demo.js
-  - pages
-+   - demo
-+     - index.js
+```bash
+$ yarn add @umijs/plugin-ant-design-pro-block --dev
 ```
-
-Ant will replace `umi-request` to `util(s)/request.js` if it exist.
-
-## Usage
-
-Configure in `.umirc.js`,
-
-```js
-export default {
-  plugins: ['@umijs/plugin-blocks', '@umijs/plugin-ant-design-pro-block'],
-};
-```
-
-## Options
-
-```js
-{
-  moveMock: false, // whether move _mock.js to mock, default to true
-  moveService: false, // whether move service.js to src/services/, default to true
-  modifyRequest: false, // whether modify umi-request to util(s)/request (if it exist), default to true
-  autoAddMenu: false, // whether add name and icon config to route config when download a pro, default to true
-}
-```
-
-## LICENSE
-
-MIT
