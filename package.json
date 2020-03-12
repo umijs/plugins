@@ -46,5 +46,8 @@
     "umi": "^3.0.7",
     "yorkie": "^2.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@umijs/plugin-blocks": "^2.0.0-beta.4"
+  }
 }
