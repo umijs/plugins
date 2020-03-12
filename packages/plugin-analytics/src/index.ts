@@ -1,7 +1,8 @@
 import { IApi } from 'umi';
 
 export default (api: IApi) => {
-  if (!api.userConfig.analytics) return;
+  const GA_KEY = process.env.GA_KEY;
+  if (!api.userConfig.analytics && !GA_KEY) return;
 
   api.describe({
     key: 'analytics',
@@ -12,7 +13,7 @@ export default (api: IApi) => {
     },
   });
   const { analytics } = api.userConfig;
-  const { baidu, ga } = analytics;
+  const { baidu, ga = GA_KEY } = analytics;
   api.logger.log('insert analytics');
 
   const baiduTpl = (code: string) => {
