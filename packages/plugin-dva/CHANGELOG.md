@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.5.3...@umijs/plugin-dva@0.6.0) (2020-03-12)
+
+### Features
+
+- add dva page typings ([#76](https://github.com/umijs/plugins/issues/76)) ([d1a90a7](https://github.com/umijs/plugins/commit/d1a90a7a53400f35a920ee4a87d07422f6b5e1b7))
+
 ## [0.5.3](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.5.2...@umijs/plugin-dva@0.5.3) (2020-03-05)
 
 **Note:** Version bump only for package @umijs/plugin-dva

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.5.1...@umijs/plugin-layout@0.6.0) (2020-03-12)
+
+### Features
+
+- built-in plugin-antd-icon-config ([#83](https://github.com/umijs/plugins/issues/83)) ([4cc5d83](https://github.com/umijs/plugins/commit/4cc5d834a15f71d0d9a5f22e238a901595667928))
+
 ## [0.5.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.5.0...@umijs/plugin-layout@0.5.1) (2020-03-10)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-ant-design-pro-block",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0",
   "description": "@umijs/plugin-ant-design-pro-block",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -22,8 +22,8 @@
   "bugs": "http://github.com/umijs/plugins/issues",
   "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-ant-design-pro-block#readme",
   "peerDependencies": {
-    "umi": "3.x",
-    "@umijs/plugin-blocks": "2.x"
+    "@umijs/plugin-blocks": "2.x",
+    "umi": "3.x"
   },
   "publishConfig": {
     "access": "public"
