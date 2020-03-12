@@ -8,11 +8,13 @@ export default defineConfig({
       name: 'model 测试',
       path: '/plugin-model',
       component: './plugin-model',
+      icon: 'smile',
     },
     {
       name: 'initial-state 测试',
       path: '/plugin-initial-state',
       component: './plugin-initial-state',
+      icon: 'star',
     },
     {
       name: 'utils 测试',
