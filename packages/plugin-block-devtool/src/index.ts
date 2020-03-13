@@ -67,7 +67,7 @@ export default function(api: IApi) {
   const blockConfig = require(join(paths.cwd || '', 'package.json'))
     .blockConfig;
   const options = api.service.userConfig.blockDevtool || {};
-  const layoutConfig = process.env.BLOCK_PAGES_LAYOUT || options.layout;
+  const layoutConfig = process.env.BLOCK_PAGES_LAYOUT || options.layout || "ant-design-pro";
   const pathToLayout =
     layoutConfig && join(__dirname, `../layouts/${layoutConfig}`);
 
