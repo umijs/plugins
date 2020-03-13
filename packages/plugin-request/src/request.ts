@@ -242,4 +242,4 @@ const request: RequestMethodInUmi = (url: any, options: any) => {
   return requestMethod(url, options);
 };
 
-export { request, useRequest };
+export { request, useRequest, getRequestMethod };
