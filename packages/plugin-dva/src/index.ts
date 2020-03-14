@@ -156,9 +156,9 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
             .join('\r\n'),
           dvaLoadingModels: models
             .map(path => {
+              if (basename(path, extname(path)) === 'model') return '';
               // prettier-ignore
-              return `    ${basename(path, extname(path))
-                } ?: boolean;`;
+              return `    "${basename(path, extname(path))}" ?: boolean;`;
             })
             .join('\r\n'),
         }),

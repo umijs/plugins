@@ -39,6 +39,7 @@ export interface Loading {
   effects: { [key: string]: boolean | undefined };
   models: {
 {{{ dvaLoadingModels }}}
+    [key: string]: boolean | undefined;
   };
 }
 
