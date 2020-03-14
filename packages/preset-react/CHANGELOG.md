@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.3](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.4.2...@umijs/preset-react@1.4.3) (2020-03-13)
+
+### Bug Fixes
+
+- test plugin lost in preset-react ([efa3239](https://github.com/umijs/plugins/commit/efa3239068dbde9ad442ce69a305abbaccec2c9b))
+
+## [1.4.2](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.4.1...@umijs/preset-react@1.4.2) (2020-03-12)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.4.1](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.4.0...@umijs/preset-react@1.4.1) (2020-03-12)
+
+**Note:** Version bump only for package @umijs/preset-react
+
 # [1.4.0](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.3.12...@umijs/preset-react@1.4.0) (2020-03-12)
 
 ### Features

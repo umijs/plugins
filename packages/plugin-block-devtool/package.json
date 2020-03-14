@@ -1,12 +1,13 @@
 {
   "name": "@umijs/plugin-block-devtool",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "@umijs/plugin-block-devtool",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib",
-    "src"
+    "src",
+    "layouts"
   ],
   "repository": {
     "type": "git",
