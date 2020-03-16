@@ -38,7 +38,7 @@ export type Subscription = (api: SubscriptionAPI, done: Function) => void | Func
 
 export interface Loading {
   global: boolean;
-  effects: { [key: string]: boolean | undefined };
+  effects: { [key in keyof EffectActionsMap]?: boolean };
   models: {
 {{{ dvaLoadingModels }}}
   };
@@ -86,10 +86,6 @@ export interface ReducerActionsMap {
 
 export interface ActionsMap extends EffectActionsMap, ReducerActionsMap {}
 
-export type DispatchPro = <T extends keyof ActionsMap>(
+export type DispatchEnhanced = <T extends keyof ActionsMap>(
   action: { type: T } & Pick<ActionsMap[T], Exclude<keyof ActionsMap[T], 'type'>>,
 ) => any;
-
-export interface LoadingPro extends Pick<Loading, Exclude<keyof Loading, 'effects'>> {
-  effects: { [key in keyof EffectActionsMap]?: boolean };
-}
