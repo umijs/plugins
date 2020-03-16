@@ -150,14 +150,34 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
       api.writeTmpFile({
         path: 'plugin-dva/connect.ts',
         content: Mustache.render(connectTpl, {
-          dvaHeadExport: modelExports
-            .map(({ path }) => {
-              // prettier-ignore
-              return `export * from '${winPath(`${dirname(path)}/${basename(path, extname(path))}`)}';`;
+          dvaHeadImport: modelExports
+            .map(({ key, pathWithoutExt }) => {
+              return `import { default as ${key} } from '${pathWithoutExt}';`;
             })
+            .join('\r\n'),
+          dvaHeadExport: modelExports
+            .map(({ pathWithoutExt }) => `export * from '${pathWithoutExt}';`)
             .join('\r\n'),
           dvaLoadingModels: modelExports
             .map(({ namespace }) => `    '${namespace}'?: boolean;`)
+            .join('\r\n'),
+          dvaEffectsMap: modelExports
+            .reduce<string[]>((prev, { effects, namespace, key }) => {
+              if (!effects) return prev;
+              const effectsMap = effects.map(effect => {
+                return `  '${namespace}/${effect}': PickEffectAction<typeof ${key}, '${effect}'>;`;
+              });
+              return prev.concat(effectsMap);
+            }, [])
+            .join('\r\n'),
+          dvaReducersMap: modelExports
+            .reduce<string[]>((prev, { reducers, namespace, key }) => {
+              if (!reducers) return prev;
+              const effectsMap = reducers.map(reducer => {
+                return `  '${namespace}/${reducer}': PickReducerAction<typeof ${key}, '${reducer}'>;`;
+              });
+              return prev.concat(effectsMap);
+            }, [])
             .join('\r\n'),
         }),
       });

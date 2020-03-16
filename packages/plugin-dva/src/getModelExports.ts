@@ -1,15 +1,23 @@
 import { readFileSync } from 'fs';
-import { basename, extname } from 'path';
+import { basename, dirname, extname } from 'path';
 import ts from 'typescript';
+import { utils } from 'umi';
 import { tsquery } from '@phenomnomnominal/tsquery';
 
 export function getModelExports(path: string) {
   const defaultNamespace = basename(path, extname(path));
+  const pathWithoutExt = utils.winPath(
+    `${dirname(path)}/${basename(path, extname(path))}`,
+  );
+  const key = `Model${Math.random()
+    .toString(36)
+    .slice(2)}`;
 
   const code = readFileSync(path, 'utf8');
   const source = ts.createSourceFile('', code, ts.ScriptTarget.Latest, true);
   const exportObject = getExportDefaultNode(source);
-  if (!exportObject) return { path, namespace: defaultNamespace };
+  if (!exportObject)
+    return { key, pathWithoutExt, namespace: defaultNamespace };
 
   const effectsNodes = exportObject.properties.filter(
     (prop): prop is ts.PropertyAssignment =>
@@ -36,15 +44,12 @@ export function getModelExports(path: string) {
     : null;
 
   return {
-    path,
+    key,
+    pathWithoutExt,
     effects: effectsNode && getPropertyKeysOfPropertyAssignment(effectsNode),
     reducers: reducersNode && getPropertyKeysOfPropertyAssignment(reducersNode),
     namespace: namespaceValue ?? defaultNamespace,
   };
-}
-
-function isStringLiteral(node: ts.Node | undefined): node is ts.StringLiteral {
-  return !!node && node.kind === ts.SyntaxKind.StringLiteral;
 }
 
 function getExportDefaultNode(
@@ -85,24 +90,22 @@ function getExportDefaultNode(
   return;
 }
 
-function getPropertyKeysOfPropertyAssignment(node: ts.PropertyAssignment) {
-  const effectsProps = tsquery(
-    node,
-    `PropertyAssignment \
-      > ObjectLiteralExpression \
-        > PropertyAssignment`,
-  ) as ts.PropertyAssignment[];
+function getPropertyKeysOfPropertyAssignment(
+  node: ts.PropertyAssignment,
+): string[] {
+  if (!isObjectLiteralExpression(node.initializer)) return [];
 
-  return effectsProps
-    .map(node => {
-      const identifier = tsquery(
-        node,
-        `PropertyAssignment \
-          > :matches(Identifier, ComputedPropertyName)`,
-      ) as (ts.Identifier | ts.ComputedPropertyName)[];
-      return identifier.length
-        ? identifier[identifier.length - 1].getText()
-        : null;
-    })
-    .filter((prop): prop is string => prop !== null);
+  return node.initializer.properties
+    .map(prop => prop.name?.getText())
+    .filter((prop): prop is string => prop !== undefined);
+}
+
+function isStringLiteral(node: ts.Node | undefined): node is ts.StringLiteral {
+  return !!node && node.kind === ts.SyntaxKind.StringLiteral;
+}
+
+function isObjectLiteralExpression(
+  node: ts.Node | undefined,
+): node is ts.ObjectLiteralExpression {
+  return !!node && node.kind === ts.SyntaxKind.ObjectLiteralExpression;
 }

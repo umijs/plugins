@@ -5,6 +5,8 @@ import { EffectsCommandMap, SubscriptionAPI } from 'dva';
 import { match } from 'react-router-dom';
 import { Location, LocationState, History } from 'history';
 
+{{{ dvaHeadImport }}}
+
 {{{ dvaHeadExport }}}
 
 export interface Action<T = any> {
@@ -59,3 +61,31 @@ export interface ConnectProps<P extends { [K in keyof P]?: string } = {}, S = Lo
  * @type U: match props types
  */
 export type ConnectRC<T = {}, U = {}> = React.ForwardRefRenderFunction<any, T & ConnectProps<U>>;
+
+type ArgsType<T extends (...args: any[]) => any> = T extends (...args: infer U) => any ? U : never;
+
+type AnyActionsMap = { [key: string]: (...args: any[]) => any };
+
+type PickEffectAction<
+  T extends { effects: AnyActionsMap },
+  U extends keyof T['effects']
+> = ArgsType<T['effects'][U]>[0];
+
+type PickReducerAction<
+  T extends { reducers: AnyActionsMap },
+  U extends keyof T['reducers']
+> = ArgsType<T['reducers'][U]>[1];
+
+export interface EffectActionsMap {
+{{{ dvaEffectsMap }}}
+}
+
+export interface ReducerActionsMap {
+{{{ dvaReducersMap }}}
+}
+
+export interface ActionsMap extends EffectActionsMap, ReducerActionsMap {}
+
+export type DispatchPro = <T extends keyof ActionsMap>(
+  action: { type: T } & Pick<ActionsMap[T], Exclude<keyof ActionsMap[T], 'type'>>,
+) => any;
