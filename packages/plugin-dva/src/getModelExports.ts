@@ -22,7 +22,7 @@ export function getModelExports(path: string) {
     source,
     `ExportAssignment \
       > ObjectLiteralExpression \
-        > PropertyAssignment:has(Identifier[name=namespace], StringLiteral[value=namespace])
+        > PropertyAssignment:has(Identifier[name=namespace], StringLiteral[value=namespace]) \
           > StringLiteral`,
   ) as ts.StringLiteral[];
 
@@ -57,7 +57,7 @@ function getPropertyKeysOfPropertyAssignment(node: ts.PropertyAssignment) {
       const identifier = tsquery(
         node,
         `PropertyAssignment \
-        > :matches(Identifier, ComputedPropertyName)`,
+          > :matches(Identifier, ComputedPropertyName)`,
       ) as (ts.Identifier | ts.ComputedPropertyName)[];
       return identifier.length
         ? identifier[identifier.length - 1].getText()
