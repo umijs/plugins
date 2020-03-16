@@ -70,6 +70,8 @@ test('normal', async () => {
 });
 
 test('singular', async () => {
+  window.localStorage.setItem('umi_locale', '');
+
   const cwd = join(fixtures, 'singular');
   const service = new Service({
     cwd,

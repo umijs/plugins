@@ -10,7 +10,6 @@ export default {
   title: 'default.title',
   locale: {
     baseNavigator: false,
-    useLocalStorage: false,
     antd: true,
     title: true,
     default: 'zh-CN',
