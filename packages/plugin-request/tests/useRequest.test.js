@@ -50,6 +50,29 @@ describe('normal request', () => {
     });
   });
 
+  test('success with object', async () => {
+    const rawData = {
+      success: true,
+      data: {
+        text: 'testtext',
+      },
+      errorMessage: 'test message',
+    };
+    server.get('/test/object/success', (req, res) => {
+      res.send(rawData);
+    });
+
+    const { result, waitForValueToChange } = renderHook(() =>
+      useRequest({
+        url: prefix('/test/object/success'),
+        method: 'GET'
+      }),
+    );
+    await waitForValueToChange(() => result.current.data);
+    expect(result.current.data).toEqual({
+      text: 'testtext',
+    });
+  });
   test('failed with reqeust', async () => {
     const rawData = {
       success: false,
