@@ -2,6 +2,7 @@ import { IApi, utils } from 'umi';
 import { basename, dirname, extname, join, relative } from 'path';
 import { readFileSync } from 'fs';
 import { getModels } from './getModels/getModels';
+import { getModelExports } from './getModelExports';
 import { getUserLibDir } from './getUserLibDir';
 
 const { Mustache, lodash, winPath } = utils;
@@ -144,22 +145,19 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
 
       // typings
 
+      const modelExports = models.map(getModelExports);
       const connectTpl = readFileSync(join(__dirname, 'connect.tpl'), 'utf-8');
       api.writeTmpFile({
         path: 'plugin-dva/connect.ts',
         content: Mustache.render(connectTpl, {
-          dvaHeadExport: models
-            .map(path => {
+          dvaHeadExport: modelExports
+            .map(({ path }) => {
               // prettier-ignore
-              return `export * from '${winPath(dirname(path) + "/" + basename(path, extname(path)))}';`;
+              return `export * from '${winPath(`${dirname(path)}/${basename(path, extname(path))}`)}';`;
             })
             .join('\r\n'),
-          dvaLoadingModels: models
-            .map(path => {
-              // prettier-ignore
-              return `    ${basename(path, extname(path))
-                } ?: boolean;`;
-            })
+          dvaLoadingModels: modelExports
+            .map(({ namespace }) => `    '${namespace}'?: boolean;`)
             .join('\r\n'),
         }),
       });

@@ -32,5 +32,8 @@
     "dva": "^2.6.0-beta.20",
     "dva-immer": "^0.4.19",
     "dva-loading": "^3.0.20"
+  },
+  "devDependencies": {
+    "@phenomnomnominal/tsquery": "^4.0.0"
   }
 }
