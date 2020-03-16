@@ -96,6 +96,7 @@ export const setIntl = (locale: string) => {
  * @returns string
  */
 export const getLocale = () => {
+  const useLocalStorage = {{{UseLocalStorage}}};
   const runtimeLocale = plugin.applyPlugins({
     key: 'locale',
     type: ApplyPluginsType.modify,
@@ -108,7 +109,7 @@ export const getLocale = () => {
   // support SSR
   const { g_lang } = window;
   const lang =
-    typeof localStorage !== 'undefined'
+    typeof localStorage !== 'undefined' && useLocalStorage
       ? window.localStorage.getItem('umi_locale')
       : '';
   // support baseNavigator, default true

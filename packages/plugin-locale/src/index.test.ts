@@ -25,7 +25,6 @@ beforeEach(() => {
 
 afterEach(() => {
   cleanup();
-  window.localStorage.setItem('umi_locale', '');
 });
 
 test('normal', async () => {

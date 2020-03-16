@@ -11,6 +11,7 @@ import {
 interface ILocaleConfig {
   default?: string;
   baseNavigator?: boolean;
+  useLocalStorage?: boolean;
   /** title 开启国际化 */
   title?: boolean;
   antd?: boolean;
@@ -28,11 +29,13 @@ export default (api: IApi) => {
     config: {
       default: {
         baseNavigator: true,
+        useLocalStorage: true,
         baseSeparator: '-',
       },
       schema(joi) {
         return joi.object({
           default: joi.string(),
+          useLocalStorage: joi.boolean(),
           baseNavigator: joi.boolean(),
           title: joi.boolean(),
           antd: joi.boolean(),
@@ -68,8 +71,8 @@ export default (api: IApi) => {
       join(__dirname, 'templates', 'locale.tpl'),
       'utf-8',
     );
-    const { baseSeparator, baseNavigator, antd, title } = api.config
-      .locale as ILocaleConfig;
+    const { baseSeparator, baseNavigator, antd, title, useLocalStorage } = api
+      .config.locale as ILocaleConfig;
     const defaultLocale = api.config.locale?.default || `zh${baseSeparator}CN`;
 
     const localeList = getList();
@@ -104,6 +107,7 @@ export default (api: IApi) => {
       content: Mustache.render(localeExportsTpl, {
         BaseSeparator: baseSeparator,
         BaseNavigator: baseNavigator,
+        UseLocalStorage: !!useLocalStorage,
         LocaleList: localeList,
         UseSSR: !!api.config?.ssr,
         Antd: !!antd,

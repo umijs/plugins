@@ -3,6 +3,7 @@ export default {
     [
       '../../../lib/index.js',
       {
+        useLocalStorage: false,
         baseNavigator: false,
         default: 'en-US',
       },
