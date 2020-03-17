@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@umijs/plugin-block-devtool": "1.1.1",
-    "umi-plugin-antd-icon-config": "^2.0.0"
+    "umi-plugin-antd-icon-config": "^2.0.0",
+    "umi-plugin-pro-block": "^2.0.1"
   }
 }
