@@ -7,3 +7,4 @@ node_modules
 .umi-test
 .umi-production
 .DS_Store
+.history
