@@ -1,6 +1,7 @@
 interface FS {
   existsSync: (filePath: string) => boolean;
   readFileSync: (filePath: string) => string;
+  readdirSync: (dirPath: string) => string;
 }
 
 const fs = jest.genMockFromModule<FS>('fs');
@@ -25,7 +26,12 @@ function readFileSync(filePath: string): string {
   return 'Invalid content';
 }
 
+function readdirSync(dirPath: string): string {
+  return 'test';
+}
+
 fs.existsSync = existsSync;
 fs.readFileSync = readFileSync;
+fs.readdirSync = readdirSync;
 
 export default fs;
