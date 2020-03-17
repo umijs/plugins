@@ -8,6 +8,7 @@ export default (api: IApi) => {
       !api.hasPlugins(['@umijs/plugin-react']) &&
         require.resolve('umi-plugin-antd-icon-config'),
       require.resolve('@umijs/plugin-block-devtool'),
+      require.resolve('umi-plugin-pro-block'),
     ].forEach(Boolean),
   };
 };
