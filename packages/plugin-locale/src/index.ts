@@ -118,7 +118,6 @@ export default (api: IApi) => {
         BaseNavigator: baseNavigator,
         UseLocalStorage: !!useLocalStorage,
         LocaleList: localeList,
-        UseSSR: !!api.config?.ssr,
         Antd: !!antd,
         DefaultLocale: JSON.stringify(defaultLocale),
         warningPkgPath: winPath(require.resolve('warning')),
