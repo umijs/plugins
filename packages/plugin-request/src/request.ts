@@ -10,6 +10,8 @@ import {
   RequestMethod,
   RequestOptionsWithResponse,
   RequestResponse,
+  RequestInterceptor,
+  ResponseInterceptor,
 } from 'umi-request';
 // @ts-ignore
 import { ApplyPluginsType, history, plugin } from 'umi';
@@ -91,6 +93,8 @@ export interface RequestConfig extends RequestOptionsInit {
     adaptor?: (resData: any, ctx: Context) => ErrorInfoStructure;
   };
   middlewares?: OnionMiddleware[];
+  requestInterceptors?: RequestInterceptor[];
+  responseInterceptors?: ResponseInterceptor[];
 }
 
 export enum ErrorShowType {
@@ -227,6 +231,17 @@ const getRequestMethod = () => {
   customMiddlewares.forEach(mw => {
     requestMethodInstance.use(mw);
   });
+
+  // Add user custom interceptors
+  const requestInterceptors = requestConfig.requestInterceptors || [];
+  const responseInterceptors = requestConfig.responseInterceptors || [];
+  requestInterceptors.map(ri => {
+    requestMethodInstance.interceptors.request.use(ri);
+  });
+  responseInterceptors.map(ri => {
+    requestMethodInstance.interceptors.response.use(ri);
+  });
+
   return requestMethodInstance;
 };
 
