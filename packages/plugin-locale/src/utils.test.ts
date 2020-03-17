@@ -16,14 +16,19 @@ describe('utils', () => {
         separator: service.config?.locale?.baseSeparator,
         absSrcPath,
         absPagesPath,
+        addAntdLocales: async args => [
+          `antd/lib/locale/${args.lang}_${(
+            args.country || args.lang
+          ).toLocaleUpperCase()}`,
+        ],
       };
-      const list = getLocaleList(opts);
+      const list = await getLocaleList(opts);
       expect(list).toEqual([
         {
           lang: 'en',
           country: 'US',
           name: 'en_US',
-          antdLocale: 'en_US',
+          antdLocale: ['antd/lib/locale/en_US'],
           paths: [
             `${absSrcPath}/locales/en_US.js`,
             `${absPagesPath}/temp/locales/en_US.js`,
@@ -38,7 +43,7 @@ describe('utils', () => {
             `${absSrcPath}/locales/sk.js`,
             `${absPagesPath}/temp/locales/sk.js`,
           ],
-          antdLocale: 'sk_SK',
+          antdLocale: ['antd/lib/locale/sk_SK'],
           momentLocale: 'sk',
         },
         {
@@ -50,7 +55,7 @@ describe('utils', () => {
             `${absPagesPath}/temp/locales/zh_CN.js`,
           ],
           momentLocale: 'zh-cn',
-          antdLocale: 'zh_CN',
+          antdLocale: ['antd/lib/locale/zh_CN'],
         },
       ]);
 
@@ -76,14 +81,19 @@ describe('utils', () => {
         separator: service.config?.locale?.baseSeparator,
         absSrcPath,
         absPagesPath,
+        addAntdLocales: async args => [
+          `antd/lib/locale/${args.lang}_${(
+            args.country || args.lang
+          ).toLocaleUpperCase()}`,
+        ],
       };
-      const list = getLocaleList(opts);
+      const list = await getLocaleList(opts);
       expect(list).toEqual([
         {
           lang: 'en',
           country: 'US',
           name: 'en-US',
-          antdLocale: 'en_US',
+          antdLocale: ['antd/lib/locale/en_US'],
           paths: [
             `${absSrcPath}/locale/en-US.js`,
             `${absPagesPath}/temp/locale/en-US.js`,
@@ -98,7 +108,7 @@ describe('utils', () => {
             `${absSrcPath}/locale/sk.json`,
             `${absPagesPath}/temp/locale/sk.json`,
           ],
-          antdLocale: 'sk_SK',
+          antdLocale: ['antd/lib/locale/sk_SK'],
           momentLocale: 'sk',
         },
         {
@@ -109,7 +119,7 @@ describe('utils', () => {
             `${absSrcPath}/locale/zh-CN.ts`,
             `${absPagesPath}/temp/locale/zh-CN.ts`,
           ],
-          antdLocale: 'zh_CN',
+          antdLocale: ['antd/lib/locale/zh_CN'],
           momentLocale: 'zh-cn',
         },
       ]);

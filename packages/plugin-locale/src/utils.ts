@@ -4,11 +4,17 @@ import { existsSync } from 'fs';
 
 const { glob, winPath, lodash } = utils;
 
+export type IAddAntdLocales = (args: {
+  lang: string;
+  country: string;
+}) => Promise<string[]>;
+
 export interface IGetLocaleFileListOpts {
   localeFolder: string;
   separator?: string;
   absSrcPath?: string;
   absPagesPath?: string;
+  addAntdLocales: IAddAntdLocales;
 }
 
 export const getMomentLocale = (
@@ -42,18 +48,19 @@ export interface IGetLocaleFileListResult {
   country: string;
   name: string;
   paths: string[];
-  antdLocale: string;
+  antdLocale: string[];
   momentLocale: string;
 }
 
-export const getLocaleList = (
+export const getLocaleList = async (
   opts: IGetLocaleFileListOpts,
-): IGetLocaleFileListResult[] => {
+): Promise<IGetLocaleFileListResult[]> => {
   const {
     localeFolder,
     separator = '-',
     absSrcPath = '',
     absPagesPath = '',
+    addAntdLocales,
   } = opts;
   const localeFileMath = new RegExp(
     `^([a-z]{2})${separator}?([A-Z]{2})?\.(js|json|ts)$`,
@@ -86,18 +93,20 @@ export const getLocaleList = (
 
   const groups = lodash.groupBy(localeFiles, 'name');
 
-  return Object.keys(groups).map(name => {
+  const promises = Object.keys(groups).map(async name => {
     const [lang, country = ''] = name.split(separator);
     const { momentLocale } = getMomentLocale(lang, country);
+    const antdLocale = await addAntdLocales({ lang, country });
     return {
       lang,
       name,
       country,
-      antdLocale: `${lang}_${(country || lang).toLocaleUpperCase()}`,
+      antdLocale,
       paths: groups[name].map(item => winPath(item.path)),
       momentLocale,
     };
   });
+  return Promise.all(promises);
 };
 
 export const exactLocalePaths = (
