@@ -96,7 +96,7 @@ export const getLocaleList = async (
   const promises = Object.keys(groups).map(async name => {
     const [lang, country = ''] = name.split(separator);
     const { momentLocale } = getMomentLocale(lang, country);
-    const antdLocale = await addAntdLocales({ lang, country });
+    const antdLocale = lodash.uniq(await addAntdLocales({ lang, country }));
     return {
       lang,
       name,

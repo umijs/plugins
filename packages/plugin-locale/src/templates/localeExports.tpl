@@ -22,7 +22,8 @@ export const localeInfo = {
     },
     locale: '{{name}}',
     {{#Antd}}antd: {
-      {{#antdLocale}}...require('{{{.}}}').default,
+      {{#antdLocale}}
+      ...require('{{{.}}}').default,
       {{/antdLocale}}
     },{{/Antd}}
     momentLocale: '{{momentLocale}}',
