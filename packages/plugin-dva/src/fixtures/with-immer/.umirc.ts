@@ -6,4 +6,7 @@ export default {
   dva: {
     immer: true,
   },
+  plugins: [
+    require.resolve('../../'),
+  ],
 }
