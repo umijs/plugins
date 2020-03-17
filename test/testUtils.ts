@@ -1,9 +1,9 @@
 import { Service } from 'umi';
 
-export async function generateTmp(opts: { cwd: string; plugin: string }) {
+export async function generateTmp(opts: { cwd: string; plugins: string[] }) {
   const service = new Service({
     cwd: opts.cwd,
-    plugins: [require.resolve('./plugin/plugin.ts'), opts.plugin],
+    plugins: [require.resolve('./plugin/plugin.ts'), ...(opts.plugins || [])],
   });
   await service.run({
     name: 'g',

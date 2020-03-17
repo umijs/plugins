@@ -2,7 +2,7 @@ export default (relEntryFile: string) =>
   relEntryFile
     ? `import { useState, useEffect } from 'react';
 import { Models } from '../../plugin-model/useModel';
-import * as app from '@/app';
+import * as app from '../../../app';
 
 export type InitialState = Models<'@@initialState'>;
 async function getInitialState() {

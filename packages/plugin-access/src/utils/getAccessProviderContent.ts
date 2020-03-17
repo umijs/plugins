@@ -1,12 +1,10 @@
 export default function() {
   return `\
 import React, { useMemo } from 'react';
-import { useModel } from '../core/umiExports';
 import { IRoute } from 'umi';
-import accessFactory from '@/access';
+import { useModel } from '../core/umiExports';
+import accessFactory from '../../access';
 import AccessContext, { AccessInstance } from './context';
-
-const _routes = require('../core/routes').routes;
 
 type Routes = IRoute[];
 
@@ -63,7 +61,7 @@ const AccessProvider: React.FC<Props> = props => {
     console.warn('[plugin-access]: the access instance created by access.ts(js) is nullish, maybe you need check it.');
   }
 
-  _routes.splice(0, _routes.length, ...traverseModifyRoutes(_routes, access));
+  props.routes.splice(0, props.routes.length, ...traverseModifyRoutes(props.routes, access));
 
   return React.createElement(
     AccessContext.Provider,

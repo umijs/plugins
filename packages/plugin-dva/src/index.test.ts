@@ -11,7 +11,7 @@ test('normal', async () => {
   const cwd = join(fixtures, 'normal');
   await generateTmp({
     cwd,
-    plugin: require.resolve('./'),
+    plugins: [require.resolve('./')],
   });
 
   const { container } = render(
@@ -26,7 +26,7 @@ test('page models', async () => {
   const cwd = join(fixtures, 'page-models');
   await generateTmp({
     cwd,
-    plugin: require.resolve('./'),
+    plugins: [require.resolve('./')],
   });
 
   const { container } = render(
@@ -41,7 +41,7 @@ test('with-immer', async () => {
   const cwd = join(fixtures, 'with-immer');
   await generateTmp({
     cwd,
-    plugin: require.resolve('./'),
+    plugins: [require.resolve('./')],
   });
 
   const { container } = render(
