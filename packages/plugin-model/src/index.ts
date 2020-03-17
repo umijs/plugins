@@ -1,7 +1,8 @@
 import { join } from 'path';
-import { IApi } from 'umi';
+import { IApi, utils } from 'umi';
 import { DIR_NAME_IN_TMP } from './constants';
 import { getTmpFile } from './utils/getTmpFile';
+import { readFileSync } from 'fs';
 
 export default (api: IApi) => {
   const {
@@ -14,7 +15,7 @@ export default (api: IApi) => {
   }
 
   // Add provider wrapper with rootContainer
-  api.addRuntimePlugin(() => join(winPath(__dirname), './runtime'));
+  api.addRuntimePlugin(() => '../plugin-model/runtime');
 
   api.onGenerateFiles(async () => {
     const modelsPath = getModelsPath();
@@ -27,15 +28,25 @@ export default (api: IApi) => {
 
       const tmpFiles = getTmpFile(modelsPath, additionalModels);
 
-      // Write models/provider.tsx
+      // provider.tsx
       api.writeTmpFile({
         path: `${DIR_NAME_IN_TMP}/Provider.tsx`,
         content: tmpFiles.providerContent,
       });
-      // Write models/useModel.tsx
+
+      // useModel.tsx
       api.writeTmpFile({
         content: tmpFiles.useModelContent,
         path: `${DIR_NAME_IN_TMP}/useModel.tsx`,
+      });
+
+      // runtime.tsx
+      api.writeTmpFile({
+        path: 'plugin-model/runtime.tsx',
+        content: utils.Mustache.render(
+          readFileSync(join(__dirname, 'runtime.tsx.tpl'), 'utf-8'),
+          {},
+        ),
       });
     } catch (e) {
       console.error(e);

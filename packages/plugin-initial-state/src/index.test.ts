@@ -9,7 +9,7 @@ async function setUp(name: string) {
   cwd = join(fixtures, name);
   const service = new Service({
     cwd,
-    plugins: [require.resolve('./')],
+    plugins: [require.resolve('./'), require.resolve('@umijs/plugin-model')],
   });
   await service.run({
     name: 'g',

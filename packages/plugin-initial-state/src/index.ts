@@ -11,6 +11,7 @@ import {
   RELATIVE_EXPORT,
   RELATIVE_EXPORT_PATH,
 } from './constants';
+import { readFileSync } from 'fs';
 
 const { winPath, getFile } = utils;
 
@@ -18,7 +19,7 @@ export default (api: IApi) => {
   // 注册 getInitialState 方法
   api.addRuntimePluginKey(() => 'getInitialState');
 
-  api.addRuntimePlugin(() => join(__dirname, 'runtime'));
+  api.addRuntimePlugin(() => '../plugin-initial-state/runtime');
 
   api.addUmiExports(() => [
     {
@@ -67,6 +68,14 @@ export default (api: IApi) => {
     api.writeTmpFile({
       path: RELATIVE_MODEL_PATH,
       content: getModelContent(enable ? relEntryFile : ''),
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-initial-state/runtime.tsx',
+      content: utils.Mustache.render(
+        readFileSync(join(__dirname, 'runtime.tsx.tpl'), 'utf-8'),
+        {},
+      ),
     });
   });
 };
