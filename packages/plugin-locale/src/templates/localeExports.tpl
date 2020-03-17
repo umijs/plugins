@@ -12,6 +12,8 @@ export * from '{{{ reactIntlPkgPath }}}';
 
 let g_intl: IntlShape;
 
+const useLocalStorage = {{{UseLocalStorage}}};
+
 export const localeInfo = {
   {{#LocaleList}}
   '{{name}}': {
@@ -105,10 +107,8 @@ export const getLocale = () => {
   if (typeof runtimeLocale?.getLocale === 'function') {
     return runtimeLocale.getLocale();
   }
-  // support SSR
-  const { g_lang } = window;
   const lang =
-    typeof localStorage !== 'undefined'
+    typeof localStorage !== 'undefined' && useLocalStorage
       ? window.localStorage.getItem('umi_locale')
       : '';
   // support baseNavigator, default true
@@ -120,7 +120,7 @@ export const getLocale = () => {
     ? navigator.language.split('-').join('{{BaseSeparator}}')
     : '';
   {{/BaseNavigator}}
-  return lang || g_lang || browserLang || {{{DefaultLocale}}};
+  return lang || browserLang || {{{DefaultLocale}}};
 };
 
 /**
@@ -150,7 +150,7 @@ export const setLocale = (lang: string, realReload: boolean = true) => {
     throw new Error('setLocale lang format error');
   }
   if (getLocale() !== lang) {
-    if (typeof window.localStorage !== 'undefined') {
+    if (typeof window.localStorage !== 'undefined' && useLocalStorage) {
       window.localStorage.setItem('umi_locale', lang || '');
     }
     setIntl(lang);

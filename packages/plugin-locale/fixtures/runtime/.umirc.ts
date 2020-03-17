@@ -7,6 +7,7 @@ export default {
     },
   },
   locale: {
+    useLocalStorage: false,
     antd: true,
     title: true,
   },
