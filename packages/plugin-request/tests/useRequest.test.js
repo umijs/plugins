@@ -65,7 +65,7 @@ describe('normal request', () => {
     const { result, waitForValueToChange } = renderHook(() =>
       useRequest({
         url: prefix('/test/object/success'),
-        method: 'GET'
+        method: 'GET',
       }),
     );
     await waitForValueToChange(() => result.current.data);

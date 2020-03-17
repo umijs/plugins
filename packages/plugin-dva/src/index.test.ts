@@ -1,6 +1,7 @@
 import { join } from 'path';
-import { Service, utils } from 'umi';
+import { utils } from 'umi';
 import { render, fireEvent, getByText, cleanup } from '@testing-library/react';
+import { generateTmp } from '../../../test/testUtils';
 
 const fixtures = join(__dirname, 'fixtures');
 
@@ -8,15 +9,9 @@ afterEach(cleanup);
 
 test('normal', async () => {
   const cwd = join(fixtures, 'normal');
-  const service = new Service({
+  await generateTmp({
     cwd,
-    plugins: [require.resolve('./')],
-  });
-  await service.run({
-    name: 'g',
-    args: {
-      _: ['g', 'tmp'],
-    },
+    plugin: require.resolve('./'),
   });
 
   const { container } = render(
@@ -29,15 +24,9 @@ test('normal', async () => {
 
 test('page models', async () => {
   const cwd = join(fixtures, 'page-models');
-  const service = new Service({
+  await generateTmp({
     cwd,
-    plugins: [require.resolve('./')],
-  });
-  await service.run({
-    name: 'g',
-    args: {
-      _: ['g', 'tmp'],
-    },
+    plugin: require.resolve('./'),
   });
 
   const { container } = render(
@@ -50,15 +39,9 @@ test('page models', async () => {
 
 test('with-immer', async () => {
   const cwd = join(fixtures, 'with-immer');
-  const service = new Service({
+  await generateTmp({
     cwd,
-    plugins: [require.resolve('./')],
-  });
-  await service.run({
-    name: 'g',
-    args: {
-      _: ['g', 'tmp'],
-    },
+    plugin: require.resolve('./'),
   });
 
   const { container } = render(

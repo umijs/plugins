@@ -39,7 +39,7 @@ export class _DvaContainer extends Component {
   }
 
   componentWillUnmount() {
-    const app = getApp();
+    let app = getApp();
     app._models.forEach(model => {
       app.unmodel(model.namespace);
     });
