@@ -5,7 +5,9 @@ import {
 } from '{{{ reactIntlPkgPath }}}';
 import { ApplyPluginsType } from 'umi';
 import { event, LANG_CHANGE_EVENT } from './locale';
+// @ts-check
 import warning from '{{{ warningPkgPath }}}';
+
 import { plugin } from '../core/umiExports';
 
 export * from '{{{ reactIntlPkgPath }}}';
@@ -40,7 +42,10 @@ export const localeInfo = {
 export const addLocale = (
   name: string,
   messages: Object,
-  extraLocales: Object,
+  extraLocales: extraLocales: {
+    momentLocale:string;
+    antd:string
+  },
 ) => {
   if (!name) {
     return;
@@ -71,12 +76,12 @@ export const getIntl = (locale?: string, changeIntl?: boolean) => {
     return g_intl;
   }
   // 如果存在于 localeInfo 中
-  if (localeInfo[locale]) {
+  if (locale&&localeInfo[locale]) {
     return createIntl(localeInfo[locale]);
   }
   // 不存在需要一个报错提醒
   warning(
-    !!localeInfo[locale],
+    !locale||!!localeInfo[locale],
     `The current popular language does not exist, please check the locales folder!`,
   );
   // 使用 zh-CN
@@ -84,7 +89,7 @@ export const getIntl = (locale?: string, changeIntl?: boolean) => {
 
   // 如果还没有，返回一个空的
   return createIntl({
-    name: {{{ DefaultLocale }}},
+    locale: {{{ DefaultLocale }}},
     messages: {},
   });
 };

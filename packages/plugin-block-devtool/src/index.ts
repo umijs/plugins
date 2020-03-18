@@ -141,6 +141,7 @@ export default function(api: IApi) {
     },
   ]);
 
+  // @ts-ignore
   api.chainWebpack(webpackConfig => {
     subBlocks.forEach(b => {
       webpackConfig.resolve.alias.set(`./${b.name}`, join(b.path, 'src'));

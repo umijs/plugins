@@ -1,3 +1,4 @@
+// @ts-ignore
 export default (
   modelPath: string,
 ) => `import { InitialState as InitialStateType } from '../${modelPath}';

@@ -1,10 +1,11 @@
 import { Component } from 'react';
 import { ApplyPluginsType } from 'umi';
 import dva from 'dva';
+// @ts-ignore
 import createLoading from '{{{ dvaLoadingPkgPath }}}';
 import { plugin, history } from '../core/umiExports';
 
-let app = null;
+let app:any = null;
 
 function _onCreate() {
   const runtimeDva = plugin.applyPlugins({
@@ -16,12 +17,13 @@ function _onCreate() {
     history,
     {{{ ExtendDvaConfig }}}
     ...(runtimeDva.config || {}),
+    // @ts-ignore
     ...(window.g_useSSR ? { initialState: window.g_initialData } : {}),
   });
   {{{ EnhanceApp }}}
   app.use(createLoading());
   {{{ RegisterPlugins }}}
-  (runtimeDva.plugins || []).forEach(plugin => {
+  (runtimeDva.plugins || []).forEach((plugin:any) => {
     app.use(plugin);
   });
   {{{ RegisterModels }}}
@@ -33,14 +35,14 @@ export function getApp() {
 }
 
 export class _DvaContainer extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     _onCreate();
   }
 
   componentWillUnmount() {
     let app = getApp();
-    app._models.forEach(model => {
+    app._models.forEach((model:any) => {
       app.unmodel(model.namespace);
     });
     app._models = [];
