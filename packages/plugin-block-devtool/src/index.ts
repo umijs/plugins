@@ -141,7 +141,6 @@ export default function(api: IApi) {
     },
   ]);
 
-  // @ts-ignore
   api.chainWebpack(webpackConfig => {
     subBlocks.forEach(b => {
       webpackConfig.resolve.alias.set(`./${b.name}`, join(b.path, 'src'));
@@ -153,5 +152,6 @@ export default function(api: IApi) {
         .include.add(pathToLayout)
         .end();
     }
+    return webpackConfig;
   });
 }
