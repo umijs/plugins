@@ -12,6 +12,7 @@ import 'moment/locale/{{.}}';
 {{/MomentLocales.length}}
 import { RawIntlProvider, getLocale, setIntl, getIntl, localeInfo } from './localeExports';
 
+// @ts-ignore
 export const event = new EventEmitter();
 event.setMaxListeners(5);
 export const LANG_CHANGE_EVENT = Symbol('LANG_CHANGE');
@@ -26,11 +27,11 @@ export function _onCreate() {
   setIntl(locale);
 }
 
-export const _LocaleContainer = props => {
+export const _LocaleContainer = (props:any) => {
   const [locale, setLocale] = React.useState(() => getLocale());
   const [intl, setContainerIntl] = React.useState(() => getIntl(locale, true));
 
-  const handleLangChange = (locale) => {
+  const handleLangChange = (locale:string) => {
     {{#MomentLocales.length}}
     if (moment?.locale) {
       moment.locale(localeInfo[locale]?.momentLocale || 'en');

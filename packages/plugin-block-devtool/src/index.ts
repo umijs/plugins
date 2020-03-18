@@ -152,5 +152,6 @@ export default function(api: IApi) {
         .include.add(pathToLayout)
         .end();
     }
+    return webpackConfig;
   });
 }

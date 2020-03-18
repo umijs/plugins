@@ -78,10 +78,12 @@ function useRequest(service: any, options: any = {}) {
     requestMethod: (requestOptions: any) => {
       if (typeof requestOptions === 'string') {
         return request(requestOptions);
-      } else if (typeof requestOptions === 'object') {
+      }
+      if (typeof requestOptions === 'object') {
         const { url, ...rest } = requestOptions;
         return request(url, rest);
       }
+      throw new Error('request options error');
     },
     ...options,
   });
@@ -184,6 +186,7 @@ const getRequestMethod = () => {
             });
             break;
           case ErrorShowType.REDIRECT:
+            // @ts-ignore
             history.push({
               pathname: errorPage,
               query: { errorCode, errorMessage },
