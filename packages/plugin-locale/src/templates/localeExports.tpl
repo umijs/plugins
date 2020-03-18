@@ -42,7 +42,7 @@ export const localeInfo = {
 export const addLocale = (
   name: string,
   messages: Object,
-  extraLocales: extraLocales: {
+  extraLocales: {
     momentLocale:string;
     antd:string
   },
