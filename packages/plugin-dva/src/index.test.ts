@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { utils } from 'umi';
 import { fireEvent, getByText, cleanup } from '@testing-library/react';
-import { generateTmp, render } from '../../../test/testUtils';
+import { generateTmp, render } from '@umijs/test-utils';
 
 const fixtures = join(__dirname, 'fixtures');
 

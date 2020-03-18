@@ -1,4 +1,4 @@
-import { generateTmp, render } from '../../../test/testUtils';
+import { generateTmp, render } from '@umijs/test-utils';
 import { join } from 'path';
 import { cleanup } from '@testing-library/react';
 
