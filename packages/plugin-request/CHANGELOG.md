@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.1](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.3.0...@umijs/plugin-request@2.3.1) (2020-03-18)
+
+**Note:** Version bump only for package @umijs/plugin-request
+
 # [2.3.0](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.2.2...@umijs/plugin-request@2.3.0) (2020-03-18)
 
 ### Bug Fixes
