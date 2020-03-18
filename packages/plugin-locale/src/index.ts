@@ -3,6 +3,7 @@ import { join, dirname } from 'path';
 import { readFileSync, existsSync } from 'fs';
 import {
   IGetLocaleFileListResult,
+  IAddAntdLocales,
   getLocaleList,
   isNeedPolyfill,
   exactLocalePaths,
@@ -53,12 +54,26 @@ export default (api: IApi) => {
     }));
   }
 
-  const getList = (): IGetLocaleFileListResult[] => {
+  const getList = async (): Promise<IGetLocaleFileListResult[]> => {
+    const { ssr } = api.config;
+    const addAntdLocales: IAddAntdLocales = async args =>
+      await api.applyPlugins({
+        key: 'addAntdLocales',
+        type: api.ApplyPluginsType.add,
+        initialValue: [
+          `antd/${ssr ? 'lib' : 'es'}/locale/${args.lang}_${(
+            args.country || args.lang
+          ).toLocaleUpperCase()}`,
+        ],
+        args,
+      });
+
     return getLocaleList({
       localeFolder: api.config?.singular ? 'locale' : 'locales',
       separator: api.config.locale?.baseSeparator,
       absSrcPath: paths.absSrcPath,
       absPagesPath: paths.absPagesPath,
+      addAntdLocales,
     });
   };
 
@@ -66,7 +81,7 @@ export default (api: IApi) => {
   api.addRuntimePluginKey(() => 'locale');
 
   // 生成临时文件
-  api.onGenerateFiles(() => {
+  api.onGenerateFiles(async () => {
     const localeTpl = readFileSync(
       join(__dirname, 'templates', 'locale.tpl'),
       'utf-8',
@@ -75,22 +90,16 @@ export default (api: IApi) => {
       .config.locale as ILocaleConfig;
     const defaultLocale = api.config.locale?.default || `zh${baseSeparator}CN`;
 
-    const localeList = getList();
+    const localeList = await getList();
     const momentLocales = localeList
       .map(({ momentLocale }) => momentLocale)
-      .filter(locale => locale);
-
-    const antdLocales = localeList
-      .map(({ antdLocale }) => antdLocale)
       .filter(locale => locale);
 
     api.writeTmpFile({
       content: Mustache.render(localeTpl, {
         MomentLocales: momentLocales,
-        UseSSR: !!api.config?.ssr,
         Antd: !!antd,
         Title: title && api.config.title,
-        AntdLocales: antdLocales,
         BaseSeparator: baseSeparator,
         DefaultLocale: defaultLocale,
         DefaultLang: defaultLocale,
@@ -109,7 +118,6 @@ export default (api: IApi) => {
         BaseNavigator: baseNavigator,
         UseLocalStorage: !!useLocalStorage,
         LocaleList: localeList,
-        UseSSR: !!api.config?.ssr,
         Antd: !!antd,
         DefaultLocale: JSON.stringify(defaultLocale),
         warningPkgPath: winPath(require.resolve('warning')),
@@ -145,8 +153,8 @@ export default (api: IApi) => {
   );
 
   // watch locale files
-  api.addTmpGenerateWatcherPaths(() => {
-    const localeList = getList();
+  api.addTmpGenerateWatcherPaths(async () => {
+    const localeList = await getList();
     return exactLocalePaths(localeList);
   });
 

@@ -21,7 +21,11 @@ export const localeInfo = {
       {{#paths}}...((locale) => locale.__esModule ? locale.default : locale)(require('{{{.}}}')),{{/paths}}
     },
     locale: '{{name}}',
-    {{#Antd}}antd: require('antd/{{#UseSSR}}lib{{/UseSSR}}{{^UseSSR}}es{{/UseSSR}}/locale/{{antdLocale}}').default,{{/Antd}}
+    {{#Antd}}antd: {
+      {{#antdLocale}}
+      ...require('{{{.}}}').default,
+      {{/antdLocale}}
+    },{{/Antd}}
     momentLocale: '{{momentLocale}}',
   },
   {{/LocaleList}}
