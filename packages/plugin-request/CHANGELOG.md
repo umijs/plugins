@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.2.2...@umijs/plugin-request@2.3.0) (2020-03-18)
+
+### Bug Fixes
+
+- useRequest service to umi-request error ([#97](https://github.com/umijs/plugins/issues/97)) ([7590b73](https://github.com/umijs/plugins/commit/7590b73c2642212fc24b5ad36d9d0f6fcc394b9c))
+
+### Features
+
+- request plugin support interceptors ([#101](https://github.com/umijs/plugins/issues/101)) ([f744147](https://github.com/umijs/plugins/commit/f7441475b3edda2c6f6c0ce727ec6133f8b7d2b6))
+
 ## [2.2.2](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.2.1...@umijs/plugin-request@2.2.2) (2020-03-12)
 
 ### Bug Fixes

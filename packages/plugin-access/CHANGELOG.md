@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/umijs/plugins/compare/@umijs/plugin-access@2.2.0...@umijs/plugin-access@2.2.1) (2020-03-18)
+
+### Bug Fixes
+
+- access hmr ([baacdf2](https://github.com/umijs/plugins/commit/baacdf22bf84682c90698d722866aa8fe6f8edb9))
+
 # [2.2.0](https://github.com/umijs/plugins/compare/@umijs/plugin-access@2.1.1...@umijs/plugin-access@2.2.0) (2020-02-18)
 
 ### Features

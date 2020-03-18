@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.3.0...@umijs/plugin-locale@0.4.0) (2020-03-18)
+
+### Features
+
+- locale useLocalStorage ([#94](https://github.com/umijs/plugins/issues/94)) ([a52c2a0](https://github.com/umijs/plugins/commit/a52c2a024e4ce99b9c46e8c912b2af11b2172353))
+- support extend antd intl ([#99](https://github.com/umijs/plugins/issues/99)) ([d4e9876](https://github.com/umijs/plugins/commit/d4e98764a7d4cfef295ceecb19fe7cb2d90da6a9))
+
 # [0.3.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.2.1...@umijs/plugin-locale@0.3.0) (2020-02-29)
 
 ### Features

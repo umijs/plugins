@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.6](https://github.com/umijs/plugins/compare/@umijs/plugin-initial-state@2.1.5...@umijs/plugin-initial-state@2.1.6) (2020-03-18)
+
+### Bug Fixes
+
+- access hmr ([baacdf2](https://github.com/umijs/plugins/commit/baacdf22bf84682c90698d722866aa8fe6f8edb9))
+
 ## [2.1.5](https://github.com/umijs/plugins/compare/@umijs/plugin-initial-state@2.1.4...@umijs/plugin-initial-state@2.1.5) (2020-03-06)
 
 ### Bug Fixes

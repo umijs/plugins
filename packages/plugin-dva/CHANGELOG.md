@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.2](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.6.1...@umijs/plugin-dva@0.6.2) (2020-03-18)
+
+### Bug Fixes
+
+- access hmr ([baacdf2](https://github.com/umijs/plugins/commit/baacdf22bf84682c90698d722866aa8fe6f8edb9))
+- dva-loading types ([#109](https://github.com/umijs/plugins/issues/109)) ([fddd325](https://github.com/umijs/plugins/commit/fddd325842da0c8eecfb18564cda62e9ee57acbc))
+
 ## [0.6.1](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.6.0...@umijs/plugin-dva@0.6.1) (2020-03-12)
 
 **Note:** Version bump only for package @umijs/plugin-dva

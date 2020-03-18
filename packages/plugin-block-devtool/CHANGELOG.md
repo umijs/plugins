@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/umijs/plugins/compare/@umijs/plugin-block-devtool@1.1.1...@umijs/plugin-block-devtool@1.2.0) (2020-03-18)
+
+### Features
+
+- 通过环境变量来设置 ga ([#84](https://github.com/umijs/plugins/issues/84)) ([3df8003](https://github.com/umijs/plugins/commit/3df80031a6b5e69155b36d6132b0e9d17361a16c))
+
 ## [1.1.1](https://github.com/umijs/plugins/compare/@umijs/plugin-block-devtool@1.1.0...@umijs/plugin-block-devtool@1.1.1) (2020-03-13)
 
 **Note:** Version bump only for package @umijs/plugin-block-devtool
