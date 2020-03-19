@@ -117,6 +117,7 @@ export default (api: IApi) => {
         BaseSeparator: baseSeparator,
         BaseNavigator: baseNavigator,
         UseLocalStorage: !!useLocalStorage,
+        LocaleDir: api.config.singular ? 'locale' : 'locales',
         LocaleList: localeList,
         Antd: !!antd,
         DefaultLocale: JSON.stringify(defaultLocale),
