@@ -20,13 +20,22 @@ export default (api: IApi) => {
   api.onGenerateFiles(async () => {
     const modelsPath = getModelsPath();
     try {
+      const hasInitialState =
+        api.hasPlugins(['@umijs/plugin-initial-state']) &&
+        readFileSync(
+          join(api.paths.absTmpPath!, 'plugin-initial-state/enable.conf'),
+          'utf-8',
+        ) === 'true';
       const additionalModels = await api.applyPlugins({
         key: 'addExtraModels',
         type: api.ApplyPluginsType.add,
         initialValue: [],
       });
 
-      const tmpFiles = getTmpFile(modelsPath, additionalModels);
+      const tmpFiles = getTmpFile(
+        modelsPath,
+        hasInitialState ? additionalModels : [],
+      );
 
       // provider.tsx
       api.writeTmpFile({

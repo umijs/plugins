@@ -21,6 +21,7 @@ export default (api: IApi) => {
 
   api.addRuntimePlugin(() => '../plugin-initial-state/runtime');
 
+  // 这个方法只在初次运行时生效, 所以必须加
   api.addUmiExports(() => [
     {
       exportAll: true,
@@ -52,30 +53,45 @@ export default (api: IApi) => {
       fileNameWithoutExt: 'app',
     })?.path;
 
-    api.writeTmpFile({
-      path: winPath(join(DIR_NAME, 'Provider.tsx')),
-      content: providerContent,
-    });
-
-    api.writeTmpFile({
-      path: winPath(RELATIVE_EXPORT_PATH),
-      content: getExportContent(RELATIVE_MODEL),
-    });
-
     const relEntryFile = relative(api.paths.cwd!, entryFile || '');
     const enable = shouldPluginEnable(entryFile);
 
-    api.writeTmpFile({
-      path: RELATIVE_MODEL_PATH,
-      content: getModelContent(enable ? relEntryFile : ''),
-    });
+    if (enable) {
+      api.writeTmpFile({
+        path: winPath(join(DIR_NAME, 'enable.conf')),
+        content: 'true',
+      });
 
+      api.writeTmpFile({
+        path: winPath(join(DIR_NAME, 'Provider.tsx')),
+        content: providerContent,
+      });
+
+      api.writeTmpFile({
+        path: RELATIVE_MODEL_PATH,
+        content: getModelContent(enable ? relEntryFile : ''),
+      });
+    } else {
+      api.writeTmpFile({
+        path: winPath(join(DIR_NAME, 'enable.conf')),
+        content: 'false',
+      });
+    }
+
+    // runtime provider，开启与否都生成
     api.writeTmpFile({
       path: 'plugin-initial-state/runtime.tsx',
-      content: utils.Mustache.render(
-        readFileSync(join(__dirname, 'runtime.tsx.tpl'), 'utf-8'),
-        {},
-      ),
+      content: enable
+        ? utils.Mustache.render(
+            readFileSync(join(__dirname, 'runtime.tsx.tpl'), 'utf-8'),
+            {},
+          )
+        : '',
+    });
+    // export 生成，开启与否都生成
+    api.writeTmpFile({
+      path: winPath(RELATIVE_EXPORT_PATH),
+      content: getExportContent(RELATIVE_MODEL),
     });
   });
 };
