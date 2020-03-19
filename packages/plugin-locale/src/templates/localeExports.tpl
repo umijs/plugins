@@ -5,7 +5,7 @@ import {
 } from '{{{ reactIntlPkgPath }}}';
 import { ApplyPluginsType } from 'umi';
 import { event, LANG_CHANGE_EVENT } from './locale';
-// @ts-check
+// @ts-ignore
 import warning from '{{{ warningPkgPath }}}';
 
 import { plugin } from '../core/umiExports';
