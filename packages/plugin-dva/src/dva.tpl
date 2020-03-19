@@ -35,7 +35,7 @@ export function getApp() {
 }
 
 export class _DvaContainer extends Component {
-  constructor(props:any) {
+  constructor(props: any) {
     super(props);
     _onCreate();
   }
