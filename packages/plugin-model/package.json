@@ -29,6 +29,6 @@
     "access": "public"
   },
   "dependencies": {
-    "deep-equal": "2.0.1"
+    "fast-deep-equal": "3.1.1"
   }
 }
