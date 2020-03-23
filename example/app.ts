@@ -13,7 +13,7 @@ export function getInitialState() {
 
 export const layout = {
   logout: () => {
-    alert('退出登陆成功');
+    alert('退出登录成功');
   },
   patchMenus: (menus: MenuItem[], initialInfo: InitialState) => {
     if (initialInfo?.initialState?.name === 'test') {
