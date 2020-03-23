@@ -103,7 +103,7 @@ describe('normal request', () => {
       res.send(rawData);
     });
     try {
-      const response = await request(prefix('/test/httpfailed'));
+      await request(prefix('/test/httpfailed'));
     } catch (e) {
       expect(e.name).toEqual('ResponseError');
       expect(e.message).toEqual('test message');
