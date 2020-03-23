@@ -31,6 +31,10 @@ export default () => {
     }
   };
 
+  const setInitialState = (initialState: ThenArg<ReturnType<typeof getInitialState>> | undefined) => {
+    setState(s => ({ ...s, initialState, loading: false }))
+  }
+
   useEffect(()=>{
     refresh();
   }, []);
@@ -38,6 +42,7 @@ export default () => {
   return {
     ...state,
     refresh,
+    setInitialState,
   }
 }
 `
