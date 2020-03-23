@@ -72,6 +72,7 @@ const normalMenu = [
   { name: '欢迎', path: '/welcome', icon: 'testicon' },
   {
     name: '菜单示例',
+    path: '/test',
     children: [
       { name: '示例 1', path: '/test/1' },
       {
