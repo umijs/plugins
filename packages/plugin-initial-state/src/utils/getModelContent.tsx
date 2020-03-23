@@ -21,7 +21,7 @@ export default () => {
   const [ state, setState ] = useState(initState);
 
   const refresh = async() => {
-    setState(s => ({ ...s, loading: true, initialState: undefined, error: undefined }))
+    setState(s => ({ ...s, loading: true, error: undefined }))
     try {
       const asyncFunc = () => new Promise<ReturnType<typeof getInitialState>>(res => res(getInitialState()));
       const ret = await asyncFunc();
