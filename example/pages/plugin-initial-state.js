@@ -2,7 +2,15 @@ import React from 'react';
 import { useModel } from 'umi';
 
 export default () => {
-  const { initialState, loading } = useModel('@@initialState');
+  let { initialState = {}, loading } = {};
+  try {
+    ({ initialState = {}, loading } = useModel
+      ? useModel('@@initialState')
+      : {});
+  } catch (e) {
+    initialState = 'plugin disabled';
+  }
+
   console.log(initialState, loading);
   return (
     <div>
