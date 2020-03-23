@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-layout",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "@umijs/plugin-layout",
   "main": "lib/index.js",
   "types": "lib/types/index.d.ts",
