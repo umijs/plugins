@@ -6,7 +6,7 @@ const { winPath } = utils;
 export default function() {
   return `import { useState, useEffect, useContext, useRef } from 'react';
 // @ts-ignore
-import isEqual from '${winPath(require.resolve('lodash.isequal'))}';
+import isEqual from '${winPath(require.resolve('fast-deep-equal'))}';
 // @ts-ignore
 import { UmiContext } from '${winPath(
     join(__dirname, '..', 'helpers', 'constant'),
