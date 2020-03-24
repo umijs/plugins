@@ -1,3 +1,4 @@
+import React from 'react';
 import { InitialState, request as umiRequest } from 'umi';
 import { MenuItem } from '@umijs/plugin-layout';
 
@@ -26,6 +27,14 @@ export const layout = {
       ];
     }
     return menus;
+  },
+  childrenRender: children => {
+    return (
+      <>
+        {children}
+        <div id="xxx"></div>
+      </>
+    );
   },
 };
 

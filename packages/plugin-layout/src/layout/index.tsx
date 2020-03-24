@@ -83,7 +83,11 @@ const BasicLayout = (props: any) => {
       {...layoutRender}
     >
       <ErrorBoundary>
-        {WithExceptionOpChildren(children, currentPathConfig)}
+        <WithExceptionOpChildren currentPathConfig={currentPathConfig}>
+          {userConfig.childrenRender
+            ? userConfig.childrenRender(children)
+            : children}
+        </WithExceptionOpChildren>
       </ErrorBoundary>
     </ProLayout>
   );

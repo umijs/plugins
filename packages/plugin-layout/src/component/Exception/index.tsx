@@ -96,10 +96,11 @@ const Exception403 = () => (
  * - 无权限
  * - 404
  */
-const WithExceptionOpChildren = (
-  children: React.ReactNode,
-  currentPathConfig?: IRouteLayoutConfig,
-) => {
+
+const WithExceptionOpChildren: React.FC<{
+  currentPathConfig?: IRouteLayoutConfig;
+}> = props => {
+  const { children, currentPathConfig } = props;
   if (!currentPathConfig) {
     return <Exception404 />;
   }
