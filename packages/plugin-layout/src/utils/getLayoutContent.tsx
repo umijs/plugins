@@ -3,6 +3,7 @@ import { LayoutConfig } from '../types/interface.d';
 export default (
   userConfig: LayoutConfig,
   path: string,
+  hasTabsLayout: boolean,
 ) => `import React from 'react';
 import { ApplyPluginsType } from 'umi';
 import { plugin } from '../core/umiExports';
@@ -19,6 +20,7 @@ export default (props) => {
   };
   return React.createElement(require('${path}').default, {
     userConfig,
+    hasTabsLayout: ${hasTabsLayout},
     ...props
   })
 }

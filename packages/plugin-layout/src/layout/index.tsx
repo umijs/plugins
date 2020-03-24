@@ -1,5 +1,12 @@
 import React, { useMemo } from 'react';
-import { Link, useModel, history, useIntl, InitialState } from 'umi';
+import {
+  Link,
+  useModel,
+  history,
+  useIntl,
+  InitialState,
+  TabsLayout,
+} from 'umi';
 import pathToRegexp from 'path-to-regexp';
 import ProLayout from '@ant-design/pro-layout';
 import './style.less';
@@ -12,7 +19,7 @@ import { MenuItem } from '../types/interface.d';
 import logo from '../assets/logo.svg';
 
 const BasicLayout = (props: any) => {
-  const { children, userConfig, location } = props;
+  const { children, userConfig, location, hasTabsLayout } = props;
   const initialInfo = (useModel && useModel('@@initialState')) || {
     initialState: undefined,
     loading: false,
@@ -83,7 +90,10 @@ const BasicLayout = (props: any) => {
       {...layoutRender}
     >
       <ErrorBoundary>
-        {WithExceptionOpChildren(children, currentPathConfig)}
+        {WithExceptionOpChildren(
+          hasTabsLayout ? <TabsLayout {...props} /> : children,
+          currentPathConfig,
+        )}
       </ErrorBoundary>
     </ProLayout>
   );

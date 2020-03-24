@@ -50,10 +50,14 @@ export default (api: IApi) => {
 
     api.writeTmpFile({
       path: join(DIR_NAME, 'Layout.tsx'),
-      content: getLayoutContent(layoutOpts, currentLayoutComponentPath),
+      content: getLayoutContent(
+        layoutOpts,
+        currentLayoutComponentPath,
+        !!api.userConfig.tabsLayout,
+      ),
     });
 
-    // TODO: 修改 icon 的加载为按需
+    // TODO: 修改 icon 的加载为按
     // 用文件生成的方式，方便之后修改 icon 为按需
     api.writeTmpFile({
       path: join(DIR_NAME, 'runtime.tsx'),
