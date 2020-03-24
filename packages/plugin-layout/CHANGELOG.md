@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.6.1...@umijs/plugin-layout@0.7.0) (2020-03-24)
+
+### Features
+
+- layout-plugin support childrenRender API ([#126](https://github.com/umijs/plugins/issues/126)) ([1cd51c9](https://github.com/umijs/plugins/commit/1cd51c99857b1e7b6b0f557000c6d6505b7e5f85))
+
 ## [0.6.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.6.0...@umijs/plugin-layout@0.6.1) (2020-03-23)
 
 ### Bug Fixes

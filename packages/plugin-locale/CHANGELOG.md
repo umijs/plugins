@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.4.2...@umijs/plugin-locale@0.4.3) (2020-03-24)
+
+### Bug Fixes
+
+- moment & antd default locale ([#124](https://github.com/umijs/plugins/issues/124)) ([2297737](https://github.com/umijs/plugins/commit/2297737cf01addde0fca023ef67bb547becb4f45))
+
 ## [0.4.2](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.4.1...@umijs/plugin-locale@0.4.2) (2020-03-20)
 
 ### Bug Fixes
