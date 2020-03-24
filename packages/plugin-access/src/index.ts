@@ -25,7 +25,7 @@ export default function(api: IApi) {
       // 创建 AccessProvider，1. 生成 access 实例; 2. 遍历修改 routes; 3. 传给 context 的 Provider
       api.writeTmpFile({
         path: `${ACCESS_DIR}/AccessProvider.ts`,
-        content: getAccessProviderContent(),
+        content: getAccessProviderContent(api.utils),
       });
 
       // 创建 access 的 hook
@@ -42,10 +42,8 @@ export default function(api: IApi) {
     }
   });
 
-  // * api.register() 不能在初始化之后运行
   if (checkIfHasDefaultExporting(accessFilePath)) {
     // 增加 rootContainer 运行时配置
-    // TODO: eliminate this workaround
     api.addRuntimePlugin(() =>
       api.utils.winPath(join(umiTmpDir!, ACCESS_DIR, 'rootContainer.ts')),
     );
