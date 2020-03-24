@@ -7,6 +7,7 @@ import {
   getLocaleList,
   isNeedPolyfill,
   exactLocalePaths,
+  getMomentLocale,
 } from './utils';
 
 interface ILocaleConfig {
@@ -83,7 +84,7 @@ export default (api: IApi) => {
   // 生成临时文件
   api.onGenerateFiles(async () => {
     const localeTpl = readFileSync(
-      join(__dirname, 'templates', 'locale.tpl'),
+      join(winPath(__dirname), 'templates', 'locale.tpl'),
       'utf-8',
     );
     const { baseSeparator, baseNavigator, antd, title, useLocalStorage } = api
@@ -95,9 +96,22 @@ export default (api: IApi) => {
       .map(({ momentLocale }) => momentLocale)
       .filter(locale => locale);
 
+    let MomentLocales = momentLocales;
+    let DefaultMomentLocale = '';
+    // set moment default accounding to locale.default
+    if (!MomentLocales.length && api.config.locale?.default) {
+      const [lang, country = ''] = defaultLocale.split(baseSeparator);
+      const { momentLocale } = getMomentLocale(lang, country);
+      if (momentLocale) {
+        MomentLocales = [momentLocale];
+        DefaultMomentLocale = momentLocale;
+      }
+    }
+
     api.writeTmpFile({
       content: Mustache.render(localeTpl, {
-        MomentLocales: momentLocales,
+        MomentLocales,
+        DefaultMomentLocale,
         Antd: !!antd,
         Title: title && api.config.title,
         BaseSeparator: baseSeparator,

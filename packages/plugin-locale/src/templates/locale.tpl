@@ -21,7 +21,7 @@ export function _onCreate() {
   const locale = getLocale();
   {{#MomentLocales.length}}
   if (moment?.locale) {
-    moment.locale(localeInfo[locale]?.momentLocale || 'en');
+    moment.locale(localeInfo[locale]?.momentLocale || '{{{DefaultMomentLocale}}}');
   }
   {{/MomentLocales.length}}
   setIntl(locale);
