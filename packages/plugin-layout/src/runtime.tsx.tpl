@@ -30,7 +30,7 @@ function formatter(data: MenuDataItem[]): MenuDataItem[] {
       const NewIcon = allIcons[icon] || allIcons[`${v4IconName}Outlined`];
       if (NewIcon) {
         try {
-          if (item.menu.icon) {
+          if (item.menu && item.menu.icon) {
             item.menu.icon = React.createElement(NewIcon);
           } else {
             item.icon = React.createElement(NewIcon);
