@@ -43,6 +43,9 @@ export const getMomentLocale = (
   return { momentLocale: '' };
 };
 
+export const getAntdLocale = (lang: string, country: string): string =>
+  `${lang}_${(country || lang).toLocaleUpperCase()}`;
+
 export interface IGetLocaleFileListResult {
   lang: string;
   country: string;

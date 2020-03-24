@@ -21,7 +21,7 @@ export function _onCreate() {
   const locale = getLocale();
   {{#MomentLocales.length}}
   if (moment?.locale) {
-    moment.locale(localeInfo[locale]?.momentLocale || 'en');
+    moment.locale(localeInfo[locale]?.momentLocale || '{{{DefaultMomentLocale}}}');
   }
   {{/MomentLocales.length}}
   setIntl(locale);
@@ -55,8 +55,13 @@ export const _LocaleContainer = (props:any) => {
   }, []);
 
   {{#Antd}}
+  const defaultAntdLocale = {
+    {{#DefaultAntdLocales}}
+    ...require('{{{.}}}').default,
+    {{/DefaultAntdLocales}}
+  }
   return (
-    <ConfigProvider locale={localeInfo[locale]?.antd}>
+    <ConfigProvider locale={localeInfo[locale]?.antd || defaultAntdLocale}>
       <RawIntlProvider value={intl}>{props.children}</RawIntlProvider>
     </ConfigProvider>
   )

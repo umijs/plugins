@@ -1,12 +1,14 @@
 import { IApi } from 'umi';
 import { join, dirname } from 'path';
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync } from 'fs';
 import {
   IGetLocaleFileListResult,
   IAddAntdLocales,
   getLocaleList,
   isNeedPolyfill,
   exactLocalePaths,
+  getMomentLocale,
+  getAntdLocale,
 } from './utils';
 
 interface ILocaleConfig {
@@ -22,7 +24,7 @@ interface ILocaleConfig {
 export default (api: IApi) => {
   const {
     paths,
-    utils: { Mustache, winPath },
+    utils: { Mustache, winPath, lodash },
   } = api;
 
   api.describe({
@@ -54,20 +56,20 @@ export default (api: IApi) => {
     }));
   }
 
-  const getList = async (): Promise<IGetLocaleFileListResult[]> => {
-    const { ssr } = api.config;
-    const addAntdLocales: IAddAntdLocales = async args =>
-      await api.applyPlugins({
-        key: 'addAntdLocales',
-        type: api.ApplyPluginsType.add,
-        initialValue: [
-          `antd/${ssr ? 'lib' : 'es'}/locale/${args.lang}_${(
-            args.country || args.lang
-          ).toLocaleUpperCase()}`,
-        ],
-        args,
-      });
+  const addAntdLocales: IAddAntdLocales = async args =>
+    await api.applyPlugins({
+      key: 'addAntdLocales',
+      type: api.ApplyPluginsType.add,
+      initialValue: [
+        `antd/${api.config?.ssr ? 'lib' : 'es'}/locale/${getAntdLocale(
+          args.lang,
+          args.country,
+        )}`,
+      ],
+      args,
+    });
 
+  const getList = async (): Promise<IGetLocaleFileListResult[]> => {
     return getLocaleList({
       localeFolder: api.config?.singular ? 'locale' : 'locales',
       separator: api.config.locale?.baseSeparator,
@@ -83,7 +85,7 @@ export default (api: IApi) => {
   // 生成临时文件
   api.onGenerateFiles(async () => {
     const localeTpl = readFileSync(
-      join(__dirname, 'templates', 'locale.tpl'),
+      join(winPath(__dirname), 'templates', 'locale.tpl'),
       'utf-8',
     );
     const { baseSeparator, baseNavigator, antd, title, useLocalStorage } = api
@@ -94,10 +96,39 @@ export default (api: IApi) => {
     const momentLocales = localeList
       .map(({ momentLocale }) => momentLocale)
       .filter(locale => locale);
+    const antdLocales = localeList
+      .map(({ antdLocale }) => antdLocale)
+      .filter(locale => locale);
+
+    let MomentLocales = momentLocales;
+    let DefaultMomentLocale = '';
+    // set moment default accounding to locale.default
+    if (!MomentLocales.length && api.config.locale?.default) {
+      const [lang, country = ''] = defaultLocale.split(baseSeparator);
+      const { momentLocale } = getMomentLocale(lang, country);
+      if (momentLocale) {
+        MomentLocales = [momentLocale];
+        DefaultMomentLocale = momentLocale;
+      }
+    }
+
+    let DefaultAntdLocales: string[] = [];
+    // set antd default locale
+    if (!antdLocales.length && api.config.locale?.antd) {
+      const [lang, country = ''] = defaultLocale.split(baseSeparator);
+      DefaultAntdLocales = lodash.uniq(
+        await addAntdLocales({
+          lang,
+          country,
+        }),
+      );
+    }
 
     api.writeTmpFile({
       content: Mustache.render(localeTpl, {
-        MomentLocales: momentLocales,
+        MomentLocales,
+        DefaultMomentLocale,
+        DefaultAntdLocales,
         Antd: !!antd,
         Title: title && api.config.title,
         BaseSeparator: baseSeparator,
