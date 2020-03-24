@@ -55,8 +55,13 @@ export const _LocaleContainer = (props:any) => {
   }, []);
 
   {{#Antd}}
+  const defaultAntdLocale = {
+    {{#DefaultAntdLocales}}
+    ...require('{{{.}}}').default,
+    {{/DefaultAntdLocales}}
+  }
   return (
-    <ConfigProvider locale={localeInfo[locale]?.antd}>
+    <ConfigProvider locale={localeInfo[locale]?.antd || defaultAntdLocale}>
       <RawIntlProvider value={intl}>{props.children}</RawIntlProvider>
     </ConfigProvider>
   )
