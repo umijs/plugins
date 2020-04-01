@@ -38,17 +38,13 @@ export default (api: IApi) => {
       : {};
     api.modifyDefaultConfig(config => {
       config.theme = {
+        'hack_less_umi_plugin': `true;@import "${require.resolve(
+          'antd/lib/style/color/colorPalette.less',
+        )}";`,
         ...darkTheme,
         ...compactTheme,
         ...config.theme,
       };
-      if (opts?.dark) {
-        config.theme![
-          'hack_less_umi_plugin'
-        ] = `true;@import "${require.resolve(
-          'antd/lib/style/color/colorPalette.less',
-        )}";`;
-      }
       return config;
     });
   }
