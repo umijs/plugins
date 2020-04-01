@@ -17,7 +17,7 @@ export default (api: IApi) => {
           })
           .oxor('dark', 'compact')
           .error(
-            new Error('dark and compact mode cannot enable at the same time.'),
+            new Error('The dark and compact mode cannot be enabled at the same time.'),
           );
       },
     },
