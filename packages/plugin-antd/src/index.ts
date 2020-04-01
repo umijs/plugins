@@ -10,10 +10,15 @@ export default (api: IApi) => {
   api.describe({
     config: {
       schema(joi) {
-        return joi.object({
-          dark: joi.boolean(),
-          compact: joi.boolean(),
-        });
+        return joi
+          .object({
+            dark: joi.boolean(),
+            compact: joi.boolean(),
+          })
+          .oxor('dark', 'compact')
+          .error(
+            new Error('dark and compact mode cannot enable at the same time.'),
+          );
       },
     },
   });
