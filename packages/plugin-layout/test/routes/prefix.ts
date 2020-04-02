@@ -63,6 +63,7 @@ const prefixMenu = [
   { name: '欢迎', path: '#/$name/welcome', icon: 'testicon' },
   {
     name: '菜单示例',
+    path: '#/$name/test',
     children: [
       { name: '示例 1', path: '#/$name/test/1' },
       {

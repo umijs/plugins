@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.3.0...@umijs/plugin-antd@0.4.0) (2020-03-23)
+
+### Features
+
+- :new: Add compact theme config to plugin-antd ([#120](https://github.com/umijs/plugins/issues/120)) ([57fe5d9](https://github.com/umijs/plugins/commit/57fe5d9386f394c9feef803dc84c4e87b250ba0c)), closes [ant-design/ant-design#22068](https://github.com/ant-design/ant-design/issues/22068)
+
 # [0.3.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.2.0...@umijs/plugin-antd@0.3.0) (2020-02-29)
 
 ### Features

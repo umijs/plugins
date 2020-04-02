@@ -3,15 +3,24 @@ import { IApi } from 'umi';
 
 interface IAntdOpts {
   dark?: boolean;
+  compact?: boolean;
 }
 
 export default (api: IApi) => {
   api.describe({
     config: {
       schema(joi) {
-        return joi.object({
-          dark: joi.boolean(),
-        });
+        return joi
+          .object({
+            dark: joi.boolean(),
+            compact: joi.boolean(),
+          })
+          .oxor('dark', 'compact')
+          .error(
+            new Error(
+              'The dark and compact mode cannot be enabled at the same time.',
+            ),
+          );
       },
     },
   });
@@ -28,15 +37,19 @@ export default (api: IApi) => {
 
   const opts: IAntdOpts = api.userConfig.antd || {};
 
-  if (opts?.dark) {
+  if (opts?.dark || opts?.compact) {
     // support dark mode, user use antd 4 by default
-    const darkThemeVars = require('antd/dist/dark-theme');
+    const darkTheme = opts?.dark ? require('antd/dist/dark-theme') : {};
+    const compactTheme = opts?.compact
+      ? require('antd/dist/compact-theme')
+      : {};
     api.modifyDefaultConfig(config => {
       config.theme = {
         hack_less_umi_plugin: `true;@import "${require.resolve(
           'antd/lib/style/color/colorPalette.less',
         )}";`,
-        ...darkThemeVars,
+        ...darkTheme,
+        ...compactTheme,
         ...config.theme,
       };
       return config;

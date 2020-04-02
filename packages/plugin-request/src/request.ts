@@ -10,6 +10,8 @@ import {
   RequestMethod,
   RequestOptionsWithResponse,
   RequestResponse,
+  RequestInterceptor,
+  ResponseInterceptor,
 } from 'umi-request';
 // @ts-ignore
 import { ApplyPluginsType, history, plugin } from 'umi';
@@ -73,7 +75,16 @@ function useRequest<Item = any, U extends Item = any>(
 function useRequest(service: any, options: any = {}) {
   return useUmiRequest(service, {
     /*FRS*/ formatResult: res => res?.data /*FRE*/,
-    requestMethod: request,
+    requestMethod: (requestOptions: any) => {
+      if (typeof requestOptions === 'string') {
+        return request(requestOptions);
+      }
+      if (typeof requestOptions === 'object') {
+        const { url, ...rest } = requestOptions;
+        return request(url, rest);
+      }
+      throw new Error('request options error');
+    },
     ...options,
   });
 }
@@ -84,6 +95,8 @@ export interface RequestConfig extends RequestOptionsInit {
     adaptor?: (resData: any, ctx: Context) => ErrorInfoStructure;
   };
   middlewares?: OnionMiddleware[];
+  requestInterceptors?: RequestInterceptor[];
+  responseInterceptors?: ResponseInterceptor[];
 }
 
 export enum ErrorShowType {
@@ -173,6 +186,7 @@ const getRequestMethod = () => {
             });
             break;
           case ErrorShowType.REDIRECT:
+            // @ts-ignore
             history.push({
               pathname: errorPage,
               query: { errorCode, errorMessage },
@@ -220,6 +234,17 @@ const getRequestMethod = () => {
   customMiddlewares.forEach(mw => {
     requestMethodInstance.use(mw);
   });
+
+  // Add user custom interceptors
+  const requestInterceptors = requestConfig.requestInterceptors || [];
+  const responseInterceptors = requestConfig.responseInterceptors || [];
+  requestInterceptors.map(ri => {
+    requestMethodInstance.interceptors.request.use(ri);
+  });
+  responseInterceptors.map(ri => {
+    requestMethodInstance.interceptors.response.use(ri);
+  });
+
   return requestMethodInstance;
 };
 

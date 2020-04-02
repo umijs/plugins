@@ -1,3 +1,4 @@
+import React from 'react';
 import { InitialState, request as umiRequest } from 'umi';
 import { MenuItem } from '@umijs/plugin-layout';
 
@@ -13,7 +14,7 @@ export function getInitialState() {
 
 export const layout = {
   logout: () => {
-    alert('退出登陆成功');
+    alert('退出登录成功');
   },
   patchMenus: (menus: MenuItem[], initialInfo: InitialState) => {
     if (initialInfo?.initialState?.name === 'test') {
@@ -26,6 +27,14 @@ export const layout = {
       ];
     }
     return menus;
+  },
+  childrenRender: children => {
+    return (
+      <>
+        {children}
+        <div id="xxx"></div>
+      </>
+    );
   },
 };
 

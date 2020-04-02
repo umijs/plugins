@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.1.4...@umijs/plugin-model@2.2.0) (2020-03-24)
+
+### Features
+
+- setInitialState ([#123](https://github.com/umijs/plugins/issues/123)) ([17449b2](https://github.com/umijs/plugins/commit/17449b26f227347f909116cd33f7dccfe2d56013))
+
+## [2.1.4](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.1.3...@umijs/plugin-model@2.1.4) (2020-03-23)
+
+**Note:** Version bump only for package @umijs/plugin-model
+
+## [2.1.3](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.1.2...@umijs/plugin-model@2.1.3) (2020-03-18)
+
+### Bug Fixes
+
+- access hmr ([baacdf2](https://github.com/umijs/plugins/commit/baacdf22bf84682c90698d722866aa8fe6f8edb9))
+
 ## [2.1.2](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.1.1...@umijs/plugin-model@2.1.2) (2020-03-10)
 
 **Note:** Version bump only for package @umijs/plugin-model

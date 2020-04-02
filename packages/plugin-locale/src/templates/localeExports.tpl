@@ -5,12 +5,16 @@ import {
 } from '{{{ reactIntlPkgPath }}}';
 import { ApplyPluginsType } from 'umi';
 import { event, LANG_CHANGE_EVENT } from './locale';
+// @ts-ignore
 import warning from '{{{ warningPkgPath }}}';
+
 import { plugin } from '../core/umiExports';
 
 export * from '{{{ reactIntlPkgPath }}}';
 
 let g_intl: IntlShape;
+
+const useLocalStorage = {{{UseLocalStorage}}};
 
 export const localeInfo = {
   {{#LocaleList}}
@@ -19,7 +23,11 @@ export const localeInfo = {
       {{#paths}}...((locale) => locale.__esModule ? locale.default : locale)(require('{{{.}}}')),{{/paths}}
     },
     locale: '{{name}}',
-    {{#Antd}}antd: require('antd/{{#UseSSR}}lib{{/UseSSR}}{{^UseSSR}}es{{/UseSSR}}/locale/{{antdLocale}}').default,{{/Antd}}
+    {{#Antd}}antd: {
+      {{#antdLocale}}
+      ...require('{{{.}}}').default,
+      {{/antdLocale}}
+    },{{/Antd}}
     momentLocale: '{{momentLocale}}',
   },
   {{/LocaleList}}
@@ -34,7 +42,10 @@ export const localeInfo = {
 export const addLocale = (
   name: string,
   messages: Object,
-  extraLocales: Object,
+  extraLocales: {
+    momentLocale:string;
+    antd:string
+  },
 ) => {
   if (!name) {
     return;
@@ -65,20 +76,20 @@ export const getIntl = (locale?: string, changeIntl?: boolean) => {
     return g_intl;
   }
   // 如果存在于 localeInfo 中
-  if (localeInfo[locale]) {
+  if (locale&&localeInfo[locale]) {
     return createIntl(localeInfo[locale]);
   }
   // 不存在需要一个报错提醒
   warning(
-    !!localeInfo[locale],
-    `The current popular language does not exist, please check the locales folder!`,
+    !locale||!!localeInfo[locale],
+    `The current popular language does not exist, please check the {{{LocaleDir}}} folder!`,
   );
   // 使用 zh-CN
   if (localeInfo[{{{ DefaultLocale }}}]) return createIntl(localeInfo[{{{ DefaultLocale }}}]);
 
   // 如果还没有，返回一个空的
   return createIntl({
-    name: {{{ DefaultLocale }}},
+    locale: {{{ DefaultLocale }}},
     messages: {},
   });
 };
@@ -105,10 +116,8 @@ export const getLocale = () => {
   if (typeof runtimeLocale?.getLocale === 'function') {
     return runtimeLocale.getLocale();
   }
-  // support SSR
-  const { g_lang } = window;
   const lang =
-    typeof localStorage !== 'undefined'
+    typeof localStorage !== 'undefined' && useLocalStorage
       ? window.localStorage.getItem('umi_locale')
       : '';
   // support baseNavigator, default true
@@ -120,7 +129,7 @@ export const getLocale = () => {
     ? navigator.language.split('-').join('{{BaseSeparator}}')
     : '';
   {{/BaseNavigator}}
-  return lang || g_lang || browserLang || {{{DefaultLocale}}};
+  return lang || browserLang || {{{DefaultLocale}}};
 };
 
 /**
@@ -150,7 +159,7 @@ export const setLocale = (lang: string, realReload: boolean = true) => {
     throw new Error('setLocale lang format error');
   }
   if (getLocale() !== lang) {
-    if (typeof window.localStorage !== 'undefined') {
+    if (typeof window.localStorage !== 'undefined' && useLocalStorage) {
       window.localStorage.setItem('umi_locale', lang || '');
     }
     setIntl(lang);

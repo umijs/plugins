@@ -16,6 +16,22 @@ npm i @umijs/plugin-locale --save
 plugins: ['@umijs/plugin-locale'];
 ```
 
+配置:
+
+```jsx
+{
+  locale: {
+    default?: string;
+    baseNavigator?: boolean;
+    useLocalStorage?: boolean;
+    /** title 开启国际化 */
+    title?: boolean;
+    antd?: boolean;
+    baseSeparator?: string;
+  }
+}
+```
+
 ```tsx
 import React, { useState, useEffect } from 'react';
 import { useIntl, getLocale, addLocale, getAllLocales, setLocale } from 'umi';
@@ -202,6 +218,29 @@ export const locale = {
   },
 };
 ```
+
+## 扩展 antd 国际化
+
+比如有一个基于 antd 的组件库 ant-c，可以通过以下方式扩展 antd 国际化：
+
+```jsx
+// pluginA.js
+export default api => {
+  api.register({
+    key: 'addAntdLocales',
+    fn: args => {
+      const { ssr } = api.config;
+      return [
+        `ant-c/${ssr ? 'lib' : 'es'}/locale/${args.lang}_${(
+          args.country || args.lang
+        ).toLocaleUpperCase()}`,
+      ];
+    },
+  });
+};
+```
+
+那么在开启 `locale: { antd: true }` 后，antd 的 [ConfigProvider](https://ant.design/components/config-provider-cn/) 就会有 `antd` 与 `ant-c` 的国际化了。
 
 ## FAQ
 

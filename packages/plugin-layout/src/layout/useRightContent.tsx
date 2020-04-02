@@ -18,7 +18,7 @@ export default function useRightContent(
       <Menu className="umi-plugin-layout-menu">
         <Menu.Item key="logout" onClick={runtimeLayout.logout}>
           <LogoutOutlined />
-          退出登陆
+          退出登录
         </Menu.Item>
       </Menu>
     );

@@ -1,6 +1,12 @@
+import React from 'react';
 import { join } from 'path';
 import { Service } from 'umi';
-import { cleanup } from '@testing-library/react';
+import {
+  render,
+  fireEvent,
+  cleanup,
+  waitForDomChange,
+} from '@testing-library/react';
 
 const fixtures = join(__dirname, 'fixtures');
 let cwd = '';
@@ -9,7 +15,7 @@ async function setUp(name: string) {
   cwd = join(fixtures, name);
   const service = new Service({
     cwd,
-    plugins: [require.resolve('./')],
+    plugins: [require.resolve('./'), require.resolve('@umijs/plugin-model')],
   });
   await service.run({
     name: 'g',
@@ -65,4 +71,35 @@ test('noEntry', async () => {
   const state = stateHook();
   expect(state.loading).toBeFalsy();
   expect(state.initialState).toBeUndefined();
+});
+
+test('setInitialState', async () => {
+  await setUp('setInitialState');
+  const App = require(join(
+    fixtures,
+    'setInitialState',
+    'src',
+    'pages',
+    'index.js',
+  )).default;
+
+  const Provider = require(join(
+    fixtures,
+    'setInitialState',
+    'src',
+    '.umi-test',
+    'plugin-model',
+    'Provider.tsx',
+  )).default;
+
+  const renderRet = render(
+    <Provider>
+      <App />
+    </Provider>,
+  );
+  await require(join(fixtures, 'setInitialState', 'test.js')).default({
+    ...renderRet,
+    fireEvent,
+    waitForDomChange,
+  });
 });

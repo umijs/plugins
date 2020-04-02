@@ -4,6 +4,7 @@ export default {
   ],
   locale: {
     baseNavigator: false,
+    useLocalStorage: false,
     default: 'en-US',
   },
   singular: true,

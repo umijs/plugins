@@ -2,7 +2,7 @@ export default (relEntryFile: string) =>
   relEntryFile
     ? `import { useState, useEffect } from 'react';
 import { Models } from '../../plugin-model/useModel';
-import * as app from '@/app';
+import * as app from '../../../app';
 
 export type InitialState = Models<'@@initialState'>;
 async function getInitialState() {
@@ -21,7 +21,7 @@ export default () => {
   const [ state, setState ] = useState(initState);
 
   const refresh = async() => {
-    setState(s => ({ ...s, loading: true, initialState: undefined, error: undefined }))
+    setState(s => ({ ...s, loading: true, error: undefined }))
     try {
       const asyncFunc = () => new Promise<ReturnType<typeof getInitialState>>(res => res(getInitialState()));
       const ret = await asyncFunc();
@@ -31,6 +31,10 @@ export default () => {
     }
   };
 
+  const setInitialState = (initialState: ThenArg<ReturnType<typeof getInitialState>> | undefined) => {
+    setState(s => ({ ...s, initialState, loading: false }))
+  }
+
   useEffect(()=>{
     refresh();
   }, []);
@@ -38,6 +42,7 @@ export default () => {
   return {
     ...state,
     refresh,
+    setInitialState,
   }
 }
 `

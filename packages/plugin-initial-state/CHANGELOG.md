@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/umijs/plugins/compare/@umijs/plugin-initial-state@2.1.8...@umijs/plugin-initial-state@2.2.0) (2020-03-24)
+
+### Bug Fixes
+
+- prevent unexpected undefined value passed to subsequent process ([#122](https://github.com/umijs/plugins/issues/122)) ([a1b1f58](https://github.com/umijs/plugins/commit/a1b1f58499a0fc8d7e10ae746ea6331913eb9085))
+
+### Features
+
+- setInitialState ([#123](https://github.com/umijs/plugins/issues/123)) ([17449b2](https://github.com/umijs/plugins/commit/17449b26f227347f909116cd33f7dccfe2d56013))
+
+## [2.1.8](https://github.com/umijs/plugins/compare/@umijs/plugin-initial-state@2.1.7...@umijs/plugin-initial-state@2.1.8) (2020-03-20)
+
+**Note:** Version bump only for package @umijs/plugin-initial-state
+
+## [2.1.7](https://github.com/umijs/plugins/compare/@umijs/plugin-initial-state@2.1.6...@umijs/plugin-initial-state@2.1.7) (2020-03-18)
+
+**Note:** Version bump only for package @umijs/plugin-initial-state
+
+## [2.1.6](https://github.com/umijs/plugins/compare/@umijs/plugin-initial-state@2.1.5...@umijs/plugin-initial-state@2.1.6) (2020-03-18)
+
+### Bug Fixes
+
+- access hmr ([baacdf2](https://github.com/umijs/plugins/commit/baacdf22bf84682c90698d722866aa8fe6f8edb9))
+
 ## [2.1.5](https://github.com/umijs/plugins/compare/@umijs/plugin-initial-state@2.1.4...@umijs/plugin-initial-state@2.1.5) (2020-03-06)
 
 ### Bug Fixes

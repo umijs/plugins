@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-analytics",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "analytics for baidu tongji and google analytics",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

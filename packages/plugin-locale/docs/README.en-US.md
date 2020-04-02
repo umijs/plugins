@@ -14,6 +14,22 @@ Configure in `umirc.js`, or `config/config.js|ts`
 plugins: ['@umijs/plugin-locale'];
 ```
 
+Configuration:
+
+```jsx
+{
+  locale: {
+    default?: string;
+    baseNavigator?: boolean;
+    useLocalStorage?: boolean;
+    /** title 开启国际化 */
+    title?: boolean;
+    antd?: boolean;
+    baseSeparator?: string;
+  }
+}
+```
+
 ```tsx
 import React, { useState, useEffect } from 'react';
 import { useIntl, getLocale, addLocale, getAllLocales, setLocale } from 'umi';
@@ -164,6 +180,29 @@ setLocale('zh-TW', true);
 // 不刷新页面
 setLocale('zh-TW', false);
 ```
+
+## Extension antd internationalization
+
+Such as a component library based on antd ant-c, can be extended antd internationalization by the following way:
+
+```jsx
+// pluginA.js
+export default api => {
+  api.register({
+    key: 'addAntdLocales',
+    fn: args => {
+      const { ssr } = api.config;
+      return [
+        `ant-c/${ssr ? 'lib' : 'es'}/locale/${args.lang}_${(
+          args.country || args.lang
+        ).toLocaleUpperCase()}`,
+      ];
+    },
+  });
+};
+```
+
+After enabling `locale: { antd: true }`, antd's [ConfigProvider](https://ant.design/components/config-provider/) will be the `antd` and `ant-c` internationalization。
 
 ## FAQ
 
