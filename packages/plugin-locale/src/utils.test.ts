@@ -7,7 +7,7 @@ describe('utils', () => {
     it('base-separator', async () => {
       const service = new Service({
         cwd: join(__dirname, '../fixtures/base-separator'),
-        plugins: [],
+        plugins: [require.resolve('./')],
       });
       await service.init();
       const { absSrcPath, absPagesPath } = service.paths;
@@ -75,7 +75,7 @@ describe('utils', () => {
     it('multiple-ext', async () => {
       const service = new Service({
         cwd: join(__dirname, '../fixtures/multiple-ext'),
-        plugins: [],
+        // plugins: [require.resolve('./')],
       });
       await service.init();
       const { absSrcPath, absPagesPath } = service.paths;
