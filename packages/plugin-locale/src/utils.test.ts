@@ -29,6 +29,7 @@ describe('utils', () => {
           country: 'US',
           name: 'en_US',
           antdLocale: ['antd/lib/locale/en_US'],
+          locale: 'en-US',
           paths: [
             `${absSrcPath}/locales/en_US.js`,
             `${absPagesPath}/temp/locales/en_US.js`,
@@ -39,6 +40,7 @@ describe('utils', () => {
           lang: 'sk',
           country: '',
           name: 'sk',
+          locale: 'sk',
           paths: [
             `${absSrcPath}/locales/sk.js`,
             `${absPagesPath}/temp/locales/sk.js`,
@@ -50,6 +52,7 @@ describe('utils', () => {
           lang: 'zh',
           country: 'CN',
           name: 'zh_CN',
+          locale: 'zh-CN',
           paths: [
             `${absSrcPath}/locales/zh_CN.js`,
             `${absPagesPath}/temp/locales/zh_CN.js`,
@@ -94,6 +97,7 @@ describe('utils', () => {
           country: 'US',
           name: 'en-US',
           antdLocale: ['antd/lib/locale/en_US'],
+          locale: 'en-US',
           paths: [
             `${absSrcPath}/locale/en-US.js`,
             `${absPagesPath}/temp/locale/en-US.js`,
@@ -104,6 +108,7 @@ describe('utils', () => {
           lang: 'sk',
           country: '',
           name: 'sk',
+          locale: 'sk',
           paths: [
             `${absSrcPath}/locale/sk.json`,
             `${absPagesPath}/temp/locale/sk.json`,
@@ -115,6 +120,7 @@ describe('utils', () => {
           lang: 'zh',
           country: 'CN',
           name: 'zh-CN',
+          locale: 'zh-CN',
           paths: [
             `${absSrcPath}/locale/zh-CN.ts`,
             `${absPagesPath}/temp/locale/zh-CN.ts`,
