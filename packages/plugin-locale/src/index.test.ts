@@ -29,7 +29,7 @@ afterEach(() => {
 });
 
 test('normal', async () => {
-  const cwd = join(fixtures, 'base');
+  const cwd = join(fixtures, 'normal');
   const service = new Service({
     cwd,
     plugins: [require.resolve('./')],
