@@ -189,9 +189,8 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
           dvaHeadExport: modelExports
             .map(({ pathWithoutExt }) => `export * from '${pathWithoutExt}';`)
             .join('\r\n'),
-          dvaLoadingModels: modelExports
-            .map(({ namespace }) => `  '${namespace}'?: boolean;`)
-            .join('\r\n'),
+          dvaModelNamespaces:
+            modelExports.map(v => `'${v.namespace}'`).join(' | ') || 'string',
           dvaEffectsMap: modelExports
             .reduce<string[]>((prev, { effects, namespace, key }) => {
               if (!effects) return prev;
