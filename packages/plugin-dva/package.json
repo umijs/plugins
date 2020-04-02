@@ -34,6 +34,6 @@
     "dva-loading": "^3.0.20"
   },
   "devDependencies": {
-    "@phenomnomnominal/tsquery": "^4.0.0"
+    "@umijs/ast": "^3.0.17"
   }
 }

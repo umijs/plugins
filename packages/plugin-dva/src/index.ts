@@ -1,8 +1,8 @@
+import { getExportProps } from '@umijs/ast';
 import { IApi, utils } from 'umi';
 import { basename, dirname, extname, join, relative } from 'path';
 import { readFileSync } from 'fs';
 import { getModels } from './getModels/getModels';
-import { getModelExports } from './getModelExports';
 import { getUserLibDir } from './getUserLibDir';
 
 const { Mustache, lodash, winPath } = utils;
@@ -145,7 +145,31 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
 
       // typings
 
-      const modelExports = models.map(getModelExports);
+      const modelExports = models.map(path => {
+        let effects: string[] = [];
+        let reducers: string[] = [];
+        let namespace = basename(path, extname(path));
+        const pathWithoutExt = `${dirname(path)}/${namespace}`;
+        const randomString = Math.random().toString(36);
+        const key = `Model${lodash.padEnd(randomString.slice(2, 14), 12, 'u')}`;
+
+        const exportsProps = getExportProps(readFileSync(path, 'utf-8')) as any;
+        if (lodash.isPlainObject(exportsProps)) {
+          if (typeof exportsProps.namespace === 'string')
+            namespace = exportsProps.namespace;
+          if (lodash.isPlainObject(exportsProps.effects))
+            effects = Object.keys(exportsProps.effects);
+          if (lodash.isPlainObject(exportsProps.reducers))
+            reducers = Object.keys(exportsProps.reducers);
+        }
+        return {
+          key,
+          effects,
+          reducers,
+          namespace,
+          pathWithoutExt: winPath(pathWithoutExt),
+        };
+      });
       const connectTpl = readFileSync(join(__dirname, 'connect.tpl'), 'utf-8');
       api.writeTmpFile({
         path: 'plugin-dva/connect.ts',
