@@ -144,14 +144,12 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
       });
 
       // typings
-
+      const usedModalKeyCount = new Map<string, number>();
       const modelExports = models.map(path => {
         let effects: string[] = [];
         let reducers: string[] = [];
         let namespace = basename(path, extname(path));
         const pathWithoutExt = `${dirname(path)}/${namespace}`;
-        const randomString = Math.random().toString(36);
-        const key = `Model${lodash.padEnd(randomString.slice(2, 14), 12, 'u')}`;
 
         const exportsProps = getExportProps(readFileSync(path, 'utf-8')) as any;
         if (lodash.isPlainObject(exportsProps)) {
@@ -162,6 +160,15 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
           if (lodash.isPlainObject(exportsProps.reducers))
             reducers = Object.keys(exportsProps.reducers);
         }
+
+        const namespaceInPascalCase = `${namespace[0].toUpperCase()}${lodash.camelCase(
+          namespace.slice(1),
+        )}`.replace(/[^a-zA-Z0-9]/g, '');
+        let key = `Model${namespaceInPascalCase}`;
+        const sameKeyCount = usedModalKeyCount.get(key) || 0;
+        if (sameKeyCount) key = `${key}${sameKeyCount}`;
+        usedModalKeyCount.set(key, sameKeyCount + 1);
+
         return {
           key,
           effects,
