@@ -36,12 +36,16 @@ export type Dispatch = <P = any, C = (payload: P) => void>(action: {
 
 export type Subscription = (api: SubscriptionAPI, done: Function) => void | Function;
 
+type EffectActionsKeys = keyof EffectActionsMap extends never ? string : keyof EffectActionsMap;
+
+interface LoadingModal {
+{{{ dvaLoadingModels }}}
+}
+
 export interface Loading {
   global: boolean;
-  effects: { [key in keyof EffectActionsMap]?: boolean };
-  models: {
-{{{ dvaLoadingModels }}}
-  };
+  effects: { [key in EffectActionsKeys]?: boolean };
+  models: keyof LoadingModal extends never ? { [key in string]?: boolean } : LoadingModal;
 }
 
 /**

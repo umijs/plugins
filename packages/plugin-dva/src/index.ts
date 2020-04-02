@@ -190,7 +190,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
             .map(({ pathWithoutExt }) => `export * from '${pathWithoutExt}';`)
             .join('\r\n'),
           dvaLoadingModels: modelExports
-            .map(({ namespace }) => `    '${namespace}'?: boolean;`)
+            .map(({ namespace }) => `  '${namespace}'?: boolean;`)
             .join('\r\n'),
           dvaEffectsMap: modelExports
             .reduce<string[]>((prev, { effects, namespace, key }) => {
