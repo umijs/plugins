@@ -116,9 +116,11 @@ export const getLocale = () => {
   if (typeof runtimeLocale?.getLocale === 'function') {
     return runtimeLocale.getLocale();
   }
+  // please clear localStorage if you change the baseSeparator config
+  // because changing will break the app
   const lang =
     typeof localStorage !== 'undefined' && useLocalStorage
-      ? window.localStorage.getItem('umi_locale')?.split('-')?.join('{{BaseSeparator}}')
+      ? window.localStorage.getItem('umi_locale')
       : '';
   // support baseNavigator, default true
   let browserLang;
