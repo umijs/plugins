@@ -22,7 +22,7 @@ export const localeInfo = {
     messages: {
       {{#paths}}...((locale) => locale.__esModule ? locale.default : locale)(require('{{{.}}}')),{{/paths}}
     },
-    locale: '{{name}}',
+    locale: '{{locale}}',
     {{#Antd}}antd: {
       {{#antdLocale}}
       ...require('{{{.}}}').default,
@@ -118,7 +118,7 @@ export const getLocale = () => {
   }
   const lang =
     typeof localStorage !== 'undefined' && useLocalStorage
-      ? window.localStorage.getItem('umi_locale')
+      ? window.localStorage.getItem('umi_locale')?.split('-')?.join('_')
       : '';
   // support baseNavigator, default true
   let browserLang;
