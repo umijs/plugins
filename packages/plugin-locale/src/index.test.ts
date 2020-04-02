@@ -174,3 +174,79 @@ test('runtime', async () => {
   );
   expect(getByTestId('display')?.textContent).toEqual('sk Traveler');
 });
+
+test('base-separator', async () => {
+  const cwd = join(fixtures, 'base-separator');
+  const service = new Service({
+    cwd,
+    plugins: [require.resolve('./')],
+  });
+  await service.run({
+    name: 'g',
+    args: {
+      _: ['g', 'tmp'],
+    },
+  });
+
+  const reactNode = require(join(cwd, 'src', '.umi-test', 'umi.ts')).default;
+  const { container, getByText, getByTestId } = render(reactNode);
+
+  // test default: zh_CN
+  expect(container.querySelector('h1')?.textContent).toEqual(
+    'Current language:zh_CN',
+  );
+  expect(
+    container.querySelector('.ant-picker-input > input')?.placeholder,
+  ).toEqual('请选择日期');
+  expect(container.querySelector('#moment')?.textContent).toEqual(
+    '2020年3月21日',
+  );
+
+  fireEvent.click(getByText('en_US'));
+  expect(container.querySelector('h1')?.textContent).toEqual(
+    'Current language:en_US',
+  );
+  expect(
+    container.querySelector('.ant-picker-input > input')?.placeholder,
+  ).toEqual('Select date');
+  expect(container.querySelector('#moment')?.textContent).toEqual(
+    'March 21, 2020',
+  );
+  expect(getByTestId('display')?.textContent).toEqual('Hello Traveler');
+
+  fireEvent.click(getByText('zh_CN'));
+  expect(container.querySelector('h1')?.textContent).toEqual(
+    'Current language:zh_CN',
+  );
+  expect(
+    container.querySelector('.ant-picker-input > input')?.placeholder,
+  ).toEqual('请选择日期');
+  expect(container.querySelector('#moment')?.textContent).toEqual(
+    '2020年3月21日',
+  );
+  expect(getByTestId('display')?.textContent).toEqual('你好 Traveler');
+
+  fireEvent.click(getByText('zh_TW'));
+  expect(container.querySelector('h1')?.textContent).toEqual(
+    'Current language:zh_TW',
+  );
+  expect(
+    container.querySelector('.ant-picker-input > input')?.placeholder,
+  ).toEqual('請選擇日期');
+  expect(container.querySelector('#moment')?.textContent).toEqual(
+    '2020年3月21日',
+  );
+  expect(getByTestId('display')?.textContent).toEqual('妳好 Traveler');
+
+  fireEvent.click(getByText('sk'));
+  expect(container.querySelector('h1')?.textContent).toEqual(
+    'Current language:sk',
+  );
+  expect(
+    container.querySelector('.ant-picker-input > input')?.placeholder,
+  ).toEqual('Vybrať dátum');
+  expect(container.querySelector('#moment')?.textContent).toEqual(
+    '21. marec 2020',
+  );
+  expect(getByTestId('display')?.textContent).toEqual('sk Traveler');
+});

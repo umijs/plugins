@@ -58,7 +58,7 @@ export const addLocale = (
   const { momentLocale, antd } = extraLocales || {};
   localeInfo[name] = {
     messages: mergeMessages,
-    locale: name,
+    locale: name.split('{{BaseSeparator}}')?.join('-'),
     momentLocale: momentLocale,
     {{#Antd}}antd,{{/Antd}}
   };
