@@ -103,6 +103,9 @@ export const getLocaleList = async (
     return {
       lang,
       name,
+      // react-intl Function.supportedLocalesOf
+      // Uncaught RangeError: Incorrect locale information provided
+      locale: name.split(separator).join('-'),
       country,
       antdLocale,
       paths: groups[name].map(item => winPath(item.path)),

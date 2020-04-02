@@ -1,12 +1,18 @@
 export default {
-  plugins: [
-    require.resolve('../../../src/index'),
-  ],
   locale: {
     baseNavigator: false,
-    useLocalStorage: false,
+    antd: true,
     baseSeparator: '_',
-    default: 'en_US',
+    default: 'zh_CN',
   },
-  singular: false,
+  history: {
+    type: 'memory',
+    options: {
+      initialEntries: ['/'],
+    },
+  },
+  mountElementId: '',
+  routes: [
+    { path: '/', component: 'index' },
+  ],
 };
