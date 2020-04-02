@@ -118,7 +118,7 @@ export const getLocale = () => {
   }
   const lang =
     typeof localStorage !== 'undefined' && useLocalStorage
-      ? window.localStorage.getItem('umi_locale')?.split('-')?.join('_')
+      ? window.localStorage.getItem('umi_locale')?.split('-')?.join('{{BaseSeparator}}')
       : '';
   // support baseNavigator, default true
   let browserLang;
