@@ -261,10 +261,23 @@ interface RequestMethodInUmi<R = false> {
     url: string,
     options?: RequestOptionsInit & { skipErrorHandler?: boolean },
   ): R extends true ? Promise<RequestResponse<T>> : Promise<T>;
+  get?: RequestMethod<R>;
+  post?: RequestMethod<R>;
+  delete?: RequestMethod<R>;
+  put?: RequestMethod<R>;
+  patch?: RequestMethod<R>;
+  head?: RequestMethod<R>;
+  options?: RequestMethod<R>;
+  rpc?: RequestMethod<R>;
 }
 const request: RequestMethodInUmi = (url: any, options: any) => {
   const requestMethod = getRequestMethod();
   return requestMethod(url, options);
 };
 
+// 语法糖
+const METHODS = ['get', 'post', 'delete', 'put', 'patch', 'head', 'options', 'rpc'];
+METHODS.forEach(method => {
+  request[method] = (url: any, options: any) => request(url, { ...options, method });
+});
 export { request, useRequest };
