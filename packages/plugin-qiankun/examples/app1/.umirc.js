@@ -3,16 +3,6 @@ export default {
   publicPath: '/app1/',
   outputPath: './dist/app1',
   mountElementId: 'app1',
-  routes: [
-    {
-      path: '/user',
-      component: './user',
-    },
-    {
-      path: '/',
-      component: './index',
-    },
-  ],
   qiankun: {
     slave: {},
   },
