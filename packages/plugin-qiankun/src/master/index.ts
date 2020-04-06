@@ -9,14 +9,10 @@ import {
   testPathWithPrefix,
   toArray,
 } from '../common';
-import { Options } from '../types';
+import { MasterOptions } from '../types';
 
-export default function(api: IApi, options: Options) {
-  const { registerRuntimeKeyInIndex = false } = options || {};
+export default function(api: IApi, options: MasterOptions) {
   api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
-  if (!registerRuntimeKeyInIndex) {
-    api.addRuntimePluginKey(() => 'qiankun');
-  }
 
   api.modifyDefaultConfig(config => ({
     ...config,

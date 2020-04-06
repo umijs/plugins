@@ -12,12 +12,13 @@ import ReactDOM from 'react-dom';
 // @ts-ignore
 import { ApplyPluginsType, plugin } from 'umi';
 import {
+  defaultHistoryType,
   defaultMountContainerId,
   noop,
   testPathWithPrefix,
   toArray,
 } from '../common';
-import { App, HistoryType, Options } from '../types';
+import { App, HistoryType, MasterOptions } from '../types';
 
 async function getMasterRuntime() {
   const config = plugin.applyPlugins({
@@ -76,11 +77,11 @@ export async function render(oldRender: typeof noop) {
     prefetch = true,
     defer = false,
     lifeCycles,
-    masterHistoryType,
+    masterHistoryType = defaultHistoryType,
     ...otherConfigs
   } = {
-    ...(subAppConfig as Options),
-    ...(runtimeConfig as Options),
+    ...(subAppConfig as MasterOptions),
+    ...(runtimeConfig as MasterOptions),
   };
   assert(
     apps && apps.length,

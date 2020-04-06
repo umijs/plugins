@@ -6,8 +6,7 @@
 import { cloneDeep } from 'lodash';
 import pathToRegexp from 'path-to-regexp';
 import { IRoute } from 'umi';
-
-import { keepOriginalRoutesOption } from './types';
+import { SlaveOptions } from './types';
 
 export const defaultMountContainerId = 'root-subapp';
 
@@ -64,7 +63,7 @@ const recursiveCoverRouter = (source: Array<IRoute>, nameSpacePath: string) =>
 
 export const addSpecifyPrefixedRoute = (
   originRoute: Array<IRoute>,
-  keepOriginalRoutes: keepOriginalRoutesOption,
+  keepOriginalRoutes: SlaveOptions['keepOriginalRoutes'],
   pkgName?: string,
 ) => {
   const copyBase = originRoute.filter(_ => _.path === '/');

@@ -4,20 +4,16 @@ import { isString } from 'lodash';
 import { join } from 'path';
 import { IApi } from 'umi';
 import { addSpecifyPrefixedRoute, defaultSlaveRootId } from '../common';
-import { Options } from '../types';
+import { SlaveOptions } from '../types';
 
 const localIpAddress = process.env.USE_REMOTE_IP ? address.ip() : 'localhost';
 
-export default function(api: IApi, options: Options) {
+export default function(api: IApi, options: SlaveOptions) {
   const {
-    registerRuntimeKeyInIndex = false,
     keepOriginalRoutes = false,
     shouldNotModifyRuntimePublicPath = false,
   } = options || {};
   api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
-  if (!registerRuntimeKeyInIndex) {
-    api.addRuntimePluginKey(() => 'qiankun');
-  }
 
   const lifecyclePath = require.resolve('./lifecycles');
   // eslint-disable-next-line import/no-dynamic-require, global-require

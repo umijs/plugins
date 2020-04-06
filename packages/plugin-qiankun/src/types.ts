@@ -17,22 +17,16 @@ export type App = {
   props?: any;
 } & Pick<IConfig, 'mountElementId'>;
 
-export type Options = {
+export type MasterOptions = {
   apps: App[];
   jsSandbox: boolean;
   prefetch: boolean;
   defer?: boolean;
   lifeCycles?: LifeCycles<object>;
-  masterHistoryType: HistoryType;
-  registerRuntimeKeyInIndex?: boolean; // 仅做插件本身透传用，开发者无需关心
-  keepOriginalRoutes?: keepOriginalRoutesOption;
-  shouldNotModifyRuntimePublicPath?: boolean;
+  masterHistoryType?: HistoryType;
 } & ImportEntryOpts;
 
-export type keepOriginalRoutesOption = boolean | string;
-
-export type GlobalOptions = {
-  master?: Options;
-  slave?: Options;
+export type SlaveOptions = {
+  keepOriginalRoutes?: boolean | string;
   shouldNotModifyRuntimePublicPath?: boolean;
 };
