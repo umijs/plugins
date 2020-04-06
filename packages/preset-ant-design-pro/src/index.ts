@@ -1,6 +1,28 @@
 import { IApi } from 'umi';
+import proChainWebpack from './chainWebpack';
 
 export default (api: IApi) => {
+  const { REACT_APP_ENV } = process.env;
+  // support dev tools
+  api.modifyDefaultConfig(config => {
+    const { chainWebpack, define } = config;
+
+    config.define = {
+      ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION: '',
+      REACT_APP_ENV: REACT_APP_ENV || false,
+      ...(define || {}),
+    };
+    config.chainWebpack = (chainWebpackConfig, webpack) => {
+      if (chainWebpack) {
+        chainWebpack(chainWebpackConfig, webpack);
+      }
+      proChainWebpack(chainWebpackConfig);
+    };
+    return config;
+  });
+
+  // 这里类型写错了
+
   const plugins = [
     require.resolve('@umijs/plugin-block-devtool'),
     require.resolve('umi-plugin-pro-block'),
