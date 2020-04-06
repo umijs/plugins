@@ -99,9 +99,15 @@ export default function(api: IApi, options: Options) {
     modifyAppRoutes();
   }
 
-  const rootExportsFile = join(api.paths.absSrcPath!, 'rootExports.js');
+  const rootExportsJsFile = join(api.paths.absSrcPath!, 'rootExports.js');
+  const rootExportsTsFile = join(api.paths.absSrcPath!, 'rootExports.ts');
+  const rootExportsJsFileExisted = existsSync(rootExportsJsFile);
+  const rootExportsFileExisted =
+    rootExportsJsFileExisted || existsSync(rootExportsTsFile);
 
-  api.addTmpGenerateWatcherPaths(() => rootExportsFile);
+  api.addTmpGenerateWatcherPaths(() =>
+    rootExportsJsFileExisted ? rootExportsJsFile : rootExportsTsFile,
+  );
 
   api.onGenerateFiles(() => {
     const {
@@ -110,7 +116,7 @@ export default function(api: IApi, options: Options) {
     const masterHistoryType = history?.type || defaultHistoryType;
     const rootExports = `
 window.g_rootExports = ${
-      existsSync(rootExportsFile) ? `require('@/rootExports')` : `{}`
+      rootExportsFileExisted ? `require('@/rootExports')` : `{}`
     };
     `.trim();
 
