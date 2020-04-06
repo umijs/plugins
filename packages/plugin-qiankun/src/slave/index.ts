@@ -9,8 +9,11 @@ import { Options } from '../types';
 const localIpAddress = process.env.USE_REMOTE_IP ? address.ip() : 'localhost';
 
 export default function(api: IApi, options: Options) {
-  const { registerRuntimeKeyInIndex = false, keepOriginalRoutes = false } =
-    options || {};
+  const {
+    registerRuntimeKeyInIndex = false,
+    keepOriginalRoutes = false,
+    shouldNotModifyRuntimePublicPath = false,
+  } = options || {};
   api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
   if (!registerRuntimeKeyInIndex) {
     api.addRuntimePluginKey(() => 'qiankun');
@@ -28,7 +31,10 @@ export default function(api: IApi, options: Options) {
     runtimePublicPath: true,
   }));
 
-  if (api.service.userConfig.runtimePublicPath !== false) {
+  if (
+    api.service.userConfig.runtimePublicPath !== false &&
+    !shouldNotModifyRuntimePublicPath
+  ) {
     api.modifyPublicPathStr(
       () =>
         `window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || "${

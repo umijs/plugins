@@ -1,5 +1,5 @@
-import { IApi } from 'umi';
 import assert from 'assert';
+import { IApi } from 'umi';
 import master from './master';
 import slave from './slave';
 
@@ -18,11 +18,15 @@ export default function(api: IApi) {
     },
   });
 
-  const { master: masterOpts, slave: slaveOpts } = api.userConfig.qiankun || {};
+  const {
+    master: masterOpts,
+    slave: slaveOpts,
+    shouldNotModifyRuntimePublicPath = false,
+  } = api.userConfig.qiankun || {};
   assert(!(masterOpts && slaveOpts), '请勿同时配置 master 和 slave 配置项。');
 
   if (slaveOpts) {
-    slave(api, slaveOpts);
+    slave(api, { ...slaveOpts, shouldNotModifyRuntimePublicPath });
   }
   if (masterOpts) {
     master(api, masterOpts);
