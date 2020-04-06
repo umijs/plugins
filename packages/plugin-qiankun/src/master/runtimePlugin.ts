@@ -10,14 +10,14 @@ import { registerMicroApps, start } from 'qiankun';
 import React from 'react';
 import ReactDOM from 'react-dom';
 // @ts-ignore
-import { IConfig, plugin, ApplyPluginsType } from 'umi';
+import { ApplyPluginsType, plugin } from 'umi';
 import {
   defaultMountContainerId,
   noop,
   testPathWithPrefix,
   toArray,
 } from '../common';
-import { App, Options } from '../types';
+import { App, HistoryType, Options } from '../types';
 
 async function getMasterRuntime() {
   const config = plugin.applyPlugins({
@@ -35,22 +35,34 @@ export async function render(oldRender: typeof noop) {
 
   function isAppActive(
     location: Location,
-    history: IConfig['history'],
-    base: App['base'],
+    history: HistoryType,
+    opts: { base: App['base']; setMatchedBase: (v: string) => void },
   ) {
+    const { base, setMatchedBase } = opts;
     const baseConfig = toArray(base);
 
-    // @ts-ignore TODO，umi 的 type 定义现在有问题
-    switch (history.type || history) {
-      case 'hash':
-        return baseConfig.some(pathPrefix =>
+    switch (history) {
+      case 'hash': {
+        const matchedBase = baseConfig.find(pathPrefix =>
           testPathWithPrefix(`#${pathPrefix}`, location.hash),
         );
+        if (matchedBase) {
+          setMatchedBase(matchedBase);
+        }
 
-      case 'browser':
-        return baseConfig.some(pathPrefix =>
+        return !!matchedBase;
+      }
+
+      case 'browser': {
+        const matchedBase = baseConfig.find(pathPrefix =>
           testPathWithPrefix(pathPrefix, location.pathname),
         );
+        if (matchedBase) {
+          setMatchedBase(matchedBase);
+        }
+
+        return !!matchedBase;
+      }
 
       default:
         return false;
@@ -64,7 +76,7 @@ export async function render(oldRender: typeof noop) {
     prefetch = true,
     defer = false,
     lifeCycles,
-    masterHistory,
+    masterHistoryType,
     ...otherConfigs
   } = {
     ...(subAppConfig as Options),
@@ -81,36 +93,47 @@ export async function render(oldRender: typeof noop) {
         name,
         entry,
         base,
-        history = masterHistory,
+        history = masterHistoryType,
         mountElementId = defaultMountContainerId,
         props,
-      }) => ({
-        name,
-        entry,
-        activeRule: location => isAppActive(location, history, base),
-        render: ({ appContent, loading }) => {
-          if (process.env.NODE_ENV === 'development') {
-            console.info(`app ${name} loading ${loading}`);
-          }
+      }) => {
+        let matchedBase = base;
 
-          if (mountElementId) {
-            const container = document.getElementById(mountElementId);
-            if (container) {
-              const subApp = React.createElement('div', {
-                dangerouslySetInnerHTML: {
-                  __html: appContent,
-                },
-              });
-              ReactDOM.render(subApp, container);
+        return {
+          name,
+          entry,
+          activeRule: location =>
+            isAppActive(location, history, {
+              base,
+              setMatchedBase: (v: string) => (matchedBase = v),
+            }),
+          render: ({ appContent, loading }) => {
+            if (process.env.NODE_ENV === 'development') {
+              console.info(`app ${name} loading ${loading}`);
             }
-          }
-        },
-        props: {
-          base,
-          history,
-          ...props,
-        },
-      }),
+
+            if (mountElementId) {
+              const container = document.getElementById(mountElementId);
+              if (container) {
+                const subApp = React.createElement('div', {
+                  dangerouslySetInnerHTML: {
+                    __html: appContent,
+                  },
+                });
+                ReactDOM.render(subApp, container);
+              }
+            }
+          },
+          props: {
+            base,
+            history,
+            getMatchedBase() {
+              return matchedBase;
+            },
+            ...props,
+          },
+        };
+      },
     ),
     lifeCycles,
     otherConfigs,

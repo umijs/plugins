@@ -4,6 +4,13 @@
   "description": "umi plugin for qiankun",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "scripts": {
+    "start": "npm-run-all --parallel start:*",
+    "start:master": "cd examples/master && umi dev",
+    "start:app1": "cd examples/app1 && umi dev",
+    "start:app2": "cd examples/app2 && umi dev",
+    "start:app3": "cd examples/app3 && umi dev"
+  },
   "files": [
     "lib",
     "master.js",
@@ -38,12 +45,13 @@
   "dependencies": {
     "@babel/runtime": "^7.4.5",
     "address": "^1.1.2",
+    "lodash": "^4.17.15",
     "path-to-regexp": "^1.7.0",
     "qiankun": "^1.4.2"
   },
   "devDependencies": {
-    "concurrently": "^5.1.0",
     "mockjs": "^1.0.1-beta3",
+    "npm-run-all": "^4.1.5",
     "umi-request": "^1.1.0"
   }
 }

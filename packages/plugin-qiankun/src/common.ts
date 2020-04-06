@@ -3,7 +3,11 @@
  * @since 2019-06-20
  */
 
+import { cloneDeep } from 'lodash';
 import pathToRegexp from 'path-to-regexp';
+import { IRoute } from 'umi';
+
+import { keepOriginalRoutesOption } from './types';
 
 export const defaultMountContainerId = 'root-subapp';
 
@@ -11,7 +15,7 @@ export const defaultMountContainerId = 'root-subapp';
 export const defaultMasterRootId = 'root-master';
 export const defaultSlaveRootId = 'root-slave';
 
-export const defaultHistoryMode = 'browser';
+export const defaultHistoryType = 'browser';
 
 // @formatter:off
 export const noop = () => {};
@@ -41,3 +45,39 @@ export function testPathWithPrefix(pathPrefix: string, realPath: string) {
     testPathWithDynamicRoute(pathPrefix, realPath)
   );
 }
+
+const recursiveCoverRouter = (source: Array<IRoute>, nameSpacePath: string) =>
+  source.map((router: IRoute) => {
+    if (router.routes) {
+      recursiveCoverRouter(router.routes, nameSpacePath);
+    }
+    if (router.path !== '/' && router.path) {
+      return {
+        ...router,
+        path: `${nameSpacePath}${router.path}`,
+      };
+    }
+    return router;
+  });
+
+export const addSpecifyPrefixedRoute = (
+  originRoute: Array<IRoute>,
+  keepOriginalRoutes: keepOriginalRoutesOption,
+  pkgName?: string,
+) => {
+  const copyBase = originRoute.filter(_ => _.path === '/');
+  if (!copyBase[0]) {
+    return originRoute;
+  }
+
+  const nameSpaceRouter: any = cloneDeep(copyBase[0]);
+  const nameSpace = keepOriginalRoutes === true ? pkgName : keepOriginalRoutes;
+
+  nameSpaceRouter.path = `/${nameSpace}`;
+  nameSpaceRouter.routes = recursiveCoverRouter(
+    nameSpaceRouter.routes,
+    `/${nameSpace}`,
+  );
+
+  return [nameSpaceRouter, ...originRoute];
+};

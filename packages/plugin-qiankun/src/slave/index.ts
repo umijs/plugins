@@ -1,14 +1,16 @@
 import address from 'address';
 import assert from 'assert';
+import { isString } from 'lodash';
 import { join } from 'path';
 import { IApi } from 'umi';
-import { defaultSlaveRootId } from '../common';
+import { addSpecifyPrefixedRoute, defaultSlaveRootId } from '../common';
 import { Options } from '../types';
 
 const localIpAddress = process.env.USE_REMOTE_IP ? address.ip() : 'localhost';
 
 export default function(api: IApi, options: Options) {
-  const { registerRuntimeKeyInIndex = false } = options || {};
+  const { registerRuntimeKeyInIndex = false, keepOriginalRoutes = false } =
+    options || {};
   api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
   if (!registerRuntimeKeyInIndex) {
     api.addRuntimePluginKey(() => 'qiankun');
@@ -121,4 +123,13 @@ export default function(api: IApi, options: Options) {
     }
     `,
   );
+
+  api.modifyRoutes(routes => {
+    // 开启keepOriginalRoutes配置
+    if (keepOriginalRoutes === true || isString(keepOriginalRoutes)) {
+      return addSpecifyPrefixedRoute(routes, keepOriginalRoutes, pkgName);
+    }
+
+    return routes;
+  });
 }
