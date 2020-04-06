@@ -91,8 +91,7 @@ export default function(api: IApi, options: Options) {
       export const Context = createContext(null);
       export function useRootExports() {
         return useContext(Context);
-      };
-        `.trim(),
+      };`.trim(),
     });
   });
 

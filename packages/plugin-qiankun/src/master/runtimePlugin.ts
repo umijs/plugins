@@ -113,7 +113,7 @@ export async function render(oldRender: typeof noop) {
       }),
     ),
     lifeCycles,
-    { ...otherConfigs },
+    otherConfigs,
   );
 
   if (defer) {
