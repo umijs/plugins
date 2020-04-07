@@ -3,12 +3,7 @@ import path from 'path';
 function getModulePackageName(module: { context: string }) {
   if (!module.context) return null;
 
-  const nodeModulesPath = path.join(__dirname, '../node_modules/');
-  if (module.context.substring(0, nodeModulesPath.length) !== nodeModulesPath) {
-    return null;
-  }
-
-  const moduleRelativePath = module.context.substring(nodeModulesPath.length);
+  const moduleRelativePath = module.context.split('node_modules').pop() || '';
   const [moduleDirName] = moduleRelativePath.split(path.sep);
   let packageName: string | null = moduleDirName;
   // handle tree shaking
