@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.4.0...@umijs/plugin-antd@0.4.1) (2020-04-07)
+
+### Bug Fixes
+
+- antd dark and compat mode ([#131](https://github.com/umijs/plugins/issues/131)) ([3e3b9d0](https://github.com/umijs/plugins/commit/3e3b9d0471cf1da1a78b9750e41ae4adb3b8d715))
+- compact mode throw error ([99301e9](https://github.com/umijs/plugins/commit/99301e93d14d0ae9f3fc7f93c566a3f4c8aca2b8)), closes [/github.com/umijs/umi/issues/4315#issuecomment-606367942](https://github.com//github.com/umijs/umi/issues/4315/issues/issuecomment-606367942)
+
 # [0.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.3.0...@umijs/plugin-antd@0.4.0) (2020-03-23)
 
 ### Features
