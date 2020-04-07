@@ -1,18 +1,19 @@
 import address from 'address';
 import assert from 'assert';
+import { isString } from 'lodash';
 import { join } from 'path';
 import { IApi } from 'umi';
-import { defaultSlaveRootId } from '../common';
-import { Options } from '../types';
+import { addSpecifyPrefixedRoute, defaultSlaveRootId } from '../common';
+import { SlaveOptions } from '../types';
 
 const localIpAddress = process.env.USE_REMOTE_IP ? address.ip() : 'localhost';
 
-export default function(api: IApi, options: Options) {
-  const { registerRuntimeKeyInIndex = false } = options || {};
+export default function(api: IApi, options: SlaveOptions) {
+  const {
+    keepOriginalRoutes = false,
+    shouldNotModifyRuntimePublicPath = false,
+  } = options || {};
   api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
-  if (!registerRuntimeKeyInIndex) {
-    api.addRuntimePluginKey(() => 'qiankun');
-  }
 
   const lifecyclePath = require.resolve('./lifecycles');
   // eslint-disable-next-line import/no-dynamic-require, global-require
@@ -26,7 +27,10 @@ export default function(api: IApi, options: Options) {
     runtimePublicPath: true,
   }));
 
-  if (api.service.userConfig.runtimePublicPath !== false) {
+  if (
+    api.service.userConfig.runtimePublicPath !== false &&
+    !shouldNotModifyRuntimePublicPath
+  ) {
     api.modifyPublicPathStr(
       () =>
         `window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || "${
@@ -91,8 +95,7 @@ export default function(api: IApi, options: Options) {
       export const Context = createContext(null);
       export function useRootExports() {
         return useContext(Context);
-      };
-        `.trim(),
+      };`.trim(),
     });
   });
 
@@ -122,4 +125,13 @@ export default function(api: IApi, options: Options) {
     }
     `,
   );
+
+  api.modifyRoutes(routes => {
+    // 开启keepOriginalRoutes配置
+    if (keepOriginalRoutes === true || isString(keepOriginalRoutes)) {
+      return addSpecifyPrefixedRoute(routes, keepOriginalRoutes, pkgName);
+    }
+
+    return routes;
+  });
 }

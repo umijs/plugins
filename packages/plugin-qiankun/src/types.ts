@@ -3,28 +3,30 @@
  * @since 2019-06-20
  */
 
+import { ImportEntryOpts } from 'import-html-entry';
 import { LifeCycles } from 'qiankun';
-// eslint-disable-next-line import/no-unresolved
+// @ts-ignore
 import { IConfig } from 'umi-types';
 
+export type HistoryType = 'browser' | 'hash';
 export type App = {
   name: string;
   entry: string | { scripts: string[]; styles: string[] };
   base: string | string[];
+  history?: HistoryType;
   props?: any;
-} & Pick<IConfig, 'history' | 'mountElementId'>;
+} & Pick<IConfig, 'mountElementId'>;
 
-export type Options = {
+export type MasterOptions = {
   apps: App[];
   jsSandbox: boolean;
   prefetch: boolean;
   defer?: boolean;
   lifeCycles?: LifeCycles<object>;
-  masterHistory: IConfig['history'];
-  registerRuntimeKeyInIndex?: boolean; // 仅做插件本身透传用，开发者无需关心
-};
+  masterHistoryType?: HistoryType;
+} & ImportEntryOpts;
 
-export type GlobalOptions = {
-  master?: Options;
-  slave?: Options;
+export type SlaveOptions = {
+  keepOriginalRoutes?: boolean | string;
+  shouldNotModifyRuntimePublicPath?: boolean;
 };

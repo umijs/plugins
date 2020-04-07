@@ -3,7 +3,8 @@
  * @since 2019-10-22
  */
 
-import { testPathWithPrefix } from '../common';
+import { addSpecifyPrefixedRoute, testPathWithPrefix } from '../common';
+import { expectRoutes, originRoutes } from './mock';
 
 it('testPathPrefix', () => {
   // browser history
@@ -65,12 +66,16 @@ it('testPathPrefix', () => {
   expect(testPathWithPrefix('/js/:abc', '/js/123')).toBeTruthy();
   expect(testPathWithPrefix('/js/:abc/', '/js/123')).toBeFalsy();
   expect(testPathWithPrefix('/js/:abc/jsx', '/js/123/jsx')).toBeTruthy();
+  expect(testPathWithPrefix('/js/:abc/jsx', '/js/123/jsx/hello')).toBeTruthy();
   expect(testPathWithPrefix('/js/:abc/jsx', '/js/123')).toBeFalsy();
   expect(testPathWithPrefix('/js/:abc/jsx', '/js/123/css')).toBeFalsy();
   expect(
     testPathWithPrefix('/js/:abc/jsx/:cde', '/js/123/jsx/kkk'),
   ).toBeTruthy();
   expect(testPathWithPrefix('/js/:abc/jsx/:cde', '/js/123/jsk')).toBeFalsy();
+  expect(
+    testPathWithPrefix('/js/:abc/jsx/:cde', '/js/123/jsx/kkk/hello'),
+  ).toBeTruthy();
   expect(testPathWithPrefix('/js/:abc?', '/js')).toBeTruthy();
   expect(testPathWithPrefix('/js/*', '/js/245')).toBeTruthy();
 
@@ -82,13 +87,36 @@ it('testPathPrefix', () => {
   expect(testPathWithPrefix('#/:abc/js', '#/js/123')).toBeFalsy();
   expect(testPathWithPrefix('#/js/:abc', '#/js/123')).toBeTruthy();
   expect(testPathWithPrefix('#/js/:abc/', '#/js/123')).toBeFalsy();
+  expect(testPathWithPrefix('#/js/:abc/', '#/js/123/jsx')).toBeTruthy();
   expect(testPathWithPrefix('#/js/:abc/jsx', '#/js/123/jsx')).toBeTruthy();
+  expect(
+    testPathWithPrefix('#/js/:abc/jsx', '#/js/123/jsx/hello'),
+  ).toBeTruthy();
+  expect(
+    testPathWithPrefix('#/js/:abc/jsx', '#/js/123/jsx/hello?test=1'),
+  ).toBeTruthy();
   expect(testPathWithPrefix('#/js/:abc/jsx', '#/js/123')).toBeFalsy();
   expect(testPathWithPrefix('#/js/:abc/jsx', '#/js/123/css')).toBeFalsy();
   expect(
     testPathWithPrefix('#/js/:abc/jsx/:cde', '#/js/123/jsx/kkk'),
   ).toBeTruthy();
+  expect(
+    testPathWithPrefix('#/js/:abc/jsx/:cde', '#/js/123/jsx/kkk/hello'),
+  ).toBeTruthy();
   expect(testPathWithPrefix('#/js/:abc/jsx/:cde', '#/js/123/jsk')).toBeFalsy();
   expect(testPathWithPrefix('#/js/:abc?', '#/js')).toBeTruthy();
   expect(testPathWithPrefix('#/js/*', '#/js/245')).toBeTruthy();
+});
+
+it('testRecursiveCoverRouter', () => {
+  // 在原route的基础上添加指定路由单测
+  expect(String(addSpecifyPrefixedRoute(originRoutes, 'test'))).toEqual(
+    String(expectRoutes),
+  );
+  expect(String(addSpecifyPrefixedRoute(originRoutes, 'test', 'app2'))).toEqual(
+    String(expectRoutes),
+  );
+  expect(String(addSpecifyPrefixedRoute(originRoutes, true, 'test'))).toEqual(
+    String(expectRoutes),
+  );
 });

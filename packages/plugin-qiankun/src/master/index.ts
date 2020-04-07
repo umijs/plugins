@@ -4,19 +4,15 @@ import { join } from 'path';
 // eslint-disable-next-line import/no-unresolved
 import { IApi, IRoute } from 'umi';
 import {
-  defaultHistoryMode,
+  defaultHistoryType,
   defaultMasterRootId,
   testPathWithPrefix,
   toArray,
 } from '../common';
-import { Options } from '../types';
+import { MasterOptions } from '../types';
 
-export default function(api: IApi, options: Options) {
-  const { registerRuntimeKeyInIndex = false } = options || {};
+export default function(api: IApi, options: MasterOptions) {
   api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
-  if (!registerRuntimeKeyInIndex) {
-    api.addRuntimePluginKey(() => 'qiankun');
-  }
 
   api.modifyDefaultConfig(config => ({
     ...config,
@@ -48,39 +44,45 @@ export default function(api: IApi, options: Options) {
     const modifyAppRoutes = () => {
       api.modifyRoutes(routes => {
         const {
-          config: { history: masterHistory = defaultHistoryMode },
+          config: { history },
         } = api;
 
+        const masterHistoryType = history?.type || defaultHistoryType;
         const newRoutes = routes.map(route => {
           if (route.path === '/' && route.routes && route.routes.length) {
-            apps.forEach(({ history: slaveHistory = masterHistory, base }) => {
-              // 当子应用的 history mode 跟主应用一致时，为避免出现 404 手动为主应用创建一个 path 为 子应用 rule 的空 div 路由组件
-              if (slaveHistory === masterHistory) {
-                const baseConfig = toArray(base);
+            apps.forEach(
+              ({ history: slaveHistory = masterHistoryType, base }) => {
+                // 当子应用的 history mode 跟主应用一致时，为避免出现 404 手动为主应用创建一个 path 为 子应用 rule 的空 div 路由组件
+                if (slaveHistory === masterHistoryType) {
+                  const baseConfig = toArray(base);
 
-                baseConfig.forEach(basePath => {
-                  const routeWithPrefix = findRouteWithPrefix(routes, basePath);
+                  baseConfig.forEach(basePath => {
+                    const routeWithPrefix = findRouteWithPrefix(
+                      routes,
+                      basePath,
+                    );
 
-                  // 应用没有自己配置过 basePath 相关路由，则自动加入 mock 的路由
-                  if (!routeWithPrefix) {
-                    route.routes!.unshift({
-                      path: basePath,
-                      exact: false,
-                      component: `() => {
+                    // 应用没有自己配置过 basePath 相关路由，则自动加入 mock 的路由
+                    if (!routeWithPrefix) {
+                      route.routes!.unshift({
+                        path: basePath,
+                        exact: false,
+                        component: `() => {
                         if (process.env.NODE_ENV === 'development') {
                           console.log('${basePath} 404 mock rendered');
                         }
 
                         return React.createElement('div');
                       }`,
-                    });
-                  } else {
-                    // 若用户已配置过跟应用 base 重名的路由，则强制将该路由 exact 设置为 false，目的是兼容之前遗留的错误用法的场景
-                    routeWithPrefix.exact = false;
-                  }
-                });
-              }
-            });
+                      });
+                    } else {
+                      // 若用户已配置过跟应用 base 重名的路由，则强制将该路由 exact 设置为 false，目的是兼容之前遗留的错误用法的场景
+                      routeWithPrefix.exact = false;
+                    }
+                  });
+                }
+              },
+            );
           }
 
           return route;
@@ -93,17 +95,24 @@ export default function(api: IApi, options: Options) {
     modifyAppRoutes();
   }
 
-  const rootExportsFile = join(api.paths.absSrcPath!, 'rootExports.js');
+  const rootExportsJsFile = join(api.paths.absSrcPath!, 'rootExports.js');
+  const rootExportsTsFile = join(api.paths.absSrcPath!, 'rootExports.ts');
+  const rootExportsJsFileExisted = existsSync(rootExportsJsFile);
+  const rootExportsFileExisted =
+    rootExportsJsFileExisted || existsSync(rootExportsTsFile);
 
-  api.addTmpGenerateWatcherPaths(() => rootExportsFile);
+  api.addTmpGenerateWatcherPaths(() =>
+    rootExportsJsFileExisted ? rootExportsJsFile : rootExportsTsFile,
+  );
 
   api.onGenerateFiles(() => {
     const {
-      config: { history = defaultHistoryMode },
+      config: { history },
     } = api;
+    const masterHistoryType = history?.type || defaultHistoryType;
     const rootExports = `
 window.g_rootExports = ${
-      existsSync(rootExportsFile) ? `require('@/rootExports')` : `{}`
+      rootExportsFileExisted ? `require('@/rootExports')` : `{}`
     };
     `.trim();
 
@@ -115,7 +124,7 @@ window.g_rootExports = ${
     api.writeTmpFile({
       path: 'plugin-qiankun/subAppsConfig.json',
       content: JSON.stringify({
-        masterHistory: history,
+        masterHistoryType,
         ...options,
       }),
     });

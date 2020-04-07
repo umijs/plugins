@@ -1,5 +1,5 @@
-import { IApi } from 'umi';
 import assert from 'assert';
+import { IApi } from 'umi';
 import master from './master';
 import slave from './slave';
 
