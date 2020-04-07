@@ -17,7 +17,9 @@ export default (api: IApi) => {
           })
           .oxor('dark', 'compact')
           .error(
-            new Error('The dark and compact mode cannot be enabled at the same time.'),
+            new Error(
+              'The dark and compact mode cannot be enabled at the same time.',
+            ),
           );
       },
     },
@@ -43,7 +45,7 @@ export default (api: IApi) => {
       : {};
     api.modifyDefaultConfig(config => {
       config.theme = {
-        'hack_less_umi_plugin': `true;@import "${require.resolve(
+        hack_less_umi_plugin: `true;@import "${require.resolve(
           'antd/lib/style/color/colorPalette.less',
         )}";`,
         ...darkTheme,
