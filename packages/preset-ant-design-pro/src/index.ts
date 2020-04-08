@@ -21,12 +21,7 @@ export default (api: IApi) => {
     return config;
   });
 
-  // 这里类型写错了
-
-  const plugins = [
-    require.resolve('@umijs/plugin-block-devtool'),
-    require.resolve('umi-plugin-pro-block'),
-  ];
+  const plugins = [require.resolve('umi-plugin-pro-block')];
 
   // 有 plugin-react 时不加 plugin-antd-icon-config，因为已经内置了
   // 在 ant-design-pro 5 之后，用 plugin-react，去 plugin-antd-icon-config
