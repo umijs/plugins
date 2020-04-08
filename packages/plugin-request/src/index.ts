@@ -78,6 +78,10 @@ import { history, plugin } from '../core/umiExports';
         exportAll: true,
         source: `../${namespace}/request`,
       },
+      {
+        exportAll: true,
+        source: 'umi-request',
+      },
     ];
   });
 }
