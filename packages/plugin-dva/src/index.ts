@@ -1,3 +1,4 @@
+import { getExportProps } from '@umijs/ast';
 import { IApi, utils } from 'umi';
 import { basename, dirname, extname, join, relative } from 'path';
 import { readFileSync } from 'fs';
@@ -143,23 +144,70 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
       });
 
       // typings
+      const usedModalKeyCount = new Map<string, number>();
+      const modelExports = models.map(path => {
+        let effects: string[] = [];
+        let reducers: string[] = [];
+        let namespace = basename(path, extname(path));
+        const pathWithoutExt = `${dirname(path)}/${namespace}`;
 
+        const exportsProps = getExportProps(readFileSync(path, 'utf-8')) as any;
+        if (lodash.isPlainObject(exportsProps)) {
+          if (typeof exportsProps.namespace === 'string')
+            namespace = exportsProps.namespace;
+          if (lodash.isPlainObject(exportsProps.effects))
+            effects = Object.keys(exportsProps.effects);
+          if (lodash.isPlainObject(exportsProps.reducers))
+            reducers = Object.keys(exportsProps.reducers);
+        }
+
+        const namespaceInPascalCase = `${namespace[0].toUpperCase()}${lodash.camelCase(
+          namespace.slice(1),
+        )}`.replace(/[^a-zA-Z0-9]/g, '');
+        let key = `Model${namespaceInPascalCase}`;
+        const sameKeyCount = usedModalKeyCount.get(key) || 0;
+        if (sameKeyCount) key = `${key}${sameKeyCount}`;
+        usedModalKeyCount.set(key, sameKeyCount + 1);
+
+        return {
+          key,
+          effects,
+          reducers,
+          namespace,
+          pathWithoutExt: winPath(pathWithoutExt),
+        };
+      });
       const connectTpl = readFileSync(join(__dirname, 'connect.tpl'), 'utf-8');
       api.writeTmpFile({
         path: 'plugin-dva/connect.ts',
         content: Mustache.render(connectTpl, {
-          dvaHeadExport: models
-            .map(path => {
-              // prettier-ignore
-              return `export * from '${winPath(dirname(path) + "/" + basename(path, extname(path)))}';`;
+          dvaHeadImport: modelExports
+            .map(({ key, pathWithoutExt }) => {
+              return `import { default as ${key} } from '${pathWithoutExt}';`;
             })
             .join('\r\n'),
-          dvaLoadingModels: models
-            .map(path => {
-              // prettier-ignore
-              return `    ${basename(path, extname(path))
-                } ?: boolean;`;
-            })
+          dvaHeadExport: modelExports
+            .map(({ pathWithoutExt }) => `export * from '${pathWithoutExt}';`)
+            .join('\r\n'),
+          dvaModelNamespaces:
+            modelExports.map(v => `'${v.namespace}'`).join(' | ') || 'string',
+          dvaEffectsMap: modelExports
+            .reduce<string[]>((prev, { effects, namespace, key }) => {
+              if (!effects) return prev;
+              const effectsMap = effects.map(effect => {
+                return `  '${namespace}/${effect}': PickEffectAction<typeof ${key}, '${effect}'>;`;
+              });
+              return prev.concat(effectsMap);
+            }, [])
+            .join('\r\n'),
+          dvaReducersMap: modelExports
+            .reduce<string[]>((prev, { reducers, namespace, key }) => {
+              if (!reducers) return prev;
+              const effectsMap = reducers.map(reducer => {
+                return `  '${namespace}/${reducer}': PickReducerAction<typeof ${key}, '${reducer}'>;`;
+              });
+              return prev.concat(effectsMap);
+            }, [])
             .join('\r\n'),
         }),
       });
