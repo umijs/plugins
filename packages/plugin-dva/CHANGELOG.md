@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.5](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.6.4...@umijs/plugin-dva@0.6.5) (2020-04-09)
+
+### Bug Fixes
+
+- **plugin-dva:** add immer reducer type ([#143](https://github.com/umijs/plugins/issues/143)) ([5abaabf](https://github.com/umijs/plugins/commit/5abaabf239f79d2fe7c25c3f62f0a922a31d7fee))
+
 ## [0.6.4](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.6.3...@umijs/plugin-dva@0.6.4) (2020-03-20)
 
 **Note:** Version bump only for package @umijs/plugin-dva

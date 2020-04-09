@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.2](https://github.com/umijs/plugins/compare/@umijs/plugin-block-devtool@1.2.1...@umijs/plugin-block-devtool@1.2.2) (2020-04-09)
+
+### Bug Fixes
+
+- **plugin-block-devtool:** fix dev tool no work error ([#141](https://github.com/umijs/plugins/issues/141)) ([801904b](https://github.com/umijs/plugins/commit/801904baafd2eee7aeee0cf60713ed2671d3dd13))
+
 ## [1.2.1](https://github.com/umijs/plugins/compare/@umijs/plugin-block-devtool@1.2.0...@umijs/plugin-block-devtool@1.2.1) (2020-03-18)
 
 **Note:** Version bump only for package @umijs/plugin-block-devtool

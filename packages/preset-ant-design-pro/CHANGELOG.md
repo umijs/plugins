@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/umijs/plugins/compare/@umijs/preset-ant-design-pro@1.1.2...@umijs/preset-ant-design-pro@1.2.0) (2020-04-09)
+
+### Features
+
+- **preset-ant-design-pro:** use api.chainWebpack ([#145](https://github.com/umijs/plugins/issues/145)) ([ae5dccc](https://github.com/umijs/plugins/commit/ae5dcccb20cce3e6e31cca8ddcd5e2cc4cc4a044))
+
 ## [1.1.2](https://github.com/umijs/plugins/compare/@umijs/preset-ant-design-pro@1.1.1...@umijs/preset-ant-design-pro@1.1.2) (2020-03-18)
 
 **Note:** Version bump only for package @umijs/preset-ant-design-pro
