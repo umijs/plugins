@@ -1,7 +1,6 @@
 export default {
   plugins: [require.resolve('../lib')],
   blockDevtool: {
-    layout: 'ant-design-pro',
     menu: {
       name: 'demo',
     },
