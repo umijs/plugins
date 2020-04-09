@@ -72,7 +72,7 @@ export default function(api: IApi, options: MasterOptions) {
                           console.log('${basePath} 404 mock rendered');
                         }
 
-                        return React.createElement('div');
+                        return require('react').createElement('div');
                       }`,
                       });
                     } else {
