@@ -5,21 +5,17 @@ export default (api: IApi) => {
   const { REACT_APP_ENV } = process.env;
   // support dev tools
   api.modifyDefaultConfig(config => {
-    const { chainWebpack, define } = config;
+    const { define } = config;
 
     config.define = {
       ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION: '',
       REACT_APP_ENV: REACT_APP_ENV || false,
       ...(define || {}),
     };
-    config.chainWebpack = (chainWebpackConfig, webpack) => {
-      if (chainWebpack) {
-        chainWebpack(chainWebpackConfig, webpack);
-      }
-      proChainWebpack(chainWebpackConfig);
-    };
     return config;
   });
+
+  api.chainWebpack(proChainWebpack);
 
   const plugins = [require.resolve('umi-plugin-pro-block')];
 
