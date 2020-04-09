@@ -15,7 +15,9 @@ export default (api: IApi) => {
     return config;
   });
 
-  api.chainWebpack(proChainWebpack);
+  if (api.chainWebpack) {
+    api.chainWebpack(proChainWebpack);
+  }
 
   const plugins = [require.resolve('umi-plugin-pro-block')];
 
