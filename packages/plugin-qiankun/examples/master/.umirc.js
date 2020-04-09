@@ -15,11 +15,49 @@ export default {
   },
   qiankun: {
     master: {
+      apps: [
+        {
+          name: 'app1',
+          entry: 'http://localhost:8001/app1',
+        },
+        {
+          name: 'app2',
+          entry: 'http://localhost:8002/app2',
+          props: {
+            testProp: 'test',
+          },
+        },
+        {
+          name: 'app3',
+          entry: 'http://localhost:8003/app3',
+        },
+      ],
       defer: true,
       jsSandbox: true,
       prefetch: true,
     },
   },
+  routes: [
+    {
+      path: '/',
+      component: '../layouts/index.js',
+      routes: [
+        {
+          path: '/app1',
+          microApp: 'app1',
+          settings: { singular: false },
+        },
+        {
+          path: '/app2',
+          component: './app2/index.js',
+        },
+        {
+          path: '/',
+          component: './index.js',
+        },
+      ],
+    },
+  ],
   plugins: [
     require.resolve('../../../plugin-dva/lib'),
     require.resolve('../../../plugin-antd/lib'),
