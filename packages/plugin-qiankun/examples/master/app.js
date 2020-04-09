@@ -1,3 +1,3 @@
-import request from './services/request';
+// import request from './services/request';
 
-export const qiankun = request('/apps').then(apps => ({ apps }));
+// export const qiankun = request('/apps').then(apps => ({ apps }));
