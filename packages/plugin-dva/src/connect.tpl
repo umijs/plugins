@@ -16,6 +16,11 @@ export type Reducer<S = any, A extends Action = AnyAction> = (
   action: A
 ) => S;
 
+export type ImmerReducer<S = any, A extends Action = AnyAction> = (
+  state: S,
+  action: A
+) => void;
+
 export type Effect = (
   action: AnyAction,
   effects: EffectsCommandMap,
