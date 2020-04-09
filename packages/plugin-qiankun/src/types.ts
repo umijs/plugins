@@ -4,7 +4,7 @@
  */
 
 import { ImportEntryOpts } from 'import-html-entry';
-import { LifeCycles } from 'qiankun';
+import { FrameworkLifeCycles } from 'qiankun';
 // @ts-ignore
 import { IConfig } from 'umi-types';
 
@@ -12,7 +12,7 @@ export type HistoryType = 'browser' | 'hash';
 export type App = {
   name: string;
   entry: string | { scripts: string[]; styles: string[] };
-  base: string | string[];
+  base?: string | string[];
   history?: HistoryType;
   props?: any;
 } & Pick<IConfig, 'mountElementId'>;
@@ -22,7 +22,7 @@ export type MasterOptions = {
   jsSandbox: boolean;
   prefetch: boolean;
   defer?: boolean;
-  lifeCycles?: LifeCycles<object>;
+  lifeCycles?: FrameworkLifeCycles<object>;
   masterHistoryType?: HistoryType;
 } & ImportEntryOpts;
 

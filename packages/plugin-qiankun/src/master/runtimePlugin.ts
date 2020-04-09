@@ -1,14 +1,13 @@
 /* eslint-disable import/no-unresolved, import/extensions */
 
-// @ts-ignore
+import {
+  getMasterOptions,
+  setMasterOptions,
+} from '@@/plugin-qiankun/masterOptions';
 import { deferred } from '@@/plugin-qiankun/qiankunDefer.js';
 import '@@/plugin-qiankun/qiankunRootExports.js';
-// @ts-ignore
-import subAppConfig from '@@/plugin-qiankun/subAppsConfig.json';
 import assert from 'assert';
-import { registerMicroApps, start } from 'qiankun';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { prefetchApps, registerMicroApps, start } from 'qiankun';
 // @ts-ignore
 import { ApplyPluginsType, plugin } from 'umi';
 import {
@@ -31,9 +30,10 @@ async function getMasterRuntime() {
   return master || config;
 }
 
-export async function render(oldRender: typeof noop) {
-  oldRender();
-
+async function useRegisterMode(
+  apps: App[],
+  masterOptions: Omit<MasterOptions, 'apps'>,
+) {
   function isAppActive(
     location: Location,
     history: HistoryType,
@@ -56,7 +56,7 @@ export async function render(oldRender: typeof noop) {
 
       case 'browser': {
         const matchedBase = baseConfig.find(pathPrefix =>
-          testPathWithPrefix(pathPrefix, location.pathname),
+          testPathWithPrefix(pathPrefix!, location.pathname),
         );
         if (matchedBase) {
           setMatchedBase(matchedBase);
@@ -70,19 +70,15 @@ export async function render(oldRender: typeof noop) {
     }
   }
 
-  const runtimeConfig = await getMasterRuntime();
   const {
-    apps,
     jsSandbox = false,
     prefetch = true,
     defer = false,
     lifeCycles,
     masterHistoryType = defaultHistoryType,
     ...otherConfigs
-  } = {
-    ...(subAppConfig as MasterOptions),
-    ...(runtimeConfig as MasterOptions),
-  };
+  } = masterOptions;
+
   assert(
     apps && apps.length,
     'sub apps must be config when using umi-plugin-qiankun',
@@ -108,28 +104,7 @@ export async function render(oldRender: typeof noop) {
               base,
               setMatchedBase: (v: string) => (matchedBase = v),
             }),
-          render: ({ appContent, loading }) => {
-            if (process.env.NODE_ENV === 'development') {
-              console.info(
-                `[@umijs/plugin-qiankun]: app ${name} loading ${loading}`,
-              );
-            }
-
-            if (mountElementId) {
-              const container = document.getElementById(mountElementId);
-              if (container) {
-                const subApp = React.createElement('div', {
-                  dangerouslySetInnerHTML: {
-                    __html: appContent,
-                  },
-                });
-                ReactDOM.render(subApp, container);
-              }
-            } else if (process.env.NODE_ENV === 'development') {
-              console.warn(`[@umijs/plugin-qiankun]: Your ${name} app container with id ${mountElementId} is not
-               ready, that may cause an unexpected behavior!`);
-            }
-          },
+          container: `#${mountElementId}`,
           props: {
             base,
             history,
@@ -142,7 +117,6 @@ export async function render(oldRender: typeof noop) {
       },
     ),
     lifeCycles,
-    otherConfigs,
   );
 
   if (defer) {
@@ -150,4 +124,27 @@ export async function render(oldRender: typeof noop) {
   }
 
   start({ jsSandbox, prefetch, ...otherConfigs });
+}
+
+export async function render(oldRender: typeof noop) {
+  oldRender();
+
+  const masterOptions = getMasterOptions();
+  const runtimeOptions = await getMasterRuntime();
+
+  setMasterOptions({ ...masterOptions, ...runtimeOptions });
+  const { apps, ...options } = getMasterOptions() as MasterOptions;
+
+  // 使用了 base 配置的应用为可注册应用
+  const registrableApps = apps.filter(app => app.base);
+  if (registrableApps.length) {
+    await useRegisterMode(registrableApps, options);
+  }
+
+  // 未使用 base 配置的可以认为是路由关联或者使用标签装载的应用
+  const loadableApps = apps.filter(app => !app.base);
+  if (loadableApps.length) {
+    const { prefetch, ...importEntryOpts } = options;
+    prefetchApps(loadableApps, prefetch, importEntryOpts);
+  }
 }
