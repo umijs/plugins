@@ -2,7 +2,7 @@
 import { existsSync, readFileSync } from 'fs';
 import { join } from 'path';
 // eslint-disable-next-line import/no-unresolved
-import { IApi } from 'umi';
+import { IApi, utils } from 'umi';
 
 import { defaultHistoryType, defaultMasterRootId } from '../common';
 import { MasterOptions } from '../types';
@@ -81,14 +81,14 @@ window.g_rootExports = ${
   api.addUmiExports(() => [
     {
       specifiers: ['qiankunStart'],
-      source: '../plugin-qiankun/qiankunDefer',
+      source: utils.winPath('../plugin-qiankun/qiankunDefer'),
     },
   ]);
 
   api.addUmiExports(() => [
     {
       specifiers: ['MicroApp'],
-      source: '../plugin-qiankun/MicroApp.tsx',
+      source: utils.winPath('../plugin-qiankun/MicroApp'),
     },
   ]);
 }
