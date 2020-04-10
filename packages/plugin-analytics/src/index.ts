@@ -12,7 +12,7 @@ export default (api: IApi) => {
       },
     },
   });
-  const { analytics } = api.userConfig;
+  const { analytics = {} } = api.userConfig;
   const { baidu, ga = GA_KEY } = analytics;
   api.logger.log('insert analytics');
 
