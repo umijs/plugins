@@ -81,6 +81,9 @@ function modifyRoutesWithRegistrableMode(api: IApi, apps: App[]) {
 }
 
 function modifyRoutesWithAttachMode(api: IApi) {
+  const { history } = api.service.userConfig;
+  const masterHistoryType = history?.type || defaultHistoryType;
+
   const patchRoutes = (routes: IRoute[]) => {
     if (routes.length) {
       routes.forEach(route => {
@@ -92,20 +95,24 @@ function modifyRoutesWithAttachMode(api: IApi) {
             );
           }
 
-          const { settings = {}, props = {} } = route;
+          const { settings = {} } = route;
           route.exact = false;
-          route.component = `() => {
+          route.component = `({match}) => {
             const MicroApp = require('umi').MicroApp as any;
             const React = require('react');
+            const { url } = match;
+            const matchedBase = url.endsWith('/') ? url.substr(0, url.length - 1) : url;
+
             return React.createElement(
               MicroApp,
               {
                 name: '${microApp}',
+                base: matchedBase,
+                history: '${masterHistoryType}',
                 settings: ${JSON.stringify(settings).replace(
                   /\"(\w+)\":/g,
                   "'$1':",
                 )},
-                props: ${JSON.stringify(props).replace(/\"(\w+)\":/g, "'$1':")},
               },
             );
           }`;

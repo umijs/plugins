@@ -1,59 +1,78 @@
 import { getMasterOptions } from '@@/plugin-qiankun/masterOptions';
-import { FrameworkConfiguration, loadMicroApp, MicroApp as MicroAppType  } from 'qiankun';
+import {
+  FrameworkConfiguration,
+  loadMicroApp,
+  MicroApp as MicroAppType,
+} from 'qiankun';
 import React, { useEffect, useRef } from 'react';
 
 type Props = {
   name: string;
   settings?: FrameworkConfiguration;
-  props?: Record<string, any>;
-}
+  base?: string;
+  history?: string;
+  getMatchedBase?: () => string;
+} & Record<string, any>;
 
-function findAppConfig(appName: string) {
-  const { apps } = getMasterOptions();
-  return apps.find((app: any) => app.name === appName);
-}
-
-function unmountMicroApp(microApp: MicroAppType) {
-  const status = microApp.getStatus();
-  if (status === 'MOUNTED') {
-    microApp.unmount();
+function unmountMicroApp(microApp?: MicroAppType) {
+  if (microApp) {
+    const status = microApp.getStatus();
+    if (status === 'MOUNTED') {
+      microApp.unmount();
+    }
   }
 }
 
 export function MicroApp(componentProps: Props) {
-  const { name, settings = {}, props = {} } = componentProps;
-  const appConfig: any = findAppConfig(name);
-  if (!appConfig) {
-    throw new Error(
-      `[@umijs/plugin-qiankun]: Can not find the configuration of ${name} app!`,
-    );
-  }
+  const {
+    masterHistoryType,
+    apps = [],
+    lifeCycles,
+    ...globalSettings
+  } = getMasterOptions() as any;
+
+  const {
+    name,
+    settings: settingsFromProps = {},
+    ...propsForMicroApp
+  } = componentProps;
 
   const containerRef = useRef<HTMLDivElement>(null);
+  let microAppRef = useRef<MicroAppType>();
 
-  let microApp: MicroAppType;
   useEffect(() => {
-    microApp = loadMicroApp(
+    const appConfig = apps.find((app: any) => app.name === name);
+    if (!appConfig) {
+      throw new Error(
+        `[@umijs/plugin-qiankun]: Can not find the configuration of ${name} app!`,
+      );
+    }
+
+    microAppRef.current = loadMicroApp(
       {
         name,
         entry: appConfig.entry,
         container: containerRef.current!,
-        props,
+        props: propsForMicroApp,
       },
-      settings,
+      {
+        ...globalSettings,
+        ...settingsFromProps,
+      },
     );
 
-    return () => unmountMicroApp(microApp);
+    return () => unmountMicroApp(microAppRef.current);
   }, []);
 
   useEffect(() => {
-    if (microApp.update) {
+    if (microAppRef.current?.update) {
+      const microApp = microAppRef.current!;
       const status = microApp.getStatus();
-      if (status === 'MOUNTED') microApp.update(props);
-    };
+      if (status === 'MOUNTED') microApp.update(propsForMicroApp);
+    }
 
-    return () => unmountMicroApp(microApp);
-  }, Object.values(props));
+    return () => {};
+  }, Object.values(propsForMicroApp));
 
   return <div ref={containerRef} />;
 }
