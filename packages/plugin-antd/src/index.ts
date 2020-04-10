@@ -12,16 +12,7 @@ export default (api: IApi) => {
       schema(joi) {
         return joi.object({
           dark: joi.boolean(),
-          compact: joi.boolean().when('dark', {
-            is: true,
-            then: joi
-              .valid(false)
-              .error(
-                new Error(
-                  'The dark and compact mode cannot be enabled at the same time.',
-                ),
-              ),
-          }),
+          compact: joi.boolean(),
         });
       },
     },
