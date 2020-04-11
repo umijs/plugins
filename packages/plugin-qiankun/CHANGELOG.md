@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.1.0...@umijs/plugin-qiankun@2.1.1) (2020-04-11)
+
+### Bug Fixes
+
+- **qiankun:** 修复 qiankun 插件生成 mock 时 React undefined 的问题 ([#147](https://github.com/umijs/plugins/issues/147)) ([5669d2f](https://github.com/umijs/plugins/commit/5669d2fd9d79babb1e4dc1e32af7f0b3f4cd94bc))
+
 # [2.1.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.0.7...@umijs/plugin-qiankun@2.1.0) (2020-04-07)
 
 ### Features
