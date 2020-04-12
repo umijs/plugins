@@ -71,7 +71,7 @@ async function useRegisterMode(
   }
 
   const {
-    jsSandbox = false,
+    sandbox = false,
     prefetch = true,
     defer = false,
     lifeCycles,
@@ -123,7 +123,7 @@ async function useRegisterMode(
     await deferred.promise;
   }
 
-  start({ jsSandbox, prefetch, ...otherConfigs });
+  start({ sandbox, prefetch, ...otherConfigs });
 }
 
 export async function render(oldRender: typeof noop) {
