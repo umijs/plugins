@@ -19,7 +19,7 @@ export type App = {
 
 export type MasterOptions = {
   apps: App[];
-  jsSandbox: boolean;
+  sandbox: boolean;
   prefetch: boolean;
   defer?: boolean;
   lifeCycles?: FrameworkLifeCycles<object>;
