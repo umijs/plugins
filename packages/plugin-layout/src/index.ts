@@ -63,6 +63,11 @@ export default (api: IApi) => {
     enableBy: api.EnableBy.config,
   });
 
+  api.modifyDefaultConfig(config => {
+    config.title = false;
+    return config;
+  });
+
   let layoutOpts: LayoutConfig = {};
 
   api.addRuntimePluginKey(() => ['layout']);
