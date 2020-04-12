@@ -109,10 +109,10 @@ function modifyRoutesWithAttachMode(api: IApi) {
                 name: '${microApp}',
                 base: matchedBase,
                 history: '${masterHistoryType}',
-                settings: ${JSON.stringify(settings).replace(
-                  /\"(\w+)\":/g,
-                  "'$1':",
-                )},
+                settings: ${JSON.stringify({
+                  ...settings,
+                  singular: true,
+                }).replace(/\"(\w+)\":/g, "'$1':")},
               },
             );
           }`;
