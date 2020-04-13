@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.4.3...@umijs/plugin-antd@0.5.0) (2020-04-13)
+
+### Bug Fixes
+
+- **antd:** missing default theme ([2b9c27b](https://github.com/umijs/plugins/commit/2b9c27bffa94fe42cd40d13ee89edbe5c9153ce0))
+
+### Features
+
+- antd support multiply themes ([#154](https://github.com/umijs/plugins/issues/154)) ([b27d607](https://github.com/umijs/plugins/commit/b27d607f619aa98cc0cd86a7aef92310fd47a061))
+
 ## [0.4.3](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.4.2...@umijs/plugin-antd@0.4.3) (2020-04-08)
 
 ### Bug Fixes

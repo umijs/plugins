@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.7.0...@umijs/plugin-layout@0.8.0) (2020-04-13)
+
+### Features
+
+- antd support multiply themes ([#154](https://github.com/umijs/plugins/issues/154)) ([b27d607](https://github.com/umijs/plugins/commit/b27d607f619aa98cc0cd86a7aef92310fd47a061))
+
 # [0.7.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.6.1...@umijs/plugin-layout@0.7.0) (2020-03-24)
 
 ### Features

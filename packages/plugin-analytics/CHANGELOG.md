@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/umijs/plugins/compare/@umijs/plugin-analytics@0.2.1...@umijs/plugin-analytics@0.2.2) (2020-04-13)
+
+### Bug Fixes
+
+- **analytics:** fix analytics=null no work ([#152](https://github.com/umijs/plugins/issues/152)) ([573b8c7](https://github.com/umijs/plugins/commit/573b8c78f3bbfd66d7734d11fccdf9659d5a1927))
+
 ## [0.2.1](https://github.com/umijs/plugins/compare/@umijs/plugin-analytics@0.2.0...@umijs/plugin-analytics@0.2.1) (2020-04-11)
 
 ### Bug Fixes
