@@ -51,9 +51,9 @@ export interface IRouteMenuConfig {
 
 export interface IRouteLayoutConfig {
   /** 默认 false */
-  hideMenu: boolean;
+  hideMenu?: boolean;
   /** 默认 false */
-  hideNav: boolean;
+  hideNav?: boolean;
   [key: string]: any;
 }
 
