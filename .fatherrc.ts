@@ -16,11 +16,6 @@ export default {
   extraBabelPlugins: [
     [
       'babel-plugin-import',
-      { libraryName: 'antd-mobile', libraryDirectory: 'es', style: true },
-      'antd-mobile',
-    ],
-    [
-      'babel-plugin-import',
       { libraryName: 'antd', libraryDirectory: 'es', style: true },
       'antd',
     ],
