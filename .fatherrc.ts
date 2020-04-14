@@ -13,4 +13,11 @@ export default {
   cjs: { type: 'babel', lazy: true },
   disableTypeCheck: true,
   pkgs: [...headPkgs, ...tailPkgs],
+  extraBabelPlugins: [
+    [
+      'babel-plugin-import',
+      { libraryName: 'antd', libraryDirectory: 'es', style: true },
+      'antd',
+    ],
+  ],
 };
