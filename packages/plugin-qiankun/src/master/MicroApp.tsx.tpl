@@ -16,10 +16,7 @@ type Props = {
 
 function unmountMicroApp(microApp?: MicroAppType) {
   if (microApp) {
-    const status = microApp.getStatus();
-    if (status === 'MOUNTED') {
-      microApp.unmount();
-    }
+    microApp.mountPromise.then(() => microApp.unmount());
   }
 }
 
