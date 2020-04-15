@@ -4,7 +4,15 @@ import { IRoute } from 'umi';
 type Routes = IRoute[];
 
 export function traverseModifyRoutes(routes: Routes, access: any) {
-  const resultRoutes: Routes = [].concat(routes as any);
+  const resultRoutes: Routes = [].concat(routes as any).map(
+    (resultRoute: IRoute) => {
+      const { routes } = resultRoute;
+      return {
+        ...resultRoute,
+        routes: routes.map((route: any) => ({ ...route }))
+      };
+    }
+  );
   const notHandledRoutes: Routes = [];
 
   notHandledRoutes.push(...resultRoutes);
