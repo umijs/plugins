@@ -9,7 +9,7 @@ type LayoutConfig = {
   [path: string]: IRouteLayoutConfig;
 };
 
-const defalutLayoutConfig = {
+const defaultLayoutConfig = {
   hideMenu: false,
   hideNav: false,
 };
@@ -21,7 +21,7 @@ function formatter(
   routes: IBestAFSRoute[] = [],
   prefix: string = '',
   base: string = '/',
-  parentRouteLayoutConfig: IRouteLayoutConfig = defalutLayoutConfig,
+  parentRouteLayoutConfig: IRouteLayoutConfig = defaultLayoutConfig,
   LayoutConfig: LayoutConfig = {},
 ): LayoutConfig {
   routes
@@ -34,6 +34,7 @@ function formatter(
       let hideMenu = parentRouteLayoutConfig.hideMenu;
 
       // 子路由的 layout 配置 优先级更高
+
       switch (layout) {
         case undefined:
           hideMenu = hideMenu;

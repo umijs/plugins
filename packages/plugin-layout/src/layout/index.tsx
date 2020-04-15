@@ -51,6 +51,10 @@ const BasicLayout = (props: any) => {
     layoutRender.headerRender = false;
   }
 
+  if (currentPathConfig && currentPathConfig.hideLayout) {
+    layoutRender.pure = true;
+  }
+
   return (
     <ProLayout
       title={userConfig.name || userConfig.title}

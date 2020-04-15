@@ -1,10 +1,55 @@
 import { IApi, utils } from 'umi';
 import { join } from 'path';
+import * as allIcons from '@ant-design/icons';
 import getLayoutContent from './utils/getLayoutContent';
 import { LayoutConfig } from './types';
 import { readFileSync } from 'fs';
 
 const DIR_NAME = 'plugin-layout';
+
+export interface MenuDataItem {
+  children?: MenuDataItem[];
+  routes?: MenuDataItem[];
+  hideChildrenInMenu?: boolean;
+  hideInMenu?: boolean;
+  icon?: string;
+  locale?: string;
+  name?: string;
+  key?: string;
+  path?: string;
+  [key: string]: any;
+}
+
+function toHump(name: string) {
+  return name.replace(/\-(\w)/g, function(all, letter) {
+    return letter.toUpperCase();
+  });
+}
+
+function formatter(data: MenuDataItem[]): string[] {
+  if (!Array.isArray(data)) {
+    return [];
+  }
+  let icons: string[] = [];
+  (data || []).forEach((item = { path: '/' }) => {
+    if (item.icon) {
+      const { icon } = item;
+      const v4IconName = toHump(icon.replace(icon[0], icon[0].toUpperCase()));
+      if (allIcons[icon]) {
+        icons.push(icon);
+      }
+      if (allIcons[`${v4IconName}Outlined`]) {
+        icons.push(`${v4IconName}Outlined`);
+      }
+    }
+    const items = item.routes || item.children;
+    if (items) {
+      icons = icons.concat(formatter(items));
+    }
+  });
+
+  return Array.from(new Set(icons));
+}
 
 export default (api: IApi) => {
   api.describe({
@@ -16,6 +61,11 @@ export default (api: IApi) => {
       onChange: api.ConfigChangeType.regenerateTmpFiles,
     },
     enableBy: api.EnableBy.config,
+  });
+
+  api.modifyDefaultConfig(config => {
+    config.title = false;
+    return config;
   });
 
   let layoutOpts: LayoutConfig = {};
@@ -53,14 +103,27 @@ export default (api: IApi) => {
       content: getLayoutContent(layoutOpts, currentLayoutComponentPath),
     });
 
-    // TODO: 修改 icon 的加载为按需
-    // 用文件生成的方式，方便之后修改 icon 为按需
+    // 生效临时的 icon 文件
+    const { userConfig } = api;
+    const icons = formatter(userConfig.routes);
+    let iconsString = icons.map(
+      iconName => `import ${iconName} from '@ant-design/icons/${iconName}'`,
+    );
+    api.writeTmpFile({
+      path: join(DIR_NAME, 'icons.ts'),
+      content: `
+  ${iconsString.join(';\n')}
+  export default {
+    ${icons.join(',\n')}
+  }
+      `,
+    });
+
     api.writeTmpFile({
       path: join(DIR_NAME, 'runtime.tsx'),
       content: readFileSync(join(__dirname, 'runtime.tsx.tpl'), 'utf-8'),
     });
   });
-
   api.modifyRoutes(routes => {
     return [
       {
