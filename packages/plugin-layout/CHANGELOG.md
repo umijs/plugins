@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.8.0...@umijs/plugin-layout@0.9.0) (2020-04-15)
+
+### Bug Fixes
+
+- **layout:** fix icon config bug ([8cc9fb7](https://github.com/umijs/plugins/commit/8cc9fb7460c4e9c5a6a4d32399601ce0a7d05ce2))
+- **layout:** fix layout icon problem ([071ae54](https://github.com/umijs/plugins/commit/071ae5426f5fdc9bffe1dba5f78cefd1b7383765))
+
+### Features
+
+- **layout:** layout close title ([a639ee2](https://github.com/umijs/plugins/commit/a639ee2ce4c83e327511c29663d4ef47a6a2937a))
+
 # [0.8.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.7.0...@umijs/plugin-layout@0.8.0) (2020-04-13)
 
 ### Features
