@@ -27,7 +27,7 @@ const BasicLayout = (props: any) => {
     userConfig.patchMenus || ((ms: MenuItem[]): MenuItem[] => ms);
   const menus = useMemo(
     () => patchMenus(getMenuDataFromRoutes(_routes[0].routes), initialInfo),
-    [loading],
+    [initialState],
   );
 
   // layout 是否渲染相关
