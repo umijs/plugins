@@ -98,7 +98,7 @@ function modifyRoutesWithAttachMode(api: IApi) {
           const { settings = {} } = route;
           route.exact = false;
           route.component = `({match}) => {
-            const MicroApp = require('umi').MicroApp as any;
+            const MicroApp = require('@@/plugin-qiankun/MicroApp').MicroApp as any;
             const React = require('react');
             const { url } = match;
             const matchedBase = url.endsWith('/') ? url.substr(0, url.length - 1) : url;
