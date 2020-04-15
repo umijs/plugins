@@ -133,13 +133,19 @@ export default (props) => {
     }
     mkdirSync(join(cwd, dirName));
   });
-  // copy 每个文件
-  readdirSync(join(blockPath, 'src', 'locales')).map(fileName => {
-    const copyFilePath = join(blockPath, 'src', 'locales', fileName);
-    if (existsSync(copyFilePath)) {
-      copyFileSync(copyFilePath, join(cwd, 'locales', fileName));
-    }
-  });
+
+  const localesPath = join(blockPath, 'src', 'locales');
+
+  if (existsSync(localesPath)) {
+    // copy 每个文件
+    readdirSync(localesPath).map(fileName => {
+      const copyFilePath = join(blockPath, 'src', 'locales', fileName);
+      if (existsSync(copyFilePath)) {
+        copyFileSync(copyFilePath, join(cwd, 'locales', fileName));
+      }
+    });
+  }
+
   // link models 文件
   ['model.ts', 'service.ts', 'data.d.ts'].map(fileName => {
     const copyFilePath = join(blockPath, 'src', fileName);
