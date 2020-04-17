@@ -57,7 +57,7 @@ export default function(api: IApi, options: MasterOptions) {
         ...options,
       })};
       export const getMasterOptions = () => options;
-      export const setMasterOptions = (newOpts) => ({ ...options, ...newOpts });
+      export const setMasterOptions = (newOpts) => options = ({ ...options, ...newOpts });
       `,
     });
 
