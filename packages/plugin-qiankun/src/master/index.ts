@@ -55,7 +55,7 @@ window.g_rootExports = ${
         ...options,
       })};
       export const getMasterOptions = () => options;
-      export const setMasterOptions = (newOpts) => ({ ...options, ...newOpts });
+      export const setMasterOptions = (newOpts) => options = ({ ...options, ...newOpts });
       `,
     });
 
