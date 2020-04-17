@@ -31,26 +31,28 @@ export function MicroApp(componentProps: Props) {
   const {
     name,
     settings: settingsFromProps = {},
-    ...propsForMicroApp
+    ...propsForParams
   } = componentProps;
 
   const containerRef = useRef<HTMLDivElement>(null);
   let microAppRef = useRef<MicroAppType>();
 
-  useEffect(() => {
-    const appConfig = apps.find((app: any) => app.name === name);
-    if (!appConfig) {
-      throw new Error(
-        `[@umijs/plugin-qiankun]: Can not find the configuration of ${name} app!`,
-      );
-    }
+  const appConfig = apps.find((app: any) => app.name === name);
+  if (!appConfig) {
+    throw new Error(
+      `[@umijs/plugin-qiankun]: Can not find the configuration of ${name} app!`,
+    );
+  }
 
+  const { entry, props: propsFromConfig = {} } = appConfig;
+
+  useEffect(() => {
     microAppRef.current = loadMicroApp(
       {
         name,
-        entry: appConfig.entry,
+        entry,
         container: containerRef.current!,
-        props: propsForMicroApp,
+        props: { ...propsFromConfig, ...propsForParams },
       },
       {
         ...globalSettings,
@@ -65,11 +67,11 @@ export function MicroApp(componentProps: Props) {
     if (microAppRef.current?.update) {
       const microApp = microAppRef.current!;
       const status = microApp.getStatus();
-      if (status === 'MOUNTED') microApp.update(propsForMicroApp);
+      if (status === 'MOUNTED') microApp.update({  ...propsFromConfig, ...propsForParams  });
     }
 
     return () => {};
-  }, Object.values(propsForMicroApp));
+  }, Object.values(propsForParams));
 
   return <div ref={containerRef} />;
 }
