@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.2](https://github.com/umijs/plugins/compare/@umijs/preset-ant-design-pro@1.2.1...@umijs/preset-ant-design-pro@1.2.2) (2020-04-20)
+
+**Note:** Version bump only for package @umijs/preset-ant-design-pro
+
 ## [1.2.1](https://github.com/umijs/plugins/compare/@umijs/preset-ant-design-pro@1.2.0...@umijs/preset-ant-design-pro@1.2.1) (2020-04-09)
 
 ### Bug Fixes

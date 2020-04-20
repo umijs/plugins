@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.3](https://github.com/umijs/plugins/compare/@umijs/plugin-block-devtool@1.2.2...@umijs/plugin-block-devtool@1.2.3) (2020-04-20)
+
+### Bug Fixes
+
+- **plugin-block-devtool:** localesPath no found bug ([#163](https://github.com/umijs/plugins/issues/163)) ([ad74fee](https://github.com/umijs/plugins/commit/ad74fee5e321c59df0c56bc9b9d698148ab90695))
+
 ## [1.2.2](https://github.com/umijs/plugins/compare/@umijs/plugin-block-devtool@1.2.1...@umijs/plugin-block-devtool@1.2.2) (2020-04-09)
 
 ### Bug Fixes
