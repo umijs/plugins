@@ -8,6 +8,7 @@ import useRightContent from './useRightContent';
 import { WithExceptionOpChildren } from '../component/Exception';
 import getLayoutConfigFromRoute from '../utils/getLayoutConfigFromRoute';
 import getMenuDataFromRoutes from '../utils/getMenuFromRoute';
+import { getMatchPath } from '../utils/index';
 import { MenuItem } from '../types/interface.d';
 import logo from '../assets/logo.svg';
 
@@ -28,7 +29,7 @@ const BasicLayout = (props: any) => {
     initialState,
     setInitialState,
   );
-  const layoutConfig = getLayoutConfigFromRoute(_routes);
+  const layoutConfig = getLayoutConfigFromRoute(_routes[0].routes);
   const patchMenus: (ms: MenuItem[], initialInfo: InitialState) => MenuItem[] =
     userConfig.patchMenus || ((ms: MenuItem[]): MenuItem[] => ms);
   const menus = useMemo(
@@ -41,23 +42,21 @@ const BasicLayout = (props: any) => {
   const layoutRender: any = {};
 
   // 动态路由匹配
-  const currentMatchPaths = Object.keys(layoutConfig).filter(item =>
-    pathToRegexp(`${item}(.*)`).test(pathName),
-  );
+  const currentMatchPath = getMatchPath(Object.keys(layoutConfig), pathName);
 
-  const currentPathConfig = currentMatchPaths.length
-    ? layoutConfig[currentMatchPaths[currentMatchPaths.length - 1]]
+  const currentPathConfig = currentMatchPath
+    ? layoutConfig[currentMatchPath]
     : undefined;
 
-  if (currentPathConfig && currentPathConfig.hideMenu) {
+  if (currentPathConfig?.hideMenu) {
     layoutRender.menuRender = false;
   }
 
-  if (currentPathConfig && currentPathConfig.hideNav) {
+  if (currentPathConfig?.hideNav) {
     layoutRender.headerRender = false;
   }
 
-  if (currentPathConfig && currentPathConfig.hideLayout) {
+  if (currentPathConfig?.hideLayout) {
     layoutRender.pure = true;
   }
 
