@@ -32,6 +32,10 @@ function formatter(data: MenuDataItem[]): string[] {
   }
   let icons: string[] = [];
   (data || []).forEach((item = { path: '/' }) => {
+    // 兼容旧的写法 menu:{icon:""}
+    if (item.menu) {
+      item = { ...item, ...item.menu };
+    }
     if (item.icon) {
       const { icon } = item;
       const v4IconName = toHump(icon.replace(icon[0], icon[0].toUpperCase()));
