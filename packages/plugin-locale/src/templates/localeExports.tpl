@@ -16,7 +16,7 @@ let g_intl: IntlShape;
 
 const useLocalStorage = {{{UseLocalStorage}}};
 
-export const localeInfo = {
+export const localeInfo: {[key: string]: any} = {
   {{#LocaleList}}
   '{{name}}': {
     messages: {
