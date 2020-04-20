@@ -16,6 +16,18 @@ export const layout = {
   logout: () => {
     alert('退出登录成功');
   },
+  rightRender: (initialState: any, setInitialState: any) => {
+    console.log('initialState', initialState);
+    return (
+      <button
+        onClick={() => {
+          setInitialState({ name: 'SS' });
+        }}
+      >
+        {initialState.name}
+      </button>
+    );
+  },
   patchMenus: (menus: MenuItem[], initialInfo: InitialState) => {
     if (initialInfo?.initialState?.name === 'test') {
       return [

@@ -8,10 +8,11 @@ export default function useRightContent(
   runtimeLayout: ILayoutRuntimeConfig,
   loading: boolean,
   initialState: any,
+  setInitialState: any,
 ) {
   const rightContentRender = useCallback(() => {
     if (runtimeLayout.rightRender) {
-      return runtimeLayout.rightRender(initialState);
+      return runtimeLayout.rightRender(initialState, setInitialState);
     }
 
     const menu = (
