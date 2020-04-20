@@ -26,8 +26,8 @@ export interface ILayoutRuntimeConfig {
   logout?: () => void;
 
   // TODO IMPORT initinfo  type from init plugin
-  /** 自定义导航头右上角 ，有默认 UI, 接受 InitInfo */
-  rightRender?: (initInfo: any) => React.ReactNode;
+  /** 自定义导航头右上角 ，有默认 UI, 接受 initialState & 修改 initialState 的方法 */
+  rightRender?: (initialState: any, setInitialState: any) => React.ReactNode;
 
   errorBoundary?: {
     /** 发生错误后的回调（可做一些错误日志上报，打点等） */

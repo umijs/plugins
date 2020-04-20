@@ -16,12 +16,18 @@ const BasicLayout = (props: any) => {
   const initialInfo = (useModel && useModel('@@initialState')) || {
     initialState: undefined,
     loading: false,
+    setInitialState: null,
   }; // plugin-initial-state 未开启
-  const { initialState, loading } = initialInfo;
+  const { initialState, loading, setInitialState } = initialInfo;
   const _routes = require('@@/core/routes').routes;
   // 国际化插件并非默认启动
   const intl = useIntl && useIntl();
-  const rightContentRender = useRightContent(userConfig, loading, initialState);
+  const rightContentRender = useRightContent(
+    userConfig,
+    loading,
+    initialState,
+    setInitialState,
+  );
   const layoutConfig = getLayoutConfigFromRoute(_routes);
   const patchMenus: (ms: MenuItem[], initialInfo: InitialState) => MenuItem[] =
     userConfig.patchMenus || ((ms: MenuItem[]): MenuItem[] => ms);
