@@ -27,6 +27,7 @@ function formatter(
         item =>
           item &&
           !item.unaccessible && // 是否没有权限查看
+          item.menu !== false && // 显示指定在 menu 中隐藏该项
           (item.name || // 兼容老版本 route 配置
           item.flatMenu || // 是否打平 menu
           (item.menu && (item.menu.name || item.menu.flatMenu)) || // 正确配置了 menu

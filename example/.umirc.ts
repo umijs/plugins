@@ -25,6 +25,7 @@ export default defineConfig({
       name: 'request 测试',
       path: '/request',
       component: './request',
+      menu: false,
     },
     {
       name: '首页',
