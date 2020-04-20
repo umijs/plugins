@@ -1,6 +1,6 @@
 export default (relEntryFile: string) =>
   relEntryFile
-    ? `import { useState, useEffect } from 'react';
+    ? `import { useState, useEffect, useCallback } from 'react';
 import { Models } from '../../plugin-model/useModel';
 import * as app from '../../../app';
 
@@ -20,7 +20,7 @@ const initState = {
 export default () => {
   const [ state, setState ] = useState(initState);
 
-  const refresh = async() => {
+  const refresh = useCallback(async() => {
     setState(s => ({ ...s, loading: true, error: undefined }))
     try {
       const asyncFunc = () => new Promise<ReturnType<typeof getInitialState>>(res => res(getInitialState()));
@@ -29,11 +29,11 @@ export default () => {
     } catch(e) {
       setState(s => ({ ...s, error: e, loading: false }));
     }
-  };
+  }, []);
 
-  const setInitialState = (initialState: ThenArg<ReturnType<typeof getInitialState>> | undefined) => {
+  const setInitialState = useCallback((initialState: ThenArg<ReturnType<typeof getInitialState>> | undefined) => {
     setState(s => ({ ...s, initialState, loading: false }))
-  }
+  }, []);
 
   useEffect(()=>{
     refresh();
