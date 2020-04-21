@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/umijs/plugins/compare/@umijs/plugin-initial-state@2.2.0...@umijs/plugin-initial-state@2.2.1) (2020-04-21)
+
+### Bug Fixes
+
+- add useCallback to initialState methods ([96c43af](https://github.com/umijs/plugins/commit/96c43afe74843a680396eac444702e47920d5ee6))
+
 # [2.2.0](https://github.com/umijs/plugins/compare/@umijs/plugin-initial-state@2.1.8...@umijs/plugin-initial-state@2.2.0) (2020-03-24)
 
 ### Bug Fixes

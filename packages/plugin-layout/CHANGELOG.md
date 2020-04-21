@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.9.1...@umijs/plugin-layout@0.9.2) (2020-04-21)
+
+### Bug Fixes
+
+- layoutConfig-renderRight add setInitialState param [#114](https://github.com/umijs/plugins/issues/114) ([#167](https://github.com/umijs/plugins/issues/167)) ([47fde8e](https://github.com/umijs/plugins/commit/47fde8e7987cb3f6cd8419139402f11aef545e9b))
+- 修复 layout 配置 menu 显示指定为 false 不生效 https://github.com/umijs/umi/issues/4179 ([#171](https://github.com/umijs/plugins/issues/171)) ([e363dc4](https://github.com/umijs/plugins/commit/e363dc46e001e4926402243c6b74a531100b2833))
+
 ## [0.9.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.9.0...@umijs/plugin-layout@0.9.1) (2020-04-15)
 
 **Note:** Version bump only for package @umijs/plugin-layout
