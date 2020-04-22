@@ -111,7 +111,6 @@ function modifyRoutesWithAttachMode(api: IApi) {
                 history: '${masterHistoryType}',
                 settings: ${JSON.stringify({
                   ...settings,
-                  singular: true,
                 }).replace(/\"(\w+)\":/g, "'$1':")},
               },
             );
