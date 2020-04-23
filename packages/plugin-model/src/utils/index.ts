@@ -7,7 +7,7 @@ const { t, parser, traverse, winPath } = utils;
 export type ModelItem = { absPath: string; namespace: string } | string;
 
 export const getName = (absPath: string) =>
-  path.basename(absPath, path.extname(absPath));
+  path.basename(absPath).replace(/(\.model)?\.(j|t)sx?$/, '');
 
 export const getPath = (absPath: string) => {
   const info = path.parse(absPath);

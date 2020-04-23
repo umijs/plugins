@@ -7,6 +7,7 @@ import { utils } from 'umi';
 // import '@testing-library/jest-dom/extend-expect';
 import { render, fireEvent } from '@testing-library/react';
 import { getTmpFile } from '../src/utils/getTmpFile';
+import { getModels } from '../src/utils/getModels';
 
 const { winPath } = utils;
 
@@ -32,10 +33,8 @@ readdirSync(fixtures)
     const fixture = join(fixtures, file);
     const tmpDir = join(fixture, '.umi');
     const extraModel = extraModelConfig[file];
-    const { providerContent, useModelContent } = getTmpFile(
-      join(fixture, 'models'),
-      extraModel,
-    );
+    const files = getModels(join(fixture, 'models'));
+    const { providerContent, useModelContent } = getTmpFile(files, extraModel);
     const providerPath = join(tmpDir, 'Provider.tsx');
     if (!existsSync(tmpDir)) {
       mkdirSync(tmpDir);

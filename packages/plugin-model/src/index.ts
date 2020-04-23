@@ -2,7 +2,9 @@ import { join } from 'path';
 import { IApi, utils } from 'umi';
 import { DIR_NAME_IN_TMP } from './constants';
 import { getTmpFile } from './utils/getTmpFile';
+import { getModels } from './utils/getModels';
 import { readFileSync } from 'fs';
+const { lodash } = utils;
 
 export default (api: IApi) => {
   const {
@@ -10,15 +12,32 @@ export default (api: IApi) => {
     utils: { winPath },
   } = api;
 
+  function getModelDir() {
+    return api.config.singular ? 'model' : 'models';
+  }
+
   function getModelsPath() {
-    return join(paths.absSrcPath!, api.config!.singular ? 'model' : 'models');
+    return join(paths.absSrcPath!, getModelDir());
+  }
+
+  function getAllModels() {
+    const srcModelsPath = getModelsPath();
+    return lodash.uniq([
+      ...getModels(srcModelsPath),
+      ...getModels(
+        paths.absPagesPath!,
+        `**/${getModelDir()}/**/*.{ts,tsx,js,jsx}`,
+      ),
+      ...getModels(paths.absPagesPath!, `**/*.model.{ts,tsx,js,jsx}`),
+    ]);
   }
 
   // Add provider wrapper with rootContainer
   api.addRuntimePlugin(() => '../plugin-model/runtime');
 
   api.onGenerateFiles(async () => {
-    const modelsPath = getModelsPath();
+    const files = getAllModels();
+
     try {
       const additionalModels = await api.applyPlugins({
         key: 'addExtraModels',
@@ -26,7 +45,7 @@ export default (api: IApi) => {
         initialValue: [],
       });
 
-      const tmpFiles = getTmpFile(modelsPath, additionalModels);
+      const tmpFiles = getTmpFile(files, additionalModels);
 
       // provider.tsx
       api.writeTmpFile({
