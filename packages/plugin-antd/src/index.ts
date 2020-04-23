@@ -32,19 +32,10 @@ export default (api: IApi) => {
 
   if (opts?.dark || opts?.compact) {
     // support dark mode, user use antd 4 by default
-    const defaultTheme = require('antd/dist/default-theme');
-    const darkTheme = opts?.dark ? require('antd/dist/dark-theme') : {};
-    const compactTheme = opts?.compact
-      ? require('antd/dist/compact-theme')
-      : {};
+    const { getThemeVariables } = require('antd/dist/theme');
     api.modifyDefaultConfig(config => {
       config.theme = {
-        hack_less_umi_plugin: `true;@import "${require.resolve(
-          'antd/lib/style/color/colorPalette.less',
-        )}";`,
-        ...defaultTheme,
-        ...darkTheme,
-        ...compactTheme,
+        ...getThemeVariables(opts),
         ...config.theme,
       };
       return config;
