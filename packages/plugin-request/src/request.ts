@@ -157,16 +157,15 @@ const getRequestMethod = () => {
           req: error.request,
           res: error.response,
         };
-        errorInfo = errorAdaptor(error.data, ctx);
-        error.message = errorInfo?.errorMessage || error.message;
-        error.data = error.data;
+        errorInfo = errorAdaptor(error.data, ctx)||{};
+        error.message = errorInfo.message = errorInfo.errorMessage || error.message;
         error.info = errorInfo;
       }
       errorInfo = error.info;
 
       if (errorInfo) {
-        const errorMessage = errorInfo?.errorMessage;
-        const errorCode = errorInfo?.errorCode;
+        const errorMessage = errorInfo.errorMessage;
+        const errorCode = errorInfo.errorCode;
         const errorPage =
           requestConfig.errorConfig?.errorPage || DEFAULT_ERROR_PAGE;
 
