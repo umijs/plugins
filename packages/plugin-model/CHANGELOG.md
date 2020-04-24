@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.2.0...@umijs/plugin-model@2.3.0) (2020-04-24)
+
+### Bug Fixes
+
+- 添加 page 作为 singular 匹配 ([5d252d8](https://github.com/umijs/plugins/commit/5d252d85fd1643e5f829f59d75486b8ff79ec4cb))
+
+### Features
+
+- 命名空间添加目录前缀避免命名空间重复 ([b72c5d8](https://github.com/umijs/plugins/commit/b72c5d8497333df3f7c509d26347b28525a99b4b))
+- 添加页面组件 useModel 配置 ([29ad36e](https://github.com/umijs/plugins/commit/29ad36e27234458a6111b5ee8bfb0244ed7acb0f))
+
 # [2.2.0](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.1.4...@umijs/plugin-model@2.2.0) (2020-03-24)
 
 ### Features

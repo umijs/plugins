@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.5.0...@umijs/plugin-antd@0.5.1) (2020-04-24)
+
+### Bug Fixes
+
+- update antd theme plugin config ([7e23032](https://github.com/umijs/plugins/commit/7e23032e9e5ee07e4b38d3cc226fca9857f4c314))
+
 # [0.5.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.4.3...@umijs/plugin-antd@0.5.0) (2020-04-13)
 
 ### Bug Fixes

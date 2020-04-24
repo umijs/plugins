@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.4.4...@umijs/plugin-locale@0.4.5) (2020-04-24)
+
+### Bug Fixes
+
+- fix type error ([18d88cc](https://github.com/umijs/plugins/commit/18d88ccaacc2904d2bf2b0d20e060ca2466fc6c7))
+
 ## [0.4.4](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.4.3...@umijs/plugin-locale@0.4.4) (2020-04-07)
 
 ### Bug Fixes
