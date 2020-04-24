@@ -73,6 +73,7 @@ async function useRegisterMode(
   const {
     sandbox = false,
     prefetch = true,
+    // @ts-ignore compatible with old configuration
     defer = false,
     lifeCycles,
     masterHistoryType = defaultHistoryType,
