@@ -80,14 +80,14 @@ function modifyRoutesWithRegistrableMode(api: IApi, apps: App[]) {
   modifyAppRoutes();
 }
 
-function modifyRoutesWithAttachMode(api: IApi) {
+function modifyRoutesWithAttachMode(api: IApi, routeBindingAlias: string) {
   const { history } = api.service.userConfig;
   const masterHistoryType = history?.type || defaultHistoryType;
 
   const patchRoutes = (routes: IRoute[]) => {
     if (routes.length) {
       routes.forEach(route => {
-        const { microApp } = route;
+        const microApp = route[routeBindingAlias];
         if (microApp) {
           if (route.routes?.length) {
             throw new Error(
@@ -130,12 +130,16 @@ function modifyRoutesWithAttachMode(api: IApi) {
   });
 }
 
-export default function modifyRoutes(api: IApi, apps: App[]) {
+export default function modifyRoutes(
+  api: IApi,
+  apps: App[],
+  routeBindingAlias: string,
+) {
   // 兼容以前的通过配置 base 自动注册应用的场景
   const registrableApps = apps.filter(app => app.base);
   if (registrableApps.length) {
     modifyRoutesWithRegistrableMode(api, registrableApps);
   }
 
-  modifyRoutesWithAttachMode(api);
+  modifyRoutesWithAttachMode(api, routeBindingAlias);
 }
