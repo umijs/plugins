@@ -18,8 +18,8 @@ export default function(api: IApi, options: MasterOptions) {
   }));
 
   // apps 可能在构建期为空
-  const { apps = [] } = options || {};
-  modifyRoutes(api, apps);
+  const { apps = [], routeBindingAlias = 'microApp' } = options || {};
+  modifyRoutes(api, apps, routeBindingAlias);
 
   const rootExportsJsFile = join(api.paths.absSrcPath!, 'rootExports.js');
   const rootExportsTsFile = join(api.paths.absSrcPath!, 'rootExports.ts');
@@ -85,10 +85,22 @@ window.g_rootExports = ${
     },
   ]);
 
+  const pinnedExport = 'MicroApp';
   api.addUmiExports(() => [
     {
-      specifiers: ['MicroApp'],
+      specifiers: [pinnedExport],
       source: utils.winPath('../plugin-qiankun/MicroApp'),
     },
   ]);
+
+  // 存在别名导出时再导出一份别名
+  const { exportComponentAlias } = options || {};
+  if (exportComponentAlias && exportComponentAlias !== pinnedExport) {
+    api.addUmiExports(() => [
+      {
+        specifiers: [{ local: pinnedExport, exported: exportComponentAlias }],
+        source: utils.winPath('../plugin-qiankun/MicroApp'),
+      },
+    ]);
+  }
 }
