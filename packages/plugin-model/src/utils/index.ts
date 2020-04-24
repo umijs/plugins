@@ -8,7 +8,7 @@ export type ModelItem = { absPath: string; namespace: string } | string;
 
 export const getName = (absPath: string) => {
   const suffix = /(\.model)?\.(j|t)sx?$/;
-  const result = absPath.match(/src\/(models|model|pages)\/(\S*)/);
+  const result = absPath.match(/src\/(models|model|pages|page)\/(\S*)/);
 
   if (result) {
     return result[2]

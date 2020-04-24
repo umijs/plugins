@@ -14,6 +14,11 @@ describe('getName test', () => {
       'dashboard.Workplace.notice',
     );
   });
+  test('page single model when singular is "page"', () => {
+    expect(getName('ae/src/page/dashboard/Workplace/form.model.ts')).toEqual(
+      'dashboard.Workplace.form',
+    );
+  });
   test('other model', () => {
     expect(
       getName('ae/src/.umi/plugin-initial-state/models/initialState.ts'),
