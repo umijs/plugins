@@ -2,30 +2,9 @@ import getProviderContent from './getProviderContent';
 import getUseModelContent from './getUseModelContent';
 import { EOL } from 'os';
 import { utils } from 'umi';
-import {
-  genImports,
-  genModels,
-  genExtraModels,
-  getValidFiles,
-  ModelItem,
-} from '.';
+import { genImports, genModels, genExtraModels, ModelItem } from '.';
 
 const { winPath } = utils;
-
-function getFiles(cwd: string) {
-  return utils.glob
-    .sync('./**/*.{ts,tsx,js,jsx}', {
-      cwd,
-    })
-    .filter(
-      (file: string) =>
-        !file.endsWith('.d.ts') &&
-        !file.endsWith('.test.js') &&
-        !file.endsWith('.test.jsx') &&
-        !file.endsWith('.test.ts') &&
-        !file.endsWith('.test.tsx'),
-    );
-}
 
 function getModels(files: string[]) {
   const sortedModels = genModels(files);
@@ -53,8 +32,7 @@ function getExtraImports(models: ModelItem[] = []) {
     .join(EOL);
 }
 
-export const getTmpFile = (modelsDir: string, extra: ModelItem[] = []) => {
-  const files = getValidFiles(getFiles(modelsDir), modelsDir);
+export const getTmpFile = (files: string[], extra: ModelItem[] = []) => {
   const imports = genImports(files);
   const userModels = getModels(files);
   const extraImports = getExtraImports(extra);

@@ -6,8 +6,18 @@ import { utils } from 'umi';
 const { t, parser, traverse, winPath } = utils;
 export type ModelItem = { absPath: string; namespace: string } | string;
 
-export const getName = (absPath: string) =>
-  path.basename(absPath, path.extname(absPath));
+export const getName = (absPath: string) => {
+  const suffix = /(\.model)?\.(j|t)sx?$/;
+  const result = absPath.match(/src\/(models|model|pages|page)\/(\S*)/);
+
+  if (result) {
+    return result[2]
+      .replace(/(models|model)\//, '')
+      .replace(/\//g, '.')
+      .replace(suffix, '');
+  }
+  return path.basename(absPath).replace(suffix, '');
+};
 
 export const getPath = (absPath: string) => {
   const info = path.parse(absPath);
