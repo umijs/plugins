@@ -49,7 +49,12 @@ export default {
         },
         {
           path: '/app2',
+          exact: false,
           component: './app2/index.js',
+        },
+        {
+          path: '/app3',
+          microApp: 'app3',
         },
         {
           path: '/',
