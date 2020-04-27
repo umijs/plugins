@@ -67,7 +67,6 @@ export default class extends React.PureComponent {
         <Content className={style.content}>
           {renderBreadCrumb(location.pathname)}
           {children}
-          {apps.length ? <div id="root-subapp-container" /> : null}
         </Content>
         <Footer className={style.footer}>
           Ant Design ©2019 Created by Ant UED
