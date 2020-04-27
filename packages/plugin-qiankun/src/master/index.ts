@@ -8,7 +8,7 @@ import { defaultHistoryType, defaultMasterRootId } from '../common';
 import { MasterOptions } from '../types';
 import modifyRoutes from './modifyRoutes';
 
-export default function(api: IApi) {
+export default function (api: IApi) {
   api.describe({
     enableBy() {
       return api.userConfig.qiankun && api.userConfig.qiankun.master;
@@ -17,14 +17,15 @@ export default function(api: IApi) {
 
   api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
 
-  api.modifyDefaultConfig(config => ({
+  api.modifyDefaultConfig((config) => ({
     ...config,
     mountElementId: defaultMasterRootId,
     disableGlobalVariables: true,
   }));
 
   // apps 可能在构建期为空
-  const options: MasterOptions = api.userConfig.qiankun.master;
+  const { qiankun = {} } = api.userConfig;
+  const options: MasterOptions = qiankun.master;
   const { apps = [], routeBindingAlias = 'microApp' } = options || {};
   modifyRoutes(api, apps, routeBindingAlias);
 

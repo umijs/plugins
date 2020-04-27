@@ -1,6 +1,6 @@
 import { IApi } from 'umi';
 
-export default function(api: IApi) {
+export default function (api: IApi) {
   api.addRuntimePluginKey(() => 'qiankun');
 
   api.describe({
@@ -16,6 +16,7 @@ export default function(api: IApi) {
           .without('slave', 'master');
       },
     },
+    enableBy: api.EnableBy.config,
   });
 
   api.registerPlugins([

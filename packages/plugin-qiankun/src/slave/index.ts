@@ -8,14 +8,15 @@ import { SlaveOptions } from '../types';
 
 const localIpAddress = process.env.USE_REMOTE_IP ? address.ip() : 'localhost';
 
-export default function(api: IApi) {
+export default function (api: IApi) {
   api.describe({
     enableBy() {
       return api.userConfig.qiankun && api.userConfig.qiankun.slave;
     },
   });
 
-  const options: SlaveOptions = api.userConfig.qiankun.slave;
+  const { qiankun = {} } = api.userConfig;
+  const options: SlaveOptions = qiankun.slave;
   const {
     keepOriginalRoutes = false,
     shouldNotModifyRuntimePublicPath = false,
@@ -25,7 +26,7 @@ export default function(api: IApi) {
   const lifecyclePath = require.resolve('./lifecycles');
   // eslint-disable-next-line import/no-dynamic-require, global-require
   const { name: pkgName } = require(join(api.cwd, 'package.json'));
-  api.modifyDefaultConfig(memo => ({
+  api.modifyDefaultConfig((memo) => ({
     ...memo,
     disableGlobalVariables: true,
     base: `/${pkgName}`,
@@ -52,7 +53,7 @@ export default function(api: IApi) {
   const port = process.env.PORT;
   const protocol = process.env.HTTPS ? 'https' : 'http';
 
-  api.chainWebpack(config => {
+  api.chainWebpack((config) => {
     assert(api.pkg.name, 'You should have name in package.json');
     config.output
       .libraryTarget('umd')
@@ -62,7 +63,7 @@ export default function(api: IApi) {
   });
 
   // umi bundle 添加 entry 标记
-  api.modifyHTML($ => {
+  api.modifyHTML(($) => {
     $('script').each((_, el) => {
       const scriptEl = $(el);
       const umiEntryJs = /\/?umi(\.\w+)?\.js$/g;
@@ -133,7 +134,7 @@ export default function(api: IApi) {
     `,
   );
 
-  api.modifyRoutes(routes => {
+  api.modifyRoutes((routes) => {
     // 开启keepOriginalRoutes配置
     if (keepOriginalRoutes === true || isString(keepOriginalRoutes)) {
       return addSpecifyPrefixedRoute(routes, keepOriginalRoutes, pkgName);
