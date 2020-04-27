@@ -1,5 +1,5 @@
 import { Layout, Menu } from 'antd';
-import Link from 'umi/link';
+import { Link } from 'umi';
 import style from './style.less';
 
 const { SubMenu } = Menu;
