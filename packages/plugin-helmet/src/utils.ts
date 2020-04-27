@@ -1,1 +1,1 @@
-export { cheerio } from '@umijs/utils';
+export { default as cheerio } from 'cheerio';
