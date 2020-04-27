@@ -11,11 +11,11 @@ const localIpAddress = process.env.USE_REMOTE_IP ? address.ip() : 'localhost';
 export default function(api: IApi) {
   api.describe({
     enableBy() {
-      return api.userConfig.qiankun && api.userConfig.qiankun.slave;
+      return api.config?.qiankun?.slave;
     },
   });
 
-  const options: SlaveOptions = api.userConfig.qiankun.slave;
+  const options: SlaveOptions = api.config?.qiankun?.slave;
   const {
     keepOriginalRoutes = false,
     shouldNotModifyRuntimePublicPath = false,
