@@ -11,7 +11,7 @@ import modifyRoutes from './modifyRoutes';
 export default function(api: IApi) {
   api.describe({
     enableBy() {
-      return api.userConfig.qiankun && api.userConfig.qiankun.master;
+      return api.config?.qiankun?.master;
     },
   });
 
@@ -24,7 +24,7 @@ export default function(api: IApi) {
   }));
 
   // apps 可能在构建期为空
-  const options: MasterOptions = api.userConfig.qiankun.master;
+  const options: MasterOptions = api.config?.qiankun?.master;
   const { apps = [], routeBindingAlias = 'microApp' } = options || {};
   modifyRoutes(api, apps, routeBindingAlias);
 
