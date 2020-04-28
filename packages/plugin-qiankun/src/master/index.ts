@@ -5,13 +5,12 @@ import { join } from 'path';
 import { IApi, utils } from 'umi';
 
 import { defaultHistoryType, defaultMasterRootId } from '../common';
-import { MasterOptions } from '../types';
 import modifyRoutes from './modifyRoutes';
 
 export default function(api: IApi) {
   api.describe({
     enableBy() {
-      return api.config?.qiankun?.master;
+      return !!api.config?.qiankun?.master;
     },
   });
 
@@ -23,10 +22,7 @@ export default function(api: IApi) {
     disableGlobalVariables: true,
   }));
 
-  // apps 可能在构建期为空
-  const options: MasterOptions = api.config?.qiankun?.master;
-  const { apps = [], routeBindingAlias = 'microApp' } = options || {};
-  modifyRoutes(api, apps, routeBindingAlias);
+  modifyRoutes(api);
 
   const rootExportsJsFile = join(api.paths.absSrcPath!, 'rootExports.js');
   const rootExportsTsFile = join(api.paths.absSrcPath!, 'rootExports.ts');
@@ -40,7 +36,10 @@ export default function(api: IApi) {
 
   api.onGenerateFiles(() => {
     const {
-      config: { history },
+      config: {
+        history,
+        qiankun: { master: options },
+      },
     } = api;
     const masterHistoryType = history?.type || defaultHistoryType;
     const rootExports = `
@@ -92,22 +91,24 @@ window.g_rootExports = ${
     },
   ]);
 
-  const pinnedExport = 'MicroApp';
-  api.addUmiExports(() => [
-    {
-      specifiers: [pinnedExport],
-      source: utils.winPath('../plugin-qiankun/MicroApp'),
-    },
-  ]);
-
-  // 存在别名导出时再导出一份别名
-  const { exportComponentAlias } = options || {};
-  if (exportComponentAlias && exportComponentAlias !== pinnedExport) {
-    api.addUmiExports(() => [
+  api.addUmiExports(() => {
+    const pinnedExport = 'MicroApp';
+    const exports: any[] = [
       {
-        specifiers: [{ local: pinnedExport, exported: exportComponentAlias }],
+        specifiers: [pinnedExport],
         source: utils.winPath('../plugin-qiankun/MicroApp'),
       },
-    ]);
-  }
+    ];
+
+    const { exportComponentAlias } = api.config.qiankun.master!;
+    // 存在别名导出时再导出一份别名
+    if (exportComponentAlias && exportComponentAlias !== pinnedExport) {
+      exports.push({
+        specifiers: [{ local: pinnedExport, exported: exportComponentAlias }],
+        source: utils.winPath('../plugin-qiankun/MicroApp'),
+      });
+    }
+
+    return exports;
+  });
 }
