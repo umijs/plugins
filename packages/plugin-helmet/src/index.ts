@@ -1,12 +1,14 @@
 import { readFileSync } from 'fs';
-import { join } from 'path';
+import { join, dirname } from 'path';
 
 import { IApi, utils } from 'umi';
 
 const { winPath, Mustache } = utils;
 
 export default (api: IApi) => {
-  const helmetPkgPath = winPath(require.resolve('react-helmet-async'));
+  const helmetPkgPath = winPath(
+    dirname(require.resolve('react-helmet-async/package')),
+  );
   api.onGenerateFiles(async () => {
     const runtimeTpl = join(winPath(__dirname), 'templates', 'runtime.tpl');
     const runtimeContent = readFileSync(runtimeTpl, 'utf-8');
