@@ -5,8 +5,7 @@
 
 import { ImportEntryOpts } from 'import-html-entry';
 import { FrameworkLifeCycles } from 'qiankun';
-// @ts-ignore
-import { IConfig } from 'umi-types';
+import { IConfig } from '@umijs/types';
 
 export type HistoryType = 'browser' | 'hash';
 export type App = {
@@ -33,3 +32,12 @@ export type SlaveOptions = {
   keepOriginalRoutes?: boolean | string;
   shouldNotModifyRuntimePublicPath?: boolean;
 };
+
+declare module '@umijs/types' {
+  interface IConfig {
+    qiankun: {
+      master?: MasterOptions;
+      slave?: SlaveOptions;
+    };
+  }
+}
