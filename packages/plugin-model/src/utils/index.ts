@@ -6,16 +6,20 @@ import { utils } from 'umi';
 const { t, parser, traverse, winPath } = utils;
 export type ModelItem = { absPath: string; namespace: string } | string;
 
-export const getName = (absPath: string) => {
+export const getName = (absPath: string, srcDirPath?: string[]) => {
   const suffix = /(\.model)?\.(j|t)sx?$/;
-  const result = absPath.match(/src\/(models|model|pages|page)\/(\S*)/);
+  const dir = srcDirPath?.find(dir => absPath.includes(dir));
 
-  if (result) {
-    return result[2]
-      .replace(/(models|model)\//, '')
-      .replace(/\//g, '.')
+  if (dir) {
+    const name = absPath
+      .replace(dir, '')
+      .replace(new RegExp(path.sep, 'g'), '.')
+      .replace(/(models|model)\./g, '')
       .replace(suffix, '');
+
+    return name.startsWith('.') ? name.slice(1) : name;
   }
+
   return path.basename(absPath).replace(suffix, '');
 };
 
@@ -96,12 +100,12 @@ export const sort = (ns: HookItem[]) => {
   return [...new Set(final)];
 };
 
-export const genModels = (imports: string[]) => {
+export const genModels = (imports: string[], srcDirPath: string[]) => {
   const contents = imports.map(absPath => ({
-    namespace: getName(absPath),
+    namespace: getName(absPath, srcDirPath),
     content: readFileSync(absPath).toString(),
   }));
-  const allUserModel = imports.map(getName);
+  const allUserModel = imports.map(absPath => getName(absPath, srcDirPath));
 
   const checkDuplicates = (list: string[]) =>
     new Set(list).size !== list.length;
