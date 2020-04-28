@@ -1,8 +1,6 @@
 /**
  * 通过路由配置自动生成布局配置
  */
-import memoizeOne from 'memoize-one';
-import { isEqual } from 'lodash';
 import { IBestAFSRoute, IRouteLayoutConfig } from '../types/interface.d';
 
 type LayoutConfig = {
@@ -93,7 +91,4 @@ function formatter(
   return LayoutConfig;
 }
 
-// 参数深比较
-const getLayoutConfigFromRoute = memoizeOne(formatter, isEqual);
-
-export default getLayoutConfigFromRoute;
+export default formatter;
