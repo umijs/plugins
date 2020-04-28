@@ -56,15 +56,6 @@ const htmlTemplate = `<!DOCTYPE html>
 test('ssr', async () => {
   const cwd = join(fixtures, 'ssr');
   const tmpServerFile = join(cwd, 'src', '.umi-test', 'core', 'server.ts');
-  const { HelmetProvider } = require(join(
-    cwd,
-    'src',
-    '.umi-test',
-    'core',
-    'umiExports.ts',
-  ));
-  // must set false, because of jest env patch the document
-  HelmetProvider.canUseDOM = false;
 
   delete require.cache[tmpServerFile];
   const service = new Service({
@@ -77,6 +68,16 @@ test('ssr', async () => {
       _: ['g', 'tmp'],
     },
   });
+
+  const { HelmetProvider } = require(join(
+    cwd,
+    'src',
+    '.umi-test',
+    'core',
+    'umiExports.ts',
+  ));
+  // must set false, because of jest env patch the document
+  HelmetProvider.canUseDOM = false;
 
   expect(existsSync(tmpServerFile)).toBeTruthy();
   const serverRender = require(tmpServerFile).default;
