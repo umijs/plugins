@@ -51,14 +51,14 @@ export default class extends React.PureComponent {
             {apps.map((app, index) => {
               if (index === 2) {
                 return (
-                  <Menu.Item key={app.base}>
+                  <Menu.Item key={app.to}>
                     <Link to="/app3/123">{app.name}</Link>
                   </Menu.Item>
                 );
               }
               return (
-                <Menu.Item key={app.base}>
-                  <Link to={app.base}>{app.name}</Link>
+                <Menu.Item key={app.to}>
+                  <Link to={app.to}>{app.name}</Link>
                 </Menu.Item>
               );
             })}
