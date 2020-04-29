@@ -71,7 +71,8 @@ async function useRegisterMode(
   }
 
   const {
-    sandbox = false,
+    // @ts-ignore 兼容之前版本的 jsSandbox 配置
+    sandbox = masterOptions.jsSandbox ?? true,
     prefetch = true,
     // @ts-ignore compatible with old configuration
     defer = false,

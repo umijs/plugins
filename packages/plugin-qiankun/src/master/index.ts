@@ -67,6 +67,7 @@ export default function(api: IApi) {
       `,
     });
 
+    // TODO 兼容以前版本的 defer 配置，后续需要移除
     api.writeTmpFile({
       path: 'plugin-qiankun/qiankunDefer.js',
       content: `
@@ -86,6 +87,7 @@ export default function(api: IApi) {
     });
   });
 
+  // TODO 兼容以前版本的 defer 配置，后续需要移除
   api.addUmiExports(() => [
     {
       specifiers: ['qiankunStart'],

@@ -1,5 +1,4 @@
 import { query } from '@/services/app';
-import { qiankunStart } from 'umi';
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -30,9 +29,6 @@ export default {
           apps,
         },
       });
-
-      // 模拟手动控制 qiankun 启动时机的场景, 需要 defer 配置为 true
-      setTimeout(qiankunStart, 200);
     },
   },
 
