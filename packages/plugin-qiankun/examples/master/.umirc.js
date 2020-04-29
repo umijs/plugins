@@ -32,9 +32,6 @@ export default {
           entry: 'http://localhost:8003/app3',
         },
       ],
-      defer: true,
-      jsSandbox: true,
-      prefetch: true,
     },
   },
   routes: [

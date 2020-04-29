@@ -65,6 +65,7 @@ window.g_rootExports = ${
       `,
     });
 
+    // TODO 兼容以前版本的 defer 配置，后续需要移除
     api.writeTmpFile({
       path: 'plugin-qiankun/qiankunDefer.js',
       content: `
@@ -84,6 +85,7 @@ window.g_rootExports = ${
     });
   });
 
+  // TODO 兼容以前版本的 defer 配置，后续需要移除
   api.addUmiExports(() => [
     {
       specifiers: ['qiankunStart'],
