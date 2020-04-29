@@ -129,8 +129,6 @@ async function useRegisterMode(
 }
 
 export async function render(oldRender: typeof noop) {
-  oldRender();
-
   const masterOptions = getMasterOptions();
   const runtimeOptions = await getMasterRuntime();
 
@@ -149,4 +147,6 @@ export async function render(oldRender: typeof noop) {
     const { prefetch, ...importEntryOpts } = options;
     prefetchApps(loadableApps, importEntryOpts);
   }
+
+  oldRender();
 }
