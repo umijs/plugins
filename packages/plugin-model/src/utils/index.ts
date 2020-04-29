@@ -13,7 +13,8 @@ export const getName = (absPath: string, srcDirPath?: string[]) => {
   if (dir) {
     const name = absPath
       .replace(dir, '')
-      .replace(new RegExp(path.sep, 'g'), '.')
+      .split(path.sep)
+      .join('.')
       .replace(/(models|model)\./g, '')
       .replace(suffix, '');
 
