@@ -33,15 +33,17 @@ readdirSync(fixtures)
     const fixture = join(fixtures, file);
     const tmpDir = join(fixture, '.umi');
     const extraModel = extraModelConfig[file];
+    const modulesDir = join(fixture, 'models');
+    const pagesDir = join(fixture, 'pages');
     const files = [
-      ...getModels(join(fixture, 'models')),
-      ...getModels(
-        join(fixture, 'src/pages'),
-        `**/models/**/*.{ts,tsx,js,jsx}`,
-      ),
-      ...getModels(join(fixture, 'src/pages'), `**/*.model.{ts,tsx,js,jsx}`),
+      ...getModels(modulesDir),
+      ...getModels(pagesDir, `**/models/**/*.{ts,tsx,js,jsx}`),
+      ...getModels(pagesDir, `**/*.model.{ts,tsx,js,jsx}`),
     ];
-    const { providerContent, useModelContent } = getTmpFile(files, extraModel);
+    const { providerContent, useModelContent } = getTmpFile(files, extraModel, [
+      modulesDir,
+      pagesDir,
+    ]);
     const providerPath = join(tmpDir, 'Provider.tsx');
     if (!existsSync(tmpDir)) {
       mkdirSync(tmpDir);

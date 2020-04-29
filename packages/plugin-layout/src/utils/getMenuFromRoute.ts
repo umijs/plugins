@@ -1,8 +1,7 @@
 /**
  * 通过路由配置自动生成菜单配置
  */
-import memoizeOne from 'memoize-one';
-import { flatten, isEqual } from 'lodash';
+import { flatten } from 'lodash';
 import {
   IBestAFSRoute,
   MenuItem,
@@ -96,7 +95,4 @@ function formatter(
   return menus;
 }
 
-// 参数深比较
-const getMenuFromRoute = memoizeOne(formatter, isEqual);
-
-export default getMenuFromRoute;
+export default formatter;

@@ -6,8 +6,8 @@ import { genImports, genModels, genExtraModels, ModelItem } from '.';
 
 const { winPath } = utils;
 
-function getModels(files: string[]) {
-  const sortedModels = genModels(files);
+function getModels(files: string[], srcDirPath: string[]) {
+  const sortedModels = genModels(files, srcDirPath);
   return sortedModels
     .map(ele => `'${ele.namespace.replace(/'/g, "\\'")}': ${ele.importName}`)
     .join(', ');
@@ -32,9 +32,13 @@ function getExtraImports(models: ModelItem[] = []) {
     .join(EOL);
 }
 
-export const getTmpFile = (files: string[], extra: ModelItem[] = []) => {
+export const getTmpFile = (
+  files: string[],
+  extra: ModelItem[] = [],
+  srcDirPath: string[],
+) => {
   const imports = genImports(files);
-  const userModels = getModels(files);
+  const userModels = getModels(files, srcDirPath);
   const extraImports = getExtraImports(extra);
   const extraModels = getExtraModels(extra);
   const enable = Boolean(imports || extraImports);
