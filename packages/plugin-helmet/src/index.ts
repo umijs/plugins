@@ -10,7 +10,7 @@ export default (api: IApi) => {
     dirname(require.resolve('react-helmet-async/package')),
   );
   api.onGenerateFiles(async () => {
-    const runtimeTpl = join(winPath(__dirname), 'templates', 'runtime.tpl');
+    const runtimeTpl = join(__dirname, 'templates', 'runtime.tpl');
     const runtimeContent = readFileSync(runtimeTpl, 'utf-8');
     api.writeTmpFile({
       path: 'plugin-helmet/runtime.ts',
