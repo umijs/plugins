@@ -1,5 +1,4 @@
 export const modifyHTMLHOC = ({ helmetContext }) => html => {
-  const { Stream } = require('stream');
   const cheerio = require('cheerio');
   const helmet = helmetContext.helmet;
   if (!helmet) return html;
@@ -7,10 +6,6 @@ export const modifyHTMLHOC = ({ helmetContext }) => html => {
   const htmlAttributes = helmet.htmlAttributes.toComponent();
   const meta = helmet.meta.toString();
   const link = helmet.link.toString();
-  if (html instanceof Stream) {
-    // TODO
-    return html;
-  }
   const $ = cheerio.load(html);
   // keep latest
   if (title) {
