@@ -21,7 +21,7 @@ import {
 import { App, HistoryType, MasterOptions } from '../types';
 
 async function getMasterRuntime() {
-  const config = plugin.applyPlugins({
+  const config = await plugin.applyPlugins({
     key: 'qiankun',
     type: ApplyPluginsType.modify,
     initialValue: {},
