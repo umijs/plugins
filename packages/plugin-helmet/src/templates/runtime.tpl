@@ -5,12 +5,14 @@ import { HelmetProvider } from '{{{ HelmetPkg }}}';
 const helmetContext = {};
 
 {{#SSR}}
-const { modifyHTMLHOC } = require('{{{ Utils }}}');
-export const ssr = {
-  modifyHTML: modifyHTMLHOC({
-    helmetContext,
-  }),
-};
+if (process.env.__IS_SERVER) {
+  const { modifyHTMLHOC } = require('{{{ Utils }}}');
+  export const ssr = {
+    modifyHTML: modifyHTMLHOC({
+      helmetContext,
+    }),
+  };
+}
 {{/SSR}}
 
 export function rootContainer(container) {
