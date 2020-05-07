@@ -8,7 +8,7 @@ const helmetContext = {};
 if (process.env.__IS_SERVER) {
   const { modifyHTMLHOC } = require('{{{ Utils }}}');
   export const ssr = {
-    modifyHTML: modifyHTMLHOC({
+    modifyServerHTML: modifyHTMLHOC({
       helmetContext,
     }),
   };

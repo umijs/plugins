@@ -28,7 +28,6 @@
     "access": "public"
   },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.3",
     "@types/react-helmet-async": "^1.0.3",
     "react-helmet-async": "^1.0.5"
   }

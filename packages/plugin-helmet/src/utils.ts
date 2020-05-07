@@ -1,5 +1,5 @@
-export const modifyHTMLHOC = ({ helmetContext }) => html => {
-  const cheerio = require('cheerio');
+// @ts-ignore
+export const modifyHTMLHOC = ({ helmetContext }) => (html, { cheerio }) => {
   const helmet = helmetContext.helmet;
   if (!helmet) return html;
   const title = helmet.title.toString();
