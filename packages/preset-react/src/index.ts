@@ -12,6 +12,7 @@ export default () => {
       require.resolve('@umijs/plugin-model'),
       require.resolve('@umijs/plugin-request'),
       require.resolve('@umijs/plugin-test'),
+      require.resolve('@umijs/plugin-helmet'),
     ],
   };
 };
