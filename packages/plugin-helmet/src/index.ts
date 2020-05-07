@@ -17,7 +17,6 @@ export default (api: IApi) => {
       content: Mustache.render(runtimeContent, {
         HelmetPkg: helmetPkgPath,
         SSR: !!api.config.ssr,
-        Utils: winPath(require.resolve('./utils')),
       }),
     });
   });

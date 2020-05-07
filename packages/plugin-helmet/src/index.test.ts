@@ -7,9 +7,11 @@ const fixtures = join(__dirname, '..', 'fixtures');
 
 afterEach(() => {
   cleanup();
+  delete process.env.__IS_SERVER;
 });
 
 test('normal', async () => {
+  process.env.__IS_SERVER = true;
   const cwd = join(fixtures, 'normal');
   const service = new Service({
     cwd,
@@ -54,6 +56,7 @@ const htmlTemplate = `<!DOCTYPE html>
 </html>`;
 
 test('ssr', async () => {
+  process.env.__IS_SERVER = true;
   const cwd = join(fixtures, 'ssr');
   const tmpServerFile = join(cwd, 'src', '.umi-test', 'core', 'server.ts');
 
