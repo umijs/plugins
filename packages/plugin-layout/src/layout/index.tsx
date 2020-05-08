@@ -91,6 +91,7 @@ const BasicLayout = (props: any) => {
       {...userConfig}
       {...props}
       {...layoutRender}
+      {...(initialState.runtimeLayoutProps || {})}
     >
       <ErrorBoundary>
         <WithExceptionOpChildren currentPathConfig={currentPathConfig}>
