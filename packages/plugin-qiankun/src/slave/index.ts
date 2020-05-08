@@ -1,7 +1,6 @@
 import address from 'address';
 import assert from 'assert';
 import { isString } from 'lodash';
-import { join } from 'path';
 import { IApi } from 'umi';
 import { addSpecifyPrefixedRoute, defaultSlaveRootId } from '../common';
 import { SlaveOptions } from '../types';
@@ -24,11 +23,10 @@ export default function(api: IApi) {
 
   const lifecyclePath = require.resolve('./lifecycles');
   // eslint-disable-next-line import/no-dynamic-require, global-require
-  const { name: pkgName } = require(join(api.cwd, 'package.json'));
   api.modifyDefaultConfig(memo => ({
     ...memo,
     disableGlobalVariables: true,
-    base: `/${pkgName}`,
+    base: `/${api.pkg.name}`,
     mountElementId: defaultSlaveRootId,
     // 默认开启 runtimePublicPath，避免出现 dynamic import 场景子应用资源地址出问题
     runtimePublicPath: true,
@@ -84,7 +82,7 @@ export default function(api: IApi) {
       memo.plugin('source-map').use(webpack.SourceMapDevToolPlugin, [
         {
           // @ts-ignore
-          namespace: pkgName,
+          namespace: api.pkg.name,
           append: `\n//# sourceMappingURL=${protocol}://${localIpAddress}:${port}/[url]`,
           filename: '[file].map',
         },
@@ -136,7 +134,7 @@ export default function(api: IApi) {
   api.modifyRoutes(routes => {
     // 开启keepOriginalRoutes配置
     if (keepOriginalRoutes === true || isString(keepOriginalRoutes)) {
-      return addSpecifyPrefixedRoute(routes, keepOriginalRoutes, pkgName);
+      return addSpecifyPrefixedRoute(routes, keepOriginalRoutes, api.pkg.name);
     }
 
     return routes;
