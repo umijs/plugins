@@ -14,7 +14,6 @@ import {
  * - indexRoute 已经被前置插件处理打平处理掉了
  * - menu 国际化
  */
-
 function formatter(
   baseRoutes: IBestAFSRoute[] = [],
   prefix: string = '',

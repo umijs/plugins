@@ -64,6 +64,7 @@ export default (api: IApi) => {
   });
 
   api.modifyDefaultConfig(config => {
+    // @ts-ignore
     config.title = false;
     return config;
   });
