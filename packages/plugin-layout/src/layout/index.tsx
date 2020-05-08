@@ -57,6 +57,10 @@ const BasicLayout = (props: any) => {
     layoutRender.headerRender = false;
   }
 
+  if (currentPathConfig && currentPathConfig.hideFooter) {
+    layoutRender.footerRender = false;
+  }
+
   if (currentPathConfig && currentPathConfig.hideLayout) {
     layoutRender.pure = true;
   }
