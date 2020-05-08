@@ -30,7 +30,7 @@ export default props => {
       return;
     }
     setRuntimeConfig(useRuntimeConfig);
-  }, []);
+  }, [initialInfo?.initialState]);
   const userConfig = {
     ...${JSON.stringify(userConfig).replace(/"/g, "'")},
     ...runtimeConfig
