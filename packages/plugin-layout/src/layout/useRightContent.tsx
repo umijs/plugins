@@ -65,7 +65,7 @@ export default function useRightContent(
         </div>
       )
     );
-  }, [initialState, loading]);
+  }, [initialState, loading, runtimeLayout.rightRender]);
 
   return rightContentRender;
 }

@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+// @ts-ignore
 import { Link, useModel, history, useIntl, InitialState } from 'umi';
 import pathToRegexp from 'path-to-regexp';
 import ProLayout from '@ant-design/pro-layout';
@@ -9,10 +10,11 @@ import { WithExceptionOpChildren } from '../component/Exception';
 import getLayoutConfigFromRoute from '../utils/getLayoutConfigFromRoute';
 import getMenuDataFromRoutes from '../utils/getMenuFromRoute';
 import { MenuItem } from '../types/interface.d';
+// @ts-ignore
 import logo from '../assets/logo.svg';
 
 const BasicLayout = (props: any) => {
-  const { children, userConfig, location } = props;
+  const { children, userConfig, location, ...restProps } = props;
   const initialInfo = (useModel && useModel('@@initialState')) || {
     initialState: undefined,
     loading: false,
@@ -75,21 +77,22 @@ const BasicLayout = (props: any) => {
       menu={{ locale: userConfig.locale }}
       menuDataRender={() => menus}
       formatMessage={intl && intl.formatMessage}
-      logo={
-        (initialState && initialState.avatar) || logo // 默认 logo
-      }
+      logo={logo}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (menuItemProps.isUrl || menuItemProps.children) {
           return defaultDom;
         }
-        return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+        if (menuItemProps.path) {
+          return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+        }
+        return defaultDom;
       }}
       disableContentMargin
       rightContentRender={rightContentRender}
       fixSiderbar
       fixedHeader
       {...userConfig}
-      {...props}
+      {...restProps}
       {...layoutRender}
     >
       <ErrorBoundary>
