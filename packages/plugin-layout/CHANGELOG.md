@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.9.2...@umijs/plugin-layout@0.10.0) (2020-05-01)
+
+### Features
+
+- remove memoize-one ([#183](https://github.com/umijs/plugins/issues/183)) ([7903f30](https://github.com/umijs/plugins/commit/7903f30d9b96542e0746915835b80823cd2301a1))
+
 ## [0.9.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.9.1...@umijs/plugin-layout@0.9.2) (2020-04-21)
 
 ### Bug Fixes
