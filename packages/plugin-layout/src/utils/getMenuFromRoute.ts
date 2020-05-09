@@ -61,6 +61,7 @@ function formatter(
 
         // 拼接返回的 menu 数据
         const result = {
+          ...route,
           name,
           path: path.startsWith('http')
             ? absolutePath
