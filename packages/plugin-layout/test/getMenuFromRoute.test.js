@@ -16,7 +16,7 @@ describe('getMenuFromRoute', () => {
    */
   test('normal', () => {
     const menu = getMenuFromRoute(normalRoute);
-    expect(menu).toEqual(normalMenu);
+    expect(menu).toMatchSnapshot();
   });
 
   /**
@@ -27,7 +27,7 @@ describe('getMenuFromRoute', () => {
    */
   test('simple', () => {
     const menu = getMenuFromRoute(simpleRoute);
-    expect(menu).toEqual(simpleMenu);
+    expect(menu).toMatchSnapshot();
   });
 
   /**
@@ -37,6 +37,6 @@ describe('getMenuFromRoute', () => {
    */
   test('prefix', () => {
     const menu = getMenuFromRoute(prefixRoute, '#/$name');
-    expect(menu).toEqual(prefixMenu);
+    expect(menu).toMatchSnapshot();
   });
 });
