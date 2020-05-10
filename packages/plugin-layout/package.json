@@ -32,7 +32,8 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.0.0",
-    "@ant-design/pro-layout": "^5.0.0",
+    "@ant-design/pro-layout": "^5.0.10",
+    "@umijs/route-utils": "^1.0.7",
     "antd": "^4.1.2",
     "lodash": "^4.17.15",
     "path-to-regexp": "1.x"
