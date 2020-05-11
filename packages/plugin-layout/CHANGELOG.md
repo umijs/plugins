@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.10.1...@umijs/plugin-layout@0.10.2) (2020-05-11)
+
+### Bug Fixes
+
+- clear renderRightContent cache ([#201](https://github.com/umijs/plugins/issues/201)) ([30d3687](https://github.com/umijs/plugins/commit/30d368727f43f38205c642d0452a054df4923153))
+
 ## [0.10.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.10.0...@umijs/plugin-layout@0.10.1) (2020-05-11)
 
 **Note:** Version bump only for package @umijs/plugin-layout
