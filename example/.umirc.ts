@@ -32,6 +32,11 @@ export default defineConfig({
       path: '/',
       component: './index',
     },
+    {
+      name: 'umi 官网- 外链测试',
+      icon: 'link',
+      path: 'https://umijs.org/',
+    },
   ],
   locale: {},
   layout: {
