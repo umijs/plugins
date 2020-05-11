@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.3](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.10.2...@umijs/plugin-layout@0.10.3) (2020-05-11)
+
+### Bug Fixes
+
+- **plugin-layout:** fix Fix problems with nested layouts ([4605d26](https://github.com/umijs/plugins/commit/4605d26a90a912a6df26de26465556ad244d54f0))
+
 ## [0.10.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.10.1...@umijs/plugin-layout@0.10.2) (2020-05-11)
 
 ### Bug Fixes
