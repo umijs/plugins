@@ -5,7 +5,7 @@ import pathToRegexp from 'path-to-regexp';
 import ProLayout from '@ant-design/pro-layout';
 import './style.less';
 import ErrorBoundary from '../component/ErrorBoundary';
-import useRightContent from './useRightContent';
+import renderRightContent from './renderRightContent';
 import { WithExceptionOpChildren } from '../component/Exception';
 import getLayoutConfigFromRoute from '../utils/getLayoutConfigFromRoute';
 import getMenuDataFromRoutes from '../utils/getMenuFromRoute';
@@ -24,7 +24,7 @@ const BasicLayout = (props: any) => {
   const _routes = require('@@/core/routes').routes;
   // 国际化插件并非默认启动
   const intl = useIntl && useIntl();
-  const rightContentRender = useRightContent(
+  const rightContentRender = renderRightContent(
     userConfig,
     loading,
     initialState,
