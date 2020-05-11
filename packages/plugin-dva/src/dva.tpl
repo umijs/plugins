@@ -7,7 +7,7 @@ import { plugin, history } from '../core/umiExports';
 
 let app:any = null;
 
-function _onCreate() {
+export function _onCreate(options = {}) {
   const runtimeDva = plugin.applyPlugins({
     key: 'dva',
     type: ApplyPluginsType.modify,
@@ -18,7 +18,8 @@ function _onCreate() {
     {{{ ExtendDvaConfig }}}
     ...(runtimeDva.config || {}),
     // @ts-ignore
-    ...(window.g_useSSR ? { initialState: window.g_initialData } : {}),
+    ...(typeof window !== 'undefined' && window.g_useSSR ? { initialState: window.g_initialProps } : {}),
+    ...(options || {}),
   });
   {{{ EnhanceApp }}}
   app.use(createLoading());
@@ -37,7 +38,10 @@ export function getApp() {
 export class _DvaContainer extends Component {
   constructor(props: any) {
     super(props);
-    _onCreate();
+    // run only in client, avoid override server _onCreate()
+    if (typeof window !== 'undefined') {
+      _onCreate();
+    }
   }
 
   componentWillUnmount() {
