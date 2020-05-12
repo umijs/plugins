@@ -7,7 +7,7 @@ const { winPath, Mustache } = utils;
 
 export default (api: IApi) => {
   const helmetPkgPath = winPath(
-    dirname(require.resolve('react-helmet-async/package')),
+    dirname(require.resolve('react-helmet/package')),
   );
   api.onGenerateFiles(async () => {
     const runtimeTpl = join(__dirname, 'templates', 'runtime.tpl');

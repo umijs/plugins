@@ -28,7 +28,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@types/react-helmet-async": "^1.0.3",
-    "react-helmet-async": "^1.0.5"
+    "@types/react-helmet": "5.0.15",
+    "react-helmet": "6.0.0"
   }
 }
