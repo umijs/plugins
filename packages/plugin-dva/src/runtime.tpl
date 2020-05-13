@@ -18,7 +18,7 @@ export const ssr = {
       tmpApp.start();
     }
     // 一定有 app
-    const { _store } = getApp() || {};
+    const { _store } = getApp();
     ctx.store = _store;
   },
 }
