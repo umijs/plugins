@@ -72,7 +72,7 @@ test('ssr', async () => {
     },
   });
 
-  const { HelmetProvider } = require(join(
+  const { Helmet } = require(join(
     cwd,
     'src',
     '.umi-test',
@@ -80,7 +80,7 @@ test('ssr', async () => {
     'umiExports.ts',
   ));
   // must set false, because of jest env patch the document
-  HelmetProvider.canUseDOM = false;
+  Helmet.canUseDOM = false;
 
   expect(existsSync(tmpServerFile)).toBeTruthy();
   const serverRender = require(tmpServerFile).default;
@@ -90,6 +90,8 @@ test('ssr', async () => {
     mountElementId: 'root',
   });
 
-  expect(html).toMatch(/<title data-rh=\"true\">Title Helmet<\/title>/);
+  expect(html).toMatch(
+    /<title data-react-helmet=\"true\">Title Helmet<\/title>/,
+  );
   expect(html).toMatch(/<html lang=\"zh\" data-direction=\"top\">/);
 });
