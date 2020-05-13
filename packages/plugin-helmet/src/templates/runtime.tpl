@@ -10,7 +10,6 @@ export const ssr = {
     const meta = helmet.meta.toString();
     const link = helmet.link.toString();
     const $ = cheerio.load(html);
-    // keep latest
     if (title) {
       $('head').prepend(title);
     }
