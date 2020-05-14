@@ -5,4 +5,5 @@ module.exports = {
       '^react-dom$': require.resolve('react-dom'),
     });
   },
+  moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json', 'd.ts'],
 };
