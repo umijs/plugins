@@ -126,7 +126,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
       );
       const dvaVersion = require(join(dvaLibPath, 'package.json')).version;
       const exportMethods = dvaVersion.startsWith('2.6')
-        ? ['connect', 'useDispatch', 'useStore', 'useSelector']
+        ? ['connect', 'useDispatch', 'useStore', 'useSelector', 'shallowEqual']
         : ['connect'];
 
       logger.debug(`dva lib path: ${dvaLibPath}`);
