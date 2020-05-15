@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.3](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.10.2...@umijs/plugin-layout@0.10.3) (2020-05-15)
+
+### Bug Fixes
+
+- **layout:** peer pro-layout ([#204](https://github.com/umijs/plugins/issues/204)) ([984579e](https://github.com/umijs/plugins/commit/984579e6828e95f3c763c00bff32e95024ebc090))
+- **plugin-layout:** fix Fix problems with nested layouts ([#202](https://github.com/umijs/plugins/issues/202)) ([85a55c6](https://github.com/umijs/plugins/commit/85a55c6ed284cd7f95814aedd4b116e9c2a2240c))
+- **plugin-layout:** If prolayout does not exist, provide a prompt ([#208](https://github.com/umijs/plugins/issues/208)) ([9f0df80](https://github.com/umijs/plugins/commit/9f0df8050671f4f05582dd222fe6539c2be97db9))
+
 ## [0.10.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.10.1...@umijs/plugin-layout@0.10.2) (2020-05-11)
 
 ### Bug Fixes
