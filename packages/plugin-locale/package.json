@@ -33,7 +33,8 @@
     "intl": "1.2.5",
     "moment": "2.x",
     "react-intl": "3.12.0",
-    "warning": "^4.0.3"
+    "warning": "^4.0.3",
+    "@ant-design/icons": "^4.1.0"
   },
   "devDependencies": {
     "@types/warning": "^3.0.0"
