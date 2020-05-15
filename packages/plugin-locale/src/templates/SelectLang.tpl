@@ -5,7 +5,7 @@ import { Menu, Dropdown } from 'antd';
 import { ClickParam } from 'antd/{{{antdFiles}}}/menu';
 import { DropDownProps } from 'antd/{{{antdFiles}}}/dropdown';
 {{/Antd}}
-import { getLocale, setLocale } from './localeExports';
+import { getLocale, getAllLocales, setLocale } from './localeExports';
 
 {{#Antd}}
 export interface HeaderDropdownProps extends DropDownProps {
@@ -42,6 +42,7 @@ interface SelectLangProps {
   globalIconClassName?: string,
   postLocalesData?: (locales: LocalData[]) => LocalData[],
   onItemClick?: (params:ClickParam) => void,
+  className?:string;
 }
 
 const transformArrayToObject = (allLangUIConfig:LocalData[])=>{
@@ -123,9 +124,12 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
   );
 
   const style = {
-    verticalAlign: 'top',
     cursor: 'pointer',
     padding: '0 12px',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 24
   }
 
   return (

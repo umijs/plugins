@@ -30,8 +30,10 @@
   height: 100%;
   margin-left: auto;
   overflow: hidden;
+  display: flex;
   .umi-plugin-layout-action {
-    display: inline-block;
+    display: flex;
+    align-items: center;
     height: 100%;
     padding: 0 12px;
     cursor: pointer;
@@ -51,15 +53,6 @@
     padding: 0 12px;
     &:hover {
       background: transparent;
-    }
-  }
-  .umi-plugin-layout-account {
-    .umi-plugin-layout-avatar {
-      margin: ~'calc((@{layout-header-height} - 24px) / 2)' 0;
-      margin-right: 8px;
-      color: @primary-color;
-      vertical-align: top;
-      background: rgba(255, 255, 255, 0.85);
     }
   }
 }
