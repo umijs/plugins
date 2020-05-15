@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.4.5...@umijs/plugin-locale@0.6.0) (2020-05-15)
+
+### Bug Fixes
+
+- **plugin:** 🚑 Uncommitted version changes ([e0c37b5](https://github.com/umijs/plugins/commit/e0c37b5594f3148ea3431c35aff98bfb9d5cf04a))
+
+### Features
+
+- **locale:** export Selectlang component ([#200](https://github.com/umijs/plugins/issues/200)) ([16278a4](https://github.com/umijs/plugins/commit/16278a4253bc4b635a9932e4c2a967129e7ec688))
+
 ## [0.4.5](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.4.4...@umijs/plugin-locale@0.4.5) (2020-04-24)
 
 ### Bug Fixes

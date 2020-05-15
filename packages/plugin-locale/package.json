@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-locale",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "@umijs/plugin-locale",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -28,13 +28,13 @@
     "access": "public"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.1.0",
     "@formatjs/intl-pluralrules": "^1.5.0",
     "@formatjs/intl-relativetimeformat": "^4.5.7",
     "intl": "1.2.5",
     "moment": "2.x",
     "react-intl": "3.12.0",
-    "warning": "^4.0.3",
-    "@ant-design/icons": "^4.1.0"
+    "warning": "^4.0.3"
   },
   "devDependencies": {
     "@types/warning": "^3.0.0"
