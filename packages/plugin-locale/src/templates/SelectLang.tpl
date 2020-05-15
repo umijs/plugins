@@ -57,6 +57,33 @@ const transformArrayToObject = (allLangUIConfig:LocalData[])=>{
   }, {});
 }
 
+const defaultLangUConfigMap = {
+  'zh-CN': {
+    lang: 'zh-CN',
+    label: '简体中文',
+    icon: '🇨🇳',
+    title: '语言'
+  },
+  'zh-TW': {
+    lang: 'zh-TW',
+    label: '繁体中文',
+    icon: '🇭🇰',
+    title: '語言'
+  },
+  'en-US': {
+    lang: 'en-US',
+    label: 'English',
+    icon: '🇺🇸',
+    title: 'Language'
+  },
+  'pt-BR': {
+    lang: 'pt-BR',
+    label: 'Português',
+    icon: '🇧🇷',
+    title: 'Idiomas'
+  }
+};
+
 export const SelectLang: React.FC<SelectLangProps> = (props) => {
   {{#ShowSelectLang}}
   const { globalIconClassName, postLocalesData, onItemClick, ...restProps } = props;
@@ -64,32 +91,16 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
 
   const changeLang = ({ key }: ClickParam): void => setLocale(key);
 
-  const defaultLangUConfig = [
-    {
-      lang: 'zh-CN',
-      label: '简体中文',
-      icon: '🇨🇳',
-      title: '语言',
-    },
-    {
-      lang: 'zh-TW',
-      label: '繁体中文',
-      icon: '🇭🇰',
-      title: '語言',
-    },
-    {
-      lang: 'en-US',
-      label: 'English',
-      icon: '🇺🇸',
-      title: 'Language',
-    },
-    {
-      lang: 'pt-BR',
-      label: 'Português',
-      icon: '🇧🇷',
-      title: 'Idiomas',
-    }
-  ]
+  const defaultLangUConfig = getAllLocales().map(
+    key =>
+      defaultLangUConfigMap[key] || {
+        lang: key,
+        label: key,
+        icon: '🌐',
+        title: key
+      }
+  );
+
 
   const allLangUIConfig = transformArrayToObject(postLocalesData ?  postLocalesData(defaultLangUConfig): defaultLangUConfig);
 
