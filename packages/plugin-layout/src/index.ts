@@ -3,7 +3,7 @@ import { join } from 'path';
 import * as allIcons from '@ant-design/icons';
 import getLayoutContent from './utils/getLayoutContent';
 import { LayoutConfig } from './types';
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync } from 'fs';
 
 const DIR_NAME = 'plugin-layout';
 
