@@ -48,15 +48,19 @@ const BasicLayout = (props: any) => {
     ? layoutConfig[currentMatchPaths[currentMatchPaths.length - 1]]
     : undefined;
 
-  if (currentPathConfig && currentPathConfig.hideMenu) {
+  if (currentPathConfig?.hideMenu) {
     layoutRender.menuRender = false;
   }
 
-  if (currentPathConfig && currentPathConfig.hideNav) {
+  if (currentPathConfig?.hideNav) {
     layoutRender.headerRender = false;
   }
 
-  if (currentPathConfig && currentPathConfig.hideLayout) {
+  if (currentPathConfig?.hideLayout) {
+    layoutRender.pure = true;
+  }
+
+  if (currentPathConfig?.hideFooter) {
     layoutRender.pure = true;
   }
 
