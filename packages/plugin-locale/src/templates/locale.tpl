@@ -10,7 +10,7 @@ import moment from 'moment';
 import 'moment/locale/{{.}}';
 {{/MomentLocales}}
 {{/MomentLocales.length}}
-import { RawIntlProvider, getLocale, setIntl, getIntl, localeInfo } from './localeExports';
+import { RawIntlProvider, getLocale, getDirection , setIntl, getIntl, localeInfo } from './localeExports';
 
 // @ts-ignore
 export const event = new EventEmitter();
