@@ -34,8 +34,8 @@
     "@umijs/plugin-crossorigin": "1.1.0",
     "@umijs/plugin-dva": "0.6.5",
     "@umijs/plugin-initial-state": "2.2.1",
-    "@umijs/plugin-layout": "0.10.2",
-    "@umijs/plugin-locale": "0.4.5",
+    "@umijs/plugin-layout": "0.11.3",
+    "@umijs/plugin-locale": "0.6.1",
     "@umijs/plugin-model": "2.3.1",
     "@umijs/plugin-request": "2.3.2",
     "@umijs/plugin-test": "1.0.0"
