@@ -115,7 +115,7 @@ export default function(api: IApi) {
     return {
       source: lifecyclePath,
       specifier:
-        '{ genMount as qiankun_genMount, genBootstrap as qiankun_genBootstrap, genUnmount as qiankun_genUnmount }',
+        '{ genMount as qiankun_genMount, genBootstrap as qiankun_genBootstrap, genUnmount as qiankun_genUnmount, genUpdate as qiankun_genUpdate }',
     };
   });
   api.addEntryCode(
@@ -123,6 +123,7 @@ export default function(api: IApi) {
       `
     export const bootstrap = qiankun_genBootstrap(clientRender);
     export const mount = qiankun_genMount();
+    export const update = qiankun_genUpdate();
     export const unmount = qiankun_genUnmount('${api.config.mountElementId}');
 
     if (!window.__POWERED_BY_QIANKUN__) {
