@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.4](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.3...@umijs/plugin-layout@0.11.4) (2020-05-18)
+
+### Bug Fixes
+
+- **layout:** amend the hideFooter config ([#213](https://github.com/umijs/plugins/issues/213)) ([4d0c0c0](https://github.com/umijs/plugins/commit/4d0c0c03ebb44d49b09937633d9fdc7452c2aa80))
+
 ## [0.11.3](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.2...@umijs/plugin-layout@0.11.3) (2020-05-17)
 
 **Note:** Version bump only for package @umijs/plugin-layout
