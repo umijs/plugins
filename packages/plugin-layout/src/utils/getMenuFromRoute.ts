@@ -1,8 +1,7 @@
 /**
  * 通过路由配置自动生成菜单配置
  */
-import memoizeOne from 'memoize-one';
-import { flatten, isEqual } from 'lodash';
+import { flatten } from 'lodash';
 import {
   IBestAFSRoute,
   MenuItem,
@@ -15,7 +14,6 @@ import {
  * - indexRoute 已经被前置插件处理打平处理掉了
  * - menu 国际化
  */
-
 function formatter(
   baseRoutes: IBestAFSRoute[] = [],
   prefix: string = '',
@@ -63,6 +61,7 @@ function formatter(
 
         // 拼接返回的 menu 数据
         const result = {
+          ...route,
           name,
           path: path.startsWith('http')
             ? absolutePath
@@ -96,7 +95,4 @@ function formatter(
   return menus;
 }
 
-// 参数深比较
-const getMenuFromRoute = memoizeOne(formatter, isEqual);
-
-export default getMenuFromRoute;
+export default formatter;

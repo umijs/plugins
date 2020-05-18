@@ -21,6 +21,15 @@ interface ILocaleConfig {
   baseSeparator?: string;
 }
 
+let hasAntd = false;
+try {
+  hasAntd = !!require.resolve('antd');
+} catch (_) {
+  console.log(
+    '@umijs/plugin-locale WARNING: antd is not installed, <SelectLang /> unavailable.',
+  );
+}
+
 export default (api: IApi) => {
   const {
     paths,
@@ -34,6 +43,7 @@ export default (api: IApi) => {
         baseNavigator: true,
         useLocalStorage: true,
         baseSeparator: '-',
+        antd: !!hasAntd,
       },
       schema(joi) {
         return joi.object({
@@ -171,6 +181,23 @@ export default (api: IApi) => {
         Title: !!title,
       }),
     });
+
+    // SelectLang.tsx
+    const selectLang = readFileSync(
+      join(__dirname, 'templates', 'SelectLang.tpl'),
+      'utf-8',
+    );
+
+    api.writeTmpFile({
+      path: 'plugin-locale/SelectLang.tsx',
+      content: Mustache.render(selectLang, {
+        Antd: !!antd,
+        LocaleList: localeList,
+        ShowSelectLang: localeList.length > 1 && !!antd,
+        iconsPkgPath: winPath(require.resolve('@ant-design/icons')),
+        antdFiles: api.config?.ssr ? 'lib' : 'es',
+      }),
+    });
   });
 
   api.addRuntimePluginKey(() => 'locale');
@@ -194,6 +221,13 @@ export default (api: IApi) => {
     return {
       exportAll: true,
       source: `../plugin-locale/localeExports`,
+    };
+  });
+
+  api.addUmiExports(() => {
+    return {
+      exportAll: true,
+      source: `../plugin-locale/SelectLang`,
     };
   });
 };

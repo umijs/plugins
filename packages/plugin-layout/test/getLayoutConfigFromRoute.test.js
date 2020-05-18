@@ -14,12 +14,42 @@ describe('getLayoutConfigFromRoute', () => {
   test('normal', () => {
     const LayoutConfig = getLayoutConfigFromRoute(normalRoute);
     expect(LayoutConfig).toEqual({
-      '/': { hideMenu: true, hideNav: true, unAccessible: false },
-      '/welcome': { hideMenu: false, hideNav: false, unAccessible: false },
-      '/test': { hideMenu: false, hideNav: false, unAccessible: false },
-      '/test/1': { hideMenu: true, hideNav: false, unAccessible: false },
-      '/test233': { hideMenu: false, hideNav: true, unAccessible: false },
-      '/test_hide': { hideMenu: false, hideNav: false, unAccessible: false },
+      '/': {
+        hideMenu: true,
+        hideFooter: true,
+        hideNav: true,
+        unAccessible: false,
+      },
+      '/welcome': {
+        hideMenu: false,
+        hideFooter: false,
+        hideNav: false,
+        unAccessible: false,
+      },
+      '/test': {
+        hideMenu: false,
+        hideFooter: false,
+        hideNav: false,
+        unAccessible: false,
+      },
+      '/test/1': {
+        hideMenu: true,
+        hideNav: false,
+        hideFooter: false,
+        unAccessible: false,
+      },
+      '/test233': {
+        hideMenu: false,
+        hideNav: true,
+        hideFooter: false,
+        unAccessible: false,
+      },
+      '/test_hide': {
+        hideMenu: false,
+        hideNav: false,
+        hideFooter: false,
+        unAccessible: false,
+      },
     });
   });
 
@@ -31,12 +61,42 @@ describe('getLayoutConfigFromRoute', () => {
   test('simple', () => {
     const LayoutConfig = getLayoutConfigFromRoute(simpleRoute);
     expect(LayoutConfig).toEqual({
-      '/': { hideMenu: true, hideNav: false, unAccessible: false },
-      '/welcome': { hideMenu: false, hideNav: false, unAccessible: false },
-      '/test': { hideMenu: true, hideNav: true, unAccessible: false },
-      '/test/1': { hideMenu: true, hideNav: true, unAccessible: false },
-      '/test233': { hideMenu: true, hideNav: false, unAccessible: false },
-      '/test_hide': { hideMenu: true, hideNav: true, unAccessible: false },
+      '/': {
+        hideMenu: true,
+        hideNav: false,
+        unAccessible: false,
+        hideFooter: false,
+      },
+      '/welcome': {
+        hideMenu: false,
+        hideNav: false,
+        unAccessible: false,
+        hideFooter: false,
+      },
+      '/test': {
+        hideMenu: true,
+        hideNav: true,
+        unAccessible: false,
+        hideFooter: false,
+      },
+      '/test/1': {
+        hideMenu: true,
+        hideNav: true,
+        unAccessible: false,
+        hideFooter: false,
+      },
+      '/test233': {
+        hideMenu: true,
+        hideNav: false,
+        unAccessible: false,
+        hideFooter: false,
+      },
+      '/test_hide': {
+        hideMenu: true,
+        hideNav: true,
+        unAccessible: false,
+        hideFooter: false,
+      },
     });
   });
 
@@ -48,12 +108,42 @@ describe('getLayoutConfigFromRoute', () => {
   test('prefix', () => {
     const LayoutConfig = getLayoutConfigFromRoute(prefixRoute);
     expect(LayoutConfig).toEqual({
-      '/': { hideMenu: true, hideNav: false, unAccessible: false },
-      '/welcome': { hideMenu: false, hideNav: false, unAccessible: false },
-      '/test': { hideMenu: true, hideNav: true, unAccessible: false },
-      '/test/1': { hideMenu: true, hideNav: true, unAccessible: false },
-      '/test233': { hideMenu: true, hideNav: false, unAccessible: false },
-      '/test_hide': { hideMenu: true, hideNav: true, unAccessible: false },
+      '/': {
+        hideMenu: true,
+        hideNav: false,
+        unAccessible: false,
+        hideFooter: false,
+      },
+      '/welcome': {
+        hideMenu: false,
+        hideNav: false,
+        unAccessible: false,
+        hideFooter: false,
+      },
+      '/test': {
+        hideMenu: true,
+        hideNav: true,
+        unAccessible: false,
+        hideFooter: false,
+      },
+      '/test/1': {
+        hideMenu: true,
+        hideNav: true,
+        unAccessible: false,
+        hideFooter: false,
+      },
+      '/test233': {
+        hideMenu: true,
+        hideNav: false,
+        unAccessible: false,
+        hideFooter: false,
+      },
+      '/test_hide': {
+        hideMenu: true,
+        hideNav: true,
+        unAccessible: false,
+        hideFooter: false,
+      },
     });
   });
 });

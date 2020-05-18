@@ -180,6 +180,32 @@ setLocale('zh-TW', true);
 setLocale('zh-TW', false);
 ```
 
+### <SelectLang />
+
+选择语言的展示组件。可以通过开启 locale 插件，从 umi 中获取该组件。只有当项目依赖 antd, 同时项目 /locales 文件夹下有超过两个语言文件时才会显示。可配置的属性有：
+
+- postLocaleData, 默认包含 "简体中文" 、"繁体中文"、 "英文" 、"葡萄牙语"四种语言配置,当需要展示其他语言时，可以通过配置 postLocaleData 来扩展，格式如下所示。
+- globalIconClassName, 全球图标的样式。
+- onItemClick, 切换语言时的回掉函数，默认会 setLocale。
+- <[Dropdown/](https://ant.design/components/dropdown-cn/#API)> 的所有 API。
+
+```tsx
+import { SelectLang } from 'umi';
+
+<SelectLang
+  postLocaleData={locales=> ([
+    ...locales,
+    {
+      lang: 'nl-NL', // 语言的 key 与 antd & locales 下的文件名保持一致
+      label: 'Nederlands', // 下拉菜单中展示的语言名
+      icon: '🇳🇱', // 下拉菜单中展示的 icon （一般为国旗
+      title: 'Taal', // 鼠标浮上全球图标时展示的文案（一般为“语言”这个词的各种翻译
+    }
+  ])}
+  onItemClick={({ key }) => alert(key)}
+>
+```
+
 ### 运行时配置
 
 支持运行时对国际化做一些扩展与定制，例如自定义语言识别等。

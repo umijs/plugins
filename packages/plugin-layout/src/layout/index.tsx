@@ -1,18 +1,21 @@
 import React, { useMemo } from 'react';
+// @ts-ignore
 import { Link, useModel, history, useIntl, InitialState } from 'umi';
 import pathToRegexp from 'path-to-regexp';
 import ProLayout from '@ant-design/pro-layout';
 import './style.less';
 import ErrorBoundary from '../component/ErrorBoundary';
-import useRightContent from './useRightContent';
+import renderRightContent from './renderRightContent';
 import { WithExceptionOpChildren } from '../component/Exception';
 import getLayoutConfigFromRoute from '../utils/getLayoutConfigFromRoute';
 import getMenuDataFromRoutes from '../utils/getMenuFromRoute';
 import { MenuItem } from '../types/interface.d';
+// @ts-ignore
 import logo from '../assets/logo.svg';
 
 const BasicLayout = (props: any) => {
-  const { children, userConfig, location } = props;
+  const { children, userConfig, location, route, ...restProps } = props;
+  const { routes = [] } = route;
   const initialInfo = (useModel && useModel('@@initialState')) || {
     initialState: undefined,
     loading: false,
@@ -22,18 +25,14 @@ const BasicLayout = (props: any) => {
   const _routes = require('@@/core/routes').routes;
   // 国际化插件并非默认启动
   const intl = useIntl && useIntl();
-  const rightContentRender = useRightContent(
-    userConfig,
-    loading,
-    initialState,
-    setInitialState,
-  );
   const layoutConfig = getLayoutConfigFromRoute(_routes);
+
   const patchMenus: (ms: MenuItem[], initialInfo: InitialState) => MenuItem[] =
     userConfig.patchMenus || ((ms: MenuItem[]): MenuItem[] => ms);
-  const menus = useMemo(
-    () => patchMenus(getMenuDataFromRoutes(_routes[0].routes), initialInfo),
-    [initialState],
+
+  const menus = patchMenus(
+    getMenuDataFromRoutes(_routes[0].routes),
+    initialInfo,
   );
 
   // layout 是否渲染相关
@@ -49,16 +48,20 @@ const BasicLayout = (props: any) => {
     ? layoutConfig[currentMatchPaths[currentMatchPaths.length - 1]]
     : undefined;
 
-  if (currentPathConfig && currentPathConfig.hideMenu) {
+  if (currentPathConfig?.hideMenu) {
     layoutRender.menuRender = false;
   }
 
-  if (currentPathConfig && currentPathConfig.hideNav) {
+  if (currentPathConfig?.hideNav) {
     layoutRender.headerRender = false;
   }
 
-  if (currentPathConfig && currentPathConfig.hideLayout) {
+  if (currentPathConfig?.hideLayout) {
     layoutRender.pure = true;
+  }
+
+  if (currentPathConfig?.hideFooter) {
+    layoutRender.footerRender = false;
   }
 
   return (
@@ -75,21 +78,24 @@ const BasicLayout = (props: any) => {
       menu={{ locale: userConfig.locale }}
       menuDataRender={() => menus}
       formatMessage={intl && intl.formatMessage}
-      logo={
-        (initialState && initialState.avatar) || logo // 默认 logo
-      }
+      logo={logo}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (menuItemProps.isUrl || menuItemProps.children) {
           return defaultDom;
         }
-        return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+        if (menuItemProps.path) {
+          return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+        }
+        return defaultDom;
       }}
       disableContentMargin
-      rightContentRender={rightContentRender}
+      rightContentRender={() =>
+        renderRightContent(userConfig, loading, initialState, setInitialState)
+      }
       fixSiderbar
       fixedHeader
       {...userConfig}
-      {...props}
+      {...restProps}
       {...layoutRender}
     >
       <ErrorBoundary>
