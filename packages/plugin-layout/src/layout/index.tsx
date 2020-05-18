@@ -61,7 +61,7 @@ const BasicLayout = (props: any) => {
   }
 
   if (currentPathConfig?.hideFooter) {
-    layoutRender.pure = true;
+    layoutRender.footerRender = false;
   }
 
   return (
