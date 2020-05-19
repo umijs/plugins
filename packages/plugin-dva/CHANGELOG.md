@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.6.5...@umijs/plugin-dva@0.7.0) (2020-05-19)
+
+### Bug Fixes
+
+- change connect.ts name ([#207](https://github.com/umijs/plugins/issues/207)) ([5a50acc](https://github.com/umijs/plugins/commit/5a50acc79315041938dcb0c15e5c4f763c9b13d3))
+
+### Features
+
+- support dva ssr ([#199](https://github.com/umijs/plugins/issues/199)) ([9930e41](https://github.com/umijs/plugins/commit/9930e412fec9958af8122cca29d3e60ef0d9dbdd))
+
 ## [0.6.5](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.6.4...@umijs/plugin-dva@0.6.5) (2020-04-09)
 
 ### Bug Fixes
