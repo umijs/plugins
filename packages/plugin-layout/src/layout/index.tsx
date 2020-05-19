@@ -29,9 +29,10 @@ const BasicLayout = (props: any) => {
 
   const patchMenus: (ms: MenuItem[], initialInfo: InitialState) => MenuItem[] =
     userConfig.patchMenus || ((ms: MenuItem[]): MenuItem[] => ms);
-  const menus = useMemo(
-    () => patchMenus(getMenuDataFromRoutes(routes), initialInfo),
-    [initialState],
+
+  const menus = patchMenus(
+    getMenuDataFromRoutes(_routes[0].routes),
+    initialInfo,
   );
 
   // layout 是否渲染相关
@@ -47,16 +48,20 @@ const BasicLayout = (props: any) => {
     ? layoutConfig[currentMatchPaths[currentMatchPaths.length - 1]]
     : undefined;
 
-  if (currentPathConfig && currentPathConfig.hideMenu) {
+  if (currentPathConfig?.hideMenu) {
     layoutRender.menuRender = false;
   }
 
-  if (currentPathConfig && currentPathConfig.hideNav) {
+  if (currentPathConfig?.hideNav) {
     layoutRender.headerRender = false;
   }
 
-  if (currentPathConfig && currentPathConfig.hideLayout) {
+  if (currentPathConfig?.hideLayout) {
     layoutRender.pure = true;
+  }
+
+  if (currentPathConfig?.hideFooter) {
+    layoutRender.footerRender = false;
   }
 
   return (

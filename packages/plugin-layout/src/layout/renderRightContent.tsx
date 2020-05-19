@@ -1,5 +1,6 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Avatar, Dropdown, Menu, Spin } from 'antd';
+import { SelectLang } from 'umi';
 import { LogoutOutlined } from '@ant-design/icons';
 import './style.less';
 import { ILayoutRuntimeConfig } from '../types/interface.d';
@@ -24,7 +25,7 @@ export default function renderRightContent(
   );
 
   const avatar = (
-    <span className="umi-plugin-layout-action umi-plugin-layout-account">
+    <span className="umi-plugin-layout-action">
       <Avatar
         size="small"
         className="umi-plugin-layout-avatar"
@@ -61,6 +62,7 @@ export default function renderRightContent(
         ) : (
           avatar
         )}
+        {SelectLang && <SelectLang />}
       </div>
     )
   );

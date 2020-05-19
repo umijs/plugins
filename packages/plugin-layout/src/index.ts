@@ -3,7 +3,7 @@ import { join } from 'path';
 import * as allIcons from '@ant-design/icons';
 import getLayoutContent from './utils/getLayoutContent';
 import { LayoutConfig } from './types';
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 
 const DIR_NAME = 'plugin-layout';
 
@@ -18,6 +18,17 @@ export interface MenuDataItem {
   key?: string;
   path?: string;
   [key: string]: any;
+}
+
+function haveProLayout() {
+  try {
+    require.resolve('@ant-design/pro-layout');
+    return true;
+  } catch (error) {
+    console.log(error);
+    console.error('@umijs/plugin-layout 需要安装 ProLayout 才可运行');
+  }
+  return false;
 }
 
 function toHump(name: string) {
@@ -86,7 +97,13 @@ export default (api: IApi) => {
 
     // allow custom theme
     let layoutComponent = {
-      PRO: utils.winPath(join(__dirname, './layout/index.js')),
+      // 如果 ProLayout 没有安装会提供一个报错和一个空的 layout 组件
+      PRO: utils.winPath(
+        join(
+          __dirname,
+          haveProLayout() ? './layout/index.js' : './layout/blankLayout.js',
+        ),
+      ),
     };
     if (layoutOpts.layoutComponent) {
       layoutComponent = Object.assign(

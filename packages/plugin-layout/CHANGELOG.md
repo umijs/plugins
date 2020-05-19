@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.4](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.3...@umijs/plugin-layout@0.11.4) (2020-05-18)
+
+### Bug Fixes
+
+- **layout:** amend the hideFooter config ([#213](https://github.com/umijs/plugins/issues/213)) ([4d0c0c0](https://github.com/umijs/plugins/commit/4d0c0c03ebb44d49b09937633d9fdc7452c2aa80))
+
+## [0.11.3](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.2...@umijs/plugin-layout@0.11.3) (2020-05-17)
+
+**Note:** Version bump only for package @umijs/plugin-layout
+
+## [0.11.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.10.2...@umijs/plugin-layout@0.11.2) (2020-05-15)
+
+### Bug Fixes
+
+- **layout:** peer pro-layout ([#204](https://github.com/umijs/plugins/issues/204)) ([984579e](https://github.com/umijs/plugins/commit/984579e6828e95f3c763c00bff32e95024ebc090))
+- **plugin:** 🚑 Uncommitted version changes ([e0c37b5](https://github.com/umijs/plugins/commit/e0c37b5594f3148ea3431c35aff98bfb9d5cf04a))
+- **plugin-layout:** fix Fix problems with nested layouts ([#202](https://github.com/umijs/plugins/issues/202)) ([85a55c6](https://github.com/umijs/plugins/commit/85a55c6ed284cd7f95814aedd4b116e9c2a2240c))
+- **plugin-layout:** If prolayout does not exist, provide a prompt ([#208](https://github.com/umijs/plugins/issues/208)) ([9f0df80](https://github.com/umijs/plugins/commit/9f0df8050671f4f05582dd222fe6539c2be97db9))
+- **plugin-layout:** rm unuse var ([344dc83](https://github.com/umijs/plugins/commit/344dc83538b68b73165a8ba7afa1b89183a863c1))
+
 ## [0.10.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.10.1...@umijs/plugin-layout@0.10.2) (2020-05-11)
 
 ### Bug Fixes
