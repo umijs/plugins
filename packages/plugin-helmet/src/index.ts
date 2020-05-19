@@ -10,25 +10,38 @@ export default (api: IApi) => {
     dirname(require.resolve('react-helmet/package')),
   );
   api.onGenerateFiles(async () => {
-    const runtimeTpl = join(__dirname, 'templates', 'runtime.tpl');
-    const runtimeContent = readFileSync(runtimeTpl, 'utf-8');
+    if (api.config.ssr) {
+      const runtimeTpl = join(__dirname, 'templates', 'runtime.tpl');
+      const runtimeContent = readFileSync(runtimeTpl, 'utf-8');
+      api.writeTmpFile({
+        path: 'plugin-helmet/runtime.ts',
+        content: Mustache.render(runtimeContent, {
+          HelmetPkg: helmetPkgPath,
+          SSR: !!api.config.ssr,
+        }),
+      });
+    }
+
+    const exportsTpl = join(__dirname, 'templates', 'exports.tpl');
+    const exportsContent = readFileSync(exportsTpl, 'utf-8');
     api.writeTmpFile({
-      path: 'plugin-helmet/runtime.ts',
-      content: Mustache.render(runtimeContent, {
+      path: 'plugin-helmet/exports.ts',
+      content: Mustache.render(exportsContent, {
         HelmetPkg: helmetPkgPath,
-        SSR: !!api.config.ssr,
       }),
     });
   });
 
   api.addRuntimePlugin(() =>
-    winPath(join(api.paths!.absTmpPath, 'plugin-helmet', 'runtime.ts')),
+    api.config?.ssr
+      ? [winPath(join(api.paths!.absTmpPath, 'plugin-helmet', 'runtime.ts'))]
+      : [],
   );
 
   api.addUmiExports(() => [
     {
       exportAll: true,
-      source: helmetPkgPath,
+      source: '../plugin-helmet/exports',
     },
   ]);
 };
