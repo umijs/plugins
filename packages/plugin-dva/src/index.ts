@@ -148,7 +148,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
 
       const connectTpl = readFileSync(join(__dirname, 'connect.tpl'), 'utf-8');
       api.writeTmpFile({
-        path: 'plugin-dva/connect.d.ts',
+        path: 'plugin-dva/connect.ts',
         content: Mustache.render(connectTpl, {
           dvaHeadExport: models
             .map(path => {
