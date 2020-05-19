@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.7.0...@umijs/plugin-dva@0.7.1) (2020-05-19)
+
+### Reverts
+
+- Revert "fix: change connect.ts name (#207)" (#219) ([003ab70](https://github.com/umijs/plugins/commit/003ab70324d2d8be89832d064467eacd41726cf3)), closes [#207](https://github.com/umijs/plugins/issues/207) [#219](https://github.com/umijs/plugins/issues/219)
+
 # [0.7.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.6.5...@umijs/plugin-dva@0.7.0) (2020-05-19)
 
 ### Bug Fixes
