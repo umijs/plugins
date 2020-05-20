@@ -111,7 +111,7 @@ export default function(api: IApi, options: MasterOptions) {
     } = api;
     const masterHistoryType = history?.type || defaultHistoryType;
     const rootExports = `
-window.g_rootExports = ${
+    if (window) window.g_rootExports = ${
       rootExportsFileExisted ? `require('@/rootExports')` : `{}`
     };
     `.trim();
