@@ -105,7 +105,9 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
 
   const allLangUIConfig = transformArrayToObject(postLocalesData ?  postLocalesData(defaultLangUConfig): defaultLangUConfig);
 
-  const handleClick = onItemClick ? (params)=> onItemClick(params): changeLang;
+ const handleClick = onItemClick
+  ? (params: ClickParam) => onItemClick(params)
+  : changeLang;
 
   const menuItemStyle = { minWidth: '160px' }
   const langMenu = (
