@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.6.1...@umijs/plugin-locale@0.7.0) (2020-05-20)
+
+### Bug Fixes
+
+- **plugin-locale:** fix ts error in 3.9 ([#221](https://github.com/umijs/plugins/issues/221)) ([010c35d](https://github.com/umijs/plugins/commit/010c35df900b614bfcfb25cb9419c34567d0ca82))
+
+### Features
+
+- add helmet plugin ([#180](https://github.com/umijs/plugins/issues/180)) ([70ffc80](https://github.com/umijs/plugins/commit/70ffc801a92d784d31f64acbb7488d8296131611))
+
 ## [0.6.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.6.0...@umijs/plugin-locale@0.6.1) (2020-05-17)
 
 **Note:** Version bump only for package @umijs/plugin-locale
