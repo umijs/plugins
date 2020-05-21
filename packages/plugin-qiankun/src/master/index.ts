@@ -113,7 +113,7 @@ export default function(api: IApi, options: MasterOptions) {
     const rootExports = `
     if (typeof window !== 'undefined') { window.g_rootExports = ${
       rootExportsFileExisted ? `require('@/rootExports')` : `{}`
-    };
+    }};
     `.trim();
 
     api.writeTmpFile({
