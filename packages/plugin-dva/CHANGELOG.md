@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.2](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.7.1...@umijs/plugin-dva@0.7.2) (2020-05-21)
+
+### Bug Fixes
+
+- ctx should return ([#227](https://github.com/umijs/plugins/issues/227)) ([545b6f2](https://github.com/umijs/plugins/commit/545b6f20e4fb5869d048a9bfe0dd2a41a545d061))
+
 ## [0.7.1](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.7.0...@umijs/plugin-dva@0.7.1) (2020-05-19)
 
 ### Reverts
