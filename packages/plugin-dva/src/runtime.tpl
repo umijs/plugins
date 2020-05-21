@@ -20,6 +20,7 @@ export const ssr = {
     // 一定有 app
     const { _store } = getApp();
     ctx.store = _store;
+    return ctx;
   },
 }
 {{/SSR}}
