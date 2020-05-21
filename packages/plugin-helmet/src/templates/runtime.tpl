@@ -11,7 +11,9 @@ if (process.env.__IS_SERVER) {
       const htmlAttributes = helmet.htmlAttributes.toComponent();
       const meta = helmet.meta.toString();
       const link = helmet.link.toString();
-      const $ = cheerio.load(html);
+      const $ = cheerio.load(html, {
+        decodeEntities: false,
+      });
       if (title) {
         $('head').prepend(title);
       }
