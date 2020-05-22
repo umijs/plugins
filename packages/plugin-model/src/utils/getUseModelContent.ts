@@ -30,15 +30,15 @@ export function useModel<T extends keyof Model<T>, U>(
   const [state, setState] = useState<RetState>(
     () => updaterRef.current ? updaterRef.current(dispatcher.data![namespace]) : dispatcher.data![namespace]
   );
-  const lastState = useRef<any>(state);
+  const stateRef = useRef<any>(state);
 
   useEffect(() => {
     const handler = (e: any) => {
       if(updater && updaterRef.current){
-        const ret = updaterRef.current(e);
-        if(!isEqual(ret, lastState.current)){
-          lastState.current = ret;
-          setState(ret);
+        const currentState = updaterRef.current(e);
+        const previousState = stateRef.current
+        if(!isEqual(currentState, previousState)){
+          setState(currentState);
         }
       } else {
         setState(e);
