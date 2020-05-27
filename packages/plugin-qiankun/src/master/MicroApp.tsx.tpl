@@ -4,7 +4,7 @@ import {
   loadMicroApp,
   MicroApp as MicroAppType,
 } from 'qiankun';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 type Props = {
   name: string;
@@ -12,6 +12,7 @@ type Props = {
   base?: string;
   history?: string;
   getMatchedBase?: () => string;
+  loadingComponent?: React.ReactNode;
 } & Record<string, any>;
 
 function unmountMicroApp(microApp?: MicroAppType) {
@@ -36,6 +37,7 @@ export function MicroApp(componentProps: Props) {
 
   const containerRef = useRef<HTMLDivElement>(null);
   let microAppRef = useRef<MicroAppType>();
+  const [ loading, setLoading ] = useState(false);
 
   const appConfig = apps.find((app: any) => app.name === name);
   if (!appConfig) {
@@ -60,6 +62,8 @@ export function MicroApp(componentProps: Props) {
       },
     );
 
+    microAppRef.current.loadPromise.then(() => setLoading(false));
+
     return () => unmountMicroApp(microAppRef.current);
   }, []);
 
@@ -73,5 +77,10 @@ export function MicroApp(componentProps: Props) {
     return () => {};
   }, Object.values(propsForParams));
 
-  return <div ref={containerRef} />;
+  return (
+    <div>
+      { loading && componentProps.loadingComponent || 'loading...' }
+      <div ref={containerRef} />
+    </div>
+  );
 }
