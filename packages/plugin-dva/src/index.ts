@@ -112,7 +112,9 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
       const runtimeTpl = readFileSync(join(__dirname, 'runtime.tpl'), 'utf-8');
       api.writeTmpFile({
         path: 'plugin-dva/runtime.tsx',
-        content: Mustache.render(runtimeTpl, {}),
+        content: Mustache.render(runtimeTpl, {
+          SSR: !!api.config?.ssr,
+        }),
       });
 
       // exports.ts
