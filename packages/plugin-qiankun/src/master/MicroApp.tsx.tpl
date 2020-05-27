@@ -37,7 +37,7 @@ export function MicroApp(componentProps: Props) {
 
   const containerRef = useRef<HTMLDivElement>(null);
   let microAppRef = useRef<MicroAppType>();
-  const [ loading, setLoading ] = useState(false);
+  const [ loading, setLoading ] = useState(true);
 
   const appConfig = apps.find((app: any) => app.name === name);
   if (!appConfig) {
@@ -79,7 +79,7 @@ export function MicroApp(componentProps: Props) {
 
   return (
     <div>
-      { loading && componentProps.loadingComponent || 'loading...' }
+      { loading && (componentProps.loadingComponent || 'loading...') }
       <div ref={containerRef} />
     </div>
   );
