@@ -43,9 +43,11 @@ export default function(api: IApi) {
     } = api;
     const masterHistoryType = history?.type || defaultHistoryType;
     const rootExports = `
-window.g_rootExports = ${
-      rootExportsFileExisted ? `require('@/rootExports')` : `{}`
-    };
+    if (typeof window !== 'undefined') {
+      window.g_rootExports = ${
+        rootExportsFileExisted ? `require('@/rootExports')` : `{}`
+      };
+    }
     `.trim();
 
     api.writeTmpFile({

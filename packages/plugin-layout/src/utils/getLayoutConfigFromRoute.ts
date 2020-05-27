@@ -1,8 +1,6 @@
 /**
  * 通过路由配置自动生成布局配置
  */
-import memoizeOne from 'memoize-one';
-import { isEqual } from 'lodash';
 import { IBestAFSRoute, IRouteLayoutConfig } from '../types/interface.d';
 
 type LayoutConfig = {
@@ -12,7 +10,41 @@ type LayoutConfig = {
 const defaultLayoutConfig = {
   hideMenu: false,
   hideNav: false,
+  hideFooter: false,
 };
+
+/*
+ * 计算当前路由的最终 layout 配置
+ * - 继承父路由的 layout 配置
+ * - 但子路由的 layout 配置优先级更高
+ */
+
+function calcExecLayoutConfig(
+  parentRouteLayoutConfig: IRouteLayoutConfig,
+  layout: IBestAFSRoute['layout'],
+) {
+  const execConfig = {};
+  for (let configItem in parentRouteLayoutConfig) {
+    let execConfigItem = parentRouteLayoutConfig[configItem];
+    switch (layout) {
+      case undefined:
+        execConfig[configItem] = execConfigItem;
+        break;
+      case true:
+        execConfig[configItem] = false;
+        break;
+      case false:
+        execConfig[configItem] = true;
+        break;
+      default:
+        execConfig[configItem] =
+          layout[configItem] === undefined
+            ? execConfigItem
+            : layout[configItem];
+    }
+  }
+  return execConfig;
+}
 
 /**
  * @param routes
@@ -29,29 +61,10 @@ function formatter(
     .map(route => {
       const { layout, indexRoute, path = '', routes, unaccessible } = route;
 
-      // 继承父路由的 layout 配置
-      let hideNav = parentRouteLayoutConfig.hideNav;
-      let hideMenu = parentRouteLayoutConfig.hideMenu;
-
-      // 子路由的 layout 配置 优先级更高
-
-      switch (layout) {
-        case undefined:
-          hideMenu = hideMenu;
-          hideNav = hideNav;
-          break;
-        case true:
-          hideMenu = false;
-          hideNav = false;
-          break;
-        case false:
-          hideMenu = true;
-          hideNav = true;
-          break;
-        default:
-          hideMenu = layout.hideMenu === undefined ? hideMenu : layout.hideMenu;
-          hideNav = layout.hideNav === undefined ? hideNav : layout.hideNav;
-      }
+      const execLayoutConfig = calcExecLayoutConfig(
+        parentRouteLayoutConfig,
+        layout,
+      );
 
       // 拼接 path
       const absolutePath = path.startsWith('/')
@@ -59,8 +72,7 @@ function formatter(
         : `${base}${base === '/' ? '' : '/'}${path}`;
 
       LayoutConfig[`${prefix}${absolutePath}`] = {
-        hideMenu,
-        hideNav,
+        ...execLayoutConfig,
         unAccessible: unaccessible || false,
       };
 
@@ -81,10 +93,7 @@ function formatter(
           childrenRoutes,
           prefix,
           absolutePath,
-          {
-            hideMenu,
-            hideNav,
-          },
+          execLayoutConfig,
           LayoutConfig,
         );
         LayoutConfig = { ...LayoutConfig, ...result };
@@ -93,7 +102,4 @@ function formatter(
   return LayoutConfig;
 }
 
-// 参数深比较
-const getLayoutConfigFromRoute = memoizeOne(formatter, isEqual);
-
-export default getLayoutConfigFromRoute;
+export default formatter;

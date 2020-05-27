@@ -12,6 +12,9 @@ const setupTests = () => {
   if (global.Intl) {
     Intl.NumberFormat = IntlPolyfill.NumberFormat;
     Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
+    // https://github.com/andyearnshaw/Intl.js/issues/256#issuecomment-267705446
+    // https://github.com/andyearnshaw/Intl.js#regexp-cache--restore
+    IntlPolyfill.__disableRegExpRestore();
   } else {
     global.Intl = IntlPolyfill;
   }
@@ -19,7 +22,7 @@ const setupTests = () => {
 
 const fixtures = join(__dirname, '..', 'fixtures');
 
-beforeEach(() => {
+beforeAll(() => {
   setupTests();
 });
 
@@ -42,7 +45,7 @@ test('normal', async () => {
   });
 
   const reactNode = require(join(cwd, 'src', '.umi-test', 'umi.ts')).default;
-  const { container, getByText, rerender } = render(reactNode);
+  const { container, getByText } = render(reactNode);
 
   fireEvent.click(getByText('en-US'));
   expect(container.querySelector('h2')?.textContent).toEqual('Hello Traveler');

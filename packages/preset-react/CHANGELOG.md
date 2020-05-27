@@ -2,6 +2,60 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.5](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.5.4...@umijs/preset-react@1.5.5) (2020-05-27)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.5.4](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.5.3...@umijs/preset-react@1.5.4) (2020-05-27)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.5.3](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.5.2...@umijs/preset-react@1.5.3) (2020-05-21)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.5.2](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.5.1...@umijs/preset-react@1.5.2) (2020-05-20)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.5.1](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.5.0...@umijs/preset-react@1.5.1) (2020-05-19)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+# [1.5.0](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.4.25...@umijs/preset-react@1.5.0) (2020-05-19)
+
+### Features
+
+- add helmet plugin ([#180](https://github.com/umijs/plugins/issues/180)) ([70ffc80](https://github.com/umijs/plugins/commit/70ffc801a92d784d31f64acbb7488d8296131611))
+
+## [1.4.25](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.4.24...@umijs/preset-react@1.4.25) (2020-05-18)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.4.24](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.4.23...@umijs/preset-react@1.4.24) (2020-05-17)
+
+### Bug Fixes
+
+- **preset-react:** sync @umijs/plugin-locale and @umijs/plugin-layout version ([78bdd4b](https://github.com/umijs/plugins/commit/78bdd4b788f77eeb1d2be556d6457c3f501bf564))
+
+## [1.4.23](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.4.21...@umijs/preset-react@1.4.23) (2020-05-15)
+
+### Bug Fixes
+
+- **plugin:** 🚑 Uncommitted version changes ([e0c37b5](https://github.com/umijs/plugins/commit/e0c37b5594f3148ea3431c35aff98bfb9d5cf04a))
+
+## [1.4.21](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.4.20...@umijs/preset-react@1.4.21) (2020-05-11)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.4.20](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.4.19...@umijs/preset-react@1.4.20) (2020-05-11)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.4.19](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.4.18...@umijs/preset-react@1.4.19) (2020-05-01)
+
+**Note:** Version bump only for package @umijs/preset-react
+
 ## [1.4.18](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.4.17...@umijs/preset-react@1.4.18) (2020-04-24)
 
 **Note:** Version bump only for package @umijs/preset-react
