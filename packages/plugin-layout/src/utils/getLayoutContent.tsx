@@ -8,7 +8,7 @@ import { ApplyPluginsType, useModel } from "umi";
 import { plugin } from "../core/umiExports";
 
 export default props => {
-  const [runtimeConfig, setRuntimeConfig] = useState({});
+  const [runtimeConfig, setRuntimeConfig] = useState(null);
 
   const initialInfo = (useModel && useModel("@@initialState")) || {
     initialState: undefined,
@@ -31,10 +31,16 @@ export default props => {
     }
     setRuntimeConfig(useRuntimeConfig);
   }, [initialInfo?.initialState]);
+
   const userConfig = {
     ...${JSON.stringify(userConfig).replace(/"/g, "'")},
-    ...runtimeConfig
+    ...runtimeConfig || {}
   };
+
+  if(!runtimeConfig){
+    return null
+  }
+
   return React.createElement(require("${path}").default, {
     userConfig,
     ...props
