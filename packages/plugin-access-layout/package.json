@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-access-layout",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "description": "@umijs/plugin-access-layout",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
