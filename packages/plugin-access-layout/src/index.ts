@@ -15,6 +15,10 @@ function toHump(name: string) {
   });
 }
 
+function unique(arr: any[]) {
+  const res = new Map();
+  return arr.filter(arr => !res.has(arr.name) && res.set(arr.name, 1));
+}
 function formatter(data: any, iconNames: string[] = []): any[] {
   if (!Array.isArray(data)) {
     return iconNames.map((icon: any) => {
@@ -41,7 +45,7 @@ function formatter(data: any, iconNames: string[] = []): any[] {
     }
   });
 
-  return icons;
+  return unique(icons);
 }
 
 export default (api: IApi) => {
