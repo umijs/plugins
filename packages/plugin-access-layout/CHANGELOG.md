@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/umijs/plugins/compare/@umijs/plugin-access-layout@1.0.0-beta.5...@umijs/plugin-access-layout@1.1.0) (2020-05-29)
+
+### Bug Fixes
+
+- [@initial](https://github.com/initial)State no work ([#243](https://github.com/umijs/plugins/issues/243)) ([09a2404](https://github.com/umijs/plugins/commit/09a240466524a1935e2acf86e556954c26298925))
+
+### Features
+
+- release ([5828843](https://github.com/umijs/plugins/commit/5828843e49f9e7f9a89d908a2848b8a9ec24403c))
+
 # [1.0.0-beta.5](https://github.com/umijs/plugins/compare/@umijs/plugin-access-layout@1.0.0-beta.4...@umijs/plugin-access-layout@1.0.0-beta.5) (2020-05-29)
 
 ### Features
