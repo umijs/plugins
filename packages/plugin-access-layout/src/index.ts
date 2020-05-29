@@ -15,7 +15,7 @@ function toHump(name: string) {
   });
 }
 
-function formatter(data: any, iconNames: string[]): any[] {
+function formatter(data: any, iconNames: string[] = []): any[] {
   if (!Array.isArray(data)) {
     return iconNames.map((icon: any) => {
       const v4IconName = toHump(icon.replace(icon[0], icon[0].toUpperCase()));
@@ -46,6 +46,7 @@ function formatter(data: any, iconNames: string[]): any[] {
 
 export default (api: IApi) => {
   if (!api.userConfig.accessLayout) return;
+  const hasLocale = !!api.userConfig.locale;
   const accessFilePath = api.utils.winPath(
     join(api.paths.absSrcPath!, 'access'),
   );
@@ -93,6 +94,8 @@ export default (api: IApi) => {
         importIcons: importIcons.join(';\n'),
         utilsPath,
         useModel,
+        hasLocale,
+        noLocale: !hasLocale,
         hasAccess,
         noAccess: !hasAccess,
         noModel: !useModel,
