@@ -45,7 +45,7 @@ const loopMenuItem = (menus: MenuDataItem[]): MenuDataItem[] =>
 const style = {
   height: '100vh',
 }
-const AccessLayout: FC<AccessLayoutProps> = ({ menuData: serveMenuData, location, children, initState = {}, hasLocale = false, layoutConfig = {},route, ...other }) => {
+const AccessLayout: FC<AccessLayoutProps> = ({ menuData: serveMenuData, location, children, initState, hasLocale = false, layoutConfig = {},route, ...other }) => {
 
 {{#useModel}}
   const { layoutConfig: pageSetLayoutConfig } = useModel('@@accessLayout');
@@ -70,19 +70,18 @@ const AccessLayout: FC<AccessLayoutProps> = ({ menuData: serveMenuData, location
   const initialState = null;
 {{/noModel}}
   const access = accessFactory(initState||initialState);
-  const accrssMenu = traverseModifyRoutes(serveMenuData||route?.routes, access);
+  const accessMenu = traverseModifyRoutes(serveMenuData||route?.routes, access);
   const trueHasLocale  = hasLocale || runtimeHasLocale || {{{ hasLocale }}};
 {{#hasLocale}}
-  const { menuData, breadcrumb } = transformRoute(accrssMenu,trueHasLocale , intl.formatMessage);
+  const { menuData, breadcrumb } = transformRoute(accessMenu,trueHasLocale , intl.formatMessage);
 {{/hasLocale}}
 {{#noLocale}}
-   const { menuData, breadcrumb } = transformRoute(accrssMenu,false);
+   const { menuData, breadcrumb } = transformRoute(accessMenu,false);
 {{/noLocale}}
 {{#useModel}}
   useEffect(() => {
     if (JSON.stringify(layoutAccess) !== JSON.stringify(access)) {
       setAccess(access);
-      console.log('setAccess(access)')
     }
   }, [JSON.stringify(access)])
 {{/useModel}}
@@ -90,9 +89,9 @@ const AccessLayout: FC<AccessLayoutProps> = ({ menuData: serveMenuData, location
 {{#noAccess}}
 {{#useModel}}
   const { access: layoutAccess } = useModel('@@accessLayout');
-  const accrssMenu = traverseModifyRoutes(serveMenuData||route?.routes, layoutAccess);
+  const accessMenu = traverseModifyRoutes(serveMenuData||route?.routes, layoutAccess);
    // @ts-ignore
-  const { menuData, breadcrumb } = transformRoute(accrssMenu, locale || useLocale, intl && intl.formatMessage, false);
+  const { menuData, breadcrumb } = transformRoute(accessMenu, locale || useLocale, intl && intl.formatMessage, false);
 {{/useModel}}
 {{#noModel}}
   // @ts-ignore
