@@ -6,23 +6,24 @@ import accessFactory from '@/access';
 // @ts-ignore
 import { traverseModifyRoutes } from '{{{ utilsPath }}}';
 import { transformRoute } from '@umijs/route-utils';
+import { Link } from 'umi';
 {{#useModel}}
-import { Link, useIntl, IntlShape, useModel } from 'umi';
+import { useModel } from 'umi';
 {{/useModel}}
-{{#noModel}}
-import { Link, useIntl, IntlShape } from 'umi';
-{{/noModel}}
+{{#hasLocale}}
+import { useIntl, IntlShape } from 'umi';
+{{/hasLocale}}
 import { WithExceptionOpChildren } from './components';
 {{{ importIcons }}}
 
 interface LayoutConfigProps {
-  locale?: boolean; // 是否使用 locale
+  hasLocale?: boolean; // 是否使用 locale
   iconNames?:string[];// 约定式的用法，用到的 icon 要提前在这里写明
 }
 interface AccessLayoutProps extends BasicLayoutProps {
   menuData?: MenuDataItem[];
   initState?: any;
-  useLocale?: boolean;
+  hasLocale?: boolean;
   layoutConfig?: LayoutConfigProps;
 }
 // 运行时动态生成这个 Map
@@ -44,13 +45,15 @@ const loopMenuItem = (menus: MenuDataItem[]): MenuDataItem[] =>
 const style = {
   height: '100vh',
 }
-const AccessLayout: FC<AccessLayoutProps> = ({ menuData: serveMenuData, location, children, initState = {}, useLocale = false, layoutConfig = {},route, ...other }) => {
+const AccessLayout: FC<AccessLayoutProps> = ({ menuData: serveMenuData, location, children, initState = {}, hasLocale = false, layoutConfig = {},route, ...other }) => {
+
 {{#useModel}}
   const { layoutConfig: pageSetLayoutConfig } = useModel('@@accessLayout');
 {{/useModel}}
-  const { locale, ...otherConfig } = layoutConfig;
-  // 国际化插件并非默认启动
-  const intl = useIntl?.();
+  const { hasLocale:runtimeHasLocale , ...otherConfig } = layoutConfig;
+{{#hasLocale}}
+  const intl = useIntl();
+{{/hasLocale}}
   const { pathname } = location!;
 {{#hasAccess}}
 {{#useModel}}
@@ -64,11 +67,17 @@ const AccessLayout: FC<AccessLayoutProps> = ({ menuData: serveMenuData, location
   const { initialState, loading, setInitialState } = initialInfo;
 {{/useModel}}
 {{#noModel}}
-const initialState = null;
+  const initialState = null;
 {{/noModel}}
   const access = accessFactory(initState||initialState);
   const accrssMenu = traverseModifyRoutes(serveMenuData||route?.routes, access);
-  const { menuData, breadcrumb } = transformRoute(accrssMenu, locale || useLocale, intl && intl.formatMessage, false);
+  const trueHasLocale  = hasLocale || runtimeHasLocale || {{{ hasLocale }}};
+{{#hasLocale}}
+  const { menuData, breadcrumb } = transformRoute(accrssMenu,trueHasLocale , intl.formatMessage);
+{{/hasLocale}}
+{{#noLocale}}
+   const { menuData, breadcrumb } = transformRoute(accrssMenu,false);
+{{/noLocale}}
 {{#useModel}}
   useEffect(() => {
     if (JSON.stringify(layoutAccess) !== JSON.stringify(access)) {
