@@ -70,11 +70,19 @@ function modifyRoutesWithRegistrableMode(
   });
 }
 
+function normalizeJsonStringInUmiRoute(str: string) {
+  return str.replace(/\"(\w+)\":/g, "'$1':");
+}
+
 function modifyRoutesWithAttachMode(
   routes: IRoute[],
   masterHistoryType: string,
-  routeBindingAlias = 'microApp',
+  opts: {
+    routeBindingAlias?: string;
+    base?: string;
+  },
 ) {
+  const { routeBindingAlias = 'microApp', base = '/' } = opts;
   const patchRoutes = (routes: IRoute[]) => {
     if (routes.length) {
       routes.forEach(route => {
@@ -92,17 +100,18 @@ function modifyRoutesWithAttachMode(
             const MicroApp = require('@@/plugin-qiankun/MicroApp').MicroApp as any;
             const React = require('react');
             const { url } = match;
-            const matchedBase = url.endsWith('/') ? url.substr(0, url.length - 1) : url;
+            const umiConfigBase = '${base === '/' ? '' : base}';
+            const runtimeMatchedBase = umiConfigBase + (url.endsWith('/') ? url.substr(0, url.length - 1) : url);
 
             return React.createElement(
               MicroApp,
               {
                 name: '${microApp}',
-                base: matchedBase,
+                base: runtimeMatchedBase,
                 history: '${masterHistoryType}',
-                settings: ${JSON.stringify({
-                  ...settings,
-                }).replace(/\"(\w+)\":/g, "'$1':")},
+                settings: ${normalizeJsonStringInUmiRoute(
+                  JSON.stringify(settings),
+                )},
               },
             );
           }`;
@@ -138,7 +147,10 @@ export default function modifyRoutes(api: IApi) {
       );
     }
 
-    modifyRoutesWithAttachMode(routes, masterHistoryType, routeBindingAlias);
+    modifyRoutesWithAttachMode(routes, masterHistoryType, {
+      routeBindingAlias,
+      base: api.config.base,
+    });
 
     return routes;
   });
