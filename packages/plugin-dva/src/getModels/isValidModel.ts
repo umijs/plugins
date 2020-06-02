@@ -34,6 +34,7 @@ export function isValidModel({ content }: { content: string }) {
   const ast = parser.parse(content, {
     sourceType: 'module',
     plugins: [
+      'jsx',
       'typescript',
       'classProperties',
       'dynamicImport',
