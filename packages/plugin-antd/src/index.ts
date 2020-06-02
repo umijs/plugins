@@ -75,7 +75,7 @@ export default (api: IApi) => {
         api.writeTmpFile({
           path: 'plugin-antd/runtime.tsx',
           content: Mustache.render(runtimeTpl, {
-            config: JSON.stringify(opts?.config),
+            config: JSON.stringify(otherConfig),
           }),
         });
       },
