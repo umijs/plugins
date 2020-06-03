@@ -141,6 +141,11 @@ export default (api: IApi) => {
       path: join(DIR_NAME, 'runtime.tsx'),
       content: readFileSync(join(__dirname, 'runtime.tsx.tpl'), 'utf-8'),
     });
+
+    api.writeTmpFile({
+      path: join(DIR_NAME, 'messenger.ts'),
+      content: readFileSync(join(__dirname, 'messenger.ts.tpl'), 'utf-8'),
+    });
   });
   api.modifyRoutes(routes => {
     return [
@@ -155,4 +160,11 @@ export default (api: IApi) => {
   });
 
   api.addRuntimePlugin(() => ['@@/plugin-layout/runtime.tsx']);
+
+  api.addUmiExports(() => {
+    return {
+      exportAll: true,
+      source: `../plugin-layout/messenger`,
+    };
+  });
 };

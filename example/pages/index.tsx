@@ -9,6 +9,14 @@ import {
   setLocale,
   Access,
   useAccess,
+  hideMenu,
+  showMenu,
+  hideNav,
+  showNav,
+  hideFooter,
+  showFooter,
+  hideLayout,
+  showLayout,
 } from 'umi';
 import { Table } from 'antd';
 import styles from './index.css';
@@ -80,6 +88,22 @@ export default connect(state => {
         >
           <button type="button">Update Article</button>
         </Access>
+      </div>
+      <div>
+        <button onClick={() => hideMenu()}>隐藏侧边栏</button>
+        <button onClick={() => showMenu()}>展示侧边栏</button>
+      </div>
+      <div>
+        <button onClick={() => hideNav()}>隐藏导航</button>
+        <button onClick={() => showNav()}>展示导航</button>
+      </div>
+      <div>
+        <button onClick={() => hideFooter()}>隐藏 footer</button>
+        <button onClick={() => showFooter()}>展示 footer</button>
+      </div>
+      <div>
+        <button onClick={() => hideLayout()}>隐藏 layout</button>
+        <button onClick={() => showLayout()}>展示 layout</button>
       </div>
     </div>
   );

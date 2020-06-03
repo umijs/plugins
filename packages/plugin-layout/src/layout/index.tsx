@@ -1,65 +1,55 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 // @ts-ignore
 import { Link, useModel, history, useIntl, InitialState } from 'umi';
 import pathToRegexp from 'path-to-regexp';
 import ProLayout from '@ant-design/pro-layout';
-import './style.less';
+
+// component
 import ErrorBoundary from '../component/ErrorBoundary';
 import renderRightContent from './renderRightContent';
 import { WithExceptionOpChildren } from '../component/Exception';
+
+// hooks & utils
+import useLayoutConfig from './useLayoutConfig';
 import getLayoutConfigFromRoute from '../utils/getLayoutConfigFromRoute';
 import getMenuDataFromRoutes from '../utils/getMenuFromRoute';
+
 import { MenuItem } from '../types/interface.d';
+import './style.less';
 // @ts-ignore
 import logo from '../assets/logo.svg';
 
 const BasicLayout = (props: any) => {
   const { children, userConfig, location, route, ...restProps } = props;
   const { routes = [] } = route;
+  const _routes = require('@@/core/routes').routes;
+
+  // 获取全局初始化信息
   const initialInfo = (useModel && useModel('@@initialState')) || {
     initialState: undefined,
     loading: false,
     setInitialState: null,
   }; // plugin-initial-state 未开启
   const { initialState, loading, setInitialState } = initialInfo;
-  const _routes = require('@@/core/routes').routes;
+
   // 国际化插件并非默认启动
   const intl = useIntl && useIntl();
-  const layoutConfig = getLayoutConfigFromRoute(_routes);
 
+  // Menus 配置相关
   const patchMenus: (ms: MenuItem[], initialInfo: InitialState) => MenuItem[] =
     userConfig.patchMenus || ((ms: MenuItem[]): MenuItem[] => ms);
-
   const menus = patchMenus(getMenuDataFromRoutes(routes), initialInfo);
 
-  // layout 是否渲染相关
+  // Layout 配置相关
   const pathName = location.pathname;
-  const layoutRender: any = {};
-
-  // 动态路由匹配
-  const currentMatchPaths = Object.keys(layoutConfig).filter(item =>
+  const layoutConfigs = getLayoutConfigFromRoute(_routes);
+  const currentMatchPaths = Object.keys(layoutConfigs).filter(item =>
     pathToRegexp(`${item}(.*)`).test(pathName),
   );
-
-  const currentPathConfig = currentMatchPaths.length
-    ? layoutConfig[currentMatchPaths[currentMatchPaths.length - 1]]
+  const layoutConfig = currentMatchPaths.length
+    ? layoutConfigs[currentMatchPaths[currentMatchPaths.length - 1]]
     : undefined;
-
-  if (currentPathConfig?.hideMenu) {
-    layoutRender.menuRender = false;
-  }
-
-  if (currentPathConfig?.hideNav) {
-    layoutRender.headerRender = false;
-  }
-
-  if (currentPathConfig?.hideLayout) {
-    layoutRender.pure = true;
-  }
-
-  if (currentPathConfig?.hideFooter) {
-    layoutRender.footerRender = false;
-  }
+  const [currentLayoutConfig, layoutRender] = useLayoutConfig(layoutConfig);
 
   return (
     <ProLayout
@@ -96,7 +86,7 @@ const BasicLayout = (props: any) => {
       {...layoutRender}
     >
       <ErrorBoundary>
-        <WithExceptionOpChildren currentPathConfig={currentPathConfig}>
+        <WithExceptionOpChildren currentPathConfig={currentLayoutConfig}>
           {userConfig.childrenRender
             ? userConfig.childrenRender(children)
             : children}
