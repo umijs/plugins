@@ -63,6 +63,8 @@ const BasicLayout = (props: any) => {
 
   return (
     <ProLayout
+      route={route}
+      location={location}
       title={userConfig.name || userConfig.title}
       className="umi-plugin-layout-main"
       navTheme="dark"
