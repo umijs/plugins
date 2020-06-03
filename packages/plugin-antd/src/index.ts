@@ -84,5 +84,6 @@ export default (api: IApi) => {
     api.addRuntimePlugin(() => [
       join(api.paths.absTmpPath!, 'plugin-antd/runtime.tsx'),
     ]);
+    api.addRuntimePluginKey(() => ['antd']);
   }
 };
