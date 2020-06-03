@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.7](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.6...@umijs/plugin-layout@0.11.7) (2020-06-03)
+
+### Bug Fixes
+
+- **layout:** fix hash router no work bugfix ([#247](https://github.com/umijs/plugins/issues/247)) ([2c35415](https://github.com/umijs/plugins/commit/2c3541577db028904043b57f3d2b1111a919ed01))
+
 ## [0.11.6](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.5...@umijs/plugin-layout@0.11.6) (2020-05-27)
 
 ### Bug Fixes
