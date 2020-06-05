@@ -4,6 +4,9 @@ import {
   loadMicroApp,
   MicroApp as MicroAppType,
 } from 'qiankun';
+{{#hasAntd}}
+import { Spin } from 'antd';
+{{/hasAntd}}
 import React, { useEffect, useRef, useState } from 'react';
 
 type Props = {
@@ -12,6 +15,7 @@ type Props = {
   base?: string;
   history?: string;
   getMatchedBase?: () => string;
+  loadingComponent?: React.ReactNode;
 } & Record<string, any>;
 
 function unmountMicroApp(microApp?: MicroAppType) {
@@ -31,11 +35,13 @@ export function MicroApp(componentProps: Props) {
   const {
     name,
     settings: settingsFromProps = {},
+    loadingComponent,
     ...propsForParams
   } = componentProps;
 
   const containerRef = useRef<HTMLDivElement>(null);
   let microAppRef = useRef<MicroAppType>();
+  const [ loading, setLoading ] = useState(true);
 
   const appConfig = apps.find((app: any) => app.name === name);
   if (!appConfig) {
@@ -52,7 +58,7 @@ export function MicroApp(componentProps: Props) {
         name,
         entry,
         container: containerRef.current!,
-        props: { ...propsFromConfig, ...propsForParams },
+        props: { ...propsFromConfig, ...propsForParams, setLoading },
       },
       {
         ...globalSettings,
@@ -67,15 +73,35 @@ export function MicroApp(componentProps: Props) {
     if (microAppRef.current?.update) {
       const microApp = microAppRef.current!;
       const status = microApp.getStatus();
-      if (status === 'MOUNTED') microApp.update({  ...propsFromConfig, ...propsForParams  });
+      if (status === 'MOUNTED') microApp.update({  ...propsFromConfig, ...propsForParams, setLoading });
     }
 
     return () => {};
   }, Object.values(propsForParams));
 
   return (
-    <div>
-      <div ref={containerRef} />
-    </div>
+    {{#hasAntd}}
+      {Boolean(loadingComponent) ? (
+        <div>
+          { loading && loadingComponent }
+          <div ref={containerRef} />
+        </div>
+      ) : (
+        <div style={{ position: 'relative' }}>
+          <Spin
+            spinning={loading}
+            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+          >
+            <div ref={containerRef} />
+          </Spin>
+        </div>
+      )}
+    {{/hasAntd}}
+    {{^hasAntd}}
+      <div>
+        { loading && Boolean(loadingComponent) && loadingComponent }
+        <div ref={containerRef} />
+      </div>
+    {{/hasAntd}}
   );
 }
