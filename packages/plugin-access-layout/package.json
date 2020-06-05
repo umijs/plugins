@@ -1,0 +1,38 @@
+{
+  "name": "@umijs/plugin-access-layout",
+  "version": "1.1.0",
+  "description": "@umijs/plugin-access-layout",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/umijs/plugins"
+  },
+  "keywords": [
+    "umi"
+  ],
+  "authors": [
+    "xiaohuoni <4486276632@qq.com> (https://github.com/xiaohuoni)"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/umijs/plugins/issues",
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-access-layout#readme",
+  "peerDependencies": {
+    "@ant-design/icons": "^4.0.0",
+    "@umijs/plugin-initial-state": "2.x",
+    "@umijs/plugin-locale": "0.x",
+    "@umijs/plugin-model": "2.x",
+    "umi": "3.x"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@ant-design/pro-layout": "^6.0.0-4",
+    "@umijs/route-utils": "^1.0.12"
+  }
+}

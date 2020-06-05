@@ -12,7 +12,6 @@ type Props = {
   base?: string;
   history?: string;
   getMatchedBase?: () => string;
-  loadingComponent?: React.ReactNode;
 } & Record<string, any>;
 
 function unmountMicroApp(microApp?: MicroAppType) {
@@ -37,7 +36,6 @@ export function MicroApp(componentProps: Props) {
 
   const containerRef = useRef<HTMLDivElement>(null);
   let microAppRef = useRef<MicroAppType>();
-  const [ loading, setLoading ] = useState(true);
 
   const appConfig = apps.find((app: any) => app.name === name);
   if (!appConfig) {
@@ -62,8 +60,6 @@ export function MicroApp(componentProps: Props) {
       },
     );
 
-    microAppRef.current.loadPromise.then(() => setLoading(false));
-
     return () => unmountMicroApp(microAppRef.current);
   }, []);
 
@@ -79,7 +75,6 @@ export function MicroApp(componentProps: Props) {
 
   return (
     <div>
-      { loading && (componentProps.loadingComponent || 'loading...') }
       <div ref={containerRef} />
     </div>
   );
