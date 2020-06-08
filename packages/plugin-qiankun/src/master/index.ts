@@ -10,9 +10,22 @@ import modifyRoutes from './modifyRoutes';
 export default function(api: IApi) {
   api.describe({
     enableBy() {
-      return !!api.config?.qiankun?.master;
+      return (
+        !!api.userConfig?.qiankun?.master ||
+        !!process.env.initialQiankunMasterOptions
+      );
     },
   });
+
+  api.modifyConfig(config => ({
+    ...config,
+    qiankun: {
+      master: {
+        ...JSON.parse(process.env.initialQiankunMasterOptions || '{}'),
+        ...config?.qiankun?.master,
+      },
+    },
+  }));
 
   api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
 

@@ -1,8 +1,6 @@
-import { IApi, utils } from 'umi';
-import { join } from 'path';
+import { IApi } from 'umi';
 
 export default function(api: IApi) {
-  const { winPath } = utils;
   api.addRuntimePluginKey(() => 'qiankun');
 
   api.describe({
@@ -15,16 +13,6 @@ export default function(api: IApi) {
         });
       },
     },
-  });
-
-  api.register({
-    key: 'addExtraModels',
-    fn: () => [
-      {
-        absPath: winPath(join(__dirname, './qiankunModel.ts')),
-        namespace: '@@qiankun',
-      },
-    ],
   });
 
   api.registerPlugins([

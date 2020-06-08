@@ -1,7 +1,8 @@
 import address from 'address';
 import assert from 'assert';
 import { isString } from 'lodash';
-import { IApi } from 'umi';
+import { join } from 'path';
+import { IApi, utils } from 'umi';
 import { addSpecifyPrefixedRoute, defaultSlaveRootId } from '../common';
 import { SlaveOptions } from '../types';
 
@@ -10,16 +11,27 @@ const localIpAddress = process.env.USE_REMOTE_IP ? address.ip() : 'localhost';
 export default function(api: IApi) {
   api.describe({
     enableBy() {
-      return !!api.config?.qiankun?.slave;
+      return !!api.userConfig?.qiankun?.slave;
     },
   });
 
-  const options: SlaveOptions = api.config?.qiankun?.slave!;
+  const options: SlaveOptions = api.userConfig?.qiankun?.slave!;
   const {
     keepOriginalRoutes = false,
     shouldNotModifyRuntimePublicPath = false,
   } = options || {};
+
   api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
+
+  api.register({
+    key: 'addExtraModels',
+    fn: () => [
+      {
+        absPath: utils.winPath(join(__dirname, '../qiankunModel.ts')),
+        namespace: '@@qiankun',
+      },
+    ],
+  });
 
   const lifecyclePath = require.resolve('./lifecycles');
   // eslint-disable-next-line import/no-dynamic-require, global-require
@@ -33,7 +45,7 @@ export default function(api: IApi) {
   }));
 
   if (
-    api.service.userConfig.runtimePublicPath !== false &&
+    api.userConfig.runtimePublicPath !== false &&
     !shouldNotModifyRuntimePublicPath
   ) {
     api.modifyPublicPathStr(
