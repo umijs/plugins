@@ -32,22 +32,21 @@ function getSlaveRuntime() {
 }
 
 export function genBootstrap(oldRender: typeof noop) {
-  return async (...args: any[]) => {
-    setModelState(args[0]);
+  return async (props: any) => {
     const slaveRuntime = getSlaveRuntime();
     if (slaveRuntime.bootstrap) {
-      await slaveRuntime.bootstrap(...args);
+      await slaveRuntime.bootstrap(props);
     }
     render = oldRender;
   };
 }
 
 export function genMount() {
-  return async (...args: any[]) => {
+  return async (props: any) => {
     const slaveRuntime = getSlaveRuntime();
-    setModelState(args[0]);
+    setModelState(props);
     if (slaveRuntime.mount) {
-      await slaveRuntime.mount(...args);
+      await slaveRuntime.mount(props);
     }
     defer.resolve();
     // 第一次 mount umi 会自动触发 render，非第一次 mount 则需手动触发
@@ -59,28 +58,22 @@ export function genMount() {
 }
 
 export function genUpdate() {
-  return async (...args: any[]) => {
+  return async (props: any) => {
     const slaveRuntime = getSlaveRuntime();
-    setModelState(args[0]);
+    setModelState(props);
     if (slaveRuntime.update) {
-      await slaveRuntime.update(...args);
+      await slaveRuntime.update(props);
     }
-    defer.resolve();
-    // 第一次 mount umi 会自动触发 render，非第一次 mount 则需手动触发
-    if (hasMountedAtLeastOnce) {
-      render();
-    }
-    hasMountedAtLeastOnce = true;
   };
 }
 
 export function genUnmount(mountElementId: string) {
-  return async (...args: any[]) => {
+  return async (props: any) => {
     const container = document.getElementById(mountElementId);
     if (container) {
       ReactDOM.unmountComponentAtNode(container);
     }
     const slaveRuntime = getSlaveRuntime();
-    if (slaveRuntime.unmount) await slaveRuntime.unmount(...args);
+    if (slaveRuntime.unmount) await slaveRuntime.unmount(props);
   };
 }
