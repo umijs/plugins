@@ -21,7 +21,7 @@ export default function(api: IApi) {
     key: 'addExtraModels',
     fn: () => [
       {
-        absPath: winPath(join(__dirname, './qiankunModel.js')),
+        absPath: winPath(join(__dirname, './qiankunModel.ts')),
         namespace: '@@qiankun',
       },
     ],

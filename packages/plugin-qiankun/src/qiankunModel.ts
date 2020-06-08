@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-let initState;
-let setModelState = val => {
+let initState: any;
+let setModelState = (val: any) => {
   initState = val;
 };
 
