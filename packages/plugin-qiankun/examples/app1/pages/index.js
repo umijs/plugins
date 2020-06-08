@@ -2,7 +2,7 @@ import React from 'react';
 import { useModel } from 'umi';
 
 export default function() {
-  const { testProp1 } = useModel('@@qiankun');
+  const { testProp1 } = useModel('@@qiankun') || {};
   return (
     <div>
       <h1>Dashboard 1</h1>
