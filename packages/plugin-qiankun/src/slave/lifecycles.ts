@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 // @ts-ignore
-import { plugin, ApplyPluginsType } from 'umi';
+import { plugin, ApplyPluginsType, setCreateHistoryOptions } from 'umi';
 // @ts-ignore
 import { setModelState } from '../qiankunModel';
 import { noop } from '../common';
@@ -43,11 +43,18 @@ export function genBootstrap(oldRender: typeof noop) {
 
 export function genMount() {
   return async (props: any) => {
-    const slaveRuntime = getSlaveRuntime();
     setModelState(props);
+
+    const slaveRuntime = getSlaveRuntime();
     if (slaveRuntime.mount) {
       await slaveRuntime.mount(props);
     }
+
+    // 使用动态 base
+    if (props?.base) {
+      setCreateHistoryOptions({ basename: props.base });
+    }
+
     defer.resolve();
     // 第一次 mount umi 会自动触发 render，非第一次 mount 则需手动触发
     if (hasMountedAtLeastOnce) {
@@ -59,8 +66,9 @@ export function genMount() {
 
 export function genUpdate() {
   return async (props: any) => {
-    const slaveRuntime = getSlaveRuntime();
     setModelState(props);
+
+    const slaveRuntime = getSlaveRuntime();
     if (slaveRuntime.update) {
       await slaveRuntime.update(props);
     }

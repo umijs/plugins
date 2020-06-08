@@ -1,7 +1,6 @@
 import { name } from './package.json';
 
 export default {
-  base: name,
   publicPath: '/app2/',
   outputPath: './dist/app2',
   mountElementId: 'app2',
