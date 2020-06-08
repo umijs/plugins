@@ -1,21 +1,30 @@
-import { IApi } from 'umi';
+import { IApi, utils } from 'umi';
+import { join } from 'path';
 
 export default function(api: IApi) {
+  const { winPath } = utils;
   api.addRuntimePluginKey(() => 'qiankun');
 
   api.describe({
     key: 'qiankun',
     config: {
       schema(joi) {
-        return joi
-          .object()
-          .keys({
-            slave: joi.object(),
-            master: joi.object(),
-          })
-          .without('slave', 'master');
+        return joi.object().keys({
+          slave: joi.object(),
+          master: joi.object(),
+        });
       },
     },
+  });
+
+  api.register({
+    key: 'addExtraModels',
+    fn: () => [
+      {
+        absPath: winPath(join(__dirname, './qiankunModel.js')),
+        namespace: '@@qiankun',
+      },
+    ],
   });
 
   api.registerPlugins([

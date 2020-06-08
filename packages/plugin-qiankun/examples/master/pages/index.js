@@ -1,6 +1,10 @@
+import React, { useState } from 'react';
+import { MicroApp } from 'umi';
 import style from './index.css';
 
 export default function() {
+  const [microAppState, setState] = useState('Hello');
+
   return (
     <div className={style.container}>
       <h2>Welcome to use QianKun ~</h2>
@@ -15,6 +19,8 @@ export default function() {
         </a>
         提Issue
       </p>
+      <button onClick={() => setState(s => s + 'o')}>修改子应用 props</button>
+      <MicroApp testProp1={microAppState} name="app1" />
     </div>
   );
 }
