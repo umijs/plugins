@@ -123,8 +123,8 @@ export default function(api: IApi) {
       `
     export const bootstrap = qiankun_genBootstrap(clientRender);
     export const mount = qiankun_genMount();
-    export const update = qiankun_genUpdate();
     export const unmount = qiankun_genUnmount('${api.config.mountElementId}');
+    export const update = qiankun_genUpdate();
 
     if (!window.__POWERED_BY_QIANKUN__) {
       bootstrap().then(mount);
