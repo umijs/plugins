@@ -15,7 +15,7 @@ type Props = {
   base?: string;
   history?: string;
   getMatchedBase?: () => string;
-  loadingComponent?: React.ReactNode;
+  loader?: (loading: boolean) => React.ReactNode;
 } & Record<string, any>;
 
 function unmountMicroApp(microApp?: MicroAppType) {
@@ -35,7 +35,7 @@ export function MicroApp(componentProps: Props) {
   const {
     name,
     settings: settingsFromProps = {},
-    loadingComponent,
+    loader,
     ...propsForParams
   } = componentProps;
 
@@ -81,9 +81,9 @@ export function MicroApp(componentProps: Props) {
 
   return (
     {{#hasAntd}}
-      {Boolean(loadingComponent) ? (
+      {Boolean(loader) ? (
         <div>
-          { loading && loadingComponent }
+          { loader(loading) }
           <div ref={containerRef} />
         </div>
       ) : (
@@ -99,7 +99,7 @@ export function MicroApp(componentProps: Props) {
     {{/hasAntd}}
     {{^hasAntd}}
       <div>
-        { loading && Boolean(loadingComponent) && loadingComponent }
+        { Boolean(loader) && loader(loading) }
         <div ref={containerRef} />
       </div>
     {{/hasAntd}}
