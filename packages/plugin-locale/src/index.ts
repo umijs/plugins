@@ -194,7 +194,11 @@ export default (api: IApi) => {
         Antd: !!antd,
         LocaleList: localeList,
         ShowSelectLang: localeList.length > 1 && !!antd,
-        iconsPkgPath: winPath(require.resolve('@ant-design/icons')),
+        iconsPkgPath: winPath(
+          require.resolve(
+            `@ant-design/icons${api.config?.ssr ? '' : '/es/icons'}`,
+          ),
+        ),
         antdFiles: api.config?.ssr ? 'lib' : 'es',
       }),
     });
