@@ -128,4 +128,11 @@ export default function(api: IApi) {
 
     return exports;
   });
+
+  api.addUmiExports(() => {
+    return {
+      specifiers: ['getMasterOptions'],
+      source: utils.winPath('../plugin-qiankun/masterOptions.js'),
+    };
+  });
 }
