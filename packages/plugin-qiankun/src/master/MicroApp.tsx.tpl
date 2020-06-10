@@ -79,23 +79,26 @@ export function MicroApp(componentProps: Props) {
     return () => {};
   }, Object.values(propsForParams));
 
+  const wrapperStyle = { position: 'relative' };
+  const absoluteCenter = { position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' };
+
   return (
     {{#hasAntd}}
-      {Boolean(loader) ? (
+      Boolean(loader) ? (
         <div>
           { loader(loading) }
           <div ref={containerRef} />
         </div>
       ) : (
-        <div style={{ position: 'relative' }}>
+        <div style={wrapperStyle}>
           <Spin
             spinning={loading}
-            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+            style={absoluteCenter}
           >
             <div ref={containerRef} />
           </Spin>
         </div>
-      )}
+      )
     {{/hasAntd}}
     {{^hasAntd}}
       <div>
