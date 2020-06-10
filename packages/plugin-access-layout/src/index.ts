@@ -49,7 +49,11 @@ function formatter(data: any, iconNames: string[] = []): any[] {
 }
 
 export default (api: IApi) => {
-  if (!api.userConfig.accessLayout) return;
+  // 约定式的这个需要明确写明，配置式的可选
+  const { iconNames, custom = false, invalid } =
+    api.userConfig.accessLayout || {};
+  // 默认使用，配置 invalid:true 关闭
+  if (invalid) return;
   const hasLocale = !!api.userConfig.locale;
   const accessFilePath = api.utils.winPath(
     join(api.paths.absSrcPath!, 'access'),
@@ -61,8 +65,9 @@ export default (api: IApi) => {
       default: {},
       schema(joi) {
         return joi.object({
-          iconNames: joi.array(),
-          useModel: joi.boolean(),
+          iconNames: joi.array(), // icon 图标，约定式时必须
+          invalid: joi.boolean(), // 是否失效，配置为 true 时，不使用这个插件
+          custom: joi.boolean(), // 支持配置式路由中，使用显示 layouts/index 的方式
         });
       },
       onChange: api.ConfigChangeType.regenerateTmpFiles,
@@ -71,8 +76,8 @@ export default (api: IApi) => {
 
   // 没有 routes 配置，表示使用约定式路由
   const isConventionRouting = !api.userConfig.routes;
-  // 约定式的这个需要明确写明，配置式的可选
-  const { iconNames, useModel } = api.userConfig.accessLayout;
+  // 有使用 plugin-model 时，自动开始 useModel 配置
+  const useModel = api.hasPlugins(['@umijs/plugin-model']);
   if (isConventionRouting && !iconNames) {
     api.logger.error('未在配置中写明使用到的icon，将会导致菜单栏icon无法显示!');
   }
@@ -154,8 +159,8 @@ export default (api: IApi) => {
     });
   }
 
-  // 使用配置式
-  if (!isConventionRouting) {
+  // 使用配置式且不是自由模式的时候，要使用 runtime
+  if (!isConventionRouting && !custom) {
     // 注册runtime配置
     api.addRuntimePluginKey(() => 'accessLayout');
     api.modifyRoutes(routes => [
@@ -168,6 +173,7 @@ export default (api: IApi) => {
       },
     ]);
   }
+
   api.addUmiExports(() => [
     {
       exportAll: true,

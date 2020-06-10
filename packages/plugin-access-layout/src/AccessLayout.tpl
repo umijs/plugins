@@ -11,20 +11,22 @@ import { Link } from 'umi';
 import { useModel } from 'umi';
 {{/useModel}}
 {{#hasLocale}}
-import { useIntl, IntlShape } from 'umi';
+import { useIntl } from 'umi';
 {{/hasLocale}}
 import { WithExceptionOpChildren } from './components';
 {{{ importIcons }}}
 
-interface LayoutConfigProps {
+export interface LayoutConfigProps extends BasicLayoutProps {
   hasLocale?: boolean; // 是否使用 locale
   iconNames?:string[];// 约定式的用法，用到的 icon 要提前在这里写明
+  renderMenuData?: (menu: MenuDataItem[], serveMenu: MenuDataItem[], ) => MenuDataItem[];
 }
-interface AccessLayoutProps extends BasicLayoutProps {
+export interface AccessLayoutProps extends BasicLayoutProps {
   menuData?: MenuDataItem[];
   initState?: any;
   hasLocale?: boolean;
   layoutConfig?: LayoutConfigProps;
+  renderMenuData?: (menu: MenuDataItem[], serveMenu: MenuDataItem[], ) => MenuDataItem[];
 }
 // 运行时动态生成这个 Map
 // const IconMap = {
@@ -45,12 +47,14 @@ const loopMenuItem = (menus: MenuDataItem[]): MenuDataItem[] =>
 const style = {
   height: '100vh',
 }
-const AccessLayout: FC<AccessLayoutProps> = ({ menuData: serveMenuData, location, children, initState, hasLocale = false, layoutConfig = {},route, ...other }) => {
+const AccessLayout: FC<AccessLayoutProps> = ({ menuData: serveMenuData, location, children, initState, hasLocale = false, layoutConfig = {},route, renderMenuData, ...other }) => {
 
 {{#useModel}}
   const { layoutConfig: pageSetLayoutConfig } = useModel('@@accessLayout');
 {{/useModel}}
-  const { hasLocale:runtimeHasLocale , ...otherConfig } = layoutConfig;
+  const { hasLocale:runtimeHasLocale, renderMenuData: runtimeRenderMenuData, ...otherConfig } = layoutConfig;
+  const tryeRenderMenuData = renderMenuData || runtimeRenderMenuData || ((a, b) => a);
+
 {{#hasLocale}}
   const intl = useIntl();
 {{/hasLocale}}
@@ -58,19 +62,22 @@ const AccessLayout: FC<AccessLayoutProps> = ({ menuData: serveMenuData, location
 {{#hasAccess}}
 {{#useModel}}
   // plugin-initial-state 未开启
-  const initialInfo = (useModel && useModel('@@initialState')) || {
+  // @ts-ignore
+  const initialInfo = useModel('@@initialState') || {
     initialState: undefined,
     loading: false,
     setInitialState: null,
   };
-  const { access: layoutAccess, setAccess } = useModel('@@accessLayout');
-  const { initialState, loading, setInitialState } = initialInfo;
+  const { access: layoutAccess, setAccess, menu:serveMenu } = useModel('@@accessLayout');
+  const { initialState } = initialInfo;
 {{/useModel}}
 {{#noModel}}
   const initialState = null;
 {{/noModel}}
   const access = accessFactory(initState||initialState);
-  const accessMenu = traverseModifyRoutes(serveMenuData||route?.routes, access);
+  const localeMenu = serveMenuData || route?.routes || [];
+  const menu = tryeRenderMenuData(localeMenu.concat(), serveMenu);
+  const accessMenu = traverseModifyRoutes(menu, access);
   const trueHasLocale  = hasLocale || runtimeHasLocale || {{{ hasLocale }}};
 {{#hasLocale}}
   const { menuData, breadcrumb } = transformRoute(accessMenu,trueHasLocale , intl.formatMessage);
@@ -88,9 +95,11 @@ const AccessLayout: FC<AccessLayoutProps> = ({ menuData: serveMenuData, location
 {{/hasAccess}}
 {{#noAccess}}
 {{#useModel}}
-  const { access: layoutAccess } = useModel('@@accessLayout');
-  const accessMenu = traverseModifyRoutes(serveMenuData||route?.routes, layoutAccess);
-   // @ts-ignore
+  const { access: layoutAccess, menu:serveMenu } = useModel('@@accessLayout');
+  const localeMenu = serveMenuData || route?.routes || [];
+  const menu = tryeRenderMenuData(localeMenu.concat(), serveMenu);
+  const accessMenu = traverseModifyRoutes(menu, layoutAccess);
+  // @ts-ignore
   const { menuData, breadcrumb } = transformRoute(accessMenu, locale || useLocale, intl && intl.formatMessage, false);
 {{/useModel}}
 {{#noModel}}
