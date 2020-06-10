@@ -4,9 +4,6 @@ import {
   loadMicroApp,
   MicroApp as MicroAppType,
 } from 'qiankun';
-{{#hasAntd}}
-import { Spin } from 'antd';
-{{/hasAntd}}
 import React, { useEffect, useRef, useState } from 'react';
 
 type Props = {
