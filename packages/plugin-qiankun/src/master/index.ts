@@ -94,19 +94,9 @@ export default function(api: IApi) {
     `.trim(),
     });
 
-    const { dependencies = {} } = require(join(
-      api.paths.cwd || '',
-      'package.json',
-    ));
-
     api.writeTmpFile({
       path: 'plugin-qiankun/MicroApp.tsx',
-      content: utils.Mustache.render(
-        readFileSync(join(__dirname, 'MicroApp.tsx.tpl'), 'utf-8'),
-        {
-          hasAntd: dependencies.antd || dependencies['@alipay/bigfish'],
-        },
-      ),
+      content: readFileSync(join(__dirname, 'MicroApp.tsx.tpl'), 'utf-8'),
     });
   });
 
