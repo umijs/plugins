@@ -1,6 +1,6 @@
 import React from 'react';
 {{#Antd}}
-import { GlobalOutlined } from '{{{ iconsPkgPath }}}';
+import GlobalOutlined from '{{{ iconsPkgPath }}}/GlobalOutlined';
 import { Menu, Dropdown } from 'antd';
 import { ClickParam } from 'antd/{{{antdFiles}}}/menu';
 import { DropDownProps } from 'antd/{{{antdFiles}}}/dropdown';
@@ -24,7 +24,6 @@ const HeaderDropdown: React.FC<HeaderDropdownProps> = ({
   ...restProps
 }) => (
   <Dropdown
-    getPopupContainer={(trigger) =>( trigger.parentNode as HTMLElement)}
     overlayClassName={cls}
     {...restProps}
   />
