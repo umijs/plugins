@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.7.0...@umijs/plugin-locale@0.7.1) (2020-06-14)
+
+### Bug Fixes
+
+- **plugin-locale:** fix locale bugs ([#256](https://github.com/umijs/plugins/issues/256)) ([46cda6a](https://github.com/umijs/plugins/commit/46cda6af35836468523e3325a0c3dbc555e9ea2c))
+- antd icons all in bundle when enable locale antd ([#250](https://github.com/umijs/plugins/issues/250)) ([11219b5](https://github.com/umijs/plugins/commit/11219b5f84b140709d03a97c778ce9436d522a04))
+
 # [0.7.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.6.1...@umijs/plugin-locale@0.7.0) (2020-05-20)
 
 ### Bug Fixes
