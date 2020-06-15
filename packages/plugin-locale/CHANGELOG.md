@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.7.1...@umijs/plugin-locale@0.8.0) (2020-06-15)
+
+### Features
+
+- **plugin-locale:** do no use antd icon ([#257](https://github.com/umijs/plugins/issues/257)) ([8b8b847](https://github.com/umijs/plugins/commit/8b8b8470d6c9112450c79e007880f679835fb3a0))
+
 ## [0.7.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.7.0...@umijs/plugin-locale@0.7.1) (2020-06-14)
 
 ### Bug Fixes

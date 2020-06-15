@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/umijs/plugins/compare/@umijs/plugin-access-layout@1.1.0...@umijs/plugin-access-layout@1.2.0) (2020-06-15)
+
+### Features
+
+- support serve menu ([#253](https://github.com/umijs/plugins/issues/253)) ([f0625bc](https://github.com/umijs/plugins/commit/f0625bcedb5cbd075732a44df377abeb1642f775))
+
 # [1.1.0](https://github.com/umijs/plugins/compare/@umijs/plugin-access-layout@1.0.0-beta.5...@umijs/plugin-access-layout@1.1.0) (2020-05-29)
 
 ### Bug Fixes
