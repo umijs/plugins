@@ -145,7 +145,7 @@ export async function render(oldRender: typeof noop) {
   const loadableApps = apps.filter(app => !app.base);
   if (loadableApps.length) {
     const { prefetch, ...importEntryOpts } = options;
-    prefetchApps(loadableApps, importEntryOpts);
+    if (prefetch) prefetchApps(loadableApps, importEntryOpts);
   }
 
   oldRender();
