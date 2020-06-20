@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.2](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.3.1...@umijs/plugin-model@2.3.2) (2020-06-20)
+
+### Bug Fixes
+
+- the lastStateRef repeat setting ([#229](https://github.com/umijs/plugins/issues/229)) ([#260](https://github.com/umijs/plugins/issues/260)) ([2b8e12c](https://github.com/umijs/plugins/commit/2b8e12c6618bc7df05b8df11dde270331c1a606a))
+
 ## [2.3.1](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.3.0...@umijs/plugin-model@2.3.1) (2020-05-01)
 
 ### Bug Fixes
