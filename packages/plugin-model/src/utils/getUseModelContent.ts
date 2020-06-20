@@ -31,6 +31,7 @@ export function useModel<T extends keyof Model<T>, U>(
     () => updaterRef.current ? updaterRef.current(dispatcher.data![namespace]) : dispatcher.data![namespace]
   );
   const stateRef = useRef<any>(state);
+  stateRef.current = state;
 
   useEffect(() => {
     const handler = (e: any) => {
