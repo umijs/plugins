@@ -133,11 +133,15 @@ export async function render(oldRender: typeof noop) {
   const runtimeOptions = await getMasterRuntime();
 
   setMasterOptions({ ...masterOptions, ...runtimeOptions });
+  // 主应用相关的配置注册完毕后即可开启渲染
+  oldRender();
+
   const { apps, ...options } = getMasterOptions() as MasterOptions;
 
   // 使用了 base 配置的应用为可注册应用
   const registrableApps = apps.filter(app => app.base);
   if (registrableApps.length) {
+    // 不要在 oldRender 调用之前调用 useRegisterMode 方法，因为里面可能会 await defer promise 从而造成死锁
     await useRegisterMode(registrableApps, options);
   }
 
@@ -147,6 +151,4 @@ export async function render(oldRender: typeof noop) {
     const { prefetch, ...importEntryOpts } = options;
     if (prefetch) prefetchApps(loadableApps, importEntryOpts);
   }
-
-  oldRender();
 }
