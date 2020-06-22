@@ -16,7 +16,7 @@ import {
 // @ts-ignore
 import { ApplyPluginsType, history, plugin } from 'umi';
 import { message, notification } from 'antd';
-import useUmiRequest from '@ahooksjs/use-request';
+import useUmiRequest, { UseRequestProvider } from '@ahooksjs/use-request';
 import {
   BaseOptions,
   BasePaginatedOptions,
@@ -267,4 +267,4 @@ const request: RequestMethodInUmi = (url: any, options: any) => {
   return requestMethod(url, options);
 };
 
-export { request, useRequest };
+export { request, useRequest, UseRequestProvider };
