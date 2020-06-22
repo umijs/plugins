@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { MicroApp } from 'umi';
+import { MicroApp, useModel } from 'umi';
 import style from './index.css';
 
 export default function() {
   const [microAppState, setState] = useState('Hello');
+  const { setGlobalState } = useModel('@@globalState');
 
   return (
     <div className={style.container}>
@@ -19,6 +20,9 @@ export default function() {
         </a>
         提Issue
       </p>
+      <button onClick={() => setGlobalState({ p1: 'hello world' })}>
+        修改全局 prop
+      </button>
       <button onClick={() => setState(s => s + 'o')}>修改子应用 props</button>
       <MicroApp testProp1={microAppState} name="app1" />
     </div>

@@ -5,6 +5,7 @@ import {
   MicroApp as MicroAppType,
 } from 'qiankun';
 import React, { useEffect, useRef, useState } from 'react';
+import { useModel } from 'umi';
 
 type Props = {
   name: string;
@@ -48,6 +49,8 @@ export function MicroApp(componentProps: Props) {
   }
 
   const { entry, props: propsFromConfig = {} } = appConfig;
+  // 约定使用 src/globalState.ts 中的数据作为主应用透传给微应用的 props，优先级高于 propsFromConfig
+  const globalState = useModel('@@qiankunGlobalState');
 
   useEffect(() => {
     microAppRef.current = loadMicroApp(
@@ -71,7 +74,7 @@ export function MicroApp(componentProps: Props) {
     if (microApp?.update) {
       const status = microApp.getStatus();
       if (status === 'MOUNTED') {
-        const props = {  ...propsFromConfig, ...propsForParams, setLoading };
+        const props = {  ...propsFromConfig, ...globalState, ...propsForParams, setLoading };
         microApp.update(props);
 
         if (process.env.NODE_ENV === 'development') {
@@ -81,7 +84,7 @@ export function MicroApp(componentProps: Props) {
     }
 
     return () => {};
-  }, Object.values(propsForParams));
+  }, Object.values({...globalState, ...propsForParams}));
 
   return (
     <div>

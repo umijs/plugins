@@ -37,6 +37,20 @@ export default function(api: IApi) {
 
   modifyRoutes(api);
 
+  const globalStateFile = join(api.paths.absSrcPath!, 'globalState.ts');
+  const globalStateFileExisted = existsSync(globalStateFile);
+  if (globalStateFileExisted) {
+    api.register({
+      key: 'addExtraModels',
+      fn: () => [
+        {
+          absPath: utils.winPath(globalStateFile),
+          namespace: '@@qiankunGlobalState',
+        },
+      ],
+    });
+  }
+
   const rootExportsJsFile = join(api.paths.absSrcPath!, 'rootExports.js');
   const rootExportsTsFile = join(api.paths.absSrcPath!, 'rootExports.ts');
   const rootExportsJsFileExisted = existsSync(rootExportsJsFile);
