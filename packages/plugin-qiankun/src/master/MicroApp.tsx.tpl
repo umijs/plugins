@@ -67,10 +67,17 @@ export function MicroApp(componentProps: Props) {
   }, []);
 
   useEffect(() => {
-    if (microAppRef.current?.update) {
-      const microApp = microAppRef.current!;
+    const microApp = microAppRef.current;
+    if (microApp?.update) {
       const status = microApp.getStatus();
-      if (status === 'MOUNTED') microApp.update({  ...propsFromConfig, ...propsForParams, setLoading });
+      if (status === 'MOUNTED') {
+        const props = {  ...propsFromConfig, ...propsForParams, setLoading };
+        microApp.update(props);
+
+        if (process.env.NODE_ENV === 'development') {
+          console.info(`[@umijs/plugin-qiankun] MicroApp ${name} is updating with props: `, props);
+        }
+      }
     }
 
     return () => {};

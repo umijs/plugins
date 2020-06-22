@@ -96,7 +96,7 @@ function modifyRoutesWithAttachMode(
 
           const { settings = {} } = route;
           route.exact = false;
-          route.component = `({match}) => {
+          route.component = `({match}: any) => {
             const MicroApp = require('@@/plugin-qiankun/MicroApp').MicroApp as any;
             const React = require('react');
             const { url } = match;
