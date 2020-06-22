@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.3.2...@umijs/plugin-model@2.4.0) (2020-06-22)
+
+### Features
+
+- useModel register support exportName ([#264](https://github.com/umijs/plugins/issues/264)) ([b1c6ed3](https://github.com/umijs/plugins/commit/b1c6ed373acae333cf5729af9757a6243103d293))
+
 ## [2.3.2](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.3.1...@umijs/plugin-model@2.3.2) (2020-06-20)
 
 ### Bug Fixes
