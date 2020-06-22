@@ -4,7 +4,9 @@ import { readFileSync } from 'fs';
 import { utils } from 'umi';
 
 const { t, parser, traverse, winPath } = utils;
-export type ModelItem = { absPath: string; namespace: string } | string;
+export type ModelItem =
+  | { absPath: string; namespace: string; exportName?: string }
+  | string;
 
 export const getName = (absPath: string, srcDirPath?: string[]) => {
   const suffix = /(\.model)?\.(j|t)sx?$/;
@@ -49,6 +51,7 @@ export const genExtraModels = (models: ModelItem[] = []) =>
       importPath: getPath(ele.absPath),
       importName: getName(ele.absPath),
       namespace: ele.namespace,
+      exportName: ele.exportName,
     };
   });
 
