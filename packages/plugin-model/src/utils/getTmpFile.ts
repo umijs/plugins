@@ -16,19 +16,23 @@ function getModels(files: string[], srcDirPath: string[]) {
 function getExtraModels(models: ModelItem[] = []) {
   const extraModels = genExtraModels(models);
   return extraModels
-    .map(ele => `'${ele.namespace}': ${winPath(ele.importName)}`)
+    .map(ele => `'${ele.namespace}': ${ele.exportName || ele.importName}`)
     .join(', ');
 }
 
 function getExtraImports(models: ModelItem[] = []) {
   const extraModels = genExtraModels(models);
   return extraModels
-    .map(
-      ele =>
-        `import ${ele.importName} from '${winPath(
+    .map(ele => {
+      if (ele.exportName) {
+        return `import { ${ele.exportName} } from '${winPath(
           ele.importPath.replace(/'/g, "\\'"),
-        )}';`,
-    )
+        )}';`;
+      }
+      return `import ${ele.importName} from '${winPath(
+        ele.importPath.replace(/'/g, "\\'"),
+      )}';`;
+    })
     .join(EOL);
 }
 
