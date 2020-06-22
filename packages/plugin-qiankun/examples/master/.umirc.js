@@ -44,6 +44,7 @@ export default {
   ],
   plugins: [
     require.resolve('../../../plugin-dva/lib'),
+    require.resolve('../../../plugin-model/lib'),
     require.resolve('../../../plugin-antd/lib'),
     require.resolve('../../../plugin-qiankun/lib'),
     // [
