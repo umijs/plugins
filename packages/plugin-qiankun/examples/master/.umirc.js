@@ -51,7 +51,7 @@ export default {
     //   {
     //     master: {
     //       defer: true,
-    //       jsSandbox: true,
+    //       sandbox: true,
     //       prefetch: true,
     //     },
     //   },
