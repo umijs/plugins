@@ -56,8 +56,8 @@ export default function(api: IApi) {
             winPath(dirname(require.resolve('umi-request/package'))),
           )
           .replace(
-            /@umijs\/use-request/g,
-            winPath(dirname(require.resolve('@umijs/use-request/package'))),
+            /@ahooksjs\/use-request/g,
+            winPath(dirname(require.resolve('@ahooksjs/use-request/package'))),
           )
           .replace(
             `import { ApplyPluginsType, history, plugin } from 'umi';`,

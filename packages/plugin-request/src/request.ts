@@ -16,7 +16,7 @@ import {
 // @ts-ignore
 import { ApplyPluginsType, history, plugin } from 'umi';
 import { message, notification } from 'antd';
-import useUmiRequest from '@umijs/use-request';
+import useUmiRequest, { UseRequestProvider } from '@ahooksjs/use-request';
 import {
   BaseOptions,
   BasePaginatedOptions,
@@ -32,7 +32,7 @@ import {
   PaginatedOptionsWithFormat,
   PaginatedParams,
   PaginatedResult,
-} from '@umijs/use-request/lib/types';
+} from '@ahooksjs/use-request/lib/types';
 
 type ResultWithData<T = any> = { data: T; [key: string]: any };
 
@@ -267,4 +267,4 @@ const request: RequestMethodInUmi = (url: any, options: any) => {
   return requestMethod(url, options);
 };
 
-export { request, useRequest };
+export { request, useRequest, UseRequestProvider };
