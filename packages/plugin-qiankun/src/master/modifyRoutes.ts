@@ -54,6 +54,7 @@ function modifyRoutesWithRegistrableMode(
                           console.log('${basePath} 404 mock rendered');
                         }
 
+                        const React = require('react');
                         return React.createElement('div');
                       }`,
               });
