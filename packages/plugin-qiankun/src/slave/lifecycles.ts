@@ -50,9 +50,9 @@ export function genMount() {
       await slaveRuntime.mount(props);
     }
 
-    // 使用动态 base
-    if (props?.base) {
-      setCreateHistoryOptions({ basename: props.base });
+    // 动态改变 history
+    if (typeof props?.history === 'object') {
+      setCreateHistoryOptions(props.history);
     }
 
     defer.resolve();
