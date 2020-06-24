@@ -53,6 +53,15 @@ export function genMount() {
     // 动态改变 history
     if (typeof props?.history === 'object') {
       setCreateHistoryOptions(props.history);
+    } else if (props?.base || props?.history) {
+      const historyObj: any = {};
+      if (props?.base) {
+        historyObj.base = props?.base;
+      }
+      if (props?.history) {
+        historyObj.type = props?.history;
+      }
+      setCreateHistoryOptions(historyObj);
     }
 
     defer.resolve();
