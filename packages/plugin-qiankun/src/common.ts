@@ -16,6 +16,9 @@ export const defaultSlaveRootId = 'root-slave';
 
 export const defaultHistoryType = 'browser';
 
+export const qiankunStateForSlaveModelNamespace = '@@qiankunStateForSlave';
+export const qiankunStateFromMasterModelNamespace = '@@qiankunStateFromMaster';
+
 // @formatter:off
 export const noop = () => {};
 // @formatter:on

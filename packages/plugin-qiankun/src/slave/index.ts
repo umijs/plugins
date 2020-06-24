@@ -3,7 +3,11 @@ import assert from 'assert';
 import { isString } from 'lodash';
 import { join } from 'path';
 import { IApi, utils } from 'umi';
-import { addSpecifyPrefixedRoute, defaultSlaveRootId } from '../common';
+import {
+  addSpecifyPrefixedRoute,
+  defaultSlaveRootId,
+  qiankunStateFromMasterModelNamespace,
+} from '../common';
 import { SlaveOptions } from '../types';
 
 const localIpAddress = process.env.USE_REMOTE_IP ? address.ip() : 'localhost';
@@ -28,7 +32,7 @@ export default function(api: IApi) {
     fn: () => [
       {
         absPath: utils.winPath(join(__dirname, '../qiankunModel.ts')),
-        namespace: '@@qiankun',
+        namespace: qiankunStateFromMasterModelNamespace,
       },
     ],
   });

@@ -4,7 +4,7 @@ import style from './index.css';
 
 export default function() {
   const [microAppState, setState] = useState('Hello');
-  const { setGlobalState } = useModel('@@globalState');
+  const { setQiankunGlobalState } = useModel('@@qiankunStateForSlave');
 
   return (
     <div className={style.container}>
@@ -20,8 +20,10 @@ export default function() {
         </a>
         提Issue
       </p>
-      <button onClick={() => setGlobalState({ p1: 'hello world' })}>
-        修改全局 prop
+      <button
+        onClick={() => setQiankunGlobalState({ slogan: 'Hello Qiankun' })}
+      >
+        修改全局 state
       </button>
       <button onClick={() => setState(s => s + 'o')}>修改子应用 props</button>
       <MicroApp testProp1={microAppState} name="app1" />

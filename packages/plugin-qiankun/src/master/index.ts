@@ -1,11 +1,17 @@
 /* eslint-disable quotes */
-import { existsSync, readFileSync } from 'fs';
+import { readFileSync } from 'fs';
 import { join } from 'path';
 // eslint-disable-next-line import/no-unresolved
 import { IApi, utils } from 'umi';
-
-import { defaultHistoryType, defaultMasterRootId } from '../common';
+import {
+  defaultHistoryType,
+  defaultMasterRootId,
+  qiankunStateForSlaveModelNamespace,
+} from '../common';
 import modifyRoutes from './modifyRoutes';
+import { hasExportWithName } from './utils';
+
+const { getFile, winPath } = utils;
 
 export default function(api: IApi) {
   api.describe({
@@ -37,29 +43,32 @@ export default function(api: IApi) {
 
   modifyRoutes(api);
 
-  const globalStateFile = join(api.paths.absSrcPath!, 'globalState.ts');
-  const globalStateFileExisted = existsSync(globalStateFile);
-  if (globalStateFileExisted) {
-    api.register({
-      key: 'addExtraModels',
-      fn: () => [
-        {
-          absPath: utils.winPath(globalStateFile),
-          namespace: '@@qiankunGlobalState',
-        },
-      ],
+  const appFile = getFile({
+    base: api.paths.absSrcPath!,
+    fileNameWithoutExt: 'app',
+    type: 'javascript',
+  });
+  if (appFile) {
+    const exportName = 'useQiankunStateForSlave';
+    const hasExport = hasExportWithName({
+      name: exportName,
+      filePath: appFile.path,
     });
+
+    if (hasExport) {
+      api.addRuntimePluginKey(() => exportName);
+      api.register({
+        key: 'addExtraModels',
+        fn: () => [
+          {
+            absPath: winPath(appFile.path),
+            namespace: qiankunStateForSlaveModelNamespace,
+            exportName,
+          },
+        ],
+      });
+    }
   }
-
-  const rootExportsJsFile = join(api.paths.absSrcPath!, 'rootExports.js');
-  const rootExportsTsFile = join(api.paths.absSrcPath!, 'rootExports.ts');
-  const rootExportsJsFileExisted = existsSync(rootExportsJsFile);
-  const rootExportsFileExisted =
-    rootExportsJsFileExisted || existsSync(rootExportsTsFile);
-
-  api.addTmpGenerateWatcherPaths(() =>
-    rootExportsJsFileExisted ? rootExportsJsFile : rootExportsTsFile,
-  );
 
   api.onGenerateFiles(() => {
     const {
@@ -69,18 +78,6 @@ export default function(api: IApi) {
       },
     } = api;
     const masterHistoryType = history?.type || defaultHistoryType;
-    const rootExports = `
-    if (typeof window !== 'undefined') {
-      window.g_rootExports = ${
-        rootExportsFileExisted ? `require('@/rootExports')` : `{}`
-      };
-    }
-    `.trim();
-
-    api.writeTmpFile({
-      path: 'plugin-qiankun/qiankunRootExports.js',
-      content: rootExports,
-    });
 
     api.writeTmpFile({
       path: 'plugin-qiankun/masterOptions.js',
@@ -92,6 +89,68 @@ export default function(api: IApi) {
       export const getMasterOptions = () => options;
       export const setMasterOptions = (newOpts) => options = ({ ...options, ...newOpts });
       `,
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/MicroApp.tsx',
+      content: readFileSync(join(__dirname, 'MicroApp.tsx.tpl'), 'utf-8'),
+    });
+  });
+
+  api.addUmiExports(() => {
+    const pinnedExport = 'MicroApp';
+    const exports: any[] = [
+      {
+        specifiers: [pinnedExport],
+        source: winPath('../plugin-qiankun/MicroApp'),
+      },
+    ];
+
+    const { exportComponentAlias } = api.config.qiankun.master!;
+    // 存在别名导出时再导出一份别名
+    if (exportComponentAlias && exportComponentAlias !== pinnedExport) {
+      exports.push({
+        specifiers: [{ local: pinnedExport, exported: exportComponentAlias }],
+        source: winPath('../plugin-qiankun/MicroApp'),
+      });
+    }
+
+    return exports;
+  });
+
+  api.addUmiExports(() => {
+    return {
+      specifiers: ['getMasterOptions'],
+      source: winPath('../plugin-qiankun/masterOptions.js'),
+    };
+  });
+
+  useCompatibleMode(api);
+}
+
+function useCompatibleMode(api: IApi) {
+  const rootExportsJsFile = getFile({
+    base: api.paths.absSrcPath!,
+    type: 'javascript',
+    fileNameWithoutExt: 'rootExports',
+  });
+
+  if (rootExportsJsFile) {
+    api.addTmpGenerateWatcherPaths(() => rootExportsJsFile.path);
+  }
+
+  api.onGenerateFiles(() => {
+    const rootExports = `
+    if (typeof window !== 'undefined') {
+      window.g_rootExports = ${
+        rootExportsJsFile ? `require('@/rootExports')` : `{}`
+      };
+    }
+    `.trim();
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/qiankunRootExports.js',
+      content: rootExports,
     });
 
     // TODO 兼容以前版本的 defer 配置，后续需要移除
@@ -107,46 +166,13 @@ export default function(api: IApi) {
       export const qiankunStart = deferred.resolve;
     `.trim(),
     });
-
-    api.writeTmpFile({
-      path: 'plugin-qiankun/MicroApp.tsx',
-      content: readFileSync(join(__dirname, 'MicroApp.tsx.tpl'), 'utf-8'),
-    });
   });
 
   // TODO 兼容以前版本的 defer 配置，后续需要移除
   api.addUmiExports(() => [
     {
       specifiers: ['qiankunStart'],
-      source: utils.winPath('../plugin-qiankun/qiankunDefer'),
+      source: winPath('../plugin-qiankun/qiankunDefer'),
     },
   ]);
-
-  api.addUmiExports(() => {
-    const pinnedExport = 'MicroApp';
-    const exports: any[] = [
-      {
-        specifiers: [pinnedExport],
-        source: utils.winPath('../plugin-qiankun/MicroApp'),
-      },
-    ];
-
-    const { exportComponentAlias } = api.config.qiankun.master!;
-    // 存在别名导出时再导出一份别名
-    if (exportComponentAlias && exportComponentAlias !== pinnedExport) {
-      exports.push({
-        specifiers: [{ local: pinnedExport, exported: exportComponentAlias }],
-        source: utils.winPath('../plugin-qiankun/MicroApp'),
-      });
-    }
-
-    return exports;
-  });
-
-  api.addUmiExports(() => {
-    return {
-      specifiers: ['getMasterOptions'],
-      source: utils.winPath('../plugin-qiankun/masterOptions.js'),
-    };
-  });
 }

@@ -7,6 +7,8 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import { useModel } from 'umi';
 
+const qiankunStateForSlaveModelNamespace = '@@qiankunStateForSlave';
+
 type Props = {
   name: string;
   settings?: FrameworkConfiguration;
@@ -34,7 +36,7 @@ export function MicroApp(componentProps: Props) {
     name,
     settings: settingsFromProps = {},
     loader,
-    ...propsForParams
+    ...propsFromParams
   } = componentProps;
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -50,7 +52,7 @@ export function MicroApp(componentProps: Props) {
 
   const { entry, props: propsFromConfig = {} } = appConfig;
   // 约定使用 src/globalState.ts 中的数据作为主应用透传给微应用的 props，优先级高于 propsFromConfig
-  const globalState = useModel('@@qiankunGlobalState');
+  const stateForSlave = useModel(qiankunStateForSlaveModelNamespace);
 
   useEffect(() => {
     microAppRef.current = loadMicroApp(
@@ -58,7 +60,7 @@ export function MicroApp(componentProps: Props) {
         name,
         entry,
         container: containerRef.current!,
-        props: { ...propsFromConfig, ...propsForParams, setLoading },
+        props: { ...propsFromConfig, ...stateForSlave, ...propsFromParams, setLoading },
       },
       {
         ...globalSettings,
@@ -74,7 +76,7 @@ export function MicroApp(componentProps: Props) {
     if (microApp?.update) {
       const status = microApp.getStatus();
       if (status === 'MOUNTED') {
-        const props = {  ...propsFromConfig, ...globalState, ...propsForParams, setLoading };
+        const props = {  ...propsFromConfig, ...stateForSlave, ...propsFromParams, setLoading };
         microApp.update(props);
 
         if (process.env.NODE_ENV === 'development') {
@@ -84,7 +86,7 @@ export function MicroApp(componentProps: Props) {
     }
 
     return () => {};
-  }, Object.values({...globalState, ...propsForParams}));
+  }, Object.values({...stateForSlave, ...propsFromParams}));
 
   return (
     <div>
