@@ -134,6 +134,19 @@ export const getLocale = () => {
   return lang || browserLang || {{{DefaultLocale}}};
 };
 
+
+/**
+ * 获取当前选择的方向
+ * @returns string
+ */
+export const getDirection = () => {
+  const lang = getLocale();
+  // array with all prefixs for rtl langueges ex: ar-EG , he-IL
+  const rtlLangs = ['he', 'ar', 'fa', 'ku']
+  const direction =  rtlLangs.filter(lng => lang.startsWith(lng)).length ? 'rtl' : 'ltr';
+  return direction;
+};
+
 /**
  * 切换语言
  * @param lang 语言的 key

@@ -10,7 +10,7 @@ import moment from 'moment';
 import 'moment/locale/{{.}}';
 {{/MomentLocales}}
 {{/MomentLocales.length}}
-import { RawIntlProvider, getLocale, setIntl, getIntl, localeInfo } from './localeExports';
+import { RawIntlProvider, getLocale, getDirection , setIntl, getIntl, localeInfo } from './localeExports';
 
 // @ts-ignore
 export const event = new EventEmitter();
@@ -60,11 +60,14 @@ export const _LocaleContainer = (props:any) => {
     ...require('{{{.}}}').default,
     {{/DefaultAntdLocales}}
   }
+  const direcition = getDirection();
+  
   return (
-    <ConfigProvider locale={localeInfo[locale]?.antd || defaultAntdLocale}>
+    <ConfigProvider  direction={direcition} locale={localeInfo[locale]?.antd || defaultAntdLocale}>
       <RawIntlProvider value={intl}>{props.children}</RawIntlProvider>
     </ConfigProvider>
   )
+
   {{/Antd}}
 
   return <RawIntlProvider value={intl}>{props.children}</RawIntlProvider>;
