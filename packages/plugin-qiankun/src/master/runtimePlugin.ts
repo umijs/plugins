@@ -61,7 +61,7 @@ async function useLegacyRegisterMode(
 ) {
   if (process.env.NODE_ENV === 'development') {
     console.warn(
-      '[@umijs/plugin-qiankun] Deprecated: 检测到还在使用旧版方式配置，建议您升级到最新配置方式以获得更好的开发体验~',
+      '[@umijs/plugin-qiankun] Deprecated: 检测到还在使用旧版配置，建议您升级到最新配置方式以获得更好的开发体验~',
     );
   }
 
