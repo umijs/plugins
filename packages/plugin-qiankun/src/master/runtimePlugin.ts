@@ -61,7 +61,7 @@ async function useLegacyRegisterMode(
 ) {
   if (process.env.NODE_ENV === 'development') {
     console.warn(
-      '[@umijs/plugin-qiankun] Deprecated: 检测到还在使用旧版配置，建议您升级到最新配置方式以获得更好的开发体验~',
+      '[@umijs/plugin-qiankun] Deprecated: 检测到还在使用旧版配置，建议您升级到最新配置方式以获得更好的开发体验，详见 https://umijs.org/plugins/plugin-qiankun#%E5%8D%87%E7%BA%A7%E6%8C%87%E5%8D%97',
     );
   }
 
@@ -155,7 +155,7 @@ async function useLegacyRegisterMode(
   if (defer) {
     if (process.env.NODE_ENV === 'development') {
       console.warn(
-        '[@umijs/plugin-qiankun] Deprecated: defer 配置不再推荐，建议您升级到最新配置方式以获得更好的开发体验~',
+        '[@umijs/plugin-qiankun] Deprecated: defer 配置不再推荐，建议您升级到最新配置方式以获得更好的开发体验，详见 https://umijs.org/plugins/plugin-qiankun#%E5%8D%87%E7%BA%A7%E6%8C%87%E5%8D%97',
       );
     }
     await deferred.promise;
