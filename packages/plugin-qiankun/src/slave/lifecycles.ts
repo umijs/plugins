@@ -21,6 +21,21 @@ let hasMountedAtLeastOnce = false;
 
 export default () => defer.promise;
 
+function normalizeHistory(
+  history: 'string' | Record<string, any>,
+  base?: string,
+) {
+  let normalizedHistory: Record<string, any> = {};
+  if (base) normalizedHistory.basename = base;
+  if (typeof history === 'string') {
+    normalizedHistory.type = history;
+  } else {
+    normalizedHistory = history;
+  }
+
+  return normalizedHistory;
+}
+
 function getSlaveRuntime() {
   const config = plugin.applyPlugins({
     key: 'qiankun',
@@ -51,18 +66,8 @@ export function genMount() {
     }
 
     // 动态改变 history
-    if (typeof props?.history === 'object') {
-      setCreateHistoryOptions(props.history);
-    } else if (props?.base || props?.history) {
-      const historyObj: any = {};
-      if (props?.base) {
-        historyObj.base = props?.base;
-      }
-      if (props?.history) {
-        historyObj.type = props?.history;
-      }
-      setCreateHistoryOptions(historyObj);
-    }
+    const historyOptions = normalizeHistory(props.history, props.base);
+    setCreateHistoryOptions(historyOptions);
 
     defer.resolve();
     // 第一次 mount umi 会自动触发 render，非第一次 mount 则需手动触发

@@ -30,10 +30,41 @@ async function getMasterRuntime() {
   return master || config;
 }
 
-async function useRegisterMode(
+export async function render(oldRender: typeof noop) {
+  const masterOptions = getMasterOptions();
+  const runtimeOptions = await getMasterRuntime();
+
+  setMasterOptions({ ...masterOptions, ...runtimeOptions });
+  // 主应用相关的配置注册完毕后即可开启渲染
+  oldRender();
+
+  const { apps, ...options } = getMasterOptions() as MasterOptions;
+
+  // 使用了 base 配置的应用为可注册应用
+  const registrableApps = apps.filter(app => app.base);
+  if (registrableApps.length) {
+    // 不要在 oldRender 调用之前调用 useRegisterMode 方法，因为里面可能会 await defer promise 从而造成死锁
+    await useLegacyRegisterMode(registrableApps, options);
+  }
+
+  // 未使用 base 配置的可以认为是路由关联或者使用标签装载的应用
+  const loadableApps = apps.filter(app => !app.base);
+  if (loadableApps.length) {
+    const { prefetch, ...importEntryOpts } = options;
+    if (prefetch) prefetchApps(loadableApps, importEntryOpts);
+  }
+}
+
+async function useLegacyRegisterMode(
   apps: App[],
   masterOptions: Omit<MasterOptions, 'apps'>,
 ) {
+  if (process.env.NODE_ENV === 'development') {
+    console.warn(
+      '[@umijs/plugin-qiankun] Deprecated: 检测到还在使用旧版方式配置，建议您升级到最新配置方式以获得更好的开发体验~',
+    );
+  }
+
   function isAppActive(
     location: Location,
     history: HistoryType,
@@ -122,33 +153,13 @@ async function useRegisterMode(
   );
 
   if (defer) {
+    if (process.env.NODE_ENV === 'development') {
+      console.warn(
+        '[@umijs/plugin-qiankun] Deprecated: defer 配置不再推荐，建议您升级到最新配置方式以获得更好的开发体验~',
+      );
+    }
     await deferred.promise;
   }
 
   start({ sandbox, prefetch, ...otherConfigs });
-}
-
-export async function render(oldRender: typeof noop) {
-  const masterOptions = getMasterOptions();
-  const runtimeOptions = await getMasterRuntime();
-
-  setMasterOptions({ ...masterOptions, ...runtimeOptions });
-  // 主应用相关的配置注册完毕后即可开启渲染
-  oldRender();
-
-  const { apps, ...options } = getMasterOptions() as MasterOptions;
-
-  // 使用了 base 配置的应用为可注册应用
-  const registrableApps = apps.filter(app => app.base);
-  if (registrableApps.length) {
-    // 不要在 oldRender 调用之前调用 useRegisterMode 方法，因为里面可能会 await defer promise 从而造成死锁
-    await useRegisterMode(registrableApps, options);
-  }
-
-  // 未使用 base 配置的可以认为是路由关联或者使用标签装载的应用
-  const loadableApps = apps.filter(app => !app.base);
-  if (loadableApps.length) {
-    const { prefetch, ...importEntryOpts } = options;
-    if (prefetch) prefetchApps(loadableApps, importEntryOpts);
-  }
 }

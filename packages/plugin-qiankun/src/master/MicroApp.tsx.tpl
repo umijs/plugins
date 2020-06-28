@@ -51,7 +51,7 @@ export function MicroApp(componentProps: Props) {
   }
 
   const { entry, props: propsFromConfig = {} } = appConfig;
-  // 约定使用 src/app/useQiankunStateForSlave.ts 中的数据作为主应用透传给微应用的 props，优先级高于 propsFromConfig
+  // 约定使用 src/app.ts/useQiankunStateForSlave 中的数据作为主应用透传给微应用的 props，优先级高于 propsFromConfig
   const stateForSlave = useModel(qiankunStateForSlaveModelNamespace);
 
   useEffect(() => {
@@ -89,9 +89,11 @@ export function MicroApp(componentProps: Props) {
   }, Object.values({...stateForSlave, ...propsFromParams}));
 
   return (
-    <div>
-      { Boolean(loader) && loader(loading) }
-      <div ref={containerRef} />
-    </div>
+    Boolean(loader)
+      ? <div>
+          { loader(loading) }
+          <div ref={containerRef} />
+        </div>
+      : <div ref={containerRef} />
   );
 }
