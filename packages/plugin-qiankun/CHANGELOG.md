@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.3.0...@umijs/plugin-qiankun@2.3.1) (2020-06-28)
+
+### Bug Fixes
+
+- **qiankun:** 修复 babel parse ts 文件出错的问题 ([#271](https://github.com/umijs/plugins/issues/271)) ([9cd07cd](https://github.com/umijs/plugins/commit/9cd07cd88e9f822668271f7d772ac350b09b9633))
+
 # [2.3.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.2.0...@umijs/plugin-qiankun@2.3.0) (2020-06-28)
 
 ### Features
