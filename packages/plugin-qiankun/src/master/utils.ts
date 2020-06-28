@@ -9,6 +9,7 @@ import { utils } from 'umi';
 
 const { t, parser } = utils;
 
+// TODO 待 https://github.com/umijs/umi/pull/4909 合并后改为 umi 中的实现
 export function hasExportWithName(opts: { name: string; filePath: string }) {
   const { name, filePath } = opts;
 
@@ -17,10 +18,10 @@ export function hasExportWithName(opts: { name: string; filePath: string }) {
   const isTSX = extname(filePath) === '.tsx';
 
   const p: ParserPlugin[] = [];
-  if (isTS) {
+  if (!isTS) {
     p.push('jsx');
   }
-  if (isTSX) {
+  if (isTS || isTSX) {
     p.push('typescript');
   }
 
