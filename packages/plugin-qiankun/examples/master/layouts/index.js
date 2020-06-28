@@ -51,14 +51,14 @@ export default class extends React.PureComponent {
             {apps.map((app, index) => {
               if (index === 2) {
                 return (
-                  <Menu.Item key={app.base}>
+                  <Menu.Item key={app.to}>
                     <Link to="/app3/123">{app.name}</Link>
                   </Menu.Item>
                 );
               }
               return (
-                <Menu.Item key={app.base}>
-                  <Link to={app.base}>{app.name}</Link>
+                <Menu.Item key={app.to}>
+                  <Link to={app.to}>{app.name}</Link>
                 </Menu.Item>
               );
             })}
@@ -66,9 +66,7 @@ export default class extends React.PureComponent {
         </Header>
         <Content className={style.content}>
           {renderBreadCrumb(location.pathname)}
-          {// 加载master pages，此处判断较为简单，实际需排除所有子应用base打头的路径
-          selectKey === '/' ? children : null}
-          {apps.length ? <div id="root-subapp-container" /> : null}
+          {children}
         </Content>
         <Footer className={style.footer}>
           Ant Design ©2019 Created by Ant UED

@@ -1,34 +1,53 @@
 import address from 'address';
 import assert from 'assert';
-import { isString } from 'lodash';
+import { isString, isEqual } from 'lodash';
 import { join } from 'path';
-import { IApi } from 'umi';
-import { addSpecifyPrefixedRoute, defaultSlaveRootId } from '../common';
+import { IApi, utils } from 'umi';
+import {
+  addSpecifyPrefixedRoute,
+  defaultSlaveRootId,
+  qiankunStateFromMasterModelNamespace,
+} from '../common';
 import { SlaveOptions } from '../types';
 
 const localIpAddress = process.env.USE_REMOTE_IP ? address.ip() : 'localhost';
 
-export default function(api: IApi, options: SlaveOptions) {
-  const {
-    keepOriginalRoutes = false,
-    shouldNotModifyRuntimePublicPath = false,
-  } = options || {};
+export default function(api: IApi) {
+  api.describe({
+    enableBy() {
+      return (
+        !!api.userConfig?.qiankun?.slave || isEqual(api.userConfig?.qiankun, {})
+      );
+    },
+  });
+
+  const options: SlaveOptions = api.userConfig?.qiankun?.slave!;
+  const { shouldNotModifyRuntimePublicPath = false } = options || {};
+
   api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
 
-  const lifecyclePath = require.resolve('./lifecycles');
+  api.register({
+    key: 'addExtraModels',
+    fn: () => [
+      {
+        absPath: utils.winPath(join(__dirname, '../qiankunModel.ts')),
+        namespace: qiankunStateFromMasterModelNamespace,
+      },
+    ],
+  });
+
   // eslint-disable-next-line import/no-dynamic-require, global-require
-  const { name: pkgName } = require(join(api.cwd, 'package.json'));
   api.modifyDefaultConfig(memo => ({
     ...memo,
     disableGlobalVariables: true,
-    base: `/${pkgName}`,
+    base: `/${api.pkg.name}`,
     mountElementId: defaultSlaveRootId,
     // 默认开启 runtimePublicPath，避免出现 dynamic import 场景子应用资源地址出问题
     runtimePublicPath: true,
   }));
 
   if (
-    api.service.userConfig.runtimePublicPath !== false &&
+    api.userConfig.runtimePublicPath !== false &&
     !shouldNotModifyRuntimePublicPath
   ) {
     api.modifyPublicPathStr(
@@ -77,7 +96,7 @@ export default function(api: IApi, options: SlaveOptions) {
       memo.plugin('source-map').use(webpack.SourceMapDevToolPlugin, [
         {
           // @ts-ignore
-          namespace: pkgName,
+          namespace: api.pkg.name,
           append: `\n//# sourceMappingURL=${protocol}://${localIpAddress}:${port}/[url]`,
           filename: '[file].map',
         },
@@ -85,6 +104,35 @@ export default function(api: IApi, options: SlaveOptions) {
       return memo;
     });
   }
+
+  const lifecyclePath = require.resolve('./lifecycles');
+  api.addEntryImports(() => {
+    return {
+      source: lifecyclePath,
+      specifier:
+        '{ genMount as qiankun_genMount, genBootstrap as qiankun_genBootstrap, genUnmount as qiankun_genUnmount, genUpdate as qiankun_genUpdate }',
+    };
+  });
+  api.addEntryCode(
+    () =>
+      `
+    export const bootstrap = qiankun_genBootstrap(clientRender);
+    export const mount = qiankun_genMount();
+    export const unmount = qiankun_genUnmount('${api.config.mountElementId}');
+    export const update = qiankun_genUpdate();
+
+    if (!window.__POWERED_BY_QIANKUN__) {
+      bootstrap().then(mount);
+    }
+    `,
+  );
+
+  useLegacyMode(api);
+}
+
+function useLegacyMode(api: IApi) {
+  const options: SlaveOptions = api.userConfig?.qiankun?.slave!;
+  const { keepOriginalRoutes = false } = options || {};
 
   api.onGenerateFiles(() => {
     api.writeTmpFile({
@@ -94,8 +142,13 @@ export default function(api: IApi, options: SlaveOptions) {
 
       export const Context = createContext(null);
       export function useRootExports() {
+        if (process.env.NODE_ENV === 'development') {
+          console.warn(
+            '[@umijs/plugin-qiankun] Deprecated: useRootExports 通信方式不再推荐，建议您升级到新的应用通信模式，以获得更好的开发体验。详见 https://umijs.org/plugins/plugin-qiankun#%E7%88%B6%E5%AD%90%E5%BA%94%E7%94%A8%E9%80%9A%E8%AE%AF',
+          );
+        }
         return useContext(Context);
-      };`.trim(),
+      }`.trim(),
     });
   });
 
@@ -106,30 +159,10 @@ export default function(api: IApi, options: SlaveOptions) {
     },
   ]);
 
-  api.addEntryImports(() => {
-    return {
-      source: lifecyclePath,
-      specifier:
-        '{ genMount as qiankun_genMount, genBootstrap as qiankun_genBootstrap, genUnmount as qiankun_genUnmount }',
-    };
-  });
-  api.addEntryCode(
-    () =>
-      `
-    export const bootstrap = qiankun_genBootstrap(clientRender);
-    export const mount = qiankun_genMount();
-    export const unmount = qiankun_genUnmount('${api.config.mountElementId}');
-
-    if (!window.__POWERED_BY_QIANKUN__) {
-      bootstrap().then(mount);
-    }
-    `,
-  );
-
   api.modifyRoutes(routes => {
     // 开启keepOriginalRoutes配置
     if (keepOriginalRoutes === true || isString(keepOriginalRoutes)) {
-      return addSpecifyPrefixedRoute(routes, keepOriginalRoutes, pkgName);
+      return addSpecifyPrefixedRoute(routes, keepOriginalRoutes, api.pkg.name);
     }
 
     return routes;

@@ -14,14 +14,37 @@ export default {
     },
   },
   qiankun: {
-    master: {
-      defer: true,
-      jsSandbox: true,
-      prefetch: true,
-    },
+    master: {},
   },
+  routes: [
+    {
+      path: '/',
+      component: '../layouts/index.js',
+      routes: [
+        {
+          path: '/app1',
+          microApp: 'app1',
+          settings: { singular: false },
+        },
+        {
+          path: '/app2',
+          exact: false,
+          component: './app2/index.js',
+        },
+        {
+          path: '/app3',
+          microApp: 'app3',
+        },
+        {
+          path: '/',
+          component: './index.js',
+        },
+      ],
+    },
+  ],
   plugins: [
     require.resolve('../../../plugin-dva/lib'),
+    require.resolve('../../../plugin-model/lib'),
     require.resolve('../../../plugin-antd/lib'),
     require.resolve('../../../plugin-qiankun/lib'),
     // [
@@ -29,7 +52,7 @@ export default {
     //   {
     //     master: {
     //       defer: true,
-    //       jsSandbox: true,
+    //       sandbox: true,
     //       prefetch: true,
     //     },
     //   },

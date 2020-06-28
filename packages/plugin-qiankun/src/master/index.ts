@@ -1,17 +1,38 @@
 /* eslint-disable quotes */
-import { existsSync } from 'fs';
+import { readFileSync } from 'fs';
 import { join } from 'path';
 // eslint-disable-next-line import/no-unresolved
-import { IApi, IRoute } from 'umi';
+import { IApi, utils } from 'umi';
 import {
   defaultHistoryType,
   defaultMasterRootId,
-  testPathWithPrefix,
-  toArray,
+  qiankunStateForSlaveModelNamespace,
 } from '../common';
-import { MasterOptions } from '../types';
+import modifyRoutes from './modifyRoutes';
+import { hasExportWithName } from './utils';
 
-export default function(api: IApi, options: MasterOptions) {
+const { getFile, winPath } = utils;
+
+export default function(api: IApi) {
+  api.describe({
+    enableBy() {
+      return (
+        !!api.userConfig?.qiankun?.master ||
+        !!process.env.initialQiankunMasterOptions
+      );
+    },
+  });
+
+  api.modifyConfig(config => ({
+    ...config,
+    qiankun: {
+      master: {
+        ...JSON.parse(process.env.initialQiankunMasterOptions || '{}'),
+        ...config?.qiankun?.master,
+      },
+    },
+  }));
+
   api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
 
   api.modifyDefaultConfig(config => ({
@@ -20,100 +41,109 @@ export default function(api: IApi, options: MasterOptions) {
     disableGlobalVariables: true,
   }));
 
-  // apps 可能在构建期为空
-  const { apps = [] } = options || {};
-  if (apps.length) {
-    // 获取一组路由中以 basePath 为前缀的路由
-    const findRouteWithPrefix = (
-      routes: IRoute[],
-      basePath: string,
-    ): IRoute | null => {
-      // eslint-disable-next-line no-restricted-syntax
-      for (const route of routes) {
-        if (route.path && testPathWithPrefix(basePath, route.path))
-          return route;
+  modifyRoutes(api);
 
-        if (route.routes && route.routes.length) {
-          return findRouteWithPrefix(route.routes, basePath);
-        }
-      }
+  const appFile = getFile({
+    base: api.paths.absSrcPath!,
+    fileNameWithoutExt: 'app',
+    type: 'javascript',
+  });
+  if (appFile) {
+    const exportName = 'useQiankunStateForSlave';
+    const hasExport = hasExportWithName({
+      name: exportName,
+      filePath: appFile.path,
+    });
 
-      return null;
-    };
-
-    const modifyAppRoutes = () => {
-      api.modifyRoutes(routes => {
-        const {
-          config: { history },
-        } = api;
-
-        const masterHistoryType = history?.type || defaultHistoryType;
-        const newRoutes = routes.map(route => {
-          if (route.path === '/' && route.routes && route.routes.length) {
-            apps.forEach(
-              ({ history: slaveHistory = masterHistoryType, base }) => {
-                // 当子应用的 history mode 跟主应用一致时，为避免出现 404 手动为主应用创建一个 path 为 子应用 rule 的空 div 路由组件
-                if (slaveHistory === masterHistoryType) {
-                  const baseConfig = toArray(base);
-
-                  baseConfig.forEach(basePath => {
-                    const routeWithPrefix = findRouteWithPrefix(
-                      routes,
-                      basePath,
-                    );
-
-                    // 应用没有自己配置过 basePath 相关路由，则自动加入 mock 的路由
-                    if (!routeWithPrefix) {
-                      route.routes!.unshift({
-                        path: basePath,
-                        exact: false,
-                        component: `() => {
-                        if (process.env.NODE_ENV === 'development') {
-                          console.log('${basePath} 404 mock rendered');
-                        }
-
-                        return require('react').createElement('div');
-                      }`,
-                      });
-                    } else {
-                      // 若用户已配置过跟应用 base 重名的路由，则强制将该路由 exact 设置为 false，目的是兼容之前遗留的错误用法的场景
-                      routeWithPrefix.exact = false;
-                    }
-                  });
-                }
-              },
-            );
-          }
-
-          return route;
-        });
-
-        return newRoutes;
+    if (hasExport) {
+      api.addRuntimePluginKey(() => exportName);
+      api.register({
+        key: 'addExtraModels',
+        fn: () => [
+          {
+            absPath: winPath(appFile.path),
+            namespace: qiankunStateForSlaveModelNamespace,
+            exportName,
+          },
+        ],
       });
-    };
-
-    modifyAppRoutes();
+    }
   }
-
-  const rootExportsJsFile = join(api.paths.absSrcPath!, 'rootExports.js');
-  const rootExportsTsFile = join(api.paths.absSrcPath!, 'rootExports.ts');
-  const rootExportsJsFileExisted = existsSync(rootExportsJsFile);
-  const rootExportsFileExisted =
-    rootExportsJsFileExisted || existsSync(rootExportsTsFile);
-
-  api.addTmpGenerateWatcherPaths(() =>
-    rootExportsJsFileExisted ? rootExportsJsFile : rootExportsTsFile,
-  );
 
   api.onGenerateFiles(() => {
     const {
-      config: { history },
+      config: {
+        history,
+        qiankun: { master: options },
+      },
     } = api;
     const masterHistoryType = history?.type || defaultHistoryType;
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/masterOptions.js',
+      content: `
+      let options = ${JSON.stringify({
+        masterHistoryType,
+        ...options,
+      })};
+      export const getMasterOptions = () => options;
+      export const setMasterOptions = (newOpts) => options = ({ ...options, ...newOpts });
+      `,
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/MicroApp.tsx',
+      content: readFileSync(join(__dirname, 'MicroApp.tsx.tpl'), 'utf-8'),
+    });
+  });
+
+  api.addUmiExports(() => {
+    const pinnedExport = 'MicroApp';
+    const exports: any[] = [
+      {
+        specifiers: [pinnedExport],
+        source: winPath('../plugin-qiankun/MicroApp'),
+      },
+    ];
+
+    const { exportComponentAlias } = api.config.qiankun.master!;
+    // 存在别名导出时再导出一份别名
+    if (exportComponentAlias && exportComponentAlias !== pinnedExport) {
+      exports.push({
+        specifiers: [{ local: pinnedExport, exported: exportComponentAlias }],
+        source: winPath('../plugin-qiankun/MicroApp'),
+      });
+    }
+
+    return exports;
+  });
+
+  api.addUmiExports(() => {
+    return {
+      specifiers: ['getMasterOptions'],
+      source: winPath('../plugin-qiankun/masterOptions.js'),
+    };
+  });
+
+  useCompatibleMode(api);
+}
+
+function useCompatibleMode(api: IApi) {
+  const rootExportsJsFile = getFile({
+    base: api.paths.absSrcPath!,
+    type: 'javascript',
+    fileNameWithoutExt: 'rootExports',
+  });
+
+  if (rootExportsJsFile) {
+    api.addTmpGenerateWatcherPaths(() => rootExportsJsFile.path);
+  }
+
+  api.onGenerateFiles(() => {
     const rootExports = `
     if (typeof window !== 'undefined') {
       window.g_rootExports = ${
-        rootExportsFileExisted ? `require('@/rootExports')` : `{}`
+        rootExportsJsFile ? `require('@/rootExports')` : `{}`
       };
     }
     `.trim();
@@ -123,14 +153,7 @@ export default function(api: IApi, options: MasterOptions) {
       content: rootExports,
     });
 
-    api.writeTmpFile({
-      path: 'plugin-qiankun/subAppsConfig.json',
-      content: JSON.stringify({
-        masterHistoryType,
-        ...options,
-      }),
-    });
-
+    // TODO 兼容以前版本的 defer 配置，后续需要移除
     api.writeTmpFile({
       path: 'plugin-qiankun/qiankunDefer.js',
       content: `
@@ -145,10 +168,11 @@ export default function(api: IApi, options: MasterOptions) {
     });
   });
 
+  // TODO 兼容以前版本的 defer 配置，后续需要移除
   api.addUmiExports(() => [
     {
       specifiers: ['qiankunStart'],
-      source: '../plugin-qiankun/qiankunDefer',
+      source: winPath('../plugin-qiankun/qiankunDefer'),
     },
   ]);
 }

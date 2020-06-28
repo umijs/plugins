@@ -1,14 +1,13 @@
 /* eslint-disable import/no-unresolved, import/extensions */
 
-// @ts-ignore
+import {
+  getMasterOptions,
+  setMasterOptions,
+} from '@@/plugin-qiankun/masterOptions';
 import { deferred } from '@@/plugin-qiankun/qiankunDefer.js';
 import '@@/plugin-qiankun/qiankunRootExports.js';
-// @ts-ignore
-import subAppConfig from '@@/plugin-qiankun/subAppsConfig.json';
 import assert from 'assert';
-import { registerMicroApps, start } from 'qiankun';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { prefetchApps, registerMicroApps, start } from 'qiankun';
 // @ts-ignore
 import { ApplyPluginsType, plugin } from 'umi';
 import {
@@ -32,7 +31,39 @@ async function getMasterRuntime() {
 }
 
 export async function render(oldRender: typeof noop) {
+  const masterOptions = getMasterOptions();
+  const runtimeOptions = await getMasterRuntime();
+
+  setMasterOptions({ ...masterOptions, ...runtimeOptions });
+  // 主应用相关的配置注册完毕后即可开启渲染
   oldRender();
+
+  const { apps, ...options } = getMasterOptions() as MasterOptions;
+
+  // 使用了 base 配置的应用为可注册应用
+  const registrableApps = apps.filter(app => app.base);
+  if (registrableApps.length) {
+    // 不要在 oldRender 调用之前调用 useRegisterMode 方法，因为里面可能会 await defer promise 从而造成死锁
+    await useLegacyRegisterMode(registrableApps, options);
+  }
+
+  // 未使用 base 配置的可以认为是路由关联或者使用标签装载的应用
+  const loadableApps = apps.filter(app => !app.base);
+  if (loadableApps.length) {
+    const { prefetch, ...importEntryOpts } = options;
+    if (prefetch) prefetchApps(loadableApps, importEntryOpts);
+  }
+}
+
+async function useLegacyRegisterMode(
+  apps: App[],
+  masterOptions: Omit<MasterOptions, 'apps'>,
+) {
+  if (process.env.NODE_ENV === 'development') {
+    console.warn(
+      '[@umijs/plugin-qiankun] Deprecated: 检测到还在使用旧版配置，建议您升级到最新配置方式以获得更好的开发体验，详见 https://umijs.org/plugins/plugin-qiankun#%E5%8D%87%E7%BA%A7%E6%8C%87%E5%8D%97',
+    );
+  }
 
   function isAppActive(
     location: Location,
@@ -56,7 +87,7 @@ export async function render(oldRender: typeof noop) {
 
       case 'browser': {
         const matchedBase = baseConfig.find(pathPrefix =>
-          testPathWithPrefix(pathPrefix, location.pathname),
+          testPathWithPrefix(pathPrefix!, location.pathname),
         );
         if (matchedBase) {
           setMatchedBase(matchedBase);
@@ -70,19 +101,17 @@ export async function render(oldRender: typeof noop) {
     }
   }
 
-  const runtimeConfig = await getMasterRuntime();
   const {
-    apps,
-    jsSandbox = false,
+    // @ts-ignore 兼容之前版本的 jsSandbox 配置
+    sandbox = masterOptions.jsSandbox ?? true,
     prefetch = true,
+    // @ts-ignore compatible with old configuration
     defer = false,
     lifeCycles,
     masterHistoryType = defaultHistoryType,
     ...otherConfigs
-  } = {
-    ...(subAppConfig as MasterOptions),
-    ...(runtimeConfig as MasterOptions),
-  };
+  } = masterOptions;
+
   assert(
     apps && apps.length,
     'sub apps must be config when using umi-plugin-qiankun',
@@ -108,28 +137,7 @@ export async function render(oldRender: typeof noop) {
               base,
               setMatchedBase: (v: string) => (matchedBase = v),
             }),
-          render: ({ appContent, loading }) => {
-            if (process.env.NODE_ENV === 'development') {
-              console.info(
-                `[@umijs/plugin-qiankun]: app ${name} loading ${loading}`,
-              );
-            }
-
-            if (mountElementId) {
-              const container = document.getElementById(mountElementId);
-              if (container) {
-                const subApp = React.createElement('div', {
-                  dangerouslySetInnerHTML: {
-                    __html: appContent,
-                  },
-                });
-                ReactDOM.render(subApp, container);
-              }
-            } else if (process.env.NODE_ENV === 'development') {
-              console.warn(`[@umijs/plugin-qiankun]: Your ${name} app container with id ${mountElementId} is not
-               ready, that may cause an unexpected behavior!`);
-            }
-          },
+          container: `#${mountElementId}`,
           props: {
             base,
             history,
@@ -142,12 +150,16 @@ export async function render(oldRender: typeof noop) {
       },
     ),
     lifeCycles,
-    otherConfigs,
   );
 
   if (defer) {
+    if (process.env.NODE_ENV === 'development') {
+      console.warn(
+        '[@umijs/plugin-qiankun] Deprecated: defer 配置不再推荐，建议您升级到最新配置方式以获得更好的开发体验，详见 https://umijs.org/plugins/plugin-qiankun#%E5%8D%87%E7%BA%A7%E6%8C%87%E5%8D%97',
+      );
+    }
     await deferred.promise;
   }
 
-  start({ jsSandbox, prefetch, ...otherConfigs });
+  start({ sandbox, prefetch, ...otherConfigs });
 }
