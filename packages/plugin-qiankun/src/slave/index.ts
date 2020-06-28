@@ -1,6 +1,6 @@
 import address from 'address';
 import assert from 'assert';
-import { isString } from 'lodash';
+import { isString, isEqual } from 'lodash';
 import { join } from 'path';
 import { IApi, utils } from 'umi';
 import {
@@ -15,15 +15,14 @@ const localIpAddress = process.env.USE_REMOTE_IP ? address.ip() : 'localhost';
 export default function(api: IApi) {
   api.describe({
     enableBy() {
-      return !!api.userConfig?.qiankun?.slave;
+      return (
+        !!api.userConfig?.qiankun?.slave || isEqual(api.userConfig?.qiankun, {})
+      );
     },
   });
 
   const options: SlaveOptions = api.userConfig?.qiankun?.slave!;
-  const {
-    keepOriginalRoutes = false,
-    shouldNotModifyRuntimePublicPath = false,
-  } = options || {};
+  const { shouldNotModifyRuntimePublicPath = false } = options || {};
 
   api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
 
@@ -37,7 +36,6 @@ export default function(api: IApi) {
     ],
   });
 
-  const lifecyclePath = require.resolve('./lifecycles');
   // eslint-disable-next-line import/no-dynamic-require, global-require
   api.modifyDefaultConfig(memo => ({
     ...memo,
@@ -107,26 +105,7 @@ export default function(api: IApi) {
     });
   }
 
-  api.onGenerateFiles(() => {
-    api.writeTmpFile({
-      path: 'plugin-qiankun/qiankunContext.js',
-      content: `
-      import { createContext, useContext } from 'react';
-
-      export const Context = createContext(null);
-      export function useRootExports() {
-        return useContext(Context);
-      };`.trim(),
-    });
-  });
-
-  api.addUmiExports(() => [
-    {
-      specifiers: ['useRootExports'],
-      source: '../plugin-qiankun/qiankunContext',
-    },
-  ]);
-
+  const lifecyclePath = require.resolve('./lifecycles');
   api.addEntryImports(() => {
     return {
       source: lifecyclePath,
@@ -147,6 +126,38 @@ export default function(api: IApi) {
     }
     `,
   );
+
+  useLegacyMode(api);
+}
+
+function useLegacyMode(api: IApi) {
+  const options: SlaveOptions = api.userConfig?.qiankun?.slave!;
+  const { keepOriginalRoutes = false } = options || {};
+
+  api.onGenerateFiles(() => {
+    api.writeTmpFile({
+      path: 'plugin-qiankun/qiankunContext.js',
+      content: `
+      import { createContext, useContext } from 'react';
+
+      export const Context = createContext(null);
+      export function useRootExports() {
+        if (process.env.NODE_ENV === 'development') {
+          console.warn(
+            '[@umijs/plugin-qiankun] Deprecated: useRootExports 通信方式不再推荐，建议您升级到新的应用通信模式，以获得更好的开发体验。详见 https://umijs.org/plugins/plugin-qiankun#%E7%88%B6%E5%AD%90%E5%BA%94%E7%94%A8%E9%80%9A%E8%AE%AF',
+          );
+        }
+        return useContext(Context);
+      }`.trim(),
+    });
+  });
+
+  api.addUmiExports(() => [
+    {
+      specifiers: ['useRootExports'],
+      source: '../plugin-qiankun/qiankunContext',
+    },
+  ]);
 
   api.modifyRoutes(routes => {
     // 开启keepOriginalRoutes配置

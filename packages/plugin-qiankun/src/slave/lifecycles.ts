@@ -22,15 +22,17 @@ let hasMountedAtLeastOnce = false;
 export default () => defer.promise;
 
 function normalizeHistory(
-  history: 'string' | Record<string, any>,
+  history?: 'string' | Record<string, any>,
   base?: string,
 ) {
   let normalizedHistory: Record<string, any> = {};
   if (base) normalizedHistory.basename = base;
-  if (typeof history === 'string') {
-    normalizedHistory.type = history;
-  } else {
-    normalizedHistory = history;
+  if (history) {
+    if (typeof history === 'string') {
+      normalizedHistory.type = history;
+    } else {
+      normalizedHistory = history;
+    }
   }
 
   return normalizedHistory;
@@ -57,7 +59,7 @@ export function genBootstrap(oldRender: typeof noop) {
 }
 
 export function genMount() {
-  return async (props: any) => {
+  return async (props?: any) => {
     setModelState(props);
 
     const slaveRuntime = getSlaveRuntime();
@@ -66,7 +68,7 @@ export function genMount() {
     }
 
     // 动态改变 history
-    const historyOptions = normalizeHistory(props.history, props.base);
+    const historyOptions = normalizeHistory(props?.history, props?.base);
     setCreateHistoryOptions(historyOptions);
 
     defer.resolve();
