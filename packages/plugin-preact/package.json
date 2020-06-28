@@ -22,8 +22,7 @@
   "bugs": "http://github.com/umijs/plugins/issues",
   "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-preact#readme",
   "dependencies": {
-    "preact": "^10.3.4",
-    "preact-compat": "^3.19.0"
+    "preact": "^10.3.4"
   },
   "peerDependencies": {
     "umi": "3.x"
