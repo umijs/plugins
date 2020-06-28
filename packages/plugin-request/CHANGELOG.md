@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.3.2...@umijs/plugin-request@2.4.0) (2020-06-28)
+
+### Features
+
+- useRequest from umi ahooks to ahooks ([#262](https://github.com/umijs/plugins/issues/262)) ([73bbd7d](https://github.com/umijs/plugins/commit/73bbd7d76a1ad84384d0a27d5872356f8a4d502b))
+
 ## [2.3.2](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.3.1...@umijs/plugin-request@2.3.2) (2020-03-20)
 
 **Note:** Version bump only for package @umijs/plugin-request

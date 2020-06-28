@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.2.0...@umijs/plugin-qiankun@2.3.0) (2020-06-28)
+
+### Features
+
+- **qiankun:** 支持 qiankun2.0 特性 ([#148](https://github.com/umijs/plugins/issues/148)) ([0297840](https://github.com/umijs/plugins/commit/029784013bbddd2cf552d68dcb8307c861c50b75)), closes [#178](https://github.com/umijs/plugins/issues/178) [#179](https://github.com/umijs/plugins/issues/179) [#214](https://github.com/umijs/plugins/issues/214) [#267](https://github.com/umijs/plugins/issues/267)
+
 # [2.2.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.1.1...@umijs/plugin-qiankun@2.2.0) (2020-05-21)
 
 ### Features

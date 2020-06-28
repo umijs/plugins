@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.8](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.7...@umijs/plugin-layout@0.11.8) (2020-06-28)
+
+### Bug Fixes
+
+- menu icon inoperative ([#168](https://github.com/umijs/plugins/issues/168)) ([16c1d93](https://github.com/umijs/plugins/commit/16c1d9305f18c702208f7f28bfa13f1c554084c9))
+
 ## [0.11.7](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.6...@umijs/plugin-layout@0.11.7) (2020-06-03)
 
 ### Bug Fixes

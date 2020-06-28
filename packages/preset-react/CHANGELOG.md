@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.11](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.5.10...@umijs/preset-react@1.5.11) (2020-06-28)
+
+**Note:** Version bump only for package @umijs/preset-react
+
 ## [1.5.10](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.5.9...@umijs/preset-react@1.5.10) (2020-06-22)
 
 **Note:** Version bump only for package @umijs/preset-react

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.8.0...@umijs/plugin-locale@0.9.0) (2020-06-28)
+
+### Features
+
+- RTL for pro [URGENT!!!](<[#269](https://github.com/umijs/plugins/issues/269)>) ([16fd164](https://github.com/umijs/plugins/commit/16fd164788d37470636de32527423d0ac9810c5b)), closes [#6599](https://github.com/umijs/plugins/issues/6599)
+
 # [0.8.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.7.1...@umijs/plugin-locale@0.8.0) (2020-06-15)
 
 ### Features
