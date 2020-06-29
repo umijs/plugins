@@ -16,10 +16,23 @@ export default function(api: IApi) {
   api.describe({
     enableBy() {
       return (
-        !!api.userConfig?.qiankun?.slave || isEqual(api.userConfig?.qiankun, {})
+        !!api.userConfig?.qiankun?.slave ||
+        isEqual(api.userConfig?.qiankun, {}) ||
+        !!process.env.initialQiankunSlaveOptions
       );
     },
   });
+
+  api.modifyConfig(config => ({
+    ...config,
+    qiankun: {
+      ...config?.qiankun,
+      slave: {
+        ...JSON.parse(process.env.initialQiankunSlaveOptions || '{}'),
+        ...config?.qiankun?.slave,
+      },
+    },
+  }));
 
   const options: SlaveOptions = api.userConfig?.qiankun?.slave!;
   const { shouldNotModifyRuntimePublicPath = false } = options || {};
