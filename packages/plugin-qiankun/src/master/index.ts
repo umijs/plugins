@@ -26,6 +26,7 @@ export default function(api: IApi) {
   api.modifyConfig(config => ({
     ...config,
     qiankun: {
+      ...config?.qiankun,
       master: {
         ...JSON.parse(process.env.initialQiankunMasterOptions || '{}'),
         ...config?.qiankun?.master,
