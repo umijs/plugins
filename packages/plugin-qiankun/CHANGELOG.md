@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.3.1...@umijs/plugin-qiankun@2.3.2) (2020-06-29)
+
+### Bug Fixes
+
+- **qiankun:** 支持异步启动 qiankun slave ([#275](https://github.com/umijs/plugins/issues/275)) ([ded2d0e](https://github.com/umijs/plugins/commit/ded2d0e1c4a9d066084dca317a9029df181bbb2d))
+
 ## [2.3.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.3.0...@umijs/plugin-qiankun@2.3.1) (2020-06-28)
 
 ### Bug Fixes
