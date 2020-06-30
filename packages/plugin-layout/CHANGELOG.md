@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.9](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.8...@umijs/plugin-layout@0.11.9) (2020-06-30)
+
+### Bug Fixes
+
+- **plugin-layout:** 更简单的使用方式 ([#280](https://github.com/umijs/plugins/issues/280)) ([cbb0d3f](https://github.com/umijs/plugins/commit/cbb0d3fd0bafb22321909877dca85256f4122178))
+
 ## [0.11.8](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.7...@umijs/plugin-layout@0.11.8) (2020-06-28)
 
 ### Bug Fixes

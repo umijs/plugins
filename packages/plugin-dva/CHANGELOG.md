@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.3](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.7.2...@umijs/plugin-dva@0.7.3) (2020-06-30)
+
+### Bug Fixes
+
+- **plugin-dva:** add query props ([#278](https://github.com/umijs/plugins/issues/278)) ([d2d9cb6](https://github.com/umijs/plugins/commit/d2d9cb6cc7a05791b8e1d374fedb1f79d5dae8df))
+
 ## [0.7.2](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.7.1...@umijs/plugin-dva@0.7.2) (2020-05-21)
 
 ### Bug Fixes
