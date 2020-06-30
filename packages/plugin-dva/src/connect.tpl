@@ -50,14 +50,19 @@ export interface Loading {
 /**
  * @type P: Params matched in dynamic routing
  */
-export interface ConnectProps<P extends { [K in keyof P]?: string } = {}, S = LocationState> {
+export interface ConnectProps<
+  P extends { [K in keyof P]?: string } = {},
+  S = LocationState,
+  T = {}
+> {
   dispatch?: Dispatch;
   // https://github.com/umijs/umi/pull/2194
   match?: match<P>;
-  location: Location<S>;
+  location: Location<S> & { query: T };
   history: History;
   route: IRoute;
 }
+
 
 /**
  * @type T: React props
