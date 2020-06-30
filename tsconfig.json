@@ -15,9 +15,12 @@
   "exclude": [
     "node_modules",
     "dist",
+    "example",
+    "jest.config.js",
     "**/*.spec.ts",
-    "lib",
     "fixtures",
-    "examples"
+    "examples",
+    "**/lib",
+    "**/scripts"
   ]
 }
