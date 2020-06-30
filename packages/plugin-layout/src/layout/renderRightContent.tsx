@@ -12,12 +12,21 @@ export default function renderRightContent(
   setInitialState: any,
 ) {
   if (runtimeLayout.rightRender) {
-    return runtimeLayout.rightRender(initialState, setInitialState);
+    return runtimeLayout.rightRender(
+      initialState,
+      setInitialState,
+      runtimeLayout,
+    );
   }
 
   const menu = (
     <Menu className="umi-plugin-layout-menu">
-      <Menu.Item key="logout" onClick={runtimeLayout.logout}>
+      <Menu.Item
+        key="logout"
+        onClick={() =>
+          runtimeLayout.logout && runtimeLayout?.logout(initialState)
+        }
+      >
         <LogoutOutlined />
         退出登录
       </Menu.Item>
