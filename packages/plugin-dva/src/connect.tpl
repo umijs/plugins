@@ -50,11 +50,15 @@ export interface Loading {
 /**
  * @type P: Params matched in dynamic routing
  */
-export interface ConnectProps<P extends { [K in keyof P]?: string } = {}, S = LocationState> {
+export interface ConnectProps<
+  P extends { [K in keyof P]?: string } = {},
+  S = LocationState,
+  T = {}
+> {
   dispatch?: Dispatch;
   // https://github.com/umijs/umi/pull/2194
   match?: match<P>;
-  location: Location<S>;
+  location: Location<S> & { query: T };
   history: History;
   route: IRoute;
 }
@@ -63,4 +67,10 @@ export interface ConnectProps<P extends { [K in keyof P]?: string } = {}, S = Lo
  * @type T: React props
  * @type U: match props types
  */
-export type ConnectRC<T = {}, U = {}> = React.ForwardRefRenderFunction<any, T & ConnectProps<U>>;
+export type ConnectRC<
+  T = {},
+  U = {},
+  S = {},
+  Q = {}
+> = React.ForwardRefRenderFunction<any, T & ConnectProps<U, S, Q>>;
+
