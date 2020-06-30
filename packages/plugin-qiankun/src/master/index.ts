@@ -18,7 +18,7 @@ export default function(api: IApi) {
     enableBy() {
       return (
         !!api.userConfig?.qiankun?.master ||
-        !!process.env.initialQiankunMasterOptions
+        !!process.env.INITIAL_QIANKUN_MASTER_OPTIONS
       );
     },
   });
@@ -28,7 +28,7 @@ export default function(api: IApi) {
     qiankun: {
       ...config?.qiankun,
       master: {
-        ...JSON.parse(process.env.initialQiankunMasterOptions || '{}'),
+        ...JSON.parse(process.env.INITIAL_QIANKUN_MASTER_OPTIONS || '{}'),
         ...config?.qiankun?.master,
       },
     },

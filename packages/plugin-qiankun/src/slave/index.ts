@@ -18,21 +18,10 @@ export default function(api: IApi) {
       return (
         !!api.userConfig?.qiankun?.slave ||
         isEqual(api.userConfig?.qiankun, {}) ||
-        !!process.env.initialQiankunSlaveOptions
+        !!process.env.INITIAL_QIANKUN_SLAVE_OPTIONS
       );
     },
   });
-
-  api.modifyConfig(config => ({
-    ...config,
-    qiankun: {
-      ...config?.qiankun,
-      slave: {
-        ...JSON.parse(process.env.initialQiankunSlaveOptions || '{}'),
-        ...config?.qiankun?.slave,
-      },
-    },
-  }));
 
   const options: SlaveOptions = api.userConfig?.qiankun?.slave!;
   const { shouldNotModifyRuntimePublicPath = false } = options || {};
@@ -50,13 +39,36 @@ export default function(api: IApi) {
   });
 
   // eslint-disable-next-line import/no-dynamic-require, global-require
-  api.modifyDefaultConfig(memo => ({
-    ...memo,
-    disableGlobalVariables: true,
-    base: `/${api.pkg.name}`,
-    mountElementId: defaultSlaveRootId,
-    // 默认开启 runtimePublicPath，避免出现 dynamic import 场景子应用资源地址出问题
-    runtimePublicPath: true,
+  api.modifyDefaultConfig(memo => {
+    const { shouldNotModifyDefaultBase }: SlaveOptions = {
+      ...JSON.parse(process.env.INITIAL_QIANKUN_SLAVE_OPTIONS || '{}'),
+      ...api.config?.qiankun?.slave,
+    };
+
+    const modifiedConfig = {
+      ...memo,
+      disableGlobalVariables: true,
+      mountElementId: defaultSlaveRootId,
+      // 默认开启 runtimePublicPath，避免出现 dynamic import 场景子应用资源地址出问题
+      runtimePublicPath: true,
+    };
+
+    if (!shouldNotModifyDefaultBase) {
+      modifiedConfig.base = `/${api.pkg.name}`;
+    }
+
+    return modifiedConfig;
+  });
+
+  api.modifyConfig(config => ({
+    ...config,
+    qiankun: {
+      ...config?.qiankun,
+      slave: {
+        ...JSON.parse(process.env.INITIAL_QIANKUN_SLAVE_OPTIONS || '{}'),
+        ...config?.qiankun?.slave,
+      },
+    },
   }));
 
   if (
