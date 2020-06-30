@@ -63,9 +63,14 @@ export interface ConnectProps<
   route: IRoute;
 }
 
-
 /**
  * @type T: React props
  * @type U: match props types
  */
-export type ConnectRC<T = {}, U = {}> = React.ForwardRefRenderFunction<any, T & ConnectProps<U>>;
+export type ConnectRC<
+  T = {},
+  U = {},
+  S = {},
+  Q = {}
+> = React.ForwardRefRenderFunction<any, T & ConnectProps<U, S, Q>>;
+
