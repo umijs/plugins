@@ -28,6 +28,7 @@ export type MasterOptions = {
 export type SlaveOptions = {
   keepOriginalRoutes?: boolean | string;
   shouldNotModifyRuntimePublicPath?: boolean;
+  shouldNotModifyDefaultBase?: boolean;
 };
 
 declare module '@umijs/types' {
