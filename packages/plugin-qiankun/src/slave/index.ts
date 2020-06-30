@@ -18,7 +18,7 @@ export default function(api: IApi) {
       return (
         !!api.userConfig?.qiankun?.slave ||
         isEqual(api.userConfig?.qiankun, {}) ||
-        !!process.env.initialQiankunSlaveOptions
+        !!process.env.INITIAL_QIANKUN_SLAVE_OPTIONS
       );
     },
   });
@@ -41,7 +41,7 @@ export default function(api: IApi) {
   // eslint-disable-next-line import/no-dynamic-require, global-require
   api.modifyDefaultConfig(memo => {
     const { shouldNotModifyDefaultBase }: SlaveOptions = {
-      ...JSON.parse(process.env.initialQiankunSlaveOptions || '{}'),
+      ...JSON.parse(process.env.INITIAL_QIANKUN_SLAVE_OPTIONS || '{}'),
       ...api.config?.qiankun?.slave,
     };
 
@@ -65,7 +65,7 @@ export default function(api: IApi) {
     qiankun: {
       ...config?.qiankun,
       slave: {
-        ...JSON.parse(process.env.initialQiankunSlaveOptions || '{}'),
+        ...JSON.parse(process.env.INITIAL_QIANKUN_SLAVE_OPTIONS || '{}'),
         ...config?.qiankun?.slave,
       },
     },
