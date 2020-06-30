@@ -59,12 +59,6 @@ export default (api: IApi) => {
     },
   ]);
   if (opts?.config) {
-    const { locale, ...otherConfig } = opts?.config;
-    if (locale) {
-      api.logger.warn(
-        'Invalid locale configuration in antd.config, please use plug-in @umijs/plugin-locale',
-      );
-    }
     api.onGenerateFiles({
       fn() {
         // runtime.tsx
@@ -75,7 +69,7 @@ export default (api: IApi) => {
         api.writeTmpFile({
           path: 'plugin-antd/runtime.tsx',
           content: Mustache.render(runtimeTpl, {
-            config: JSON.stringify(otherConfig),
+            config: JSON.stringify(opts?.config),
           }),
         });
       },
