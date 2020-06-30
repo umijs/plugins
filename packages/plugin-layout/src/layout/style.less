@@ -1,13 +1,8 @@
 @import '~antd/es/style/themes/default.less';
 @pro-header-hover-bg: rgba(0, 0, 0, 0.025);
 
-.umi-plugin-layout-container > * {
-  background-color: @popover-bg;
-  border-radius: 4px;
-  box-shadow: @shadow-1-down;
-}
-
 @media screen and (max-width: @screen-xs) {
+  // 在小屏幕的时候可以有更好的体验
   .umi-plugin-layout-container {
     width: 100% !important;
   }
@@ -49,6 +44,7 @@
       background: @pro-header-hover-bg;
     }
   }
+
   .umi-plugin-layout-search {
     padding: 0 12px;
     &:hover {

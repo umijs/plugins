@@ -60,7 +60,11 @@ const BasicLayout = (props: any) => {
   if (currentPathConfig?.hideFooter) {
     layoutRender.footerRender = false;
   }
-
+  const layoutRestProps = {
+    ...userConfig,
+    ...restProps,
+    ...layoutRender,
+  };
   return (
     <ProLayout
       route={route}
@@ -88,14 +92,30 @@ const BasicLayout = (props: any) => {
         return defaultDom;
       }}
       disableContentMargin
-      rightContentRender={() =>
-        renderRightContent(userConfig, loading, initialState, setInitialState)
-      }
       fixSiderbar
       fixedHeader
-      {...userConfig}
-      {...restProps}
-      {...layoutRender}
+      {...layoutRestProps}
+      rightContentRender={
+        // === false 应该关闭这个功能
+        props?.rightContentRender !== false &&
+        (layoutProps => {
+          const dom = renderRightContent(
+            userConfig,
+            loading,
+            initialState,
+            setInitialState,
+          );
+          if (props.rightContentRender) {
+            return props.rightContentRender(layoutProps, dom, {
+              userConfig,
+              loading,
+              initialState,
+              setInitialState,
+            });
+          }
+          return dom;
+        })
+      }
     >
       <ErrorBoundary>
         <WithExceptionOpChildren currentPathConfig={currentPathConfig}>
