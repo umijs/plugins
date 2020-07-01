@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.6.0...@umijs/plugin-antd@0.7.0) (2020-07-01)
+
+### Features
+
+- don't filter antd.config.locale ([#283](https://github.com/umijs/plugins/issues/283)) ([2bb8f78](https://github.com/umijs/plugins/commit/2bb8f78ed931c8f725867610527322e52daed8a6))
+
 # [0.6.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.5.1...@umijs/plugin-antd@0.6.0) (2020-06-03)
 
 ### Features

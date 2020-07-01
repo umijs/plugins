@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.4](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.7.3...@umijs/plugin-dva@0.7.4) (2020-07-01)
+
+### Bug Fixes
+
+- **plugin-dva:** add RequiredConnectProps ([#285](https://github.com/umijs/plugins/issues/285)) ([fd2ba9c](https://github.com/umijs/plugins/commit/fd2ba9cb11854adc6c4d055454fdcbcbc41f2c01))
+
 ## [0.7.3](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.7.2...@umijs/plugin-dva@0.7.3) (2020-06-30)
 
 ### Bug Fixes

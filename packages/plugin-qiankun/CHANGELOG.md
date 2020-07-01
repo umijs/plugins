@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.3.2...@umijs/plugin-qiankun@2.4.0) (2020-07-01)
+
+### Features
+
+- **qiankun:** slave 默认启用 runtimeHistory ([#284](https://github.com/umijs/plugins/issues/284)) ([c5e84a5](https://github.com/umijs/plugins/commit/c5e84a51de01b6d6b242a60e90743570a2b56b29))
+- **qiankun:** 添加 shouldNotModifyDefaultBase slave 配置用于关闭默认修改行为 ([#279](https://github.com/umijs/plugins/issues/279)) ([6b37163](https://github.com/umijs/plugins/commit/6b3716330ec3c8471c4c7a6f9677664ed42612eb))
+
 ## [2.3.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.3.1...@umijs/plugin-qiankun@2.3.2) (2020-06-29)
 
 ### Bug Fixes

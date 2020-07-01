@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-dva",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "@umijs/plugin-dva",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
