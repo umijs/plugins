@@ -63,6 +63,12 @@ export interface ConnectProps<
   route: IRoute;
 }
 
+export type RequiredConnectProps<
+  P extends { [K in keyof P]?: string } = {},
+  S = LocationState,
+  T = {}
+  > = Required<ConnectProps<P, S, T>>
+
 /**
  * @type T: React props
  * @type U: match props types
@@ -72,5 +78,5 @@ export type ConnectRC<
   U = {},
   S = {},
   Q = {}
-> = React.ForwardRefRenderFunction<any, T & ConnectProps<U, S, Q>>;
+> = React.ForwardRefRenderFunction<any, T & RequiredConnectProps<U, S, Q>>;
 
