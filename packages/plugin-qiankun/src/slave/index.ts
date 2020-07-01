@@ -51,6 +51,7 @@ export default function(api: IApi) {
       mountElementId: defaultSlaveRootId,
       // 默认开启 runtimePublicPath，避免出现 dynamic import 场景子应用资源地址出问题
       runtimePublicPath: true,
+      runtimeHistory: {},
     };
 
     if (!shouldNotModifyDefaultBase) {
