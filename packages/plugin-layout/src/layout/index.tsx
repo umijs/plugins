@@ -97,7 +97,7 @@ const BasicLayout = (props: any) => {
       {...layoutRestProps}
       rightContentRender={
         // === false 应该关闭这个功能
-        props?.rightContentRender !== false &&
+        layoutRestProps?.rightContentRender !== false &&
         (layoutProps => {
           const dom = renderRightContent(
             userConfig,
@@ -105,8 +105,8 @@ const BasicLayout = (props: any) => {
             initialState,
             setInitialState,
           );
-          if (props.rightContentRender) {
-            return props.rightContentRender(layoutProps, dom, {
+          if (layoutRestProps.rightContentRender) {
+            return layoutRestProps.rightContentRender(layoutProps, dom, {
               userConfig,
               loading,
               initialState,
