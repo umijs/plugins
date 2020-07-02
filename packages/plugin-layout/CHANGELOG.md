@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.10](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.9...@umijs/plugin-layout@0.11.10) (2020-07-02)
+
+### Bug Fixes
+
+- **plugin-layout:** fix rightContentRender no work problem ([#286](https://github.com/umijs/plugins/issues/286)) ([d785c75](https://github.com/umijs/plugins/commit/d785c758c370af94969bdb786568d411cd952f90))
+
 ## [0.11.9](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.8...@umijs/plugin-layout@0.11.9) (2020-06-30)
 
 ### Bug Fixes
