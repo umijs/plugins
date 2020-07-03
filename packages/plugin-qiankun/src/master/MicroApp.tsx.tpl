@@ -39,10 +39,6 @@ export function MicroApp(componentProps: Props) {
     ...propsFromParams
   } = componentProps;
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  let microAppRef = useRef<MicroAppType>();
-  const [ loading, setLoading ] = useState(true);
-
   const appConfig = apps.find((app: any) => app.name === name);
   if (!appConfig) {
     throw new Error(
@@ -50,10 +46,11 @@ export function MicroApp(componentProps: Props) {
     );
   }
 
-  const { entry, props: propsFromConfig = {} } = appConfig;
   // 约定使用 src/app.ts/useQiankunStateForSlave 中的数据作为主应用透传给微应用的 props，优先级高于 propsFromConfig
   const stateForSlave = useModel(qiankunStateForSlaveModelNamespace);
+  const { entry, props: propsFromConfig = {} } = appConfig;
 
+  const containerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     microAppRef.current = loadMicroApp(
       {
@@ -71,22 +68,45 @@ export function MicroApp(componentProps: Props) {
     return () => unmountMicroApp(microAppRef.current);
   }, []);
 
+  const microAppRef = useRef<MicroAppType>();
+  const updatingPromise = useRef<Promise<any>>();
+  const [loading, setLoading] = useState(true);
+  const updatingTimestamp = useRef(Date.now());
+
   useEffect(() => {
     const microApp = microAppRef.current;
-    if (microApp?.update) {
-      const status = microApp.getStatus();
-      if (status === 'MOUNTED') {
-        const props = {  ...propsFromConfig, ...stateForSlave, ...propsFromParams, setLoading };
-        microApp.update(props);
+    if (microApp) {
+      if (!updatingPromise.current) {
+        // 初始化 updatingPromise 为 microApp.mountPromise，从而确保后续更新是在应用 mount 完成之后
+        updatingPromise.current = microApp.mountPromise;
+      } else {
+        // 确保 microApp.update 调用是跟组件状态变更顺序一致的，且后一个微应用更新必须等待前一个更新完成
+        updatingPromise.current = updatingPromise.current.then(() => {
+          const canUpdate = (microApp?: MicroAppType) => microApp?.update && microApp.getStatus() === 'MOUNTED';
+          if (canUpdate(microApp)) {
+            const props = { ...propsFromConfig, ...stateForSlave, ...propsFromParams, setLoading };
 
-        if (process.env.NODE_ENV === 'development') {
-          console.info(`[@umijs/plugin-qiankun] MicroApp ${name} is updating with props: `, props);
-        }
+            if (process.env.NODE_ENV === 'development') {
+              if (Date.now() - updatingTimestamp.current < 200) {
+                console.warn(`[@umijs/plugin-qiankun] It seems like microApp ${name} is updating too many times in a short time(200ms), you may need to do some optimization to avoid the unnecessary re-rendering.`);
+              }
+
+              console.info(`[@umijs/plugin-qiankun] MicroApp ${name} is updating with props: `, props);
+              updatingTimestamp.current = Date.now();
+            }
+
+            // 返回 microApp.update 形成链式调用
+            // @ts-ignore
+            return microApp.update(props);
+          }
+
+          return void 0;
+        });
       }
     }
 
     return () => {};
-  }, Object.values({...stateForSlave, ...propsFromParams}));
+  }, Object.values({ ...stateForSlave, ...propsFromParams }));
 
   return (
     Boolean(loader)
