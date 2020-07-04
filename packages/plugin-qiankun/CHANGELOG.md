@@ -1,6 +1,18 @@
 # Change Log
 
-All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [2.4.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.4.0...@umijs/plugin-qiankun@2.4.1) (2020-07-04)
+
+
+### Bug Fixes
+
+* **qiankun:** 修复 mounting 期间更新操作丢失 & 短时间内连续更新会抛状态异常的问题 ([#289](https://github.com/umijs/plugins/issues/289)) ([2456e40](https://github.com/umijs/plugins/commit/2456e409e59baa2a04f3638b27f6448363892e51))
+
+
+
+
 
 # [2.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.3.2...@umijs/plugin-qiankun@2.4.0) (2020-07-01)
 
