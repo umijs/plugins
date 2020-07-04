@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@ahooksjs/use-request@^2.0.0":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@ahooksjs/use-request/-/use-request-2.0.2.tgz#9bd00197c0fd363724c5eaaf4b30c183b48471ba"
+  integrity sha512-Wz3O+lefPhaDLdgJZd8ee/it+Dw0oryzr1QzgyhcBqM9E0LyPDMMK2DzSafdlBLIOPR2OJ40kifbvjyn/mXbpA==
+  dependencies:
+    lodash.debounce "^4.0.8"
+    lodash.throttle "^4.1.1"
+
 "@ant-design/colors@^3.1.0":
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/@ant-design/colors/-/colors-3.2.2.tgz#5ad43d619e911f3488ebac303d606e66a8423903"
@@ -3767,14 +3775,6 @@
     "@umijs/server" "3.2.0"
     "@umijs/utils" "3.2.0"
     webpack-chain "6.4.0"
-
-"@umijs/use-request@^1.2.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@umijs/use-request/-/use-request-1.4.0.tgz#e7a89a7b617ef586f4ed21eee6331cef7641aeb3"
-  dependencies:
-    lodash.debounce "^4.0.8"
-    lodash.throttle "^4.1.1"
-    umi-request "^1.2.17"
 
 "@umijs/utils@3.1.0", "@umijs/utils@^3.0.0-beta.12":
   version "3.1.0"
@@ -9057,9 +9057,10 @@ import-from@^2.1.0:
   dependencies:
     resolve-from "^3.0.0"
 
-import-html-entry@^1.4.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/import-html-entry/-/import-html-entry-1.5.1.tgz#7901f101720bfc3200b4e21878ed187322d352b3"
+import-html-entry@^1.7.0:
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/import-html-entry/-/import-html-entry-1.7.4.tgz#40bbd4269baa00ed2986a1d2052e6818c1c92379"
+  integrity sha512-A/ntpKNDEqIgsx382qpIy7h3mKT1R18E46GSaYCDjs95m49KcYU6mfRdkwRZM7tR/PtWxuX8EbLE0gKskDLjeg==
   dependencies:
     "@babel/runtime" "^7.7.2"
 
@@ -13872,14 +13873,15 @@ q@^1.1.2, q@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
 
-qiankun@^1.4.2:
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/qiankun/-/qiankun-1.4.5.tgz#c309d69b0037163ab47bfcbc96d993d0111ef7e3"
+qiankun@^2.0.7:
+  version "2.0.16"
+  resolved "https://registry.yarnpkg.com/qiankun/-/qiankun-2.0.16.tgz#344d2f78a067b20992a2faddf4674c08a7fb8b81"
+  integrity sha512-03ViCIamE9FWw6DaSskiI+32jnefNMlrH+e3uQaSgHFzPsAnJa+9YcU+3lyECnxp2yelQe4w4j9R5hY9CgWXdQ==
   dependencies:
     "@babel/runtime" "^7.5.5"
-    import-html-entry "^1.4.1"
+    import-html-entry "^1.7.0"
     lodash "^4.17.11"
-    single-spa "^4.4.3"
+    single-spa "^5.3.1"
     tslib "^1.10.0"
 
 qs@6.7.0:
@@ -15877,9 +15879,10 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-single-spa@^4.4.3:
-  version "4.4.3"
-  resolved "https://registry.yarnpkg.com/single-spa/-/single-spa-4.4.3.tgz#4dff3a17f633b732691cff25cf0bf0897ecdfd37"
+single-spa@^5.3.1:
+  version "5.5.4"
+  resolved "https://registry.yarnpkg.com/single-spa/-/single-spa-5.5.4.tgz#154ad43548994b92fbade9506ac4142dfe0fc78b"
+  integrity sha512-Nivf1RaHBvAytKH2mbiySxdr9NUGSKA5LseB+N6Aaxvev6jUlRev1bRNnCKqYOBjRDzaW6V6C2082SGyDfsZCg==
 
 sisteransi@^1.0.4:
   version "1.0.5"
@@ -17247,7 +17250,7 @@ umi-plugin-pro-block@^2.0.1:
   dependencies:
     debug "^4.1.0"
 
-umi-request@^1.1.0, umi-request@^1.2.14, umi-request@^1.2.17:
+umi-request@^1.1.0, umi-request@^1.2.14:
   version "1.2.19"
   resolved "https://registry.yarnpkg.com/umi-request/-/umi-request-1.2.19.tgz#57ec16322506674f2d6392d553119829cedb1589"
   dependencies:
