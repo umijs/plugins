@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useMemo } from 'react';
+import { isBrowser } from 'umi';
 
 interface ExecutorProps {
   hook: () => any;
@@ -16,7 +17,7 @@ export default (props: ExecutorProps) => {
   let data: any;
   try {
     data = hook();
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development' && isBrowser()) {
       let count = Object.keys(
         ((window as any)._umi_useModel_dev_tool_log || {})[namespace] || {},
       ).length;
