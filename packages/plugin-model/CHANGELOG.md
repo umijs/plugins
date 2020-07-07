@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.1](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.0...@umijs/plugin-model@2.5.1) (2020-07-07)
+
+### Bug Fixes
+
+- ssr ([#295](https://github.com/umijs/plugins/issues/295)) ([1135b88](https://github.com/umijs/plugins/commit/1135b881f179973ad33a52fb7636fb2b57c874c2))
+
 # [2.5.0](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.4.0...@umijs/plugin-model@2.5.0) (2020-07-03)
 
 ### Features
