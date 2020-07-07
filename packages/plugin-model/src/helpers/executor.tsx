@@ -16,7 +16,10 @@ export default (props: ExecutorProps) => {
   let data: any;
   try {
     data = hook();
-    if (process.env.NODE_ENV === 'development') {
+    if (
+      process.env.NODE_ENV === 'development' &&
+      typeof document !== 'undefined'
+    ) {
       let count = Object.keys(
         ((window as any)._umi_useModel_dev_tool_log || {})[namespace] || {},
       ).length;
