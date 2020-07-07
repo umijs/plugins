@@ -28,7 +28,7 @@ export function MicroApp(componentProps: Props) {
   const {
     masterHistoryType,
     apps = [],
-    lifeCycles,
+    lifeCycles: globalLifeCycles,
     ...globalSettings
   } = getMasterOptions() as any;
 
@@ -36,6 +36,7 @@ export function MicroApp(componentProps: Props) {
     name,
     settings: settingsFromProps = {},
     loader,
+    lifeCycles,
     ...propsFromParams
   } = componentProps;
 
@@ -63,6 +64,7 @@ export function MicroApp(componentProps: Props) {
         ...globalSettings,
         ...settingsFromProps,
       },
+      lifeCycles || globalLifeCycles,
     );
 
     return () => unmountMicroApp(microAppRef.current);
