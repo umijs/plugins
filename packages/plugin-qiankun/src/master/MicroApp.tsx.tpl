@@ -6,7 +6,7 @@ import {
 } from 'qiankun';
 import React, { useEffect, useRef, useState } from 'react';
 import { useModel } from 'umi';
-import { mergeWith } from 'lodash';
+import { concat, mergeWith } from 'lodash';
 
 const qiankunStateForSlaveModelNamespace = '@@qiankunStateForSlave';
 
