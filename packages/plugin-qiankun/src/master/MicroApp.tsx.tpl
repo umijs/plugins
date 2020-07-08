@@ -6,6 +6,7 @@ import {
 } from 'qiankun';
 import React, { useEffect, useRef, useState } from 'react';
 import { useModel } from 'umi';
+import { mergeWith } from 'lodash';
 
 const qiankunStateForSlaveModelNamespace = '@@qiankunStateForSlave';
 
@@ -28,7 +29,7 @@ export function MicroApp(componentProps: Props) {
   const {
     masterHistoryType,
     apps = [],
-    lifeCycles,
+    lifeCycles: globalLifeCycles,
     ...globalSettings
   } = getMasterOptions() as any;
 
@@ -36,6 +37,7 @@ export function MicroApp(componentProps: Props) {
     name,
     settings: settingsFromProps = {},
     loader,
+    lifeCycles,
     ...propsFromParams
   } = componentProps;
 
@@ -63,6 +65,12 @@ export function MicroApp(componentProps: Props) {
         ...globalSettings,
         ...settingsFromProps,
       },
+      mergeWith(
+        {},
+        globalLifeCycles,
+        lifeCycles,
+        (v1, v2) => concat(v1 ?? [], v2 ?? [])
+      ),
     );
 
     return () => unmountMicroApp(microAppRef.current);
