@@ -71,7 +71,20 @@ export function genMount() {
     const historyOptions = normalizeHistory(props?.history, props?.base);
     setCreateHistoryOptions(historyOptions);
 
-    defer.resolve();
+    // 默认修改 loading
+    // 如果需要手动控制 loading
+    // 通过配置 app.ts，slave: { autoSetLanding: false }
+    const callback = () => {
+      if (
+        slaveRuntime?.autoSetLanding !== false &&
+        typeof props?.setLoading === 'function'
+      ) {
+        props.setLoading(false);
+      }
+    };
+    defer.resolve({
+      callback,
+    });
     // 第一次 mount umi 会自动触发 render，非第一次 mount 则需手动触发
     if (hasMountedAtLeastOnce) {
       render();
