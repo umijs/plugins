@@ -21,6 +21,7 @@
   "dependencies": {
     "antd": "^4.1.2",
     "lodash": "^4.17.15",
+    "@umijs/route-utils": "^1.0.7",
     "path-to-regexp": "1.x"
   },
   "peerDependencies": {

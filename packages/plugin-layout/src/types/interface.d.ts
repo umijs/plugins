@@ -87,24 +87,3 @@ export interface TechMenuItem {
   children?: TechMenuItem[];
   externalLink: boolean;
 }
-
-/**
- * 规范侧边栏组件 menu 的数据格式
- */
-export interface MenuItem {
-  /** 菜单名 */
-  name: string;
-  /** 图标：antd 的 icon name 和 url */
-  icon: string;
-  /** path */
-  path: string;
-  /** 子项 */
-  children?: MenuItem[];
-  [key: string]: any;
-}
-
-export function getMenuDataFromRoutes(
-  routes: IBestAFSRoute[],
-  prefix: string,
-  base: string,
-): MenuItem[];
