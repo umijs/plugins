@@ -1,15 +1,12 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 // @ts-ignore
 import { Link, useModel, history, useIntl, InitialState } from 'umi';
-import pathToRegexp from 'path-to-regexp';
 import ProLayout from '@ant-design/pro-layout';
 import './style.less';
 import ErrorBoundary from '../component/ErrorBoundary';
 import renderRightContent from './renderRightContent';
 import { WithExceptionOpChildren } from '../component/Exception';
-import getLayoutConfigFromRoute from '../utils/getLayoutConfigFromRoute';
-import getMenuDataFromRoutes from '../utils/getMenuFromRoute';
-import { MenuItem } from '../types/interface.d';
+import { getMatchMenu, MenuDataItem, transformRoute } from '@umijs/route-utils';
 // @ts-ignore
 import logo from '../assets/logo.svg';
 
@@ -22,38 +19,34 @@ const BasicLayout = (props: any) => {
     setInitialState: null,
   }; // plugin-initial-state 未开启
   const { initialState, loading, setInitialState } = initialInfo;
-  const _routes = require('@@/core/routes').routes;
   // 国际化插件并非默认启动
   const intl = useIntl && useIntl();
-  const layoutConfig = getLayoutConfigFromRoute(_routes);
 
-  const patchMenus: (ms: MenuItem[], initialInfo: InitialState) => MenuItem[] =
-    userConfig.patchMenus || ((ms: MenuItem[]): MenuItem[] => ms);
+  const [currentPathConfig, setCurrentPathConfig] = useState<MenuDataItem>({});
 
-  const menus = patchMenus(getMenuDataFromRoutes(routes), initialInfo);
-
+  useEffect(() => {
+    const { menuData } = transformRoute(
+      props?.route?.routes || [],
+      undefined,
+      undefined,
+      true,
+    );
+    // 动态路由匹配
+    const currentPathConfig = getMatchMenu(location.pathname, menuData).pop();
+    setCurrentPathConfig(currentPathConfig || {});
+  }, [location.pathname]);
   // layout 是否渲染相关
-  const pathName = location.pathname;
   const layoutRender: any = {};
 
-  // 动态路由匹配
-  const currentMatchPaths = Object.keys(layoutConfig).filter(item =>
-    pathToRegexp(`${item}(.*)`).test(pathName),
-  );
-
-  const currentPathConfig = currentMatchPaths.length
-    ? layoutConfig[currentMatchPaths[currentMatchPaths.length - 1]]
-    : undefined;
-
-  if (currentPathConfig?.hideMenu) {
+  if (currentPathConfig?.layout?.hideMenu) {
     layoutRender.menuRender = false;
   }
 
-  if (currentPathConfig?.hideNav) {
+  if (currentPathConfig?.layout?.hideNav) {
     layoutRender.headerRender = false;
   }
 
-  if (currentPathConfig?.hideLayout) {
+  if (currentPathConfig?.layout == false) {
     layoutRender.pure = true;
   }
 
@@ -65,6 +58,7 @@ const BasicLayout = (props: any) => {
     ...restProps,
     ...layoutRender,
   };
+
   return (
     <ProLayout
       route={route}
@@ -79,7 +73,12 @@ const BasicLayout = (props: any) => {
         history.push('/');
       }}
       menu={{ locale: userConfig.locale }}
-      menuDataRender={() => menus}
+      // 支持了一个 patchMenus，其实应该用 menuDataRender
+      menuDataRender={
+        userConfig.patchMenus
+          ? menuData => userConfig.patchMenus(menuData, initialInfo)
+          : undefined
+      }
       formatMessage={intl && intl.formatMessage}
       logo={logo}
       menuItemRender={(menuItemProps, defaultDom) => {
