@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-layout",
-  "version": "0.11.10",
+  "version": "0.11.11",
   "description": "@umijs/plugin-layout",
   "keywords": [
     "umi"
@@ -19,9 +19,9 @@
     "src"
   ],
   "dependencies": {
+    "@umijs/route-utils": "^1.0.7",
     "antd": "^4.1.2",
     "lodash": "^4.17.15",
-    "@umijs/route-utils": "^1.0.7",
     "path-to-regexp": "1.x"
   },
   "peerDependencies": {

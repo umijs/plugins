@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.11](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.10...@umijs/plugin-layout@0.11.11) (2020-07-09)
+
+### Bug Fixes
+
+- **layout:** fix the problem that hideNav does not take effect in sarfari ([#299](https://github.com/umijs/plugins/issues/299)) ([fcdc055](https://github.com/umijs/plugins/commit/fcdc055d57446e9c406b9bbdd668b4bebc228d63))
+
 ## [0.11.10](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.9...@umijs/plugin-layout@0.11.10) (2020-07-02)
 
 ### Bug Fixes
