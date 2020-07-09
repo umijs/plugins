@@ -3712,6 +3712,16 @@
     path-to-regexp "2.4.0"
     umi-test "^1.9.6"
 
+"@umijs/route-utils@^1.0.7":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@umijs/route-utils/-/route-utils-1.0.17.tgz#69a7659f30b2a0b271c8bce8bcda6954475c33ed"
+  integrity sha512-19guqrOHYepMu7Oz22+aBjGSZUKHmdG5L9cz5aIk57vWgMnZ0xEl5KqUXqCFfSVkOluY9ivgYhkvPO3AWjUHiQ==
+  dependencies:
+    hash.js "^1.1.7"
+    lodash.isequal "^4.5.0"
+    memoize-one "^5.1.1"
+    path-to-regexp "2.4.0"
+
 "@umijs/runtime@3.2.0":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@umijs/runtime/-/runtime-3.2.0.tgz#cff9bdb2d05789add723317ec68aab43b9d128d7"
