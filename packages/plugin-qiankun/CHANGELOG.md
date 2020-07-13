@@ -1,41 +1,25 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 ## [2.5.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.5.0...@umijs/plugin-qiankun@2.5.1) (2020-07-08)
 
-
 ### Bug Fixes
 
-* **qiankun:** concat not defined in MicroApp ([#298](https://github.com/umijs/plugins/issues/298)) ([2b65bf7](https://github.com/umijs/plugins/commit/2b65bf7d5af90565b4a77b17fb20602312129dfb))
-
-
-
-
+- **qiankun:** concat not defined in MicroApp ([#298](https://github.com/umijs/plugins/issues/298)) ([2b65bf7](https://github.com/umijs/plugins/commit/2b65bf7d5af90565b4a77b17fb20602312129dfb))
 
 # [2.5.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.4.1...@umijs/plugin-qiankun@2.5.0) (2020-07-08)
 
-
 ### Features
 
-* **qiankun:** microApp auto setLoading ([#293](https://github.com/umijs/plugins/issues/293)) ([18c15f2](https://github.com/umijs/plugins/commit/18c15f2f041b7abffa826f665d6f88d9289479c8))
-* **qiankun:** MicroApp support lifeCycles ([#296](https://github.com/umijs/plugins/issues/296)) ([def736b](https://github.com/umijs/plugins/commit/def736b5830e7e41bdd4c24319e4c0c659aa751d))
-
-
-
-
+- **qiankun:** microApp auto setLoading ([#293](https://github.com/umijs/plugins/issues/293)) ([18c15f2](https://github.com/umijs/plugins/commit/18c15f2f041b7abffa826f665d6f88d9289479c8))
+- **qiankun:** MicroApp support lifeCycles ([#296](https://github.com/umijs/plugins/issues/296)) ([def736b](https://github.com/umijs/plugins/commit/def736b5830e7e41bdd4c24319e4c0c659aa751d))
 
 ## [2.4.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.4.0...@umijs/plugin-qiankun@2.4.1) (2020-07-04)
 
-
 ### Bug Fixes
 
-* **qiankun:** 修复 mounting 期间更新操作丢失 & 短时间内连续更新会抛状态异常的问题 ([#289](https://github.com/umijs/plugins/issues/289)) ([2456e40](https://github.com/umijs/plugins/commit/2456e409e59baa2a04f3638b27f6448363892e51))
-
-
-
-
+- **qiankun:** 修复 mounting 期间更新操作丢失 & 短时间内连续更新会抛状态异常的问题 ([#289](https://github.com/umijs/plugins/issues/289)) ([2456e40](https://github.com/umijs/plugins/commit/2456e409e59baa2a04f3638b27f6448363892e51))
 
 # [2.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.3.2...@umijs/plugin-qiankun@2.4.0) (2020-07-01)
 

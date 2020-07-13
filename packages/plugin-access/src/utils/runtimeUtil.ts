@@ -21,8 +21,8 @@ export function traverseModifyRoutes(routes: Routes, access: any) {
   for (let i = 0; i < notHandledRoutes.length; i++) {
     const currentRoute = notHandledRoutes[i];
     let currentRouteAccessible =
-      typeof currentRoute.unaccessible === 'boolean'
-        ? !currentRoute.unaccessible
+      typeof currentRoute.unAccessible === 'boolean'
+        ? !currentRoute.unAccessible
         : true;
     if (currentRoute && currentRoute.access) {
       if (typeof currentRoute.access !== 'string') {
@@ -38,7 +38,7 @@ export function traverseModifyRoutes(routes: Routes, access: any) {
       } else if (typeof accessProp === 'boolean') {
         currentRouteAccessible = accessProp;
       }
-      currentRoute.unaccessible = !currentRouteAccessible;
+      currentRoute.unAccessible = !currentRouteAccessible;
     }
 
     if (currentRoute.routes || currentRoute.childRoutes) {
@@ -48,21 +48,21 @@ export function traverseModifyRoutes(routes: Routes, access: any) {
         continue;
       }
       childRoutes.forEach(childRoute => {
-        childRoute.unaccessible = !currentRouteAccessible;
+        childRoute.unAccessible = !currentRouteAccessible;
       }); // Default inherit from parent route
       notHandledRoutes.push(...childRoutes);
     }
   }
 
-  // Make parent route unaccessible if child routes exist and all of child routes are unaccessible
+  // Make parent route unAccessible if child routes exist and all of child routes are unAccessible
   for (let i = 0; i < notHandledRoutes.length; i++) {
     const currentRoute = notHandledRoutes[i];
     const childRoutes: Routes = currentRoute.routes || currentRoute.childRoutes;
     const isAllChildRoutesUnaccessible =
       Array.isArray(childRoutes) &&
-      childRoutes.every(route => route.unaccessible);
-    if (!currentRoute.unaccessible && isAllChildRoutesUnaccessible) {
-      currentRoute.unaccessible = true;
+      childRoutes.every(route => route.unAccessible);
+    if (!currentRoute.unAccessible && isAllChildRoutesUnaccessible) {
+      currentRoute.unAccessible = true;
     }
   }
 

@@ -75,59 +75,59 @@ describe('TraverseModifyRoutes', () => {
       {
         path: '/homepage',
         access: 'canReadHomepage',
-        unaccessible: false,
+        unAccessible: false,
         routes: null,
       },
       {
         path: '/admin',
         access: 'canReadAdminPage',
-        unaccessible: true,
+        unAccessible: true,
         routes: [
           {
             path: '/adminList',
             access: 'canReadAdminList',
-            unaccessible: false,
+            unAccessible: false,
           },
           {
             path: '/adminDetail',
             access: 'canReadAdminDetail',
-            unaccessible: true,
+            unAccessible: true,
           },
         ],
       },
       {
         path: '/user',
         access: 'canReadUser',
-        unaccessible: false,
+        unAccessible: false,
         routes: [
           {
             path: '/userDetail',
             access: 'canReadUserDetail',
-            unaccessible: false,
+            unAccessible: false,
           },
         ],
       },
       {
         path: '/order',
         access: 'canReadOrder',
-        unaccessible: true,
+        unAccessible: true,
         routes: [
           {
             path: '/orderAudit',
             access: 'canReadOrderAudit',
-            unaccessible: true,
+            unAccessible: true,
           },
           {
             path: '/orderCancellation',
             access: 'canReadOrderCancellation',
-            unaccessible: true,
+            unAccessible: true,
           },
         ],
       },
       {
         path: '/about',
         access: 'canReadAbout',
-        unaccessible: false,
+        unAccessible: false,
       },
     ]);
   });

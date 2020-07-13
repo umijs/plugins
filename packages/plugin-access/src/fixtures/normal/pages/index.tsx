@@ -3,7 +3,7 @@ import React from 'react';
 const App = (props: any) => {
   return (
     <div>
-      <h1>unaccessible: {props.route.unaccessible.toString()}</h1>
+      <h1>unAccessible: {props.route.unAccessible.toString()}</h1>
     </div>
   );
 };

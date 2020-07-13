@@ -10,5 +10,5 @@ test('normal', async () => {
   const cwd = join(fixtures, 'normal');
   await generateTmp({ cwd });
   const { container } = render({ cwd });
-  expect(container.innerHTML).toEqual('<div><h1>unaccessible: true</h1></div>');
+  expect(container.innerHTML).toEqual('<div><h1>unAccessible: true</h1></div>');
 });
