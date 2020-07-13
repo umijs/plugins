@@ -58,10 +58,10 @@ export function traverseModifyRoutes(routes: Routes, access: any) {
   for (let i = 0; i < notHandledRoutes.length; i++) {
     const currentRoute = notHandledRoutes[i];
     const childRoutes: Routes = currentRoute.routes || currentRoute.childRoutes;
-    const isAllChildRoutesUnaccessible =
+    const isAllChildRoutesunAccessible =
       Array.isArray(childRoutes) &&
       childRoutes.every(route => route.unAccessible);
-    if (!currentRoute.unAccessible && isAllChildRoutesUnaccessible) {
+    if (!currentRoute.unAccessible && isAllChildRoutesunAccessible) {
       currentRoute.unAccessible = true;
     }
   }

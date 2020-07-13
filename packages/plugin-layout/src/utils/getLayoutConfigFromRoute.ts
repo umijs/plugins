@@ -59,7 +59,7 @@ function formatter(
   routes
     .filter(item => item && !item.path?.startsWith('http'))
     .map(route => {
-      const { layout, indexRoute, path = '', routes, unaccessible } = route;
+      const { layout, indexRoute, path = '', routes, unAccessible } = route;
 
       const execLayoutConfig = calcExecLayoutConfig(
         parentRouteLayoutConfig,
@@ -73,7 +73,7 @@ function formatter(
 
       LayoutConfig[`${prefix}${absolutePath}`] = {
         ...execLayoutConfig,
-        unAccessible: unaccessible || false,
+        unAccessible: unAccessible || false,
       };
 
       // 拼接 childrenRoutes, 处理存在 indexRoute 时的逻辑

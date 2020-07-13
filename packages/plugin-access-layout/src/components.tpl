@@ -58,7 +58,7 @@ const WithExceptionOpChildren: React.FC<{
   if (!currentPathConfig) {
     return <Exception404 />;
   }
-  if (currentPathConfig.unaccessible) {
+  if (currentPathConfig.unAccessible) {
     return <Exception403 />;
   }
   return children;
