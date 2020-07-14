@@ -24,6 +24,23 @@ const BasicLayout = (props: any) => {
 
   const [currentPathConfig, setCurrentPathConfig] = useState<MenuDataItem>({});
 
+  // 广度优先匹配路由
+  const breadthMatchMenu = (tree: MenuDataItem[], path: string) => {
+    let stark: MenuDataItem[] = [];
+
+    stark = stark.concat(tree);
+
+    while (stark.length) {
+      const temp = stark.shift();
+      if (temp.children) {
+        stark = stark.concat(temp.children);
+      }
+      if (temp.path === path) {
+        return temp;
+      }
+    }
+  };
+
   useEffect(() => {
     const { menuData } = transformRoute(
       props?.route?.routes || [],
@@ -31,9 +48,21 @@ const BasicLayout = (props: any) => {
       undefined,
       true,
     );
+    // 判断是否存在该路由地址
+    const matchedMenu = breadthMatchMenu(
+      props?.route?.routes || [],
+      location.pathname,
+    );
     // 动态路由匹配
-    const currentPathConfig = getMatchMenu(location.pathname, menuData).pop();
-    setCurrentPathConfig(currentPathConfig || {});
+    let currentPathConfig = getMatchMenu(location.pathname, menuData).pop();
+
+    if (matchedMenu) {
+      currentPathConfig = {
+        ...currentPathConfig,
+        unaccessible: matchedMenu.unaccessible,
+      };
+    }
+    setCurrentPathConfig(currentPathConfig);
   }, [location.pathname]);
   // layout 是否渲染相关
   const layoutRender: any = {};
