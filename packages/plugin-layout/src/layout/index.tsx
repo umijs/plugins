@@ -7,6 +7,7 @@ import ErrorBoundary from '../component/ErrorBoundary';
 import renderRightContent from './renderRightContent';
 import { WithExceptionOpChildren } from '../component/Exception';
 import { getMatchMenu, MenuDataItem, transformRoute } from '@umijs/route-utils';
+import breadthMatchRoute from '../utils/breadthMatchRoute';
 // @ts-ignore
 import logo from '../assets/logo.svg';
 
@@ -24,23 +25,6 @@ const BasicLayout = (props: any) => {
 
   const [currentPathConfig, setCurrentPathConfig] = useState<MenuDataItem>({});
 
-  // 广度优先匹配路由
-  const breadthMatchMenu = (tree: MenuDataItem[], path: string) => {
-    let stark: MenuDataItem[] = [];
-
-    stark = stark.concat(tree);
-
-    while (stark.length) {
-      const temp = stark.shift();
-      if (temp.children) {
-        stark = stark.concat(temp.children);
-      }
-      if (temp.path === path) {
-        return temp;
-      }
-    }
-  };
-
   useEffect(() => {
     const { menuData } = transformRoute(
       props?.route?.routes || [],
@@ -49,7 +33,7 @@ const BasicLayout = (props: any) => {
       true,
     );
     // 判断是否存在该路由地址
-    const matchedMenu = breadthMatchMenu(
+    const matchedMenu = breadthMatchRoute(
       props?.route?.routes || [],
       location.pathname,
     );
