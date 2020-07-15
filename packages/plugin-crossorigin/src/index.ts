@@ -18,14 +18,18 @@ export default (api: IApi) => {
     return webpackConfig;
   });
 
-  api.modifyHTML($ => {
-    $('script').each((i: number, elem) => {
-      const el = $(elem);
-      // 在 local 的 script 标签上添加 crossorigin="anonymous"
-      if (el.attr('src') && !/^(https?:)?\/\//.test(el.attr('src')!)) {
-        el.attr('crossorigin', 'anonymous');
-      }
-    });
-    return $;
+  // last exec
+  api.modifyHTML({
+    fn: $ => {
+      $('script').each((i: number, elem) => {
+        const el = $(elem);
+        // 在 local 的 script 标签上添加 crossorigin="anonymous"
+        if (el.attr('src') && !/^(https?:)?\/\//.test(el.attr('src')!)) {
+          el.attr('crossorigin', 'anonymous');
+        }
+      });
+      return $;
+    },
+    stage: Infinity,
   });
 };
