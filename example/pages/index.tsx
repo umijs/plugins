@@ -9,6 +9,7 @@ import {
   setLocale,
   Access,
   useAccess,
+  PageLoading,
 } from 'umi';
 import { Table } from 'antd';
 import styles from './index.css';
@@ -34,6 +35,7 @@ export default connect(state => {
   return (
     <div className={styles.normal}>
       <h1>当前语言：{locale}</h1>
+      <PageLoading />
       {list.map(locale => (
         <a
           key={locale}

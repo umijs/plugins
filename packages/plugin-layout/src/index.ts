@@ -145,7 +145,18 @@ export default (api: IApi) => {
       path: join(DIR_NAME, 'runtime.tsx'),
       content: readFileSync(join(__dirname, 'runtime.tsx.tpl'), 'utf-8'),
     });
+
+    // 导出 @ant-design/pro-layout ，方便依赖收敛（强约束
+    api.writeTmpFile({
+      path: 'plugin-layout/exports.ts',
+      content: `
+      export * from '${utils.winPath(
+        require.resolve('@ant-design/pro-layout'),
+      )}'; 
+    `.trim(),
+    });
   });
+
   api.modifyRoutes(routes => {
     return [
       {
@@ -159,4 +170,11 @@ export default (api: IApi) => {
   });
 
   api.addRuntimePlugin(() => ['@@/plugin-layout/runtime.tsx']);
+
+  api.addUmiExports(() => [
+    {
+      exportAll: true,
+      source: '../plugin-layout/exports',
+    },
+  ]);
 };
