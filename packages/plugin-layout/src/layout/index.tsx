@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 // @ts-ignore
 import { Link, useModel, history, useIntl, InitialState } from 'umi';
 import ProLayout from '@ant-design/pro-layout';
@@ -10,9 +10,44 @@ import { getMatchMenu, MenuDataItem, transformRoute } from '@umijs/route-utils';
 // @ts-ignore
 import logo from '../assets/logo.svg';
 
+const getLayoutRender = (currentPathConfig: {
+  layout:
+    | {
+        hideMenu: boolean;
+        hideNav: boolean;
+        hideFooter: boolean;
+      }
+    | false;
+  hideFooter: boolean;
+}) => {
+  const layoutRender: any = {};
+
+  if (currentPathConfig?.hideFooter) {
+    layoutRender.footerRender = false;
+  }
+
+  if (currentPathConfig?.layout == false) {
+    layoutRender.pure = true;
+    return;
+  }
+
+  if (currentPathConfig?.layout?.hideMenu) {
+    layoutRender.menuRender = false;
+  }
+
+  if (currentPathConfig?.layout?.hideFooter) {
+    layoutRender.footerRender = false;
+  }
+
+  if (currentPathConfig?.layout?.hideNav) {
+    layoutRender.headerRender = false;
+  }
+
+  return layoutRender;
+};
+
 const BasicLayout = (props: any) => {
   const { children, userConfig, location, route, ...restProps } = props;
-  const { routes = [] } = route;
   const initialInfo = (useModel && useModel('@@initialState')) || {
     initialState: undefined,
     loading: false,
@@ -36,27 +71,11 @@ const BasicLayout = (props: any) => {
     setCurrentPathConfig(currentPathConfig || {});
   }, [location.pathname]);
   // layout 是否渲染相关
-  const layoutRender: any = {};
 
-  if (currentPathConfig?.layout?.hideMenu) {
-    layoutRender.menuRender = false;
-  }
-
-  if (currentPathConfig?.layout?.hideNav) {
-    layoutRender.headerRender = false;
-  }
-
-  if (currentPathConfig?.layout == false) {
-    layoutRender.pure = true;
-  }
-
-  if (currentPathConfig?.hideFooter) {
-    layoutRender.footerRender = false;
-  }
   const layoutRestProps = {
     ...userConfig,
     ...restProps,
-    ...layoutRender,
+    ...getLayoutRender(currentPathConfig as any),
   };
 
   return (
