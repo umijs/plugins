@@ -28,7 +28,7 @@ const getLayoutRender = (currentPathConfig: {
 
   if (currentPathConfig?.layout == false) {
     layoutRender.pure = true;
-    return;
+    return layoutRender;
   }
 
   if (currentPathConfig?.layout?.hideMenu) {
