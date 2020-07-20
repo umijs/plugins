@@ -1,4 +1,4 @@
-import { IApi } from 'umi';
+import { IApi, BundlerConfigType } from 'umi';
 
 export default (api: IApi) => {
   api.describe({
@@ -11,8 +11,8 @@ export default (api: IApi) => {
     enableBy: api.EnableBy.config,
   });
 
-  api.modifyBundleConfig(memo => {
-    if (memo.optimization) {
+  api.modifyBundleConfig((memo, { type }) => {
+    if (memo.optimization && type === BundlerConfigType.csr) {
       memo.optimization.minimizer = [
         new (require('esbuild-webpack-plugin').default)(),
       ];
