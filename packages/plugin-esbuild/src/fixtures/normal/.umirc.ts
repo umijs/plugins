@@ -9,9 +9,6 @@ export default {
       initialEntries: ['/'],
     },
   },
-  plugins: [
-    require.resolve('../../index.ts')
-  ],
   mountElementId: '',
   routes: [
     { path: '/', component: 'index' },
