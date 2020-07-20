@@ -63,10 +63,15 @@ const WithExceptionOpChildren: React.FC<{
   children: any;
 }> = props => {
   const { children, currentPathConfig } = props;
+
+  // 404 现在应该很少会发生
   if (!currentPathConfig) {
     return <Exception404 />;
   }
-  if (currentPathConfig.unAccessible) {
+  /**
+   * 这里是没有权限的意思
+   */
+  if (currentPathConfig.unAccessible || currentPathConfig.unaccessible) {
     return <Exception403 />;
   }
   return children;
