@@ -15,6 +15,7 @@ test('normal build', async () => {
     });
     err = false;
   } catch (e) {
+    console.error('normal build error', e);
     err = true;
   }
   expect(err).toBeFalsy();
@@ -32,6 +33,7 @@ test('ssr build', async () => {
     });
     err = false;
   } catch (e) {
+    console.error('ssr build error', e);
     err = true;
   }
   expect(err).toBeFalsy();

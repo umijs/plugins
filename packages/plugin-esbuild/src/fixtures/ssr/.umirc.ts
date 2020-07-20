@@ -1,6 +1,7 @@
 
 export default {
   ssr: {},
+  exportStatic: {},
   history: {
     type: 'memory',
     options: {
