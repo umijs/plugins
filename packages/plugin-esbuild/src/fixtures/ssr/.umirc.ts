@@ -1,5 +1,8 @@
 
 export default {
+  nodeModulesTransform: {
+    type: 'none',
+  },
   ssr: {},
   exportStatic: {},
   history: {
