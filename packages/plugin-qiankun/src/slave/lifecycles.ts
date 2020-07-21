@@ -82,12 +82,15 @@ export function genMount(mountElementId: string) {
         props.setLoading(false);
       }
     };
+    // 支持通过 props 注入 container 来限定子应用 mountElementId 的查找范围
+    // 避免多个子应用出现在同一主应用时出现 mount 冲突
+    const rootElement = props.container?.querySelector(mountElementId);
+
     defer.resolve({
       callback,
-      // 支持通过 props 注入 container 来限定子应用 mountElementId 的查找范围
-      // 避免多个子应用出现在同一主应用时出现 mount 冲突
-      container: props.container?.querySelector(mountElementId) || mountElementId,
+      ...(rootElement ? { rootElement } : {}),
     });
+
     // 第一次 mount umi 会自动触发 render，非第一次 mount 则需手动触发
     if (hasMountedAtLeastOnce) {
       render();
