@@ -78,7 +78,7 @@ export default function(api: IApi) {
         qiankun: { master: options },
       },
     } = api;
-    const masterHistoryType = history?.type || defaultHistoryType;
+    const masterHistoryType = (history && history?.type) || defaultHistoryType;
 
     api.writeTmpFile({
       path: 'plugin-qiankun/masterOptions.js',

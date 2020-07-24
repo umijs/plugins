@@ -153,6 +153,17 @@ export default function(api: IApi) {
     `,
   );
 
+  api.onGenerateFiles(() => {
+    api.writeTmpFile({
+      path: 'plugin-qiankun/slaveOptions.js',
+      content: `
+      let options = ${JSON.stringify(api.config.qiankun.slave || {})};
+      export const getSlaveOptions = () => options;
+      export const setSlaveOptions = (newOpts) => options = ({ ...options, ...newOpts });
+      `,
+    });
+  });
+
   useLegacyMode(api);
 }
 
