@@ -33,7 +33,7 @@
   "peerDependencies": {
     "react": "16",
     "react-dom": "16",
-    "umi": "3.x",
+    "umi": "^3.2.11",
     "webpack": "^4.41.0"
   },
   "publishConfig": {
