@@ -1,3 +1,4 @@
+// @ts-ignore
 import { getMasterOptions } from '@@/plugin-qiankun/masterOptions';
 import {
   FrameworkConfiguration,
@@ -5,6 +6,7 @@ import {
   MicroApp as MicroAppType,
 } from 'qiankun';
 import React, { useEffect, useRef, useState } from 'react';
+// @ts-ignore
 import { useModel } from 'umi';
 import { concat, mergeWith } from 'lodash';
 

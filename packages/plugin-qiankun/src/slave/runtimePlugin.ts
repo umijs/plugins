@@ -1,5 +1,5 @@
 import React from 'react';
-import qiankunRender from './lifecycles';
+import qiankunRender, { clientRenderOpts } from './lifecycles';
 
 export function rootContainer(container: HTMLElement) {
   const value =
@@ -12,3 +12,10 @@ export function rootContainer(container: HTMLElement) {
 export const render = (oldRender: any) => {
   return qiankunRender().then(oldRender);
 };
+
+export function modifyClientRenderOpts(memo: any) {
+  return {
+    ...memo,
+    ...clientRenderOpts,
+  };
+}
