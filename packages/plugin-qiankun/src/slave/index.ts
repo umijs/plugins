@@ -23,9 +23,6 @@ export default function(api: IApi) {
     },
   });
 
-  const options: SlaveOptions = api.userConfig?.qiankun?.slave!;
-  const { shouldNotModifyRuntimePublicPath = false } = options || {};
-
   api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
 
   api.register({
@@ -40,52 +37,45 @@ export default function(api: IApi) {
 
   // eslint-disable-next-line import/no-dynamic-require, global-require
   api.modifyDefaultConfig(memo => {
-    const { shouldNotModifyDefaultBase }: SlaveOptions = {
+    const initialSlaveOptions: SlaveOptions = {
       ...JSON.parse(process.env.INITIAL_QIANKUN_SLAVE_OPTIONS || '{}'),
-      ...api.config?.qiankun?.slave,
+      ...memo?.qiankun?.slave,
     };
 
-    const modifiedConfig = {
+    const modifiedDefaultConfig = {
       ...memo,
       disableGlobalVariables: true,
       mountElementId: defaultSlaveRootId,
       // 默认开启 runtimePublicPath，避免出现 dynamic import 场景子应用资源地址出问题
       runtimePublicPath: true,
       runtimeHistory: {},
+      slave: initialSlaveOptions,
     };
 
-    if (!shouldNotModifyDefaultBase) {
-      modifiedConfig.base = `/${api.pkg.name}`;
+    if (!initialSlaveOptions.shouldNotModifyDefaultBase) {
+      modifiedDefaultConfig.base = `/${api.pkg.name}`;
     }
 
-    return modifiedConfig;
+    return modifiedDefaultConfig;
   });
 
-  api.modifyConfig(config => ({
-    ...config,
-    qiankun: {
-      ...config?.qiankun,
-      slave: {
-        ...JSON.parse(process.env.INITIAL_QIANKUN_SLAVE_OPTIONS || '{}'),
-        ...config?.qiankun?.slave,
-      },
-    },
-  }));
+  api.modifyPublicPathStr(publicPathStr => {
+    const {
+      runtimePublicPath,
+      qiankun: { slave: shouldNotModifyRuntimePublicPath },
+    } = api.config;
 
-  if (
-    api.userConfig.runtimePublicPath !== false &&
-    !shouldNotModifyRuntimePublicPath
-  ) {
-    api.modifyPublicPathStr(
-      () =>
-        `window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || "${
-          // 开发阶段 publicPath 配置无效，默认为 /
-          process.env.NODE_ENV !== 'development'
-            ? api.config.publicPath || '/'
-            : '/'
-        }"`,
-    );
-  }
+    if (runtimePublicPath === true && !shouldNotModifyRuntimePublicPath) {
+      return `window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || "${
+        // 开发阶段 publicPath 配置无效，默认为 /
+        process.env.NODE_ENV !== 'development'
+          ? api.config.publicPath || '/'
+          : '/'
+      }"`;
+    }
+
+    return publicPathStr;
+  });
 
   const port = process.env.PORT;
   const protocol = process.env.HTTPS ? 'https' : 'http';
