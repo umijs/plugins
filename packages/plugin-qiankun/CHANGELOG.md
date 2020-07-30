@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.5.1...@umijs/plugin-qiankun@2.6.0) (2020-07-30)
+
+
+### Features
+
+* **qiankun:** support to pass container for different sub apps ([#310](https://github.com/umijs/plugins/issues/310)) ([ff9a499](https://github.com/umijs/plugins/commit/ff9a4991f1be50d3a4aa89cd25f956386d4e1662))
+* **qiankun:** 支持运行时动态设置 clientRender 的 rootElement ([#312](https://github.com/umijs/plugins/issues/312)) ([e90e0ca](https://github.com/umijs/plugins/commit/e90e0ca1b1178675e985389eae2623ebee4aa53d))
+
+
+
+
+
 ## [2.5.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.5.0...@umijs/plugin-qiankun@2.5.1) (2020-07-08)
 
 
