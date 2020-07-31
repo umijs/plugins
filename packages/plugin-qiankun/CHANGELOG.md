@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.6.0...@umijs/plugin-qiankun@2.6.1) (2020-07-31)
+
+
+### Bug Fixes
+
+* **qiankun:** fix slave options retire bug ([#314](https://github.com/umijs/plugins/issues/314)) ([432fcb2](https://github.com/umijs/plugins/commit/432fcb29cef8cef3f8fe3db6caa838eff79400b9))
+
+
+
+
+
 # [2.6.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.5.1...@umijs/plugin-qiankun@2.6.0) (2020-07-30)
 
 
