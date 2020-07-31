@@ -23,23 +23,19 @@ export default function(api: IApi) {
     },
   });
 
-  api.modifyConfig(config => ({
-    ...config,
-    qiankun: {
-      ...config?.qiankun,
-      master: {
-        ...JSON.parse(process.env.INITIAL_QIANKUN_MASTER_OPTIONS || '{}'),
-        ...config?.qiankun?.master,
-      },
-    },
-  }));
-
   api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
 
   api.modifyDefaultConfig(config => ({
     ...config,
     mountElementId: defaultMasterRootId,
     disableGlobalVariables: true,
+    qiankun: {
+      ...config.qiankun,
+      master: {
+        ...JSON.parse(process.env.INITIAL_QIANKUN_MASTER_OPTIONS || '{}'),
+        ...config?.qiankun?.master,
+      },
+    },
   }));
 
   modifyRoutes(api);

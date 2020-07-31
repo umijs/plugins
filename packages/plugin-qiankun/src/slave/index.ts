@@ -39,7 +39,7 @@ export default function(api: IApi) {
   api.modifyDefaultConfig(memo => {
     const initialSlaveOptions: SlaveOptions = {
       ...JSON.parse(process.env.INITIAL_QIANKUN_SLAVE_OPTIONS || '{}'),
-      ...memo?.qiankun?.slave,
+      ...memo.qiankun?.slave,
     };
 
     const modifiedDefaultConfig = {
@@ -49,7 +49,10 @@ export default function(api: IApi) {
       // 默认开启 runtimePublicPath，避免出现 dynamic import 场景子应用资源地址出问题
       runtimePublicPath: true,
       runtimeHistory: {},
-      slave: initialSlaveOptions,
+      qiankun: {
+        ...memo.qiankun,
+        slave: initialSlaveOptions,
+      },
     };
 
     if (!initialSlaveOptions.shouldNotModifyDefaultBase) {
@@ -62,7 +65,9 @@ export default function(api: IApi) {
   api.modifyPublicPathStr(publicPathStr => {
     const {
       runtimePublicPath,
-      qiankun: { slave: shouldNotModifyRuntimePublicPath },
+      qiankun: {
+        slave: { shouldNotModifyRuntimePublicPath },
+      },
     } = api.config;
 
     if (runtimePublicPath === true && !shouldNotModifyRuntimePublicPath) {

@@ -6,12 +6,13 @@ export default function modifyRoutes(api: IApi) {
   api.modifyRoutes(routes => {
     const {
       history,
+      base,
       qiankun: { master: { routeBindingAlias = 'microApp', apps = [] } = {} },
     } = api.config;
-    const masterHistoryType = history?.type || defaultHistoryType;
+    const masterHistoryType = (history && history?.type) || defaultHistoryType;
 
     // 兼容以前的通过配置 base 自动注册应用的场景
-    const registrableApps = apps.filter(app => app.base);
+    const registrableApps = apps.filter((app: App) => app.base);
     if (registrableApps.length) {
       useLegacyModifyRoutesWithRegistrableMode(
         routes,
@@ -22,7 +23,7 @@ export default function modifyRoutes(api: IApi) {
 
     modifyRoutesWithAttachMode(routes, masterHistoryType, {
       routeBindingAlias,
-      base: api.config.base,
+      base: base || '/',
     });
 
     return routes;
