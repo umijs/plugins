@@ -22,8 +22,13 @@ export function intl({
   id: string;
   value?: { [key: string]: any };
 }) {
-  const intl = useIntl();
   const localeMessages: { [key: string]: string } =
     getLocale() === 'zh-CN' ? zhCN : enUS;
+
+  if (!useIntl) {
+    return localeMessages[id] || id;
+  }
+  const intl = useIntl && useIntl();
+
   return intl.formatMessage({ id }, value) || localeMessages[id] || id;
 }
