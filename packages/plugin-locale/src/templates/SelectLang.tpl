@@ -76,7 +76,7 @@ const defaultLangUConfigMap = {
     title: 'език'
   },
   'ca-ES': {
-    lang: 'ca-ES,
+    lang: 'ca-ES',
     label: 'Catalá',
     icon: '🇨🇦',
     title: 'llengua'
