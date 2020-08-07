@@ -50,7 +50,7 @@ export default function(api: IApi) {
         content: requestTemplate
           .replace(/\/\*FRS\*\/(.+)\/\*FRE\*\//, formatResultStr)
           .replace(/\['data'\]/g, dataField ? `['${dataField}']` : '')
-          .replace(/data: T;/, dataField ? `${dataField}: T;` : '')
+          .replace(/data\?: T;/, dataField ? `${dataField}?: T;` : '')
           .replace(
             /umi-request/g,
             winPath(dirname(require.resolve('umi-request/package'))),
