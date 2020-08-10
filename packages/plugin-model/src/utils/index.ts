@@ -1,5 +1,5 @@
-import path from 'path';
 import { EOL } from 'os';
+import path from 'path';
 import { readFileSync } from 'fs';
 import { utils } from 'umi';
 
@@ -20,7 +20,19 @@ export const getName = (absPath: string, srcDirPath?: string[]) => {
       .replace(/(models|model)\./g, '')
       .replace(suffix, '');
 
-    return name.startsWith('.') ? name.slice(1) : name;
+    // 修复Mac OS编译后出现login.login的model名称.在Windows中不存在这种问题,经测试,Windows中dir一直是undefined
+    let result = name;
+    if (name.startsWith('.')) {
+      let temp = name.slice(1);
+      if (temp.indexOf('.') > -1) result = temp.slice(temp.indexOf('.') + 1);
+      else result = temp;
+    } else {
+      if (name.indexOf('.') > -1) result = name.slice(name.indexOf('.') + 1);
+      else result = name;
+    }
+    return result;
+
+    // return name.startsWith('.') ? name.slice(1) : name;
   }
 
   return path.basename(absPath).replace(suffix, '');
