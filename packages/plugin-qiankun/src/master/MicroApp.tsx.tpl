@@ -29,7 +29,7 @@ type Props = {
   name: string;
   settings?: FrameworkConfiguration;
   base?: string;
-  history?: HashHistory | BrowserHistory | MemoryHistory;
+  history?: 'hash' | 'browser' | 'memory' | HashHistory | BrowserHistory | MemoryHistory;
   getMatchedBase?: () => string;
   loader?: (loading: boolean) => React.ReactNode;
 } & Record<string, any>;
