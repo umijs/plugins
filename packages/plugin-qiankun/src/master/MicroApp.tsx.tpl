@@ -13,15 +13,15 @@ import { BrowserHistoryBuildOptions, HashHistoryBuildOptions, MemoryHistoryBuild
 
 const qiankunStateForSlaveModelNamespace = '@@qiankunStateForSlave';
 
-type hashHistory = {
+type HashHistory = {
   type?: 'hash',
 } & HashHistoryBuildOptions;
 
-type browserHistory = {
+type BrowserHistory = {
   type?: 'browser',
 } & BrowserHistoryBuildOptions;
 
-type memoryHistory = {
+type MemoryHistory = {
   type?: 'memory',
 } & MemoryHistoryBuildOptions;
 
@@ -29,7 +29,7 @@ type Props = {
   name: string;
   settings?: FrameworkConfiguration;
   base?: string;
-  history?: hashHistory | browserHistory | memoryHistory;
+  history?: HashHistory | BrowserHistory | MemoryHistory;
   getMatchedBase?: () => string;
   loader?: (loading: boolean) => React.ReactNode;
 } & Record<string, any>;
