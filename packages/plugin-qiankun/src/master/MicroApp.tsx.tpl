@@ -9,14 +9,27 @@ import React, { useEffect, useRef, useState } from 'react';
 // @ts-ignore
 import { useModel } from 'umi';
 import { concat, mergeWith } from 'lodash';
+import { BrowserHistoryBuildOptions, HashHistoryBuildOptions, MemoryHistoryBuildOptions, } from 'history-with-query';
 
 const qiankunStateForSlaveModelNamespace = '@@qiankunStateForSlave';
+
+type hashHistory = {
+  type?: 'hash',
+} & HashHistoryBuildOptions;
+
+type browserHistory = {
+  type?: 'browser',
+} & BrowserHistoryBuildOptions;
+
+type memoryHistory = {
+  type?: 'memory',
+} & MemoryHistoryBuildOptions;
 
 type Props = {
   name: string;
   settings?: FrameworkConfiguration;
   base?: string;
-  history?: string;
+  history?: hashHistory | browserHistory | memoryHistory;
   getMatchedBase?: () => string;
   loader?: (loading: boolean) => React.ReactNode;
 } & Record<string, any>;
