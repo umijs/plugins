@@ -21,8 +21,9 @@ const getFileName = (name: string) => {
 
 export const getName = (absPath: string, absSrcPath: string) => {
   const relativePath = path.relative(absSrcPath, absPath);
+  const escape = (str: string) => str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
   const rootModelRegex = new RegExp(
-    `^((src${path.sep})?(page(s)?${path.sep})?(model))`,
+    `^((src${escape(path.sep)})?(page(s)?${escape(path.sep)})?(model))`,
   );
   // model files without namespace
   if (rootModelRegex.test(relativePath)) {
