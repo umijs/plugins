@@ -8,22 +8,35 @@ export type ModelItem =
   | { absPath: string; namespace: string; exportName?: string }
   | string;
 
-export const getName = (absPath: string, srcDirPath?: string[]) => {
-  const suffix = /(\.model)?\.(j|t)sx?$/;
-  const dir = srcDirPath?.find(dir => absPath.includes(dir));
-
-  if (dir) {
-    const name = absPath
-      .replace(dir, '')
-      .split(path.sep)
-      .join('.')
-      .replace(/(models|model)\./g, '')
-      .replace(suffix, '');
-
-    return name.startsWith('.') ? name.slice(1) : name;
+const getFileName = (name: string) => {
+  const fileName = path.basename(name, path.extname(name));
+  if (fileName.endsWith('.model') || fileName.endsWith('.models')) {
+    return fileName
+      .split('.')
+      .slice(0, -1)
+      .join('.');
   }
+  return fileName;
+};
 
-  return path.basename(absPath).replace(suffix, '');
+export const getName = (absPath: string, absSrcPath: string) => {
+  const relativePath = path.relative(absSrcPath, absPath);
+  const rootModelRegex = new RegExp(
+    `^((src${path.sep})?(page(s)?${path.sep})?(model))`,
+  );
+  // model files without namespace
+  if (rootModelRegex.test(relativePath)) {
+    return getFileName(relativePath);
+  }
+  // model files with namespace
+  const dirList = path.dirname(relativePath).split(path.sep);
+  try {
+    return `${dirList
+      .filter(ele => !['src', 'page', 'pages', 'model', 'models'].includes(ele))
+      .join('.')}.${getFileName(relativePath)}`;
+  } catch (e) {
+    return getFileName(relativePath);
+  }
 };
 
 export const getPath = (absPath: string) => {
@@ -38,18 +51,18 @@ export const genImports = (imports: string[]) =>
     )
     .join(EOL);
 
-export const genExtraModels = (models: ModelItem[] = []) =>
+export const genExtraModels = (models: ModelItem[] = [], absSrcPath: string) =>
   models.map(ele => {
     if (typeof ele === 'string') {
       return {
         importPath: getPath(ele),
-        importName: getName(ele),
-        namespace: getName(ele),
+        importName: path.basename(ele).split('.')[0],
+        namespace: getName(ele, absSrcPath),
       };
     }
     return {
       importPath: getPath(ele.absPath),
-      importName: getName(ele.absPath),
+      importName: path.basename(ele.absPath).split('.')[0],
       namespace: ele.namespace,
       exportName: ele.exportName,
     };
@@ -104,12 +117,12 @@ export const sort = (ns: HookItem[]) => {
   return [...new Set(final)];
 };
 
-export const genModels = (imports: string[], srcDirPath: string[]) => {
+export const genModels = (imports: string[], absSrcPath: string) => {
   const contents = imports.map(absPath => ({
-    namespace: getName(absPath, srcDirPath),
+    namespace: getName(absPath, absSrcPath),
     content: readFileSync(absPath).toString(),
   }));
-  const allUserModel = imports.map(absPath => getName(absPath, srcDirPath));
+  const allUserModel = imports.map(absPath => getName(absPath, absSrcPath));
 
   const checkDuplicates = (list: string[]) =>
     new Set(list).size !== list.length;
