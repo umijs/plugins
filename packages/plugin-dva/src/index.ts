@@ -142,7 +142,6 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
         ? ['connect', 'useDispatch', 'useStore', 'useSelector']
         : ['connect'];
 
-      logger.debug(`dva lib path: ${dvaLibPath}`);
       logger.debug(`dva version: ${dvaVersion}`);
       logger.debug(`exported methods:`);
       logger.debug(exportMethods);
@@ -150,7 +149,6 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
       api.writeTmpFile({
         path: 'plugin-dva/exports.ts',
         content: Mustache.render(exportsTpl, {
-          dvaLibPath,
           exportMethods: exportMethods.join(', '),
         }),
       });
