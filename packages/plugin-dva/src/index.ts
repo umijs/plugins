@@ -17,9 +17,13 @@ export default (api: IApi) => {
     return join(api.paths.absSrcPath!, getModelDir());
   }
 
-  function hasDvaDependency() {
+  function getDvaDependency() {
     const { dependencies, devDependencies } = api.pkg;
-    return dependencies?.dva || devDependencies?.dva;
+    return (
+      dependencies?.dva ||
+      devDependencies?.dva ||
+      require('../package').dependencies.dva
+    );
   }
 
   // 配置
@@ -66,6 +70,13 @@ export default (api: IApi) => {
   // 初始检测一遍
   api.onStart(() => {
     hasModels = getAllModels().length > 0;
+  });
+
+  api.modifyDepInfo(memo => {
+    memo['dva'] = {
+      range: getDvaDependency(),
+    };
+    return memo;
   });
 
   // 生成临时文件
