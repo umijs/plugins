@@ -3,7 +3,7 @@ import { join } from 'path';
 import * as allIcons from '@ant-design/icons';
 import getLayoutContent from './utils/getLayoutContent';
 import { LayoutConfig } from './types';
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, copyFileSync, statSync } from 'fs';
 
 const DIR_NAME = 'plugin-layout';
 
@@ -78,6 +78,42 @@ export default (api: IApi) => {
     enableBy: api.EnableBy.config,
   });
 
+  api.modifyDepInfo(memo => {
+    const pkg = require('../package.json');
+    memo['@ant-design/pro-layout'] = {
+      range:
+        api.pkg.dependencies?.['@ant-design/pro-layout'] ||
+        api.pkg.devDependencies?.['@ant-design/pro-layout'] ||
+        pkg.peerDependencies['@ant-design/pro-layout'],
+    };
+    memo['@umijs/route-utils'] = {
+      range: pkg.dependencies['@umijs/route-utils'],
+    };
+    return memo;
+  });
+
+  let generatedOnce = false;
+  api.onGenerateFiles(() => {
+    if (generatedOnce) return;
+    generatedOnce = true;
+    const cwd = join(__dirname, '../src');
+    const files = utils.glob.sync('**/*', {
+      cwd,
+    });
+    const base = join(api.paths.absTmpPath!, 'plugin-layout', 'layout');
+    utils.mkdirp.sync(base);
+    files.forEach(file => {
+      if (['index.ts', 'runtime.tsx.tpl'].includes(file)) return;
+      const source = join(cwd, file);
+      const target = join(base, file);
+      if (statSync(source).isDirectory()) {
+        utils.mkdirp.sync(target);
+      } else {
+        copyFileSync(source, target);
+      }
+    });
+  });
+
   api.modifyDefaultConfig(config => {
     // @ts-ignore
     config.title = false;
@@ -102,12 +138,9 @@ export default (api: IApi) => {
     // allow custom theme
     let layoutComponent = {
       // 如果 ProLayout 没有安装会提供一个报错和一个空的 layout 组件
-      PRO: utils.winPath(
-        join(
-          __dirname,
-          haveProLayout() ? './layout/index.js' : './layout/blankLayout.js',
-        ),
-      ),
+      PRO: haveProLayout()
+        ? './layout/layout/index.tsx'
+        : './layout/layout/blankLayout.tsx',
     };
     if (layoutOpts.layoutComponent) {
       layoutComponent = Object.assign(
@@ -129,7 +162,8 @@ export default (api: IApi) => {
     const { userConfig } = api;
     const icons = formatter(userConfig.routes);
     let iconsString = icons.map(
-      iconName => `import ${iconName} from '@ant-design/icons/${iconName}'`,
+      iconName =>
+        `import ${iconName} from '@ant-design/icons/es/icons/${iconName}'`,
     );
     api.writeTmpFile({
       path: join(DIR_NAME, 'icons.ts'),

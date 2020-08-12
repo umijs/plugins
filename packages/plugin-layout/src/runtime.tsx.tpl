@@ -1,6 +1,6 @@
-const react = require('react');
+import React from 'react';
 // @ts-ignore
-import allIcons from '@@/plugin-layout/icons';
+import allIcons from './icons';
 
 export interface MenuDataItem {
   children?: MenuDataItem[];

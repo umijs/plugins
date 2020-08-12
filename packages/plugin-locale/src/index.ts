@@ -207,7 +207,7 @@ export default (api: IApi) => {
 
   // Modify entry js
   api.addEntryCodeAhead(() =>
-    `require('./plugin-locale/locale')._onCreate();`.trim(),
+    `import { _onCreate } from './plugin-locale/locale';\n_onCreate();`.trim(),
   );
 
   // watch locale files
