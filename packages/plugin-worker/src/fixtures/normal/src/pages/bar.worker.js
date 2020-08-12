@@ -1,4 +1,3 @@
-
 if (typeof onmessage !== 'undefined') {
   // 监听消息
   onmessage = function (evt) {
@@ -8,5 +7,4 @@ if (typeof onmessage !== 'undefined') {
   postMessage({
     value: '666'
   });
-
 }
