@@ -22,4 +22,9 @@ describe('getName test', () => {
       getName(join('ae/src/page/dashboard/Workplace/form.model.ts'), srcDir),
     ).toEqual('dashboard.Workplace.form');
   });
+  test('subdirectories in base model dir', () => {
+    expect(getName(join('ae/src/models/home/test.ts'), srcDir)).toEqual(
+      'home.test',
+    );
+  });
 });
