@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.14](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.13...@umijs/plugin-layout@0.11.14) (2020-08-12)
+
+### Bug Fixes
+
+- **layout:** fix useIntl is null, error page will try error ([#316](https://github.com/umijs/plugins/issues/316)) ([ce7e136](https://github.com/umijs/plugins/commit/ce7e13603cee3e111583ba5a91bafc16c6ad8dae))
+
 ## [0.11.13](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.12...@umijs/plugin-layout@0.11.13) (2020-07-20)
 
 ### Bug Fixes

@@ -1,64 +1,44 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [2.7.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.6.1...@umijs/plugin-qiankun@2.7.0) (2020-08-12)
+
+### Features
+
+- 完善 MicroApp history 类型 ([#322](https://github.com/umijs/plugins/issues/322)) ([d289228](https://github.com/umijs/plugins/commit/d289228ac1b4ee84c5c20bf480199182c84c7661))
 
 ## [2.6.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.6.0...@umijs/plugin-qiankun@2.6.1) (2020-07-31)
 
-
 ### Bug Fixes
 
-* **qiankun:** fix slave options retire bug ([#314](https://github.com/umijs/plugins/issues/314)) ([432fcb2](https://github.com/umijs/plugins/commit/432fcb29cef8cef3f8fe3db6caa838eff79400b9))
-
-
-
-
+- **qiankun:** fix slave options retire bug ([#314](https://github.com/umijs/plugins/issues/314)) ([432fcb2](https://github.com/umijs/plugins/commit/432fcb29cef8cef3f8fe3db6caa838eff79400b9))
 
 # [2.6.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.5.1...@umijs/plugin-qiankun@2.6.0) (2020-07-30)
 
-
 ### Features
 
-* **qiankun:** support to pass container for different sub apps ([#310](https://github.com/umijs/plugins/issues/310)) ([ff9a499](https://github.com/umijs/plugins/commit/ff9a4991f1be50d3a4aa89cd25f956386d4e1662))
-* **qiankun:** 支持运行时动态设置 clientRender 的 rootElement ([#312](https://github.com/umijs/plugins/issues/312)) ([e90e0ca](https://github.com/umijs/plugins/commit/e90e0ca1b1178675e985389eae2623ebee4aa53d))
-
-
-
-
+- **qiankun:** support to pass container for different sub apps ([#310](https://github.com/umijs/plugins/issues/310)) ([ff9a499](https://github.com/umijs/plugins/commit/ff9a4991f1be50d3a4aa89cd25f956386d4e1662))
+- **qiankun:** 支持运行时动态设置 clientRender 的 rootElement ([#312](https://github.com/umijs/plugins/issues/312)) ([e90e0ca](https://github.com/umijs/plugins/commit/e90e0ca1b1178675e985389eae2623ebee4aa53d))
 
 ## [2.5.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.5.0...@umijs/plugin-qiankun@2.5.1) (2020-07-08)
 
-
 ### Bug Fixes
 
-* **qiankun:** concat not defined in MicroApp ([#298](https://github.com/umijs/plugins/issues/298)) ([2b65bf7](https://github.com/umijs/plugins/commit/2b65bf7d5af90565b4a77b17fb20602312129dfb))
-
-
-
-
+- **qiankun:** concat not defined in MicroApp ([#298](https://github.com/umijs/plugins/issues/298)) ([2b65bf7](https://github.com/umijs/plugins/commit/2b65bf7d5af90565b4a77b17fb20602312129dfb))
 
 # [2.5.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.4.1...@umijs/plugin-qiankun@2.5.0) (2020-07-08)
 
-
 ### Features
 
-* **qiankun:** microApp auto setLoading ([#293](https://github.com/umijs/plugins/issues/293)) ([18c15f2](https://github.com/umijs/plugins/commit/18c15f2f041b7abffa826f665d6f88d9289479c8))
-* **qiankun:** MicroApp support lifeCycles ([#296](https://github.com/umijs/plugins/issues/296)) ([def736b](https://github.com/umijs/plugins/commit/def736b5830e7e41bdd4c24319e4c0c659aa751d))
-
-
-
-
+- **qiankun:** microApp auto setLoading ([#293](https://github.com/umijs/plugins/issues/293)) ([18c15f2](https://github.com/umijs/plugins/commit/18c15f2f041b7abffa826f665d6f88d9289479c8))
+- **qiankun:** MicroApp support lifeCycles ([#296](https://github.com/umijs/plugins/issues/296)) ([def736b](https://github.com/umijs/plugins/commit/def736b5830e7e41bdd4c24319e4c0c659aa751d))
 
 ## [2.4.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.4.0...@umijs/plugin-qiankun@2.4.1) (2020-07-04)
 
-
 ### Bug Fixes
 
-* **qiankun:** 修复 mounting 期间更新操作丢失 & 短时间内连续更新会抛状态异常的问题 ([#289](https://github.com/umijs/plugins/issues/289)) ([2456e40](https://github.com/umijs/plugins/commit/2456e409e59baa2a04f3638b27f6448363892e51))
-
-
-
-
+- **qiankun:** 修复 mounting 期间更新操作丢失 & 短时间内连续更新会抛状态异常的问题 ([#289](https://github.com/umijs/plugins/issues/289)) ([2456e40](https://github.com/umijs/plugins/commit/2456e409e59baa2a04f3638b27f6448363892e51))
 
 # [2.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.3.2...@umijs/plugin-qiankun@2.4.0) (2020-07-01)
 
