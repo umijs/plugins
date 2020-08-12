@@ -1,9 +1,7 @@
 import { getName } from '../src/utils';
 import { join } from 'path';
 
-const srcDir = ['models', 'model', 'pages', 'page'].map(dir =>
-  join('ae/src', dir),
-);
+const srcDir = 'ae/src';
 
 describe('getName test', () => {
   test('global model', () => {
@@ -23,10 +21,5 @@ describe('getName test', () => {
     expect(
       getName(join('ae/src/page/dashboard/Workplace/form.model.ts'), srcDir),
     ).toEqual('dashboard.Workplace.form');
-  });
-  test('other model', () => {
-    expect(
-      getName(join('ae/src/.umi/plugin-initial-state/models/initialState.ts')),
-    ).toEqual('initialState');
   });
 });

@@ -40,10 +40,11 @@ readdirSync(fixtures)
       ...getModels(pagesDir, `**/models/**/*.{ts,tsx,js,jsx}`),
       ...getModels(pagesDir, `**/*.model.{ts,tsx,js,jsx}`),
     ];
-    const { providerContent, useModelContent } = getTmpFile(files, extraModel, [
-      modulesDir,
-      pagesDir,
-    ]);
+    const { providerContent, useModelContent } = getTmpFile(
+      files,
+      extraModel,
+      fixture,
+    );
     const providerPath = join(tmpDir, 'Provider.tsx');
     if (!existsSync(tmpDir)) {
       mkdirSync(tmpDir);
