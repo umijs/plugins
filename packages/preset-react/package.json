@@ -39,6 +39,7 @@
     "@umijs/plugin-locale": "0.9.0",
     "@umijs/plugin-model": "2.5.2",
     "@umijs/plugin-request": "2.4.2",
+    "@umijs/plugin-worker": "1.0.0-beta.1",
     "@umijs/plugin-test": "1.0.0"
   }
 }

@@ -19505,6 +19505,14 @@ worker-farm@^1.7.0:
   dependencies:
     errno "~0.1.7"
 
+worker-loader@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/worker-loader/-/worker-loader-3.0.0.tgz#4256b6ea9715ad3e0d39ad2d4b58e5fef49b06da"
+  integrity sha512-TNDhyNxUfOGkxNDH28bkrfS4d2BSKYtc3Jznkhhpra9q3p5Su9mRD9Rso5uUNCK6vsEdlceTCJ7aMcluJAotZw==
+  dependencies:
+    loader-utils "^2.0.0"
+    schema-utils "^2.7.0"
+
 wrap-ansi@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-3.0.1.tgz#288a04d87eda5c286e060dfe8f135ce8d007f8ba"

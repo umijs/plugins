@@ -1,0 +1,33 @@
+{
+  "name": "@umijs/plugin-worker",
+  "version": "1.0.0-beta.1",
+  "description": "@umijs/plugin-worker",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/umijs/plugins"
+  },
+  "keywords": [
+    "umi"
+  ],
+  "authors": [
+    "ycjcl868 <45808948@qq.com> (https://github.com/ycjcl868)"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/umijs/plugins/issues",
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-worker#readme",
+  "peerDependencies": {
+    "umi": "3.x"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "worker-loader": "3.0.0"
+  }
+}
