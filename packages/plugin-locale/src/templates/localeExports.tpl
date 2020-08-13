@@ -10,7 +10,30 @@ import warning from '{{{ warningPkgPath }}}';
 
 import { plugin } from '../core/umiExports';
 
-export * from '{{{ reactIntlPkgPath }}}';
+export {
+  createIntl,
+};
+export {
+  FormattedDate,
+  FormattedDateParts,
+  FormattedDisplayName,
+  FormattedHTMLMessage,
+  FormattedList,
+  FormattedMessage,
+  FormattedNumber,
+  FormattedNumberParts,
+  FormattedPlural,
+  FormattedRelativeTime,
+  FormattedTime,
+  FormattedTimeParts,
+  IntlContext,
+  IntlProvider,
+  RawIntlProvider,
+  createIntlCache,
+  defineMessages,
+  injectIntl,
+  useIntl,
+} from '{{{ reactIntlPkgPath }}}';
 
 let g_intl: IntlShape;
 

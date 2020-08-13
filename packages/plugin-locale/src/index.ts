@@ -59,6 +59,18 @@ export default (api: IApi) => {
     enableBy: api.EnableBy.config,
   });
 
+  const reactIntlPkgPath = winPath(
+    dirname(require.resolve('react-intl/package')),
+  );
+
+  api.modifyDepInfo(memo => {
+    memo['react-intl'] = {
+      range: require('../package.json').dependencies['react-intl'],
+      alias: [reactIntlPkgPath],
+    };
+    return memo;
+  });
+
   // polyfill
   if (isNeedPolyfill(api.userConfig?.targets || {})) {
     api.addEntryImportsAhead(() => ({
@@ -163,11 +175,7 @@ export default (api: IApi) => {
         Antd: !!antd,
         DefaultLocale: JSON.stringify(defaultLocale),
         warningPkgPath: winPath(require.resolve('warning')),
-        // react-intl main use `dist/index.js`
-        // use dirname let webpack identify main or module
-        reactIntlPkgPath: winPath(
-          dirname(require.resolve('react-intl/package')),
-        ),
+        reactIntlPkgPath,
       }),
     });
     // runtime.tsx
