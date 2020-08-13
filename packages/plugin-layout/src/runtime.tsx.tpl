@@ -33,9 +33,9 @@ function formatter(data: MenuDataItem[]): MenuDataItem[] {
       if (NewIcon) {
         try {
           if (item.icon)
-            item.icon = react.createElement(NewIcon);
+            item.icon = React.createElement(NewIcon);
           if (item.menu)
-            item.menu.icon = react.createElement(NewIcon);
+            item.menu.icon = React.createElement(NewIcon);
         } catch (error) {
           console.log(error);
         }
