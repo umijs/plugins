@@ -14,6 +14,26 @@ export default function(api: IApi) {
 
   api.addRuntimePluginKey(() => 'request');
 
+  const umiRequestPkgPath = winPath(
+    dirname(require.resolve('umi-request/package')),
+  );
+  const useRequestPkgPath = winPath(
+    dirname(require.resolve('@ahooksjs/use-request/package')),
+  );
+
+  api.modifyDepInfo(memo => {
+    const pkg = require('../package.json');
+    memo['umi-request'] = {
+      range: pkg.dependencies['umi-request'],
+      alias: [umiRequestPkgPath],
+    };
+    memo['@ahooksjs/use-request'] = {
+      range: pkg.dependencies['@ahooksjs/use-request'],
+      alias: [useRequestPkgPath],
+    };
+    return memo;
+  });
+
   // 配置
   api.describe({
     config: {
@@ -51,14 +71,8 @@ export default function(api: IApi) {
           .replace(/\/\*FRS\*\/(.+)\/\*FRE\*\//, formatResultStr)
           .replace(/\['data'\]/g, dataField ? `['${dataField}']` : '')
           .replace(/data\?: T;/, dataField ? `${dataField}?: T;` : '')
-          .replace(
-            /umi-request/g,
-            winPath(dirname(require.resolve('umi-request/package'))),
-          )
-          .replace(
-            /@ahooksjs\/use-request/g,
-            winPath(dirname(require.resolve('@ahooksjs/use-request/package'))),
-          )
+          .replace(/umi-request/g, umiRequestPkgPath)
+          .replace(/@ahooksjs\/use-request/g, useRequestPkgPath)
           .replace(
             `import { ApplyPluginsType, history, plugin } from 'umi';`,
             `
