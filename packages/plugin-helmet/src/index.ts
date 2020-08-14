@@ -10,12 +10,14 @@ export default (api: IApi) => {
     dirname(require.resolve('react-helmet/package')),
   );
 
-  api.modifyDepInfo(memo => {
-    memo['react-helmet'] = {
-      range: require('../package.json').dependencies['react-helmet'],
-      alias: [helmetPkgPath],
-    };
-    return memo;
+  api.addDepInfo(() => {
+    return [
+      {
+        name: 'react-helmet',
+        range: require('../package.json').dependencies['react-helmet'],
+        alias: [helmetPkgPath],
+      },
+    ];
   });
 
   api.onGenerateFiles(async () => {

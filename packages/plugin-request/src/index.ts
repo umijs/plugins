@@ -21,17 +21,20 @@ export default function(api: IApi) {
     dirname(require.resolve('@ahooksjs/use-request/package')),
   );
 
-  api.modifyDepInfo(memo => {
+  api.addDepInfo(() => {
     const pkg = require('../package.json');
-    memo['umi-request'] = {
-      range: pkg.dependencies['umi-request'],
-      alias: [umiRequestPkgPath],
-    };
-    memo['@ahooksjs/use-request'] = {
-      range: pkg.dependencies['@ahooksjs/use-request'],
-      alias: [useRequestPkgPath],
-    };
-    return memo;
+    return [
+      {
+        name: 'umi-request',
+        range: pkg.dependencies['umi-request'],
+        alias: [umiRequestPkgPath],
+      },
+      {
+        name: '@ahooksjs/use-request',
+        range: pkg.dependencies['@ahooksjs/use-request'],
+        alias: [useRequestPkgPath],
+      },
+    ];
   });
 
   // 配置

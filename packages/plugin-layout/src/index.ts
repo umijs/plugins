@@ -78,18 +78,21 @@ export default (api: IApi) => {
     enableBy: api.EnableBy.config,
   });
 
-  api.modifyDepInfo(memo => {
+  api.addDepInfo(() => {
     const pkg = require('../package.json');
-    memo['@ant-design/pro-layout'] = {
-      range:
-        api.pkg.dependencies?.['@ant-design/pro-layout'] ||
-        api.pkg.devDependencies?.['@ant-design/pro-layout'] ||
-        pkg.peerDependencies['@ant-design/pro-layout'],
-    };
-    memo['@umijs/route-utils'] = {
-      range: pkg.dependencies['@umijs/route-utils'],
-    };
-    return memo;
+    return [
+      {
+        name: '@ant-design/pro-layout',
+        range:
+          api.pkg.dependencies?.['@ant-design/pro-layout'] ||
+          api.pkg.devDependencies?.['@ant-design/pro-layout'] ||
+          pkg.peerDependencies['@ant-design/pro-layout'],
+      },
+      {
+        name: '@umijs/route-utils',
+        range: pkg.dependencies['@umijs/route-utils'],
+      },
+    ];
   });
 
   let generatedOnce = false;

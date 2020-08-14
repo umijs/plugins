@@ -63,12 +63,12 @@ export default (api: IApi) => {
     dirname(require.resolve('react-intl/package')),
   );
 
-  api.modifyDepInfo(memo => {
-    memo['react-intl'] = {
+  api.addDepInfo(() => {
+    return {
+      name: 'react-intl',
       range: require('../package.json').dependencies['react-intl'],
       alias: [reactIntlPkgPath],
     };
-    return memo;
   });
 
   // polyfill

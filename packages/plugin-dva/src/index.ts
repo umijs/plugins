@@ -72,11 +72,11 @@ export default (api: IApi) => {
     hasModels = getAllModels().length > 0;
   });
 
-  api.modifyDepInfo(memo => {
-    memo['dva'] = {
+  api.addDepInfo(() => {
+    return {
+      name: 'dva',
       range: getDvaDependency(),
     };
-    return memo;
   });
 
   // 生成临时文件
