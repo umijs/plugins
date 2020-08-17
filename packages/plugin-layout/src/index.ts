@@ -126,20 +126,29 @@ export default (api: IApi) => {
     });
 
     // 生效临时的 icon 文件
-    const { userConfig } = api;
-    const icons = formatter(userConfig.routes);
-    let iconsString = icons.map(
-      iconName => `import ${iconName} from '@ant-design/icons/${iconName}'`,
-    );
-    api.writeTmpFile({
-      path: join(DIR_NAME, 'icons.ts'),
-      content: `
+    function generateIcons(routes) {
+      const icons = formatter(routes);
+      let iconsString = icons.map(
+        iconName => `import ${iconName} from '@ant-design/icons/${iconName}'`,
+      );
+      api.writeTmpFile({
+        path: join(DIR_NAME, 'icons.ts'),
+        content: `
   ${iconsString.join(';\n')}
   export default {
     ${icons.join(',\n')}
   }
       `,
-    });
+      });
+    }
+    const {
+      userConfig: { routes },
+    } = api;
+    if (routes) {
+      generateIcons(routes);
+    } else {
+      api.getRoutes().then(generateIcons);
+    }
 
     api.writeTmpFile({
       path: join(DIR_NAME, 'runtime.tsx'),
