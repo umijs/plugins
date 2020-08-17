@@ -73,6 +73,7 @@ const BasicLayout = (props: any) => {
   // layout 是否渲染相关
 
   const layoutRestProps = {
+    itemRender: route => (<Link to={route.path}>{route.breadcrumbName}</Link>),
     ...userConfig,
     ...restProps,
     ...getLayoutRender(currentPathConfig as any),
