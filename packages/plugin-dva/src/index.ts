@@ -104,11 +104,19 @@ export default (api: IApi) => {
           ]
             .filter(Boolean)
             .join('\n'),
+          RegisterModelImports: models
+            .map(path => {
+              return `import Model${basename(
+                path,
+                extname(path),
+              )} from '${path}';`;
+            })
+            .join('\r\n'),
           RegisterModels: models
             .map(path => {
               // prettier-ignore
               return `
-app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}').default) });
+app.model({ namespace: '${basename(path, extname(path))}', ...Model${basename(path, extname(path))} });
           `.trim();
             })
             .join('\r\n'),
