@@ -6,22 +6,22 @@ import { genImports, genModels, genExtraModels, ModelItem } from '.';
 
 const { winPath } = utils;
 
-function getModels(files: string[], srcDirPath: string[]) {
-  const sortedModels = genModels(files, srcDirPath);
+function getModels(files: string[], absSrcPath: string) {
+  const sortedModels = genModels(files, absSrcPath);
   return sortedModels
     .map(ele => `'${ele.namespace.replace(/'/g, "\\'")}': ${ele.importName}`)
     .join(', ');
 }
 
-function getExtraModels(models: ModelItem[] = []) {
-  const extraModels = genExtraModels(models);
+function getExtraModels(models: ModelItem[] = [], absSrcPath: string) {
+  const extraModels = genExtraModels(models, absSrcPath);
   return extraModels
     .map(ele => `'${ele.namespace}': ${ele.exportName || ele.importName}`)
     .join(', ');
 }
 
-function getExtraImports(models: ModelItem[] = []) {
-  const extraModels = genExtraModels(models);
+function getExtraImports(models: ModelItem[] = [], absSrcPath: string) {
+  const extraModels = genExtraModels(models, absSrcPath);
   return extraModels
     .map(ele => {
       if (ele.exportName) {
@@ -39,12 +39,12 @@ function getExtraImports(models: ModelItem[] = []) {
 export const getTmpFile = (
   files: string[],
   extra: ModelItem[] = [],
-  srcDirPath: string[],
+  absSrcPath: string,
 ) => {
   const imports = genImports(files);
-  const userModels = getModels(files, srcDirPath);
-  const extraImports = getExtraImports(extra);
-  const extraModels = getExtraModels(extra);
+  const userModels = getModels(files, absSrcPath);
+  const extraImports = getExtraImports(extra, absSrcPath);
+  const extraModels = getExtraModels(extra, absSrcPath);
   const enable = Boolean(imports || extraImports);
 
   return {
