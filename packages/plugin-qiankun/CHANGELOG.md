@@ -1,6 +1,18 @@
 # Change Log
 
-All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [2.8.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.7.0...@umijs/plugin-qiankun@2.8.0) (2020-08-19)
+
+
+### Features
+
+* **qiankun:** expose plugin enable api ([#333](https://github.com/umijs/plugins/issues/333)) ([164ae2f](https://github.com/umijs/plugins/commit/164ae2f377877ae7321b1579b8b09b3ae5f4f80e))
+
+
+
+
 
 # [2.7.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.6.1...@umijs/plugin-qiankun@2.7.0) (2020-08-12)
 
