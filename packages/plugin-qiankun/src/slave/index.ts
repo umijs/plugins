@@ -12,15 +12,17 @@ import { SlaveOptions } from '../types';
 
 const localIpAddress = process.env.USE_REMOTE_IP ? address.ip() : 'localhost';
 
+export function isSlaveEnable(api: IApi) {
+  return (
+    !!api.userConfig?.qiankun?.slave ||
+    isEqual(api.userConfig?.qiankun, {}) ||
+    !!process.env.INITIAL_QIANKUN_SLAVE_OPTIONS
+  );
+}
+
 export default function(api: IApi) {
   api.describe({
-    enableBy() {
-      return (
-        !!api.userConfig?.qiankun?.slave ||
-        isEqual(api.userConfig?.qiankun, {}) ||
-        !!process.env.INITIAL_QIANKUN_SLAVE_OPTIONS
-      );
-    },
+    enableBy: () => isSlaveEnable(api),
   });
 
   api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
