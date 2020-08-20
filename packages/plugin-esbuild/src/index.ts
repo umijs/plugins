@@ -14,7 +14,7 @@ export default (api: IApi) => {
   api.modifyBundleConfig(memo => {
     if (memo.optimization) {
       memo.optimization.minimizer = [
-        new (require('esbuild-webpack-plugin').default)(),
+        new (require('esbuild-webpack-plugin').default)({ target: 'chrome49' }),
       ];
     }
     return memo;
