@@ -3,7 +3,9 @@
 import {
   getMasterOptions,
   setMasterOptions,
+  // @ts-ignore
 } from '@@/plugin-qiankun/masterOptions';
+// @ts-ignore
 import { deferred } from '@@/plugin-qiankun/qiankunDefer.js';
 import '@@/plugin-qiankun/qiankunRootExports.js';
 import assert from 'assert';
