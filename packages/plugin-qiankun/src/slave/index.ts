@@ -2,7 +2,7 @@ import address from 'address';
 import assert from 'assert';
 import { isString, isEqual } from 'lodash';
 import { join } from 'path';
-import { IApi, utils } from 'umi';
+import { IApi } from 'umi';
 import { SlaveOptions } from '../types';
 import { addSpecifyPrefixedRoute } from './addSpecifyPrefixedRoute';
 import {
