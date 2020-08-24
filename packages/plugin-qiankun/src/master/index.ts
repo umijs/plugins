@@ -186,6 +186,13 @@ function useCompatibleMode(api: IApi) {
     });
   });
 
+  api.addDepInfo(() => {
+    return {
+      name: 'qiankun',
+      range: require('../../package.json').dependencies.qiankun,
+    };
+  });
+
   // TODO 兼容以前版本的 defer 配置，后续需要移除
   api.addUmiExports(() => [
     {
