@@ -1,10 +1,11 @@
 import ReactDOM from 'react-dom';
 // @ts-ignore
 import { plugin, ApplyPluginsType, setCreateHistoryOptions } from 'umi';
-import { setModelState } from '../qiankunModel';
-import { noop } from '../common';
+import { setModelState } from './qiankunModel';
 // @ts-ignore
-import { getSlaveOptions } from '@@/plugin-qiankun/slaveOptions';
+import { getSlaveOptions } from './slaveOptions';
+
+const noop = () => {};
 
 type Defer = {
   promise: Promise<any>;

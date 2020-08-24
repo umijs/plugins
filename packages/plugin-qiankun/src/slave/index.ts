@@ -3,12 +3,13 @@ import assert from 'assert';
 import { isString, isEqual } from 'lodash';
 import { join } from 'path';
 import { IApi, utils } from 'umi';
+import { SlaveOptions } from '../types';
+import { addSpecifyPrefixedRoute } from './addSpecifyPrefixedRoute';
 import {
-  addSpecifyPrefixedRoute,
   defaultSlaveRootId,
   qiankunStateFromMasterModelNamespace,
-} from '../common';
-import { SlaveOptions } from '../types';
+} from '../constants';
+import { readFileSync } from 'fs';
 
 const localIpAddress = process.env.USE_REMOTE_IP ? address.ip() : 'localhost';
 
@@ -23,13 +24,13 @@ export default function(api: IApi) {
     },
   });
 
-  api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
+  api.addRuntimePlugin(() => '@@/plugin-qiankun/slaveRuntimePlugin');
 
   api.register({
     key: 'addExtraModels',
     fn: () => [
       {
-        absPath: utils.winPath(join(__dirname, '../qiankunModel.ts')),
+        absPath: '@@/plugin-qiankun/qiankunModel',
         namespace: qiankunStateFromMasterModelNamespace,
       },
     ],
@@ -126,10 +127,9 @@ export default function(api: IApi) {
     });
   }
 
-  const lifecyclePath = require.resolve('./lifecycles');
   api.addEntryImports(() => {
     return {
-      source: lifecyclePath,
+      source: '@@/plugin-qiankun/lifecycles',
       specifier:
         '{ genMount as qiankun_genMount, genBootstrap as qiankun_genBootstrap, genUnmount as qiankun_genUnmount, genUpdate as qiankun_genUpdate }',
     };
@@ -156,6 +156,24 @@ export default function(api: IApi) {
       export const getSlaveOptions = () => options;
       export const setSlaveOptions = (newOpts) => options = ({ ...options, ...newOpts });
       `,
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/qiankunModel.ts',
+      content: readFileSync(join(__dirname, 'qiankunModel.ts.tpl'), 'utf-8'),
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/slaveRuntimePlugin.ts',
+      content: readFileSync(
+        join(__dirname, 'slaveRuntimePlugin.ts.tpl'),
+        'utf-8',
+      ),
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/lifecycles.ts',
+      content: readFileSync(join(__dirname, 'lifecycles.ts.tpl'), 'utf-8'),
     });
   });
 
