@@ -13,14 +13,16 @@ import {
 
 const { getFile, winPath } = utils;
 
+export function isMasterEnable(api: IApi) {
+  return (
+    !!api.userConfig?.qiankun?.master ||
+    !!process.env.INITIAL_QIANKUN_MASTER_OPTIONS
+  );
+}
+
 export default function(api: IApi) {
   api.describe({
-    enableBy() {
-      return (
-        !!api.userConfig?.qiankun?.master ||
-        !!process.env.INITIAL_QIANKUN_MASTER_OPTIONS
-      );
-    },
+    enableBy: () => isMasterEnable(api),
   });
 
   api.addRuntimePlugin(() => '@@/plugin-qiankun/masterRuntimePlugin');
@@ -33,7 +35,7 @@ export default function(api: IApi) {
       ...config.qiankun,
       master: {
         ...JSON.parse(process.env.INITIAL_QIANKUN_MASTER_OPTIONS || '{}'),
-        ...config?.qiankun?.master,
+        ...(config.qiankun || {}).master,
       },
     },
   }));
@@ -69,11 +71,9 @@ export default function(api: IApi) {
 
   api.onGenerateFiles(() => {
     const {
-      config: {
-        history,
-        qiankun: { master: options },
-      },
+      config: { history },
     } = api;
+    const { master: options } = api.config?.qiankun || {};
     const masterHistoryType = (history && history?.type) || defaultHistoryType;
 
     api.writeTmpFile({
@@ -124,7 +124,7 @@ export default function(api: IApi) {
       },
     ];
 
-    const { exportComponentAlias } = api.config.qiankun.master!;
+    const { exportComponentAlias } = (api.config?.qiankun || {}).master!;
     // 存在别名导出时再导出一份别名
     if (exportComponentAlias && exportComponentAlias !== pinnedExport) {
       exports.push({

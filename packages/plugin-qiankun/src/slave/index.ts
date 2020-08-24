@@ -13,15 +13,17 @@ import { readFileSync } from 'fs';
 
 const localIpAddress = process.env.USE_REMOTE_IP ? address.ip() : 'localhost';
 
+export function isSlaveEnable(api: IApi) {
+  return (
+    !!api.userConfig?.qiankun?.slave ||
+    isEqual(api.userConfig?.qiankun, {}) ||
+    !!process.env.INITIAL_QIANKUN_SLAVE_OPTIONS
+  );
+}
+
 export default function(api: IApi) {
   api.describe({
-    enableBy() {
-      return (
-        !!api.userConfig?.qiankun?.slave ||
-        isEqual(api.userConfig?.qiankun, {}) ||
-        !!process.env.INITIAL_QIANKUN_SLAVE_OPTIONS
-      );
-    },
+    enableBy: () => isSlaveEnable(api),
   });
 
   api.addRuntimePlugin(() => '@@/plugin-qiankun/slaveRuntimePlugin');
@@ -40,7 +42,7 @@ export default function(api: IApi) {
   api.modifyDefaultConfig(memo => {
     const initialSlaveOptions: SlaveOptions = {
       ...JSON.parse(process.env.INITIAL_QIANKUN_SLAVE_OPTIONS || '{}'),
-      ...memo.qiankun?.slave,
+      ...(memo.qiankun || {}).slave,
     };
 
     const modifiedDefaultConfig = {
@@ -64,12 +66,10 @@ export default function(api: IApi) {
   });
 
   api.modifyPublicPathStr(publicPathStr => {
-    const {
-      runtimePublicPath,
-      qiankun: {
-        slave: { shouldNotModifyRuntimePublicPath },
-      },
-    } = api.config;
+    const { runtimePublicPath } = api.config;
+    const { shouldNotModifyRuntimePublicPath } = (
+      api.config.qiankun || {}
+    ).slave!;
 
     if (runtimePublicPath === true && !shouldNotModifyRuntimePublicPath) {
       return `window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || "${
@@ -152,7 +152,7 @@ export default function(api: IApi) {
     api.writeTmpFile({
       path: 'plugin-qiankun/slaveOptions.js',
       content: `
-      let options = ${JSON.stringify(api.config.qiankun.slave || {})};
+      let options = ${JSON.stringify((api.config.qiankun || {}).slave || {})};
       export const getSlaveOptions = () => options;
       export const setSlaveOptions = (newOpts) => options = ({ ...options, ...newOpts });
       `,

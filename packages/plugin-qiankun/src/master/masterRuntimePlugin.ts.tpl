@@ -4,6 +4,7 @@ import {
   getMasterOptions,
   setMasterOptions,
 } from './masterOptions';
+// @ts-ignore
 import { deferred } from './qiankunDefer.js';
 import '@@/plugin-qiankun/qiankunRootExports.js';
 import assert from 'assert';

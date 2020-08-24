@@ -5,11 +5,9 @@ import { defaultHistoryType } from '../constants';
 
 export default function modifyRoutes(api: IApi) {
   api.modifyRoutes(routes => {
-    const {
-      history,
-      base,
-      qiankun: { master: { routeBindingAlias = 'microApp', apps = [] } = {} },
-    } = api.config;
+    const { history, base } = api.config;
+    const { master: { routeBindingAlias = 'microApp', apps = [] } = {} } =
+      api.config.qiankun || {};
     const masterHistoryType = (history && history?.type) || defaultHistoryType;
 
     // 兼容以前的通过配置 base 自动注册应用的场景
