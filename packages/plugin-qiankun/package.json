@@ -12,7 +12,8 @@
     "start:app3": "cd examples/app3 && umi dev"
   },
   "files": [
-    "lib"
+    "lib",
+    "src"
   ],
   "repository": {
     "type": "git",
