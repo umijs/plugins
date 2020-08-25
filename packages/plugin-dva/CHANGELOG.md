@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.2](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.8.1...@umijs/plugin-dva@0.8.2) (2020-08-25)
+
+### Bug Fixes
+
+- **dva:** upperCamelCase model's default specifier ([#342](https://github.com/umijs/plugins/issues/342)) ([ef3fc39](https://github.com/umijs/plugins/commit/ef3fc39209abf445b5670cc829099b6aad2d2de1))
+
 ## [0.8.1](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.8.0...@umijs/plugin-dva@0.8.1) (2020-08-25)
 
 ### Bug Fixes
