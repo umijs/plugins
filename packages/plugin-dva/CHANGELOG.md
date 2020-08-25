@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.1](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.8.0...@umijs/plugin-dva@0.8.1) (2020-08-25)
+
+### Bug Fixes
+
+- dva model register duplicate ([#340](https://github.com/umijs/plugins/issues/340)) ([4845db8](https://github.com/umijs/plugins/commit/4845db80b0521c13396f05f064b4742859fa26f2))
+
 # [0.8.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.7.4...@umijs/plugin-dva@0.8.0) (2020-08-25)
 
 ### Features
