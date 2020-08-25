@@ -105,18 +105,18 @@ export default (api: IApi) => {
             .filter(Boolean)
             .join('\n'),
           RegisterModelImports: models
-            .map(path => {
+            .map((path, index) => {
               return `import Model${basename(
                 path,
                 extname(path),
-              )} from '${path}';`;
+              )}${index} from '${path}';`;
             })
             .join('\r\n'),
           RegisterModels: models
-            .map(path => {
+            .map((path, index) => {
               // prettier-ignore
               return `
-app.model({ namespace: '${basename(path, extname(path))}', ...Model${basename(path, extname(path))} });
+app.model({ namespace: '${basename(path, extname(path))}${index}', ...Model${basename(path, extname(path))}${index} });
           `.trim();
             })
             .join('\r\n'),
