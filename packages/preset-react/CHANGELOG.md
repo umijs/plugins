@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.5.22...@umijs/preset-react@1.6.0) (2020-08-25)
+
+### Features
+
+- enhancement for mfsu ([#326](https://github.com/umijs/plugins/issues/326)) ([655c0da](https://github.com/umijs/plugins/commit/655c0da475748a0671dd3a5de8ab079dbe1bed5a))
+
 ## [1.5.22](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.5.21...@umijs/preset-react@1.5.22) (2020-08-19)
 
 **Note:** Version bump only for package @umijs/preset-react

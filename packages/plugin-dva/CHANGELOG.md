@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.7.4...@umijs/plugin-dva@0.8.0) (2020-08-25)
+
+### Features
+
+- enhancement for mfsu ([#326](https://github.com/umijs/plugins/issues/326)) ([655c0da](https://github.com/umijs/plugins/commit/655c0da475748a0671dd3a5de8ab079dbe1bed5a))
+
 ## [0.7.4](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.7.3...@umijs/plugin-dva@0.7.4) (2020-07-01)
 
 ### Bug Fixes
