@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.9.0...@umijs/plugin-qiankun@2.9.1) (2020-08-25)
+
+### Bug Fixes
+
+- **qiankun:** npm package file lost ([#341](https://github.com/umijs/plugins/issues/341)) ([8a06f02](https://github.com/umijs/plugins/commit/8a06f0257b55cfe1010748348fedf673c8a63c6a))
+
 # [2.9.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.8.1...@umijs/plugin-qiankun@2.9.0) (2020-08-25)
 
 ### Features
