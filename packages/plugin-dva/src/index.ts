@@ -106,9 +106,8 @@ export default (api: IApi) => {
             .join('\n'),
           RegisterModelImports: models
             .map((path, index) => {
-              return `import Model${basename(
-                path,
-                extname(path),
+              return `import Model${lodash.upperFirst(
+                lodash.camelCase(basename(path, extname(path))),
               )}${index} from '${path}';`;
             })
             .join('\r\n'),
@@ -116,7 +115,7 @@ export default (api: IApi) => {
             .map((path, index) => {
               // prettier-ignore
               return `
-app.model({ namespace: '${basename(path, extname(path))}', ...Model${basename(path, extname(path))}${index} });
+app.model({ namespace: '${basename(path, extname(path))}', ...Model${lodash.upperFirst(lodash.camelCase(basename(path, extname(path))))}${index} });
           `.trim();
             })
             .join('\r\n'),
