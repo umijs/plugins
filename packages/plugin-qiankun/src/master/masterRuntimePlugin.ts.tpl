@@ -3,23 +3,22 @@
 import {
   getMasterOptions,
   setMasterOptions,
-  // @ts-ignore
-} from '@@/plugin-qiankun/masterOptions';
+} from './masterOptions';
 // @ts-ignore
-import { deferred } from '@@/plugin-qiankun/qiankunDefer.js';
+import { deferred } from './qiankunDefer.js';
 import '@@/plugin-qiankun/qiankunRootExports.js';
 import assert from 'assert';
 import { prefetchApps, registerMicroApps, start } from 'qiankun';
 // @ts-ignore
 import { ApplyPluginsType, plugin } from 'umi';
 import {
-  defaultHistoryType,
   defaultMountContainerId,
   noop,
   testPathWithPrefix,
   toArray,
-} from '../common';
-import { App, HistoryType, MasterOptions } from '../types';
+} from './common';
+import { App, HistoryType, MasterOptions } from './types';
+import { defaultHistoryType } from './constants';
 
 async function getMasterRuntime() {
   const config = plugin.applyPlugins({

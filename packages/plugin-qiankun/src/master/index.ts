@@ -3,13 +3,13 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 // eslint-disable-next-line import/no-unresolved
 import { IApi, utils } from 'umi';
+import modifyRoutes from './modifyRoutes';
+import { hasExportWithName } from './utils';
 import {
   defaultHistoryType,
   defaultMasterRootId,
   qiankunStateForSlaveModelNamespace,
-} from '../common';
-import modifyRoutes from './modifyRoutes';
-import { hasExportWithName } from './utils';
+} from '../constants';
 
 const { getFile, winPath } = utils;
 
@@ -25,7 +25,7 @@ export default function(api: IApi) {
     enableBy: () => isMasterEnable(api),
   });
 
-  api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
+  api.addRuntimePlugin(() => '@@/plugin-qiankun/masterRuntimePlugin');
 
   api.modifyDefaultConfig(config => ({
     ...config,
@@ -91,6 +91,27 @@ export default function(api: IApi) {
     api.writeTmpFile({
       path: 'plugin-qiankun/MicroApp.tsx',
       content: readFileSync(join(__dirname, 'MicroApp.tsx.tpl'), 'utf-8'),
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/masterRuntimePlugin.ts',
+      content: readFileSync(
+        join(__dirname, 'masterRuntimePlugin.ts.tpl'),
+        'utf-8',
+      ),
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/common.ts',
+      content: readFileSync(join(__dirname, '../../src/common.ts'), 'utf-8'),
+    });
+    api.writeTmpFile({
+      path: 'plugin-qiankun/constants.ts',
+      content: readFileSync(join(__dirname, '../../src/constants.ts'), 'utf-8'),
+    });
+    api.writeTmpFile({
+      path: 'plugin-qiankun/types.ts',
+      content: readFileSync(join(__dirname, '../../src/types.ts'), 'utf-8'),
     });
   });
 
@@ -163,6 +184,13 @@ function useCompatibleMode(api: IApi) {
       export const qiankunStart = deferred.resolve;
     `.trim(),
     });
+  });
+
+  api.addDepInfo(() => {
+    return {
+      name: 'qiankun',
+      range: require('../../package.json').dependencies.qiankun,
+    };
   });
 
   // TODO 兼容以前版本的 defer 配置，后续需要移除

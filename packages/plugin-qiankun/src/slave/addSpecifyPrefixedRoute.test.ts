@@ -1,42 +1,6 @@
-export const originSingleRoute = [
-  {
-    path: '/',
-    exact: true,
-    _title: 'app2',
-    _title_default: 'app2',
-  },
-  {
-    path: '/user',
-    exact: true,
-    _title: 'app2',
-    _title_default: 'app2',
-  },
-  {
-    _title: 'app2',
-    _title_default: 'app2',
-  },
-];
+import { addSpecifyPrefixedRoute } from './addSpecifyPrefixedRoute';
 
-export const expectCoverRoute = [
-  {
-    path: '/',
-    exact: true,
-    _title: 'app2',
-    _title_default: 'app2',
-  },
-  {
-    path: '/test/user',
-    exact: true,
-    _title: 'app2',
-    _title_default: 'app2',
-  },
-  {
-    _title: 'app2',
-    _title_default: 'app2',
-  },
-];
-
-export const originRoutes = [
+const originRoutes = [
   {
     path: '/',
     routes: [
@@ -66,7 +30,7 @@ export const originRoutes = [
   },
 ];
 
-export const expectRoutes = [
+const expectRoutes = [
   {
     path: '/app2',
     routes: [
@@ -118,3 +82,16 @@ export const expectRoutes = [
     _title_default: 'app2',
   },
 ];
+
+test('addSpecifyPrefixedRoute', () => {
+  // 在原route的基础上添加指定路由单测
+  expect(String(addSpecifyPrefixedRoute(originRoutes, 'test'))).toEqual(
+    String(expectRoutes),
+  );
+  expect(String(addSpecifyPrefixedRoute(originRoutes, 'test', 'app2'))).toEqual(
+    String(expectRoutes),
+  );
+  expect(String(addSpecifyPrefixedRoute(originRoutes, true, 'test'))).toEqual(
+    String(expectRoutes),
+  );
+});

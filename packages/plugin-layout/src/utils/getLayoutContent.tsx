@@ -6,6 +6,7 @@ export default (
 ) => `import React, { useState, useEffect } from "react";
 import { ApplyPluginsType, useModel } from "umi";
 import { plugin } from "../core/umiExports";
+import LayoutComponent from '${path}';
 
 export default props => {
   const [runtimeConfig, setRuntimeConfig] = useState(null);
@@ -41,7 +42,7 @@ export default props => {
     return null
   }
 
-  return React.createElement(require("${path}").default, {
+  return React.createElement(LayoutComponent, {
     userConfig,
     ...props
   });

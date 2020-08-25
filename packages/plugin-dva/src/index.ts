@@ -17,9 +17,13 @@ export default (api: IApi) => {
     return join(api.paths.absSrcPath!, getModelDir());
   }
 
-  function hasDvaDependency() {
+  function getDvaDependency() {
     const { dependencies, devDependencies } = api.pkg;
-    return dependencies?.dva || devDependencies?.dva;
+    return (
+      dependencies?.dva ||
+      devDependencies?.dva ||
+      require('../package').dependencies.dva
+    );
   }
 
   // 配置
@@ -68,6 +72,13 @@ export default (api: IApi) => {
     hasModels = getAllModels().length > 0;
   });
 
+  api.addDepInfo(() => {
+    return {
+      name: 'dva',
+      range: getDvaDependency(),
+    };
+  });
+
   // 生成临时文件
   api.onGenerateFiles({
     fn() {
@@ -93,11 +104,19 @@ export default (api: IApi) => {
           ]
             .filter(Boolean)
             .join('\n'),
+          RegisterModelImports: models
+            .map(path => {
+              return `import Model${basename(
+                path,
+                extname(path),
+              )} from '${path}';`;
+            })
+            .join('\r\n'),
           RegisterModels: models
             .map(path => {
               // prettier-ignore
               return `
-app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}').default) });
+app.model({ namespace: '${basename(path, extname(path))}', ...Model${basename(path, extname(path))} });
           `.trim();
             })
             .join('\r\n'),
@@ -131,7 +150,6 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
         ? ['connect', 'useDispatch', 'useStore', 'useSelector']
         : ['connect'];
 
-      logger.debug(`dva lib path: ${dvaLibPath}`);
       logger.debug(`dva version: ${dvaVersion}`);
       logger.debug(`exported methods:`);
       logger.debug(exportMethods);
@@ -139,7 +157,6 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
       api.writeTmpFile({
         path: 'plugin-dva/exports.ts',
         content: Mustache.render(exportsTpl, {
-          dvaLibPath,
           exportMethods: exportMethods.join(', '),
         }),
       });

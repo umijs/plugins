@@ -1,18 +1,12 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 ## [0.11.15](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.14...@umijs/plugin-layout@0.11.15) (2020-08-19)
 
-
 ### Bug Fixes
 
-* **layout:** 渲染Breadcrumb 子节点,使用Link标签 ([#331](https://github.com/umijs/plugins/issues/331)) ([3c5e1dc](https://github.com/umijs/plugins/commit/3c5e1dc244920c41a7d5fb6364aee53187d07bb3))
-
-
-
-
+- **layout:** 渲染 Breadcrumb 子节点,使用 Link 标签 ([#331](https://github.com/umijs/plugins/issues/331)) ([3c5e1dc](https://github.com/umijs/plugins/commit/3c5e1dc244920c41a7d5fb6364aee53187d07bb3))
 
 ## [0.11.14](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.13...@umijs/plugin-layout@0.11.14) (2020-08-12)
 

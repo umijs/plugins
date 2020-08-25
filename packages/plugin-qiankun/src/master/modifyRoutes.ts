@@ -1,6 +1,7 @@
 import { IApi, IRoute } from 'umi';
-import { defaultHistoryType, testPathWithPrefix, toArray } from '../common';
+import { testPathWithPrefix, toArray } from '../common';
 import { App } from '../types';
+import { defaultHistoryType } from '../constants';
 
 export default function modifyRoutes(api: IApi) {
   api.modifyRoutes(routes => {
