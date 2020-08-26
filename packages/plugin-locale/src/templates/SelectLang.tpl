@@ -351,7 +351,7 @@ const defaultLangUConfigMap = {
     icon: '🇺🇰',
     title: 'Мова'
   },
-  '	vi-VN': {
+  'vi-VN': {
     lang: '	vi-VN',
     label: 'Tiếng Việt',
     icon: '🇻🇮',
