@@ -92,6 +92,10 @@ export default (api: IApi) => {
         name: '@umijs/route-utils',
         range: pkg.dependencies['@umijs/route-utils'],
       },
+      {
+        name: '@ant-design/icons',
+        range: pkg.peerDependencies['@ant-design/icons'],
+      },
     ];
   });
 
