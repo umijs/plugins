@@ -1,6 +1,6 @@
 {
   "name": "@umijs/preset-react",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "description": "@umijs/preset-react",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -33,7 +33,7 @@
     "@umijs/plugin-antd": "0.8.0",
     "@umijs/plugin-crossorigin": "1.1.1",
     "@umijs/plugin-dva": "0.8.2",
-    "@umijs/plugin-helmet": "1.1.0",
+    "@umijs/plugin-helmet": "1.1.1",
     "@umijs/plugin-initial-state": "2.2.1",
     "@umijs/plugin-layout": "0.12.1",
     "@umijs/plugin-locale": "0.10.1",
