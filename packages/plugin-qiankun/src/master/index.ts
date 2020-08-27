@@ -94,9 +94,9 @@ export default function(api: IApi) {
     });
 
     api.writeTmpFile({
-      path: 'plugin-qiankun/MicroAppWithMemoryHistory.tsx',
+      path: 'plugin-qiankun/MicroAppWithMemoHistory.tsx',
       content: readFileSync(
-        join(__dirname, 'MicroAppWithMemoryHistory.tsx.tpl'),
+        join(__dirname, 'MicroAppWithMemoHistory.tsx.tpl'),
         'utf-8',
       ),
     });
@@ -153,8 +153,8 @@ export default function(api: IApi) {
 
   api.addUmiExports(() => {
     return {
-      specifiers: ['MicroAppWithMemoryHistory'],
-      source: winPath('../plugin-qiankun/MicroAppWithMemoryHistory'),
+      specifiers: ['MicroAppWithMemoHistory'],
+      source: winPath('../plugin-qiankun/MicroAppWithMemoHistory'),
     };
   });
 

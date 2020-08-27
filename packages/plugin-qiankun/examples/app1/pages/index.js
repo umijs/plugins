@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useModel, MicroAppWithMemoryHistory } from 'umi';
+import { useModel, MicroAppWithMemoHistory } from 'umi';
 import { Drawer } from 'antd';
 
 export default function() {
@@ -11,7 +11,7 @@ export default function() {
       <p>testProp1: {testProp1}</p>
       <p>globalState: {JSON.stringify(globalState)}</p>
 
-      <h1>MicroAppWithMemoryHistory</h1>
+      <h1>MicroAppWithMemoHistory</h1>
       <button
         onClick={() => {
           setVisible(true);
@@ -28,7 +28,7 @@ export default function() {
         }}
         width={800}
       >
-        <MicroAppWithMemoryHistory
+        <MicroAppWithMemoHistory
           name="app2"
           url="/user"
           current={2}

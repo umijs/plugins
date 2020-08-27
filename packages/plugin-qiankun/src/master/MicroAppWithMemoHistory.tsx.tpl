@@ -5,7 +5,7 @@ export interface Props extends MicroAppProps {
   history?: never
 }
 
-export function MicroAppWithMemoryHistory(componentProps: Props) {
+export function MicroAppWithMemoHistory(componentProps: Props) {
   const { url, ...rest } = componentProps;
 
   return (
