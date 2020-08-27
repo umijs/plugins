@@ -164,6 +164,11 @@ export default function(api: IApi) {
     });
 
     api.writeTmpFile({
+      path: 'plugin-qiankun/connectMaster.tsx',
+      content: readFileSync(join(__dirname, 'connectMaster.tsx.tpl'), 'utf-8'),
+    });
+
+    api.writeTmpFile({
       path: 'plugin-qiankun/slaveRuntimePlugin.ts',
       content: readFileSync(
         join(__dirname, 'slaveRuntimePlugin.ts.tpl'),
@@ -206,6 +211,10 @@ function useLegacyMode(api: IApi) {
     {
       specifiers: ['useRootExports'],
       source: '../plugin-qiankun/qiankunContext',
+    },
+    {
+      specifiers: ['connectMaster'],
+      source: '../plugin-qiankun/connectMaster',
     },
   ]);
 
