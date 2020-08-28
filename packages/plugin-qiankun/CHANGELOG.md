@@ -1,6 +1,18 @@
 # Change Log
 
-All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [2.10.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.9.1...@umijs/plugin-qiankun@2.10.0) (2020-08-28)
+
+
+### Features
+
+* **plugin-qiankun:** add MicroAppWithMemomyHistory and connectMaster ([#352](https://github.com/umijs/plugins/issues/352)) ([75c51ff](https://github.com/umijs/plugins/commit/75c51ff927114d2fca77a9400eb8e350f4c0c651))
+
+
+
+
 
 ## [2.9.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.9.0...@umijs/plugin-qiankun@2.9.1) (2020-08-25)
 
