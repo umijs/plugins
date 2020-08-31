@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.10.0...@umijs/plugin-qiankun@2.11.0) (2020-08-31)
+
+
+### Features
+
+* **qiankun:** socket-server 支持从 HOST 环境变量中生成 ([#353](https://github.com/umijs/plugins/issues/353)) ([0b1eecb](https://github.com/umijs/plugins/commit/0b1eecbd3ea11088184783525bdf7868893548d4))
+
+
+
+
+
 # [2.10.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.9.1...@umijs/plugin-qiankun@2.10.0) (2020-08-28)
 
 
