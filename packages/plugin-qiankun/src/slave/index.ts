@@ -11,8 +11,6 @@ import {
 } from '../constants';
 import { readFileSync } from 'fs';
 
-const localIpAddress = process.env.USE_REMOTE_IP ? address.ip() : 'localhost';
-
 export function isSlaveEnable(api: IApi) {
   return (
     !!api.userConfig?.qiankun?.slave ||
@@ -83,9 +81,6 @@ export default function(api: IApi) {
     return publicPathStr;
   });
 
-  const port = process.env.PORT;
-  const protocol = process.env.HTTPS ? 'https' : 'http';
-
   api.chainWebpack(config => {
     assert(api.pkg.name, 'You should have name in package.json');
     config.output
@@ -108,10 +103,16 @@ export default function(api: IApi) {
     return $;
   });
 
+  const port = process.env.PORT;
   // source-map 跨域设置
   if (process.env.NODE_ENV === 'development' && port) {
+    const localHostname = process.env.USE_REMOTE_IP
+      ? address.ip()
+      : process.env.HOST || 'localhost';
+
+    const protocol = process.env.HTTPS ? 'https' : 'http';
     // 变更 webpack-dev-server websocket 默认监听地址
-    process.env.SOCKET_SERVER = `${protocol}://${localIpAddress}:${port}/`;
+    process.env.SOCKET_SERVER = `${protocol}://${localHostname}:${port}/`;
     api.chainWebpack((memo, { webpack }) => {
       // 禁用 devtool，启用 SourceMapDevToolPlugin
       memo.devtool(false);
@@ -119,7 +120,7 @@ export default function(api: IApi) {
         {
           // @ts-ignore
           namespace: api.pkg.name,
-          append: `\n//# sourceMappingURL=${protocol}://${localIpAddress}:${port}/[url]`,
+          append: `\n//# sourceMappingURL=${protocol}://${localHostname}:${port}/[url]`,
           filename: '[file].map',
         },
       ]);
