@@ -34,6 +34,7 @@ export default function(api: IApi) {
     qiankun: {
       ...config.qiankun,
       master: {
+        apps: [],
         ...JSON.parse(process.env.INITIAL_QIANKUN_MASTER_OPTIONS || '{}'),
         ...(config.qiankun || {}).master,
       },
