@@ -68,6 +68,11 @@ export function MicroApp(componentProps: Props) {
   const { entry, props: propsFromConfig = {} } = appConfig;
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const microAppRef = useRef<MicroAppType>();
+  const updatingPromise = useRef<Promise<any>>();
+  const [loading, setLoading] = useState(true);
+  const updatingTimestamp = useRef(Date.now());
+
   useEffect(() => {
     microAppRef.current = loadMicroApp(
       {
@@ -90,11 +95,6 @@ export function MicroApp(componentProps: Props) {
 
     return () => unmountMicroApp(microAppRef.current);
   }, []);
-
-  const microAppRef = useRef<MicroAppType>();
-  const updatingPromise = useRef<Promise<any>>();
-  const [loading, setLoading] = useState(true);
-  const updatingTimestamp = useRef(Date.now());
 
   useEffect(() => {
     const microApp = microAppRef.current;
