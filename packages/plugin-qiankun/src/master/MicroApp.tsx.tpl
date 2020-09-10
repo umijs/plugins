@@ -8,7 +8,7 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 // @ts-ignore
 import { useModel } from 'umi';
-import { concat, mergeWith } from 'lodash';
+import { concat, mergeWith, noop } from 'lodash';
 import { BrowserHistoryBuildOptions, HashHistoryBuildOptions, MemoryHistoryBuildOptions, } from 'history-with-query';
 
 const qiankunStateForSlaveModelNamespace = '@@qiankunStateForSlave';
@@ -64,7 +64,7 @@ export function MicroApp(componentProps: Props) {
   }
 
   // 约定使用 src/app.ts/useQiankunStateForSlave 中的数据作为主应用透传给微应用的 props，优先级高于 propsFromConfig
-  const stateForSlave = useModel(qiankunStateForSlaveModelNamespace);
+  const stateForSlave = (useModel || noop)(qiankunStateForSlaveModelNamespace);
   const { entry, props: propsFromConfig = {} } = appConfig;
 
   const containerRef = useRef<HTMLDivElement>(null);
