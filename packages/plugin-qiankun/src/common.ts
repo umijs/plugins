@@ -3,7 +3,7 @@
  * @since 2019-06-20
  */
 
-import pathToRegexp from 'path-to-regexp';
+import { pathToRegexp } from 'path-to-regexp';
 
 export const defaultMountContainerId = 'root-subapp';
 
@@ -26,7 +26,7 @@ function testPathWithStaticPrefix(pathPrefix: string, realPath: string) {
 }
 
 function testPathWithDynamicRoute(dynamicRoute: string, realPath: string) {
-  return !!pathToRegexp(dynamicRoute, { strict: true, end: false }).exec(
+  return !!pathToRegexp(dynamicRoute, [], { strict: true, end: false }).exec(
     realPath,
   );
 }
