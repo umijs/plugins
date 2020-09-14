@@ -72,6 +72,11 @@ const BasicLayout = (props: any) => {
   }, [location.pathname]);
   // layout 是否渲染相关
 
+  // 关闭布局
+  if (currentPathConfig?.layout == false) {
+    return children;
+  }
+
   const layoutRestProps = {
     itemRender: route => <Link to={route.path}>{route.breadcrumbName}</Link>,
     ...userConfig,
