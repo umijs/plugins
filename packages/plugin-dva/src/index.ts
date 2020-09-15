@@ -32,10 +32,11 @@ export default (api: IApi) => {
     config: {
       schema(joi) {
         return joi.object({
-          immer: joi.boolean(),
-          hmr: joi.boolean(),
-          skipModelValidate: joi.boolean(),
+          disableModelsReExport: joi.boolean(),
           extraModels: joi.array().items(joi.string()),
+          hmr: joi.boolean(),
+          immer: joi.boolean(),
+          skipModelValidate: joi.boolean(),
         });
       },
     },
@@ -166,12 +167,14 @@ app.model({ namespace: '${basename(path, extname(path))}', ...Model${lodash.uppe
       api.writeTmpFile({
         path: 'plugin-dva/connect.ts',
         content: Mustache.render(connectTpl, {
-          dvaHeadExport: models
-            .map(path => {
-              // prettier-ignore
-              return `export * from '${winPath(dirname(path) + "/" + basename(path, extname(path)))}';`;
-            })
-            .join('\r\n'),
+          dvaHeadExport: api.config.dva?.disableModelsReExport
+            ? ``
+            : models
+                .map(path => {
+                  // prettier-ignore
+                  return `export * from '${winPath(dirname(path) + "/" + basename(path, extname(path)))}';`;
+                })
+                .join('\r\n'),
           dvaLoadingModels: models
             .map(path => {
               // prettier-ignore
