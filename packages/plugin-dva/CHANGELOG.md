@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.8.2...@umijs/plugin-dva@0.9.0) (2020-09-15)
+
+### Features
+
+- **dva:** support config disableModelsReExport, don't reexport model in connect.ts ([#366](https://github.com/umijs/plugins/issues/366)) ([0f40f1d](https://github.com/umijs/plugins/commit/0f40f1d038e04ebc959a49d62a42b78177f14995))
+
 ## [0.8.2](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.8.1...@umijs/plugin-dva@0.8.2) (2020-08-25)
 
 ### Bug Fixes
