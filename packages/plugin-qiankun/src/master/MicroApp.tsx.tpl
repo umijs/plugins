@@ -25,7 +25,7 @@ type MemoryHistory = {
   type?: 'memory',
 } & MemoryHistoryBuildOptions;
 
-type Props = {
+export type Props = {
   name: string;
   settings?: FrameworkConfiguration;
   base?: string;
