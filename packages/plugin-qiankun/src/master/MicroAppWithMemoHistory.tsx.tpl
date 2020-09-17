@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { MicroApp, Props as MicroAppProps } from './MicroApp';
 
 export interface Props extends MicroAppProps {
@@ -6,7 +6,16 @@ export interface Props extends MicroAppProps {
 }
 
 export function MicroAppWithMemoHistory(componentProps: Props) {
+  const history = useRef();
   const { url, ...rest } = componentProps;
+
+  useEffect(() => {
+    // push history for slave app when url property changed
+    // the initial url will be ignored because the history ref has not been initialized
+    if (history.current && url) {
+      history.current.push(url);
+    }
+  }, [url]);
 
   return (
     <MicroApp
@@ -16,6 +25,7 @@ export function MicroAppWithMemoHistory(componentProps: Props) {
         initialEntries: [url],
         initialIndex: 1,
       }}
+      historyRef={history}
     />
   )
 }
