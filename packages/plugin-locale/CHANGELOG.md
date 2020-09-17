@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.1...@umijs/plugin-locale@0.10.2) (2020-09-17)
+
+### Bug Fixes
+
+- **locale:** import order problem ([#369](https://github.com/umijs/plugins/issues/369)) ([ba7d20c](https://github.com/umijs/plugins/commit/ba7d20c41d6d2176c216fb82a7cba9298646ee08))
+
 ## [0.10.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.0...@umijs/plugin-locale@0.10.1) (2020-08-26)
 
 **Note:** Version bump only for package @umijs/plugin-locale

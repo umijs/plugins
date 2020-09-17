@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.12.0...@umijs/plugin-qiankun@2.12.1) (2020-09-17)
+
+### Bug Fixes
+
+- **qiankun:** type missing in MicroAppWithMemoHistory ([#367](https://github.com/umijs/plugins/issues/367)) ([13d7df8](https://github.com/umijs/plugins/commit/13d7df8eeaa28b38bb458a50ce838acfd28d53c2))
+
 # [2.12.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.11.0...@umijs/plugin-qiankun@2.12.0) (2020-09-15)
 
 ### Bug Fixes
