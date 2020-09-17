@@ -8,7 +8,7 @@ import { event, LANG_CHANGE_EVENT } from './locale';
 // @ts-ignore
 import warning from '{{{ warningPkgPath }}}';
 
-import { plugin } from '../core/umiExports';
+import { plugin } from '../core/plugin';
 
 export {
   createIntl,
