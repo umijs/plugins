@@ -91,9 +91,9 @@ export function genMount(mountElementId: string) {
           props.setLoading(false);
         }
 
-        // 支持将子应用的 history 通过 ref 回传给父应用
-        if (props?.historyRef?.current !== undefined) {
-          props.historyRef.current = history;
+        // 支持将子应用的 history 回传给父应用
+        if (typeof props?.onHistoryInit === 'function') {
+          onHistoryInit(history);
         }
       },
       // 支持通过 props 注入 container 来限定子应用 mountElementId 的查找范围
