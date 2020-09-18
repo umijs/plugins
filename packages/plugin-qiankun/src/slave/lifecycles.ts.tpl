@@ -93,7 +93,7 @@ export function genMount(mountElementId: string) {
 
         // 支持将子应用的 history 回传给父应用
         if (typeof props?.onHistoryInit === 'function') {
-          onHistoryInit(history);
+          props.onHistoryInit(history);
         }
       },
       // 支持通过 props 注入 container 来限定子应用 mountElementId 的查找范围
