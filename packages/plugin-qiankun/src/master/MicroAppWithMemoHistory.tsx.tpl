@@ -8,6 +8,7 @@ export interface Props extends MicroAppProps {
 export function MicroAppWithMemoHistory(componentProps: Props) {
   const { url, ...rest } = componentProps;
   const history = useRef();
+  // url 的变更不会透传给下游，组件内自己会处理掉，所以这里直接用 ref 来存
   const historyOpts = useRef({
     type: 'memory',
     initialEntries: [url],
