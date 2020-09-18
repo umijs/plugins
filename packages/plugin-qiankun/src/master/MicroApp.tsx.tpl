@@ -7,7 +7,7 @@ import {
 } from 'qiankun';
 import React, { useEffect, useRef, useState } from 'react';
 // @ts-ignore
-import { useModel } from 'umi';
+import { useModel, History } from 'umi';
 import { concat, mergeWith, noop } from 'lodash';
 import { BrowserHistoryBuildOptions, HashHistoryBuildOptions, MemoryHistoryBuildOptions, } from 'history-with-query';
 
@@ -32,6 +32,7 @@ export type Props = {
   history?: 'hash' | 'browser' | 'memory' | HashHistory | BrowserHistory | MemoryHistory;
   getMatchedBase?: () => string;
   loader?: (loading: boolean) => React.ReactNode;
+  onHistoryInit?: History => void;
 } & Record<string, any>;
 
 function unmountMicroApp(microApp?: MicroAppType) {
