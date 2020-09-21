@@ -1,5 +1,7 @@
 // @ts-ignore
 import { getMasterOptions } from '@@/plugin-qiankun/masterOptions';
+// @ts-ignore
+import MicroAppLoader from '@@/plugin-qiankun/MicroAppLoader';
 import {
   FrameworkConfiguration,
   loadMicroApp,
@@ -33,6 +35,10 @@ export type Props = {
   getMatchedBase?: () => string;
   loader?: (loading: boolean) => React.ReactNode;
   onHistoryInit?: (history: History) => void;
+  autoSetLoading?: boolean;
+  // 仅开启 loader 时需要
+  wrapperClassName?: string;
+  className?: string;
 } & Record<string, any>;
 
 function unmountMicroApp(microApp?: MicroAppType) {
@@ -54,6 +60,9 @@ export function MicroApp(componentProps: Props) {
     settings: settingsFromProps = {},
     loader,
     lifeCycles,
+    wrapperClassName,
+    className,
+    autoSetLoading,
     ...propsFromParams
   } = componentProps;
 
@@ -132,12 +141,15 @@ export function MicroApp(componentProps: Props) {
     return () => {};
   }, Object.values({ ...stateForSlave, ...propsFromParams }));
 
+  // 未配置自定义 loader 且开启了 autoSetLoading 场景下，使用插件默认的 loader，否则使用自定义 loader
+  const microAppLoader = loader || (autoSetLoading ? (loading) => <MicroAppLoader loading={loading}/> : null);
+
   return (
-    Boolean(loader)
-      ? <div>
-          { loader(loading) }
-          <div ref={containerRef} />
+    Boolean(microAppLoader)
+      ? <div style={{ position: 'relative' }} className={wrapperClassName}>
+          { microAppLoader(loading) }
+          <div ref={containerRef} className={className}/>
         </div>
-      : <div ref={containerRef} />
+      : <div ref={containerRef} className={className}/>
   );
 }

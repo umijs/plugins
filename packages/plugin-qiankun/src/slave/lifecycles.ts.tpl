@@ -82,10 +82,10 @@ export function genMount(mountElementId: string) {
     clientRenderOpts = {
       // 默认修改 loading
       // 如果需要手动控制 loading
-      // 通过配置 app.ts，slave: { autoSetLanding: false }
+      // 通过配置 app.ts，slave: { autoSetLanding: false }，或者主应用通过 props.autoSetLoading 配置
       callback: () => {
         if (
-          slaveOptions?.autoSetLanding !== false &&
+          (slaveOptions?.autoSetLanding !== false || props?.autoSetLoading !== false)  &&
           typeof props?.setLoading === 'function'
         ) {
           props.setLoading(false);

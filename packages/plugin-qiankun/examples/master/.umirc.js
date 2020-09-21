@@ -24,7 +24,9 @@ export default {
         {
           path: '/app1',
           microApp: 'app1',
-          settings: { singular: false },
+          microAppProps: {
+            autoSetLoading: true,
+          },
         },
         {
           path: '/app2',
