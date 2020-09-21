@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.13.1...@umijs/plugin-qiankun@2.14.0) (2020-09-21)
+
+
+### Bug Fixes
+
+* **qiankun:** 修复配置序列化异常的问题 ([#386](https://github.com/umijs/plugins/issues/386)) ([6903652](https://github.com/umijs/plugins/commit/690365292c9614f9302dabfa3348a734676978a2))
+* **qiankun:** 默认开启 loading 动画 ([#385](https://github.com/umijs/plugins/issues/385)) ([857347e](https://github.com/umijs/plugins/commit/857347ee77f3d7d3a5d2d778c4aabbc6127a5eae))
+
+
+### Features
+
+* **qiankun:** 支持通过配置 autoSetLoading 自动开启 loading 动画 ([#384](https://github.com/umijs/plugins/issues/384)) ([5ce53a1](https://github.com/umijs/plugins/commit/5ce53a17b07f7e9105e3f39740b13a7a831e53ae))
+
+
+
+
+
 ## [2.13.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.13.0...@umijs/plugin-qiankun@2.13.1) (2020-09-21)
 
 
