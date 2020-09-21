@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 // @ts-ignore
-import { plugin, ApplyPluginsType, setCreateHistoryOptions } from 'umi';
+import { plugin, ApplyPluginsType, setCreateHistoryOptions, history } from 'umi';
 import { setModelState } from './qiankunModel';
 // @ts-ignore
 import { getSlaveOptions } from './slaveOptions';
@@ -89,6 +89,11 @@ export function genMount(mountElementId: string) {
           typeof props?.setLoading === 'function'
         ) {
           props.setLoading(false);
+        }
+
+        // 支持将子应用的 history 回传给父应用
+        if (typeof props?.onHistoryInit === 'function') {
+          props.onHistoryInit(history);
         }
       },
       // 支持通过 props 注入 container 来限定子应用 mountElementId 的查找范围
