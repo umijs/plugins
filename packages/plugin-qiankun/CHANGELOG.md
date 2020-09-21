@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.12.1...@umijs/plugin-qiankun@2.13.0) (2020-09-21)
+
+### Features
+
+- **qiankun:** support to access history ref for slave ([#370](https://github.com/umijs/plugins/issues/370)) ([fe8979a](https://github.com/umijs/plugins/commit/fe8979aa74cb91cd3e546ed1dd8125c249b872e3))
+
 ## [2.12.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.12.0...@umijs/plugin-qiankun@2.12.1) (2020-09-17)
 
 ### Bug Fixes

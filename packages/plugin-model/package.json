@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-model",
-  "version": "2.5.3",
+  "version": "2.5.4",
   "description": "@umijs/plugin-model",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
