@@ -44,16 +44,19 @@ function modifyRoutesWithAttachMode(
   const patchRoutes = (routes: IRoute[]) => {
     if (routes.length) {
       routes.forEach(route => {
-        const microApp = route[routeBindingAlias];
-        if (microApp) {
+        const microAppName = route[routeBindingAlias];
+        const microAppProps = route[`${routeBindingAlias}Props`] || {};
+        if (microAppName) {
           if (route.routes?.length) {
             throw new Error(
               '[@umijs/plugin-qiankun]: You can not attach micro app to a route who has children!',
             );
           }
 
-          const { settings = {} } = route;
           route.exact = false;
+          const { settings = {}, ...componentProps } = microAppProps;
+          // 兼容以前的 settings 配置
+          const microAppSettings = route.settings || settings || {};
           route.component = `({match}: any) => {
             const MicroApp = require('@@/plugin-qiankun/MicroApp').MicroApp as any;
             const React = require('react');
@@ -64,12 +67,15 @@ function modifyRoutesWithAttachMode(
             return React.createElement(
               MicroApp,
               {
-                name: '${microApp}',
+                name: '${microAppName}',
                 base: runtimeMatchedBase,
                 history: '${masterHistoryType}',
                 settings: ${normalizeJsonStringInUmiRoute(
-                  JSON.stringify(settings),
+                  JSON.stringify(microAppSettings),
                 )},
+                ...${normalizeJsonStringInUmiRoute(
+                  JSON.stringify(componentProps),
+                )}
               },
             );
           }`;

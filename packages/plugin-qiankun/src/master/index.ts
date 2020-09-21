@@ -121,6 +121,14 @@ export default function(api: IApi) {
       path: 'plugin-qiankun/types.ts',
       content: readFileSync(join(__dirname, '../../src/types.ts'), 'utf-8'),
     });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/MicroAppLoader.tsx',
+      // 开启了 antd 插件的时候，使用 antd 的 loader 组件，否则提示用户必须设置一个自定义的 loader 组件
+      content: api.hasPlugins(['@umijs/plugin-antd'])
+        ? readFileSync(join(__dirname, 'AntdLoader.tsx.tpl'), 'utf-8')
+        : `export default function Loader() { throw new Error(\`[@umijs/plugin-qiankun]: You must to set a custom loader while you'r not enable @umijs/plugin-antd plugin!\`) }`,
+    });
   });
 
   api.addUmiExports(() => {
