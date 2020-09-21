@@ -62,7 +62,8 @@ export function MicroApp(componentProps: Props) {
     lifeCycles,
     wrapperClassName,
     className,
-    autoSetLoading,
+    // 默认开启自动 loading 动画
+    autoSetLoading = true,
     ...propsFromParams
   } = componentProps;
 
