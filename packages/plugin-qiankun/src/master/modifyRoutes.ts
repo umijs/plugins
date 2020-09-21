@@ -38,7 +38,7 @@ function modifyRoutesWithAttachMode(
   },
 ) {
   const normalizeJsonStringInUmiRoute = (str: string) =>
-    str.replace(/\"(\w+)\":/g, "'$1':");
+    str.replace(/\"/g, "'");
 
   const { routeBindingAlias = 'microApp', base = '/' } = opts;
   const patchRoutes = (routes: IRoute[]) => {

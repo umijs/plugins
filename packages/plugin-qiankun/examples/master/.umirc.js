@@ -26,6 +26,8 @@ export default {
           microApp: 'app1',
           microAppProps: {
             autoSetLoading: true,
+            className: 'appClassName',
+            wrapperClassName: 'wrapperClass',
           },
         },
         {
