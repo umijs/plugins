@@ -32,7 +32,7 @@ export type Props = {
   history?: 'hash' | 'browser' | 'memory' | HashHistory | BrowserHistory | MemoryHistory;
   getMatchedBase?: () => string;
   loader?: (loading: boolean) => React.ReactNode;
-  onHistoryInit?: History => void;
+  onHistoryInit?: (history: History) => void;
 } & Record<string, any>;
 
 function unmountMicroApp(microApp?: MicroAppType) {
