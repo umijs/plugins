@@ -83,7 +83,7 @@ export function genMount(mountElementId: string) {
       // 默认开启
       // 如果需要手动控制 loading，通过主应用配置 props.autoSetLoading false 可以关闭
       callback: () => {
-        if (props?.autoSetLoading !== false && typeof props?.setLoading === 'function') {
+        if (props?.autoSetLoading && typeof props?.setLoading === 'function') {
           props.setLoading(false);
         }
 
