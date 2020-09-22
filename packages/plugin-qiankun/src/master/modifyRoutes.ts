@@ -58,8 +58,7 @@ function modifyRoutesWithAttachMode(
           // 兼容以前的 settings 配置
           const microAppSettings = route.settings || settings || {};
           route.component = `({match}: any) => {
-            const MicroApp = require('@@/plugin-qiankun/MicroApp').MicroApp as any;
-            const React = require('react');
+            const MicroApp = umiExports.MicroApp as any;
             const { url } = match;
             const umiConfigBase = '${base === '/' ? '' : base}';
             const runtimeMatchedBase = umiConfigBase + (url.endsWith('/') ? url.substr(0, url.length - 1) : url);
