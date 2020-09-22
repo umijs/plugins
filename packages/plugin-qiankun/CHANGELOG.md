@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.14.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.14.0...@umijs/plugin-qiankun@2.14.1) (2020-09-22)
+
+
+### Bug Fixes
+
+* **qiankun:** 自动 loading 默认关 ([#394](https://github.com/umijs/plugins/issues/394)) ([523c96a](https://github.com/umijs/plugins/commit/523c96a77b7f1ecdc26dae771abda194c1fa8172))
+
+
+
+
+
 # [2.14.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.13.1...@umijs/plugin-qiankun@2.14.0) (2020-09-21)
 
 
