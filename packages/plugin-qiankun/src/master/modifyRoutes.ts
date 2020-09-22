@@ -58,9 +58,17 @@ function modifyRoutesWithAttachMode(
           // 兼容以前的 settings 配置
           const microAppSettings = route.settings || settings || {};
           route.component = `({match}: any) => {
-            const MicroApp = umiExports.MicroApp as any;
+            const { MicroApp, getCreateHistoryOptions } = umiExports as any;
             const { url } = match;
-            const umiConfigBase = '${base === '/' ? '' : base}';
+
+            // 默认取静态配置的 base
+            let umiConfigBase = '${base === '/' ? '' : base}';
+            // 存在 getCreateHistoryOptions 说明当前应用开启了 runtimeHistory，此时取运行时的 history 配置的 basename
+            if (typeof getCreateHistoryOptions === 'function') {
+              const { basename = '/' } = getCreateHistoryOptions();
+              umiConfigBase = basename === '/' ? '' : basename;
+            }
+
             const runtimeMatchedBase = umiConfigBase + (url.endsWith('/') ? url.substr(0, url.length - 1) : url);
 
             return React.createElement(

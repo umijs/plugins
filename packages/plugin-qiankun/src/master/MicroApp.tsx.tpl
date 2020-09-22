@@ -62,7 +62,6 @@ export function MicroApp(componentProps: Props) {
     lifeCycles,
     wrapperClassName,
     className,
-    autoSetLoading,
     ...propsFromParams
   } = componentProps;
 
@@ -142,7 +141,7 @@ export function MicroApp(componentProps: Props) {
   }, Object.values({ ...stateForSlave, ...propsFromParams }));
 
   // 未配置自定义 loader 且开启了 autoSetLoading 场景下，使用插件默认的 loader，否则使用自定义 loader
-  const microAppLoader = loader || (autoSetLoading ? (loading) => <MicroAppLoader loading={loading}/> : null);
+  const microAppLoader = loader || (propsFromParams.autoSetLoading ? (loading) => <MicroAppLoader loading={loading}/> : null);
 
   return (
     Boolean(microAppLoader)
