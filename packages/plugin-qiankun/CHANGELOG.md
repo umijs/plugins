@@ -1,6 +1,18 @@
 # Change Log
 
-All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [2.14.3](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.14.2...@umijs/plugin-qiankun@2.14.3) (2020-09-22)
+
+
+### Bug Fixes
+
+* **qiankun:** 微应用支持读取运行时 history basename ([#396](https://github.com/umijs/plugins/issues/396)) ([b07435a](https://github.com/umijs/plugins/commit/b07435ae672a95d235b6509aef2a0d748cc85ee2))
+
+
+
+
 
 ## [2.14.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.14.1...@umijs/plugin-qiankun@2.14.2) (2020-09-22)
 
