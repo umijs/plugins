@@ -1,47 +1,36 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [2.14.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.14.1...@umijs/plugin-qiankun@2.14.2) (2020-09-22)
+
+### Bug Fixes
+
+- **qiankun:** no cjs require, use umiExports.MicroApp ([#395](https://github.com/umijs/plugins/issues/395)) ([c679b30](https://github.com/umijs/plugins/commit/c679b30425bde3e1274efca5b8051861c578a026))
 
 ## [2.14.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.14.0...@umijs/plugin-qiankun@2.14.1) (2020-09-22)
 
-
 ### Bug Fixes
 
-* **qiankun:** 自动 loading 默认关 ([#394](https://github.com/umijs/plugins/issues/394)) ([523c96a](https://github.com/umijs/plugins/commit/523c96a77b7f1ecdc26dae771abda194c1fa8172))
-
-
-
-
+- **qiankun:** 自动 loading 默认关 ([#394](https://github.com/umijs/plugins/issues/394)) ([523c96a](https://github.com/umijs/plugins/commit/523c96a77b7f1ecdc26dae771abda194c1fa8172))
 
 # [2.14.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.13.1...@umijs/plugin-qiankun@2.14.0) (2020-09-21)
 
-
 ### Bug Fixes
 
-* **qiankun:** 修复配置序列化异常的问题 ([#386](https://github.com/umijs/plugins/issues/386)) ([6903652](https://github.com/umijs/plugins/commit/690365292c9614f9302dabfa3348a734676978a2))
-* **qiankun:** 默认开启 loading 动画 ([#385](https://github.com/umijs/plugins/issues/385)) ([857347e](https://github.com/umijs/plugins/commit/857347ee77f3d7d3a5d2d778c4aabbc6127a5eae))
-
+- **qiankun:** 修复配置序列化异常的问题 ([#386](https://github.com/umijs/plugins/issues/386)) ([6903652](https://github.com/umijs/plugins/commit/690365292c9614f9302dabfa3348a734676978a2))
+- **qiankun:** 默认开启 loading 动画 ([#385](https://github.com/umijs/plugins/issues/385)) ([857347e](https://github.com/umijs/plugins/commit/857347ee77f3d7d3a5d2d778c4aabbc6127a5eae))
 
 ### Features
 
-* **qiankun:** 支持通过配置 autoSetLoading 自动开启 loading 动画 ([#384](https://github.com/umijs/plugins/issues/384)) ([5ce53a1](https://github.com/umijs/plugins/commit/5ce53a17b07f7e9105e3f39740b13a7a831e53ae))
-
-
-
-
+- **qiankun:** 支持通过配置 autoSetLoading 自动开启 loading 动画 ([#384](https://github.com/umijs/plugins/issues/384)) ([5ce53a1](https://github.com/umijs/plugins/commit/5ce53a17b07f7e9105e3f39740b13a7a831e53ae))
 
 ## [2.13.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.13.0...@umijs/plugin-qiankun@2.13.1) (2020-09-21)
 
-
 ### Bug Fixes
 
-* **qiankun:** pathToRegexp fix ([#382](https://github.com/umijs/plugins/issues/382)) ([8053e49](https://github.com/umijs/plugins/commit/8053e493a296ea519e35f060f9272f9ea480ab88))
-* fix a warning when build plugin qiankun ([#355](https://github.com/umijs/plugins/issues/355)) ([5d1b01c](https://github.com/umijs/plugins/commit/5d1b01cce21ce09242a725d037441ce1e285b06b))
-
-
-
-
+- **qiankun:** pathToRegexp fix ([#382](https://github.com/umijs/plugins/issues/382)) ([8053e49](https://github.com/umijs/plugins/commit/8053e493a296ea519e35f060f9272f9ea480ab88))
+- fix a warning when build plugin qiankun ([#355](https://github.com/umijs/plugins/issues/355)) ([5d1b01c](https://github.com/umijs/plugins/commit/5d1b01cce21ce09242a725d037441ce1e285b06b))
 
 # [2.13.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.12.1...@umijs/plugin-qiankun@2.13.0) (2020-09-21)
 
