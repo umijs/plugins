@@ -368,12 +368,6 @@ const defaultLangUConfigMap = {
     label: '繁体中文',
     icon: '🇭🇰',
     title: '語言'
-  },
-  'zh-TW': {
-    lang: 'zh-TW',
-    label: '繁体中文',
-    icon: '🇹🇼',
-    title: '語言'
   }
 };
 
