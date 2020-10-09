@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.15.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.14.3...@umijs/plugin-qiankun@2.15.0) (2020-10-09)
+
+
+### Features
+
+* **qiankun:** 兼容配置了 routeBindingAlias 同时又使用了原 microApp 的方式 ([#402](https://github.com/umijs/plugins/issues/402)) ([9b330d0](https://github.com/umijs/plugins/commit/9b330d0a2873a529c3154c7171024339cb5fb995))
+
+
+
+
+
 ## [2.14.3](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.14.2...@umijs/plugin-qiankun@2.14.3) (2020-09-22)
 
 
