@@ -44,8 +44,10 @@ function modifyRoutesWithAttachMode(
   const patchRoutes = (routes: IRoute[]) => {
     if (routes.length) {
       routes.forEach(route => {
-        const microAppName = route[routeBindingAlias];
-        const microAppProps = route[`${routeBindingAlias}Props`] || {};
+        // 当配置了 routeBindingAlias 时，优先从 routeBindingAlias 里取配置，但同时也兼容使用了默认的 microApp 方式
+        const microAppName = route[routeBindingAlias] || route.microApp;
+        const microAppProps =
+          route[`${routeBindingAlias}Props`] || route.microAppProps || {};
         if (microAppName) {
           if (route.routes?.length) {
             throw new Error(
