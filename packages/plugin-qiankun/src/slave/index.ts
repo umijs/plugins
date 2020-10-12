@@ -81,12 +81,16 @@ export default function(api: IApi) {
     return publicPathStr;
   });
 
-  api.chainWebpack(config => {
+  api.chainWebpack((config, { webpack }) => {
     assert(api.pkg.name, 'You should have name in package.json');
-    config.output
-      .libraryTarget('umd')
-      .library(`${api.pkg.name}-[name]`)
-      .jsonpFunction(`webpackJsonp_${api.pkg.name}`);
+
+    config.output.libraryTarget('umd').library(`${api.pkg.name}-[name]`);
+    const usingWebpack5 = webpack.version?.startsWith('5');
+    // webpack5 移除了 jsonpFunction 配置，且不再需要配置 jsonpFunction，see https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-unique-naming
+    if (!usingWebpack5) {
+      config.output.jsonpFunction(`webpackJsonp_${api.pkg.name}`);
+    }
+
     return config;
   });
 
