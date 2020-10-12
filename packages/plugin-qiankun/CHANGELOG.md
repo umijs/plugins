@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.16.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.15.0...@umijs/plugin-qiankun@2.16.0) (2020-10-12)
+
+
+### Features
+
+* **qiankun:** 兼容 webpack5 ([#404](https://github.com/umijs/plugins/issues/404)) ([0f45586](https://github.com/umijs/plugins/commit/0f455861b219b9102e998a8f7b865ce3d7fc4bb8))
+
+
+
+
+
 # [2.15.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.14.3...@umijs/plugin-qiankun@2.15.0) (2020-10-09)
 
 
