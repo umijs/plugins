@@ -63,9 +63,11 @@ export function useModel<T extends keyof Model<T>, U>(
     }
     try {
       dispatcher.callbacks![namespace]!.add(handler);
+      dispatcher.update(namespace);
     } catch (e) {
       dispatcher.callbacks![namespace] = new Set();
       dispatcher.callbacks![namespace]!.add(handler);
+      dispatcher.update(namespace);
     }
     return () => {
       // 保证组件卸载前，还能最后一次触发 handler
