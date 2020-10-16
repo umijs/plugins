@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.3](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.12.2...@umijs/plugin-layout@0.12.3) (2020-10-16)
+
+### Bug Fixes
+
+- **layout:** 🛂 better domes ([#406](https://github.com/umijs/plugins/issues/406)) ([6f49726](https://github.com/umijs/plugins/commit/6f49726f87ef9e2fcbb1d45e5127c111305b90aa))
+
 ## [0.12.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.12.1...@umijs/plugin-layout@0.12.2) (2020-09-15)
 
 ### Bug Fixes
