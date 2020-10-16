@@ -15,7 +15,7 @@ export enum LOCALES_ICON {
 export type ILocale = keyof typeof LOCALES;
 
 /** 处理默认 UI 的国际化函数 */
-export function intl({
+export function formatMessage({
   id,
   value = {},
 }: {

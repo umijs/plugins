@@ -69,8 +69,8 @@ export default function renderRightContent(
             {avatar}
           </Dropdown>
         ) : (
-            avatar
-          )}
+          avatar
+        )}
         {SelectLang && <SelectLang />}
       </div>
     )
