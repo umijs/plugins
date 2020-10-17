@@ -1,4 +1,4 @@
-import { useIntl, getLocale } from 'umi';
+import { getIntl, getLocale } from 'umi';
 import zhCN from '../locale/zh-CN';
 import enUS from '../locale/en-US';
 
@@ -25,10 +25,10 @@ export function formatMessage({
   const localeMessages: { [key: string]: string } =
     getLocale() === 'zh-CN' ? zhCN : enUS;
 
-  if (!useIntl) {
+  if (!getIntl) {
     return localeMessages[id] || id;
   }
-  const intl = useIntl && useIntl();
+  const intl = getIntl();
 
   return intl.formatMessage({ id }, value) || localeMessages[id] || id;
 }
