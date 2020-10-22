@@ -5,7 +5,7 @@ import { plugin } from "../core/umiExports";
 
 export function rootContainer(container) {
   const runtimeAntd = plugin.applyPlugins({
-    key: "antd",
+    key: 'antd',
     type: ApplyPluginsType.modify,
     initialValue: {},
   });
