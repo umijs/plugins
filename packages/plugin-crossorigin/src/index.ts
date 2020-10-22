@@ -1,5 +1,9 @@
 import { IApi } from 'umi';
 
+interface ICrossOriginOpts {
+  include?: RegExp[];
+}
+
 export default (api: IApi) => {
   // disable by default
   if (!api.userConfig.crossorigin) return;
@@ -8,7 +12,12 @@ export default (api: IApi) => {
     key: 'crossorigin',
     config: {
       schema(joi) {
-        return joi.boolean();
+        return joi.alternatives(
+          joi.boolean(),
+          joi.object({
+            include: joi.array(),
+          }),
+        );
       },
     },
   });
@@ -18,13 +27,26 @@ export default (api: IApi) => {
     return webpackConfig;
   });
 
+  const opts: ICrossOriginOpts = api.userConfig.crossorigin || {};
+  const include = opts.include || [];
+
   // last exec
   api.modifyHTML({
     fn: $ => {
       $('script').each((i: number, elem) => {
         const el = $(elem);
+        const scriptSrc = el.attr('src');
+
+        if (!scriptSrc) {
+          return;
+        }
+
         // 在 local 的 script 标签上添加 crossorigin="anonymous"
-        if (el.attr('src') && !/^(https?:)?\/\//.test(el.attr('src')!)) {
+        if (!/^(https?:)?\/\//.test(el.attr('src')!)) {
+          el.attr('crossorigin', 'anonymous');
+        }
+
+        if (include.some(reg => reg.test(scriptSrc))) {
           el.attr('crossorigin', 'anonymous');
         }
       });
