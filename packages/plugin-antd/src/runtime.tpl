@@ -1,14 +1,24 @@
-import React from 'react';
-import { ConfigProvider } from 'antd';
-import { ApplyPluginsType } from 'umi';
-import { plugin } from '../core/umiExports';
+import React from "react";
+import { ConfigProvider, Modal, message } from "antd";
+import { ApplyPluginsType } from "umi";
+import { plugin } from "../core/umiExports";
 
 export function rootContainer(container) {
   const runtimeAntd = plugin.applyPlugins({
-    key: 'antd',
+    key: "antd",
     type: ApplyPluginsType.modify,
     initialValue: {},
   });
 
-  return React.createElement(ConfigProvider, {...{{{ config }}},...runtimeAntd}, container);
+  const finalConfig = {...{{{ config }}},...runtimeAntd}
+
+  if (finalConfig.prefixCls) {
+    Modal.config({
+      rootPrefixCls: finalConfig.prefixCls,
+    });
+    message.config({
+      prefixCls: finalConfig.prefixCls,
+    });
+  }
+  return React.createElement(ConfigProvider, finalConfig, container);
 }
