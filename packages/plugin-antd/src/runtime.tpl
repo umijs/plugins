@@ -1,7 +1,7 @@
-import React from "react";
-import { ConfigProvider, Modal, message } from "antd";
-import { ApplyPluginsType } from "umi";
-import { plugin } from "../core/umiExports";
+import React from 'react';
+import { ConfigProvider, Modal, message } from 'antd';
+import { ApplyPluginsType } from 'umi';
+import { plugin } from '../core/umiExports';
 
 export function rootContainer(container) {
   const runtimeAntd = plugin.applyPlugins({
