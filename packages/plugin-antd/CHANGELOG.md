@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.8.0...@umijs/plugin-antd@0.9.0) (2020-10-22)
+
+### Features
+
+- **antd:** prefixCls support message antd Modal ([#417](https://github.com/umijs/plugins/issues/417)) ([d352267](https://github.com/umijs/plugins/commit/d352267e937a5508fc62a17b942ad5b8e63bb14a))
+
 # [0.8.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.7.0...@umijs/plugin-antd@0.8.0) (2020-08-25)
 
 ### Features
