@@ -1,9 +1,10 @@
 import ReactDOM from 'react-dom';
 // @ts-ignore
 import { plugin, ApplyPluginsType, setCreateHistoryOptions, history } from 'umi';
-import { setModelState } from './qiankunModel';
 // @ts-ignore
-import { getSlaveOptions } from './slaveOptions';
+import { createHistory } from '@@/core/history';
+// @ts-ignore
+import { setModelState } from './qiankunModel';
 
 const noop = () => {};
 
@@ -22,7 +23,7 @@ let render = noop;
 let hasMountedAtLeastOnce = false;
 
 export default () => defer.promise;
-export let clientRenderOpts = {};
+export const clientRenderOptsStack: any[] = [];
 
 function normalizeHistory(
   history?: 'string' | Record<string, any>,
@@ -75,11 +76,8 @@ export function genMount(mountElementId: string) {
     const historyOptions = normalizeHistory(props?.history, props?.base);
     setCreateHistoryOptions(historyOptions);
 
-    const staticSlaveOptions = getSlaveOptions();
-    const slaveOptions = { ...staticSlaveOptions, ...slaveRuntime };
-
     // 更新 clientRender 配置
-    clientRenderOpts = {
+    const clientRenderOpts = {
       // 默认开启
       // 如果需要手动控制 loading，通过主应用配置 props.autoSetLoading false 可以关闭
       callback: () => {
@@ -96,7 +94,11 @@ export function genMount(mountElementId: string) {
       // 避免多个子应用出现在同一主应用时出现 mount 冲突
       rootElement:
         props?.container?.querySelector(`#${mountElementId}`) || mountElementId,
+      // FIXME 子应用嵌入模式下不支持热更
+      history: createHistory(),
     };
+
+    clientRenderOptsStack.push(clientRenderOpts);
 
     // 第一次 mount defer 被 resolve 后umi 会自动触发 render，非第一次 mount 则需手动触发
     if (hasMountedAtLeastOnce) {

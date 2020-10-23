@@ -45,7 +45,7 @@
     "address": "^1.1.2",
     "lodash": "^4.17.15",
     "path-to-regexp": "^1.7.0",
-    "qiankun": "^2.0.7"
+    "qiankun": "^2.2.1"
   },
   "devDependencies": {
     "mockjs": "^1.0.1-beta3",
