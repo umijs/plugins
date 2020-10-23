@@ -15,7 +15,7 @@ export default (api: IApi) => {
         return joi.alternatives(
           joi.boolean(),
           joi.object({
-            include: joi.array(),
+            include: joi.array().items(joi.object().instance(RegExp)),
           }),
         );
       },
@@ -42,7 +42,7 @@ export default (api: IApi) => {
         }
 
         // 在 local 的 script 标签上添加 crossorigin="anonymous"
-        if (!/^(https?:)?\/\//.test(el.attr('src')!)) {
+        if (!/^(https?:)?\/\//.test(scriptSrc!)) {
           el.attr('crossorigin', 'anonymous');
         }
 
