@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.17.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.16.0...@umijs/plugin-qiankun@2.17.0) (2020-10-23)
+
+
+### Features
+
+* **qiankun:** 支持一屏展示多个 umi 应用渲染实例 ([#418](https://github.com/umijs/plugins/issues/418)) ([67a82e0](https://github.com/umijs/plugins/commit/67a82e0717b223445869173a4664292cda4a9f60))
+
+
+
+
+
 # [2.16.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.15.0...@umijs/plugin-qiankun@2.16.0) (2020-10-12)
 
 
