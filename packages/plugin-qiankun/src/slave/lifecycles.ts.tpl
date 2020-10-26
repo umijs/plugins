@@ -65,40 +65,43 @@ export function genBootstrap(oldRender: typeof noop) {
 
 export function genMount(mountElementId: string) {
   return async (props?: any) => {
-    setModelState(props);
+    // props 有值时说明应用是通过 lifecycle 被主应用唤醒的，而不是独立运行时自己 mount
+    if (typeof props !== 'undefined') {
+      setModelState(props);
 
-    const slaveRuntime = getSlaveRuntime();
-    if (slaveRuntime.mount) {
-      await slaveRuntime.mount(props);
+      const slaveRuntime = getSlaveRuntime();
+      if (slaveRuntime.mount) {
+        await slaveRuntime.mount(props);
+      }
+
+      // 动态改变 history
+      const historyOptions = normalizeHistory(props?.history, props?.base);
+      setCreateHistoryOptions(historyOptions);
+
+      // 更新 clientRender 配置
+      const clientRenderOpts = {
+        // 默认开启
+        // 如果需要手动控制 loading，通过主应用配置 props.autoSetLoading false 可以关闭
+        callback: () => {
+          if (props?.autoSetLoading && typeof props?.setLoading === 'function') {
+            props.setLoading(false);
+          }
+
+          // 支持将子应用的 history 回传给父应用
+          if (typeof props?.onHistoryInit === 'function') {
+            props.onHistoryInit(history);
+          }
+        },
+        // 支持通过 props 注入 container 来限定子应用 mountElementId 的查找范围
+        // 避免多个子应用出现在同一主应用时出现 mount 冲突
+        rootElement:
+          props?.container?.querySelector(`#${mountElementId}`) || mountElementId,
+        // FIXME 子应用嵌入模式下不支持热更
+        history: createHistory(),
+      };
+
+      clientRenderOptsStack.push(clientRenderOpts);
     }
-
-    // 动态改变 history
-    const historyOptions = normalizeHistory(props?.history, props?.base);
-    setCreateHistoryOptions(historyOptions);
-
-    // 更新 clientRender 配置
-    const clientRenderOpts = {
-      // 默认开启
-      // 如果需要手动控制 loading，通过主应用配置 props.autoSetLoading false 可以关闭
-      callback: () => {
-        if (props?.autoSetLoading && typeof props?.setLoading === 'function') {
-          props.setLoading(false);
-        }
-
-        // 支持将子应用的 history 回传给父应用
-        if (typeof props?.onHistoryInit === 'function') {
-          props.onHistoryInit(history);
-        }
-      },
-      // 支持通过 props 注入 container 来限定子应用 mountElementId 的查找范围
-      // 避免多个子应用出现在同一主应用时出现 mount 冲突
-      rootElement:
-        props?.container?.querySelector(`#${mountElementId}`) || mountElementId,
-      // FIXME 子应用嵌入模式下不支持热更
-      history: createHistory(),
-    };
-
-    clientRenderOptsStack.push(clientRenderOpts);
 
     // 第一次 mount defer 被 resolve 后umi 会自动触发 render，非第一次 mount 则需手动触发
     if (hasMountedAtLeastOnce) {
