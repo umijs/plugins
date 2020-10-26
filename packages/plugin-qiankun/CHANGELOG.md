@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.17.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.17.0...@umijs/plugin-qiankun@2.17.1) (2020-10-26)
+
+
+### Bug Fixes
+
+* **qiankun:** 修复 slave 子应用独立运行时多创建了一个 history 导致的 业务 history.push 失效的问题 ([#421](https://github.com/umijs/plugins/issues/421)) ([9556420](https://github.com/umijs/plugins/commit/955642038bf3c76d3bf7173e69ff08a53e3ad753))
+
+
+
+
+
 # [2.17.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.16.0...@umijs/plugin-qiankun@2.17.0) (2020-10-23)
 
 
