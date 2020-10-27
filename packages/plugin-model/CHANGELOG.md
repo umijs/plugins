@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.6](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.5...@umijs/plugin-model@2.5.6) (2020-10-27)
+
+### Bug Fixes
+
+- 通过改变 key 卸载时导致的循环问题 ([#422](https://github.com/umijs/plugins/issues/422)) ([54278e3](https://github.com/umijs/plugins/commit/54278e3c96dc33b722eb49c8839db4f6cfb30533))
+
 ## [2.5.5](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.4...@umijs/plugin-model@2.5.5) (2020-10-16)
 
 ### Bug Fixes
