@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-dva",
-  "version": "0.7.4",
+  "version": "0.9.1",
   "description": "@umijs/plugin-dva",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -30,7 +30,7 @@
   "dependencies": {
     "babel-plugin-dva-hmr": "^0.4.2",
     "dva": "^2.6.0-beta.20",
-    "dva-immer": "^0.4.19",
+    "dva-immer": "^0.5.0",
     "dva-loading": "^3.0.20"
   }
 }

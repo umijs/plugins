@@ -1,4 +1,4 @@
-import { useIntl, getLocale } from 'umi';
+import { getIntl, getLocale } from 'umi';
 import zhCN from '../locale/zh-CN';
 import enUS from '../locale/en-US';
 
@@ -15,7 +15,7 @@ export enum LOCALES_ICON {
 export type ILocale = keyof typeof LOCALES;
 
 /** 处理默认 UI 的国际化函数 */
-export function intl({
+export function formatMessage({
   id,
   value = {},
 }: {
@@ -25,10 +25,10 @@ export function intl({
   const localeMessages: { [key: string]: string } =
     getLocale() === 'zh-CN' ? zhCN : enUS;
 
-  if (!useIntl) {
+  if (!getIntl) {
     return localeMessages[id] || id;
   }
-  const intl = useIntl && useIntl();
+  const intl = getIntl();
 
   return intl.formatMessage({ id }, value) || localeMessages[id] || id;
 }

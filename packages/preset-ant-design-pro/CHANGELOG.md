@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/umijs/plugins/compare/@umijs/preset-ant-design-pro@1.2.2...@umijs/preset-ant-design-pro@1.3.0) (2020-10-16)
+
+### Features
+
+- change webpackPlugin config ([#407](https://github.com/umijs/plugins/issues/407)) ([4f3f51c](https://github.com/umijs/plugins/commit/4f3f51c163fc8eaef3e8852c4e0dbbc2c5d58e44))
+
 ## [1.2.2](https://github.com/umijs/plugins/compare/@umijs/preset-ant-design-pro@1.2.1...@umijs/preset-ant-design-pro@1.2.2) (2020-04-20)
 
 **Note:** Version bump only for package @umijs/preset-ant-design-pro

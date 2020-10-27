@@ -69,8 +69,8 @@ const defaultLangUConfigMap = {
     icon: '🇦🇿',
     title: 'Dil'
   },
-  '	bg-BG': {
-    lang: '	bg-BG',
+  'bg-BG': {
+    lang: 'bg-BG',
     label: 'Български език',
     icon: '🇧🇬',
     title: 'език'
@@ -100,7 +100,7 @@ const defaultLangUConfigMap = {
     title: 'Sprache'
   },
   'el-GR': {
-    lang: '	el-GR',
+    lang: 'el-GR',
     label: 'Ελληνικά',
     icon: '🇬🇷',
     title: 'Γλώσσα'
@@ -124,7 +124,7 @@ const defaultLangUConfigMap = {
     title: 'Idioma'
   },
   'et-EE': {
-    lang: '	et-EE',
+    lang: 'et-EE',
     label: 'Eesti',
     icon: '🇪🇪',
     title: 'Keel'
@@ -183,7 +183,7 @@ const defaultLangUConfigMap = {
     icon: '🇭🇺',
     title: 'Nyelv'
   },
-  '	hy-AM': {
+  'hy-AM': {
     lang: 'hu-HU',
     label: 'Հայերեն',
     icon: '🇦🇲',
@@ -202,7 +202,7 @@ const defaultLangUConfigMap = {
     title: 'Linguaggio'
   },
   'is-IS': {
-    lang: '	is-IS',
+    lang: 'is-IS',
     label: 'Íslenska',
     icon: '🇮🇸',
     title: 'Tungumál'
@@ -321,8 +321,8 @@ const defaultLangUConfigMap = {
     icon: '🇸🇱',
     title: 'Jezik'
   },
-  '	sv-SE': {
-    lang: '	sv-SE',
+  'sv-SE': {
+    lang: 'sv-SE',
     label: 'Svenska',
     icon: '🇸🇪',
     title: 'Språk'
@@ -351,10 +351,10 @@ const defaultLangUConfigMap = {
     icon: '🇺🇰',
     title: 'Мова'
   },
-  '	vi-VN': {
-    lang: '	vi-VN',
+  'vi-VN': {
+    lang: 'vi-VN',
     label: 'Tiếng Việt',
-    icon: '🇻🇮',
+    icon: '🇻🇳',
     title: 'Ngôn ngữ'
   },
   'zh-CN': {
@@ -367,12 +367,6 @@ const defaultLangUConfigMap = {
     lang: 'zh-TW',
     label: '繁体中文',
     icon: '🇭🇰',
-    title: '語言'
-  },
-  'zh-TW': {
-    lang: 'zh-TW',
-    label: '繁体中文',
-    icon: '🇹🇼',
     title: '語言'
   }
 };

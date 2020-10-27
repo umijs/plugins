@@ -9,6 +9,17 @@ export default (api: IApi) => {
   const helmetPkgPath = winPath(
     dirname(require.resolve('react-helmet/package')),
   );
+
+  api.addDepInfo(() => {
+    return [
+      {
+        name: 'react-helmet',
+        range: require('../package.json').dependencies['react-helmet'],
+        alias: [helmetPkgPath],
+      },
+    ];
+  });
+
   api.onGenerateFiles(async () => {
     if (api.config.ssr) {
       const runtimeTpl = join(__dirname, 'templates', 'runtime.tpl');
@@ -34,7 +45,7 @@ export default (api: IApi) => {
 
   api.addRuntimePlugin(() =>
     api.config?.ssr
-      ? [winPath(join(api.paths!.absTmpPath, 'plugin-helmet', 'runtime.ts'))]
+      ? [winPath(join(api.paths.absTmpPath!, 'plugin-helmet', 'runtime.ts'))]
       : [],
   );
 

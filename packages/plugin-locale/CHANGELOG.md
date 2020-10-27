@@ -1,6 +1,43 @@
 # Change Log
 
-All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [0.10.4](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.3...@umijs/plugin-locale@0.10.4) (2020-10-12)
+
+**Note:** Version bump only for package @umijs/plugin-locale
+
+
+
+
+
+## [0.10.3](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.2...@umijs/plugin-locale@0.10.3) (2020-10-09)
+
+**Note:** Version bump only for package @umijs/plugin-locale
+
+
+
+
+
+## [0.10.2](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.1...@umijs/plugin-locale@0.10.2) (2020-09-17)
+
+### Bug Fixes
+
+- **locale:** import order problem ([#369](https://github.com/umijs/plugins/issues/369)) ([ba7d20c](https://github.com/umijs/plugins/commit/ba7d20c41d6d2176c216fb82a7cba9298646ee08))
+
+## [0.10.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.0...@umijs/plugin-locale@0.10.1) (2020-08-26)
+
+**Note:** Version bump only for package @umijs/plugin-locale
+
+# [0.10.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.9.1...@umijs/plugin-locale@0.10.0) (2020-08-25)
+
+### Features
+
+- enhancement for mfsu ([#326](https://github.com/umijs/plugins/issues/326)) ([655c0da](https://github.com/umijs/plugins/commit/655c0da475748a0671dd3a5de8ab079dbe1bed5a))
+
+## [0.9.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.9.0...@umijs/plugin-locale@0.9.1) (2020-08-12)
+
+**Note:** Version bump only for package @umijs/plugin-locale
 
 # [0.9.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.8.0...@umijs/plugin-locale@0.9.0) (2020-06-28)
 

@@ -4,6 +4,14 @@ export default {
   outputPath: './dist/app1',
   mountElementId: 'app1',
   qiankun: {
+    master: {
+      apps: [
+        {
+          name: 'app2',
+          entry: 'http://localhost:8002/app2',
+        },
+      ],
+    },
     slave: {},
   },
   plugins: [

@@ -1,5 +1,7 @@
 // @ts-ignore
 import { getMasterOptions } from '@@/plugin-qiankun/masterOptions';
+// @ts-ignore
+import MicroAppLoader from '@@/plugin-qiankun/MicroAppLoader';
 import {
   FrameworkConfiguration,
   loadMicroApp,
@@ -7,8 +9,8 @@ import {
 } from 'qiankun';
 import React, { useEffect, useRef, useState } from 'react';
 // @ts-ignore
-import { useModel } from 'umi';
-import { concat, mergeWith } from 'lodash';
+import { useModel, History } from 'umi';
+import { concat, mergeWith, noop } from 'lodash';
 import { BrowserHistoryBuildOptions, HashHistoryBuildOptions, MemoryHistoryBuildOptions, } from 'history-with-query';
 
 const qiankunStateForSlaveModelNamespace = '@@qiankunStateForSlave';
@@ -25,13 +27,18 @@ type MemoryHistory = {
   type?: 'memory',
 } & MemoryHistoryBuildOptions;
 
-type Props = {
+export type Props = {
   name: string;
   settings?: FrameworkConfiguration;
   base?: string;
   history?: 'hash' | 'browser' | 'memory' | HashHistory | BrowserHistory | MemoryHistory;
   getMatchedBase?: () => string;
   loader?: (loading: boolean) => React.ReactNode;
+  onHistoryInit?: (history: History) => void;
+  autoSetLoading?: boolean;
+  // 仅开启 loader 时需要
+  wrapperClassName?: string;
+  className?: string;
 } & Record<string, any>;
 
 function unmountMicroApp(microApp?: MicroAppType) {
@@ -53,6 +60,8 @@ export function MicroApp(componentProps: Props) {
     settings: settingsFromProps = {},
     loader,
     lifeCycles,
+    wrapperClassName,
+    className,
     ...propsFromParams
   } = componentProps;
 
@@ -64,10 +73,15 @@ export function MicroApp(componentProps: Props) {
   }
 
   // 约定使用 src/app.ts/useQiankunStateForSlave 中的数据作为主应用透传给微应用的 props，优先级高于 propsFromConfig
-  const stateForSlave = useModel(qiankunStateForSlaveModelNamespace);
+  const stateForSlave = (useModel || noop)(qiankunStateForSlaveModelNamespace);
   const { entry, props: propsFromConfig = {} } = appConfig;
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const microAppRef = useRef<MicroAppType>();
+  const updatingPromise = useRef<Promise<any>>();
+  const [loading, setLoading] = useState(true);
+  const updatingTimestamp = useRef(Date.now());
+
   useEffect(() => {
     microAppRef.current = loadMicroApp(
       {
@@ -90,11 +104,6 @@ export function MicroApp(componentProps: Props) {
 
     return () => unmountMicroApp(microAppRef.current);
   }, []);
-
-  const microAppRef = useRef<MicroAppType>();
-  const updatingPromise = useRef<Promise<any>>();
-  const [loading, setLoading] = useState(true);
-  const updatingTimestamp = useRef(Date.now());
 
   useEffect(() => {
     const microApp = microAppRef.current;
@@ -131,12 +140,15 @@ export function MicroApp(componentProps: Props) {
     return () => {};
   }, Object.values({ ...stateForSlave, ...propsFromParams }));
 
+  // 未配置自定义 loader 且开启了 autoSetLoading 场景下，使用插件默认的 loader，否则使用自定义 loader
+  const microAppLoader = loader || (propsFromParams.autoSetLoading ? (loading) => <MicroAppLoader loading={loading}/> : null);
+
   return (
-    Boolean(loader)
-      ? <div>
-          { loader(loading) }
-          <div ref={containerRef} />
+    Boolean(microAppLoader)
+      ? <div style={{ position: 'relative' }} className={wrapperClassName}>
+          { microAppLoader(loading) }
+          <div ref={containerRef} className={className}/>
         </div>
-      : <div ref={containerRef} />
+      : <div ref={containerRef} className={className}/>
   );
 }

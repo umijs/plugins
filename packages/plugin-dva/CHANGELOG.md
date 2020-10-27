@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.1](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.9.0...@umijs/plugin-dva@0.9.1) (2020-09-24)
+
+**Note:** Version bump only for package @umijs/plugin-dva
+
+# [0.9.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.8.2...@umijs/plugin-dva@0.9.0) (2020-09-15)
+
+### Features
+
+- **dva:** support config disableModelsReExport, don't reexport model in connect.ts ([#366](https://github.com/umijs/plugins/issues/366)) ([0f40f1d](https://github.com/umijs/plugins/commit/0f40f1d038e04ebc959a49d62a42b78177f14995))
+
+## [0.8.2](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.8.1...@umijs/plugin-dva@0.8.2) (2020-08-25)
+
+### Bug Fixes
+
+- **dva:** upperCamelCase model's default specifier ([#342](https://github.com/umijs/plugins/issues/342)) ([ef3fc39](https://github.com/umijs/plugins/commit/ef3fc39209abf445b5670cc829099b6aad2d2de1))
+
+## [0.8.1](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.8.0...@umijs/plugin-dva@0.8.1) (2020-08-25)
+
+### Bug Fixes
+
+- dva model register duplicate ([#340](https://github.com/umijs/plugins/issues/340)) ([4845db8](https://github.com/umijs/plugins/commit/4845db80b0521c13396f05f064b4742859fa26f2))
+
+# [0.8.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.7.4...@umijs/plugin-dva@0.8.0) (2020-08-25)
+
+### Features
+
+- enhancement for mfsu ([#326](https://github.com/umijs/plugins/issues/326)) ([655c0da](https://github.com/umijs/plugins/commit/655c0da475748a0671dd3a5de8ab079dbe1bed5a))
+
 ## [0.7.4](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.7.3...@umijs/plugin-dva@0.7.4) (2020-07-01)
 
 ### Bug Fixes

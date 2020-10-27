@@ -21,20 +21,16 @@ const getFileName = (name: string) => {
 
 export const getName = (absPath: string, absSrcPath: string) => {
   const relativePath = path.relative(absSrcPath, absPath);
-  const escape = (str: string) => str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-  const rootModelRegex = new RegExp(
-    `^((src${escape(path.sep)})?(page(s)?${escape(path.sep)})?(model))`,
-  );
-  // model files without namespace
-  if (rootModelRegex.test(relativePath)) {
-    return getFileName(relativePath);
-  }
   // model files with namespace
   const dirList = path.dirname(relativePath).split(path.sep);
   try {
-    return `${dirList
-      .filter(ele => !['src', 'page', 'pages', 'model', 'models'].includes(ele))
-      .join('.')}.${getFileName(relativePath)}`;
+    const validDirs = dirList.filter(
+      ele => !['src', 'page', 'pages', 'model', 'models'].includes(ele),
+    );
+    if (validDirs && validDirs.length) {
+      return `${validDirs.join('.')}.${getFileName(relativePath)}`;
+    }
+    return getFileName(relativePath);
   } catch (e) {
     return getFileName(relativePath);
   }

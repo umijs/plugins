@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.5](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.4...@umijs/plugin-model@2.5.5) (2020-10-16)
+
+### Bug Fixes
+
+- useModel 首次注册 handler 后没有立即同步状态到 dispatcher ([#408](https://github.com/umijs/plugins/issues/408)) ([ebd1225](https://github.com/umijs/plugins/commit/ebd122517827bc55604cf74fd5f0800fe668fc2e))
+
+## [2.5.4](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.3...@umijs/plugin-model@2.5.4) (2020-09-21)
+
+### Bug Fixes
+
+- update state failed when unmount component immediate after update ([#381](https://github.com/umijs/plugins/issues/381)) ([c8078ac](https://github.com/umijs/plugins/commit/c8078ac31ef9df6d501aa3074f116dfe569afb26))
+
+## [2.5.3](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.2...@umijs/plugin-model@2.5.3) (2020-08-12)
+
+**Note:** Version bump only for package @umijs/plugin-model
+
 ## [2.5.2](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.1...@umijs/plugin-model@2.5.2) (2020-08-12)
 
 **Note:** Version bump only for package @umijs/plugin-model

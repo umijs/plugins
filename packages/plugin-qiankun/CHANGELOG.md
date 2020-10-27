@@ -1,6 +1,150 @@
 # Change Log
 
-All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [2.17.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.17.0...@umijs/plugin-qiankun@2.17.1) (2020-10-26)
+
+
+### Bug Fixes
+
+* **qiankun:** 修复 slave 子应用独立运行时多创建了一个 history 导致的 业务 history.push 失效的问题 ([#421](https://github.com/umijs/plugins/issues/421)) ([9556420](https://github.com/umijs/plugins/commit/955642038bf3c76d3bf7173e69ff08a53e3ad753))
+
+
+
+
+
+# [2.17.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.16.0...@umijs/plugin-qiankun@2.17.0) (2020-10-23)
+
+
+### Features
+
+* **qiankun:** 支持一屏展示多个 umi 应用渲染实例 ([#418](https://github.com/umijs/plugins/issues/418)) ([67a82e0](https://github.com/umijs/plugins/commit/67a82e0717b223445869173a4664292cda4a9f60))
+
+
+
+
+
+# [2.16.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.15.0...@umijs/plugin-qiankun@2.16.0) (2020-10-12)
+
+
+### Features
+
+* **qiankun:** 兼容 webpack5 ([#404](https://github.com/umijs/plugins/issues/404)) ([0f45586](https://github.com/umijs/plugins/commit/0f455861b219b9102e998a8f7b865ce3d7fc4bb8))
+
+
+
+
+
+# [2.15.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.14.3...@umijs/plugin-qiankun@2.15.0) (2020-10-09)
+
+
+### Features
+
+* **qiankun:** 兼容配置了 routeBindingAlias 同时又使用了原 microApp 的方式 ([#402](https://github.com/umijs/plugins/issues/402)) ([9b330d0](https://github.com/umijs/plugins/commit/9b330d0a2873a529c3154c7171024339cb5fb995))
+
+
+
+
+
+## [2.14.3](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.14.2...@umijs/plugin-qiankun@2.14.3) (2020-09-22)
+
+
+### Bug Fixes
+
+* **qiankun:** 微应用支持读取运行时 history basename ([#396](https://github.com/umijs/plugins/issues/396)) ([b07435a](https://github.com/umijs/plugins/commit/b07435ae672a95d235b6509aef2a0d748cc85ee2))
+
+
+
+
+
+## [2.14.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.14.1...@umijs/plugin-qiankun@2.14.2) (2020-09-22)
+
+### Bug Fixes
+
+- **qiankun:** no cjs require, use umiExports.MicroApp ([#395](https://github.com/umijs/plugins/issues/395)) ([c679b30](https://github.com/umijs/plugins/commit/c679b30425bde3e1274efca5b8051861c578a026))
+
+## [2.14.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.14.0...@umijs/plugin-qiankun@2.14.1) (2020-09-22)
+
+### Bug Fixes
+
+- **qiankun:** 自动 loading 默认关 ([#394](https://github.com/umijs/plugins/issues/394)) ([523c96a](https://github.com/umijs/plugins/commit/523c96a77b7f1ecdc26dae771abda194c1fa8172))
+
+# [2.14.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.13.1...@umijs/plugin-qiankun@2.14.0) (2020-09-21)
+
+### Bug Fixes
+
+- **qiankun:** 修复配置序列化异常的问题 ([#386](https://github.com/umijs/plugins/issues/386)) ([6903652](https://github.com/umijs/plugins/commit/690365292c9614f9302dabfa3348a734676978a2))
+- **qiankun:** 默认开启 loading 动画 ([#385](https://github.com/umijs/plugins/issues/385)) ([857347e](https://github.com/umijs/plugins/commit/857347ee77f3d7d3a5d2d778c4aabbc6127a5eae))
+
+### Features
+
+- **qiankun:** 支持通过配置 autoSetLoading 自动开启 loading 动画 ([#384](https://github.com/umijs/plugins/issues/384)) ([5ce53a1](https://github.com/umijs/plugins/commit/5ce53a17b07f7e9105e3f39740b13a7a831e53ae))
+
+## [2.13.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.13.0...@umijs/plugin-qiankun@2.13.1) (2020-09-21)
+
+### Bug Fixes
+
+- **qiankun:** pathToRegexp fix ([#382](https://github.com/umijs/plugins/issues/382)) ([8053e49](https://github.com/umijs/plugins/commit/8053e493a296ea519e35f060f9272f9ea480ab88))
+- fix a warning when build plugin qiankun ([#355](https://github.com/umijs/plugins/issues/355)) ([5d1b01c](https://github.com/umijs/plugins/commit/5d1b01cce21ce09242a725d037441ce1e285b06b))
+
+# [2.13.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.12.1...@umijs/plugin-qiankun@2.13.0) (2020-09-21)
+
+### Features
+
+- **qiankun:** support to access history ref for slave ([#370](https://github.com/umijs/plugins/issues/370)) ([fe8979a](https://github.com/umijs/plugins/commit/fe8979aa74cb91cd3e546ed1dd8125c249b872e3))
+
+## [2.12.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.12.0...@umijs/plugin-qiankun@2.12.1) (2020-09-17)
+
+### Bug Fixes
+
+- **qiankun:** type missing in MicroAppWithMemoHistory ([#367](https://github.com/umijs/plugins/issues/367)) ([13d7df8](https://github.com/umijs/plugins/commit/13d7df8eeaa28b38bb458a50ce838acfd28d53c2))
+
+# [2.12.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.11.0...@umijs/plugin-qiankun@2.12.0) (2020-09-15)
+
+### Bug Fixes
+
+- **qiankun:** 支持未开启 useModel 的场景 ([#360](https://github.com/umijs/plugins/issues/360)) ([1020281](https://github.com/umijs/plugins/commit/10202810ab8c1cda42a49b632e8fa1e23ce51a1b))
+
+### Features
+
+- **qiankun:** 支持运行时同时配置 master 和 slave ([#359](https://github.com/umijs/plugins/issues/359)) ([8bd928b](https://github.com/umijs/plugins/commit/8bd928bf866802918129d6b02ef8216f7a7377de))
+
+# [2.11.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.10.0...@umijs/plugin-qiankun@2.11.0) (2020-08-31)
+
+### Features
+
+- **qiankun:** socket-server 支持从 HOST 环境变量中生成 ([#353](https://github.com/umijs/plugins/issues/353)) ([0b1eecb](https://github.com/umijs/plugins/commit/0b1eecbd3ea11088184783525bdf7868893548d4))
+
+# [2.10.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.9.1...@umijs/plugin-qiankun@2.10.0) (2020-08-28)
+
+### Features
+
+- **plugin-qiankun:** add MicroAppWithMemomyHistory and connectMaster ([#352](https://github.com/umijs/plugins/issues/352)) ([75c51ff](https://github.com/umijs/plugins/commit/75c51ff927114d2fca77a9400eb8e350f4c0c651))
+
+## [2.9.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.9.0...@umijs/plugin-qiankun@2.9.1) (2020-08-25)
+
+### Bug Fixes
+
+- **qiankun:** npm package file lost ([#341](https://github.com/umijs/plugins/issues/341)) ([8a06f02](https://github.com/umijs/plugins/commit/8a06f0257b55cfe1010748348fedf673c8a63c6a))
+
+# [2.9.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.8.1...@umijs/plugin-qiankun@2.9.0) (2020-08-25)
+
+### Features
+
+- enhancement for mfsu ([#326](https://github.com/umijs/plugins/issues/326)) ([655c0da](https://github.com/umijs/plugins/commit/655c0da475748a0671dd3a5de8ab079dbe1bed5a))
+
+## [2.8.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.8.0...@umijs/plugin-qiankun@2.8.1) (2020-08-20)
+
+### Bug Fixes
+
+- **qiankun:** 完善类型 ([#335](https://github.com/umijs/plugins/issues/335)) ([6671e12](https://github.com/umijs/plugins/commit/6671e12f70710baab87cbbcd5be040cf89c6a9cc))
+
+# [2.8.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.7.0...@umijs/plugin-qiankun@2.8.0) (2020-08-19)
+
+### Features
+
+- **qiankun:** expose plugin enable api ([#333](https://github.com/umijs/plugins/issues/333)) ([164ae2f](https://github.com/umijs/plugins/commit/164ae2f377877ae7321b1579b8b09b3ae5f4f80e))
 
 # [2.7.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.6.1...@umijs/plugin-qiankun@2.7.0) (2020-08-12)
 

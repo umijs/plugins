@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "esnext",
     "moduleResolution": "node",
+    "declaration": true,
     "jsx": "react",
     "rootDir": "./src",
     "downlevelIteration": true,
@@ -19,6 +20,6 @@
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "typeRoots": ["typings"]
+    "typeRoots": ["./typings"]
   }
 }

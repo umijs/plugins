@@ -4,6 +4,7 @@ import dva from 'dva';
 // @ts-ignore
 import createLoading from '{{{ dvaLoadingPkgPath }}}';
 import { plugin, history } from '../core/umiExports';
+{{{ RegisterModelImports }}}
 
 let app:any = null;
 

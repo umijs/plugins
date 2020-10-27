@@ -3,27 +3,29 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 // eslint-disable-next-line import/no-unresolved
 import { IApi, utils } from 'umi';
+import modifyRoutes from './modifyRoutes';
+import { hasExportWithName } from './utils';
 import {
   defaultHistoryType,
   defaultMasterRootId,
   qiankunStateForSlaveModelNamespace,
-} from '../common';
-import modifyRoutes from './modifyRoutes';
-import { hasExportWithName } from './utils';
+} from '../constants';
 
 const { getFile, winPath } = utils;
 
+export function isMasterEnable(api: IApi) {
+  return (
+    !!api.userConfig?.qiankun?.master ||
+    !!process.env.INITIAL_QIANKUN_MASTER_OPTIONS
+  );
+}
+
 export default function(api: IApi) {
   api.describe({
-    enableBy() {
-      return (
-        !!api.userConfig?.qiankun?.master ||
-        !!process.env.INITIAL_QIANKUN_MASTER_OPTIONS
-      );
-    },
+    enableBy: () => isMasterEnable(api),
   });
 
-  api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
+  api.addRuntimePlugin(() => '@@/plugin-qiankun/masterRuntimePlugin');
 
   api.modifyDefaultConfig(config => ({
     ...config,
@@ -33,7 +35,7 @@ export default function(api: IApi) {
       ...config.qiankun,
       master: {
         ...JSON.parse(process.env.INITIAL_QIANKUN_MASTER_OPTIONS || '{}'),
-        ...config?.qiankun?.master,
+        ...(config.qiankun || {}).master,
       },
     },
   }));
@@ -69,11 +71,9 @@ export default function(api: IApi) {
 
   api.onGenerateFiles(() => {
     const {
-      config: {
-        history,
-        qiankun: { master: options },
-      },
+      config: { history },
     } = api;
+    const { master: options } = api.config?.qiankun || {};
     const masterHistoryType = (history && history?.type) || defaultHistoryType;
 
     api.writeTmpFile({
@@ -92,6 +92,43 @@ export default function(api: IApi) {
       path: 'plugin-qiankun/MicroApp.tsx',
       content: readFileSync(join(__dirname, 'MicroApp.tsx.tpl'), 'utf-8'),
     });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/MicroAppWithMemoHistory.tsx',
+      content: readFileSync(
+        join(__dirname, 'MicroAppWithMemoHistory.tsx.tpl'),
+        'utf-8',
+      ),
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/masterRuntimePlugin.ts',
+      content: readFileSync(
+        join(__dirname, 'masterRuntimePlugin.ts.tpl'),
+        'utf-8',
+      ),
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/common.ts',
+      content: readFileSync(join(__dirname, '../../src/common.ts'), 'utf-8'),
+    });
+    api.writeTmpFile({
+      path: 'plugin-qiankun/constants.ts',
+      content: readFileSync(join(__dirname, '../../src/constants.ts'), 'utf-8'),
+    });
+    api.writeTmpFile({
+      path: 'plugin-qiankun/types.ts',
+      content: readFileSync(join(__dirname, '../../src/types.ts'), 'utf-8'),
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/MicroAppLoader.tsx',
+      // 开启了 antd 插件的时候，使用 antd 的 loader 组件，否则提示用户必须设置一个自定义的 loader 组件
+      content: api.hasPlugins(['@umijs/plugin-antd'])
+        ? readFileSync(join(__dirname, 'AntdLoader.tsx.tpl'), 'utf-8')
+        : `export default function Loader() { console.warn(\`[@umijs/plugin-qiankun]: Seems like you'r not using @umijs/plugin-antd, you need to provide a customer loader or set autoSetLoading false to shut down this warning!\`); return null; }`,
+    });
   });
 
   api.addUmiExports(() => {
@@ -103,7 +140,7 @@ export default function(api: IApi) {
       },
     ];
 
-    const { exportComponentAlias } = api.config.qiankun.master!;
+    const { exportComponentAlias } = (api.config?.qiankun || {}).master!;
     // 存在别名导出时再导出一份别名
     if (exportComponentAlias && exportComponentAlias !== pinnedExport) {
       exports.push({
@@ -119,6 +156,13 @@ export default function(api: IApi) {
     return {
       specifiers: ['getMasterOptions'],
       source: winPath('../plugin-qiankun/masterOptions.js'),
+    };
+  });
+
+  api.addUmiExports(() => {
+    return {
+      specifiers: ['MicroAppWithMemoHistory'],
+      source: winPath('../plugin-qiankun/MicroAppWithMemoHistory'),
     };
   });
 
@@ -163,6 +207,13 @@ function useCompatibleMode(api: IApi) {
       export const qiankunStart = deferred.resolve;
     `.trim(),
     });
+  });
+
+  api.addDepInfo(() => {
+    return {
+      name: 'qiankun',
+      range: require('../../package.json').dependencies.qiankun,
+    };
   });
 
   // TODO 兼容以前版本的 defer 配置，后续需要移除

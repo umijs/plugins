@@ -34,6 +34,22 @@ export default (api: IApi) => {
     };
   });
 
+  api.addDepInfo(() => {
+    function getAntdDependency() {
+      const { dependencies, devDependencies } = api.pkg;
+      return (
+        dependencies?.antd ||
+        devDependencies?.antd ||
+        require('../package').dependencies.antd
+      );
+    }
+
+    return {
+      name: 'antd',
+      range: getAntdDependency(),
+    };
+  });
+
   const opts: IAntdOpts = api.userConfig.antd || {};
 
   if (opts?.dark || opts?.compact) {

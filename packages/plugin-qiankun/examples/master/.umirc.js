@@ -24,7 +24,11 @@ export default {
         {
           path: '/app1',
           microApp: 'app1',
-          settings: { singular: false },
+          microAppProps: {
+            autoSetLoading: true,
+            className: 'appClassName',
+            wrapperClassName: 'wrapperClass',
+          },
         },
         {
           path: '/app2',

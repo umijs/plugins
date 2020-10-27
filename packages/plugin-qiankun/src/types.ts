@@ -3,7 +3,7 @@
  * @since 2019-06-20
  */
 
-import { IConfig } from '@umijs/types';
+import { BaseIConfig } from '@umijs/types';
 import { FrameworkConfiguration, FrameworkLifeCycles } from 'qiankun';
 
 export type HistoryType = 'browser' | 'hash';
@@ -13,7 +13,7 @@ export type App = {
   base?: string | string[];
   history?: HistoryType;
   props?: any;
-} & Pick<IConfig, 'mountElementId'>;
+} & Pick<BaseIConfig, 'mountElementId'>;
 
 export type MasterOptions = {
   apps: App[];
@@ -32,7 +32,7 @@ export type SlaveOptions = {
 };
 
 declare module '@umijs/types' {
-  interface IConfig {
+  interface BaseIConfig {
     qiankun: {
       master?: MasterOptions;
       slave?: SlaveOptions;

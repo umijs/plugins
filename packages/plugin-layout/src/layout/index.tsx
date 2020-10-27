@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 // @ts-ignore
-import { Link, useModel, history, useIntl, InitialState } from 'umi';
-import ProLayout from '@ant-design/pro-layout';
+import { Link, useModel, history } from 'umi';
+import ProLayout, { BasicLayoutProps } from '@ant-design/pro-layout';
 import './style.less';
 import ErrorBoundary from '../component/ErrorBoundary';
 import renderRightContent from './renderRightContent';
 import { WithExceptionOpChildren } from '../component/Exception';
 import { getMatchMenu, MenuDataItem, transformRoute } from '@umijs/route-utils';
 // @ts-ignore
-import logo from '../assets/logo.svg';
+import logo from '../component/logo';
+import { formatMessage } from '../utils/intl';
 
 const getLayoutRender = (currentPathConfig: {
   layout:
@@ -52,11 +53,10 @@ const BasicLayout = (props: any) => {
     initialState: undefined,
     loading: false,
     setInitialState: null,
-  }; // plugin-initial-state 未开启
-  const { initialState, loading, setInitialState } = initialInfo;
-  // 国际化插件并非默认启动
-  const intl = useIntl && useIntl();
+  };
 
+  // plugin-initial-state 未开启
+  const { initialState, loading, setInitialState } = initialInfo;
   const [currentPathConfig, setCurrentPathConfig] = useState<MenuDataItem>({});
 
   useEffect(() => {
@@ -70,9 +70,18 @@ const BasicLayout = (props: any) => {
     const currentPathConfig = getMatchMenu(location.pathname, menuData).pop();
     setCurrentPathConfig(currentPathConfig || {});
   }, [location.pathname]);
-  // layout 是否渲染相关
 
-  const layoutRestProps = {
+  // layout 是否渲染相关
+  const layoutRestProps: BasicLayoutProps & {
+    rightContentRender?:
+      | false
+      | ((
+          props: BasicLayoutProps,
+          dom: React.ReactNode,
+          config: any,
+        ) => React.ReactNode);
+  } = {
+    itemRender: route => <Link to={route.path}>{route.breadcrumbName}</Link>,
     ...userConfig,
     ...restProps,
     ...getLayoutRender(currentPathConfig as any),
@@ -98,7 +107,7 @@ const BasicLayout = (props: any) => {
           ? menuData => userConfig.patchMenus(menuData, initialInfo)
           : undefined
       }
-      formatMessage={intl && intl.formatMessage}
+      formatMessage={formatMessage}
       logo={logo}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (menuItemProps.isUrl || menuItemProps.children) {

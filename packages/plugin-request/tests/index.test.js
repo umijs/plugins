@@ -25,6 +25,7 @@ describe('plugin-request', () => {
         },
       },
       addUmiExports() {},
+      addDepInfo() {},
       writeTmpFile,
     };
   };

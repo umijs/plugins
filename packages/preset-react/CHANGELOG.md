@@ -1,6 +1,85 @@
 # Change Log
 
-All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [1.6.15](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.6.14...@umijs/preset-react@1.6.15) (2020-10-26)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+
+
+
+
+## [1.6.14](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.6.13...@umijs/preset-react@1.6.14) (2020-10-22)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.6.13](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.6.12...@umijs/preset-react@1.6.13) (2020-10-18)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.6.12](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.6.11...@umijs/preset-react@1.6.12) (2020-10-16)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.6.11](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.6.10...@umijs/preset-react@1.6.11) (2020-10-16)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.6.10](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.6.9...@umijs/preset-react@1.6.10) (2020-10-12)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.6.9](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.6.8...@umijs/preset-react@1.6.9) (2020-10-09)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.6.8](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.6.7...@umijs/preset-react@1.6.8) (2020-09-24)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.6.7](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.6.6...@umijs/preset-react@1.6.7) (2020-09-21)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.6.6](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.6.5...@umijs/preset-react@1.6.6) (2020-09-17)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.6.5](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.6.4...@umijs/preset-react@1.6.5) (2020-09-15)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.6.4](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.6.3...@umijs/preset-react@1.6.4) (2020-08-27)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.6.3](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.6.2...@umijs/preset-react@1.6.3) (2020-08-26)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.6.2](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.6.1...@umijs/preset-react@1.6.2) (2020-08-25)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.6.1](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.6.0...@umijs/preset-react@1.6.1) (2020-08-25)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+# [1.6.0](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.5.22...@umijs/preset-react@1.6.0) (2020-08-25)
+
+### Features
+
+- enhancement for mfsu ([#326](https://github.com/umijs/plugins/issues/326)) ([655c0da](https://github.com/umijs/plugins/commit/655c0da475748a0671dd3a5de8ab079dbe1bed5a))
+
+## [1.5.22](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.5.21...@umijs/preset-react@1.5.22) (2020-08-19)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.5.21](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.5.20...@umijs/preset-react@1.5.21) (2020-08-12)
+
+**Note:** Version bump only for package @umijs/preset-react
 
 ## [1.5.20](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.5.19...@umijs/preset-react@1.5.20) (2020-08-12)
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Result, Typography } from 'antd';
-import { intl } from '../../utils/intl';
+import { formatMessage } from '../../utils/intl';
 import { Exception500 } from '../Exception';
 
 interface Error {
@@ -25,11 +25,12 @@ export interface IProps {
 const DefaultFallbackComponent = ({ componentStack, error }: Error) => (
   <Result
     status="error"
-    title={intl({ id: 'layout.global.error.title' })}
+    title={formatMessage({ id: 'layout.global.error.title' })}
     subTitle={error!.toString()}
   >
     <Typography.Paragraph>
-      {intl({ id: 'layout.global.error.stack' })}：<pre>{componentStack}</pre>
+      {formatMessage({ id: 'layout.global.error.stack' })}：
+      <pre>{componentStack}</pre>
     </Typography.Paragraph>
   </Result>
 );

@@ -17,9 +17,13 @@ export default (api: IApi) => {
     return join(api.paths.absSrcPath!, getModelDir());
   }
 
-  function hasDvaDependency() {
+  function getDvaDependency() {
     const { dependencies, devDependencies } = api.pkg;
-    return dependencies?.dva || devDependencies?.dva;
+    return (
+      dependencies?.dva ||
+      devDependencies?.dva ||
+      require('../package').dependencies.dva
+    );
   }
 
   // 配置
@@ -28,10 +32,11 @@ export default (api: IApi) => {
     config: {
       schema(joi) {
         return joi.object({
-          immer: joi.boolean(),
-          hmr: joi.boolean(),
-          skipModelValidate: joi.boolean(),
+          disableModelsReExport: joi.boolean(),
           extraModels: joi.array().items(joi.string()),
+          hmr: joi.boolean(),
+          immer: joi.boolean(),
+          skipModelValidate: joi.boolean(),
         });
       },
     },
@@ -68,6 +73,13 @@ export default (api: IApi) => {
     hasModels = getAllModels().length > 0;
   });
 
+  api.addDepInfo(() => {
+    return {
+      name: 'dva',
+      range: getDvaDependency(),
+    };
+  });
+
   // 生成临时文件
   api.onGenerateFiles({
     fn() {
@@ -93,11 +105,18 @@ export default (api: IApi) => {
           ]
             .filter(Boolean)
             .join('\n'),
+          RegisterModelImports: models
+            .map((path, index) => {
+              return `import Model${lodash.upperFirst(
+                lodash.camelCase(basename(path, extname(path))),
+              )}${index} from '${path}';`;
+            })
+            .join('\r\n'),
           RegisterModels: models
-            .map(path => {
+            .map((path, index) => {
               // prettier-ignore
               return `
-app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}').default) });
+app.model({ namespace: '${basename(path, extname(path))}', ...Model${lodash.upperFirst(lodash.camelCase(basename(path, extname(path))))}${index} });
           `.trim();
             })
             .join('\r\n'),
@@ -131,7 +150,6 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
         ? ['connect', 'useDispatch', 'useStore', 'useSelector']
         : ['connect'];
 
-      logger.debug(`dva lib path: ${dvaLibPath}`);
       logger.debug(`dva version: ${dvaVersion}`);
       logger.debug(`exported methods:`);
       logger.debug(exportMethods);
@@ -139,7 +157,6 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
       api.writeTmpFile({
         path: 'plugin-dva/exports.ts',
         content: Mustache.render(exportsTpl, {
-          dvaLibPath,
           exportMethods: exportMethods.join(', '),
         }),
       });
@@ -150,12 +167,14 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
       api.writeTmpFile({
         path: 'plugin-dva/connect.ts',
         content: Mustache.render(connectTpl, {
-          dvaHeadExport: models
-            .map(path => {
-              // prettier-ignore
-              return `export * from '${winPath(dirname(path) + "/" + basename(path, extname(path)))}';`;
-            })
-            .join('\r\n'),
+          dvaHeadExport: api.config.dva?.disableModelsReExport
+            ? ``
+            : models
+                .map(path => {
+                  // prettier-ignore
+                  return `export * from '${winPath(dirname(path) + "/" + basename(path, extname(path)))}';`;
+                })
+                .join('\r\n'),
           dvaLoadingModels: models
             .map(path => {
               // prettier-ignore
