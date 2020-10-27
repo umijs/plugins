@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.17.3](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.17.2...@umijs/plugin-qiankun@2.17.3) (2020-10-27)
+
+
+### Bug Fixes
+
+* **qiankun:** 修复 clientRenderOpts 可能为空的问题 ([#424](https://github.com/umijs/plugins/issues/424)) ([28a1493](https://github.com/umijs/plugins/commit/28a1493c73c81f8c00435cf2946806cca5eaffdf))
+
+
+
+
+
 ## [2.17.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.17.1...@umijs/plugin-qiankun@2.17.2) (2020-10-27)
 
 
