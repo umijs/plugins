@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.17.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.17.1...@umijs/plugin-qiankun@2.17.2) (2020-10-27)
+
+
+### Bug Fixes
+
+* **qiankun:** remount 时创建的 history 为旧的 history ([#423](https://github.com/umijs/plugins/issues/423)) ([1801b4d](https://github.com/umijs/plugins/commit/1801b4df4527dc6e331d07f3c0edf08fe460aa3b))
+
+
+
+
+
 ## [2.17.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.17.0...@umijs/plugin-qiankun@2.17.1) (2020-10-26)
 
 
