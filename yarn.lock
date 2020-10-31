@@ -10051,10 +10051,10 @@ import-from@^2.1.0:
   dependencies:
     resolve-from "^3.0.0"
 
-import-html-entry@^1.8.1:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/import-html-entry/-/import-html-entry-1.8.1.tgz#d5ff7946aa6a1cfac3964d888eb0fbdbb9ca92f5"
-  integrity sha512-xbAWugrBVdDyAKEnIV0TyLTA3SZkf1u7SUNaM4+5zy4Ss+wthoFzA0kd2Wj2spHmVO/LxhVT3SZF8PUNPG+EFg==
+import-html-entry@^1.9.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/import-html-entry/-/import-html-entry-1.10.0.tgz#23092ef650fe5041a7802d8562f5681f0699d657"
+  integrity sha512-JNINPazMpBjjO/eYd/P2G7CC11nssuV2WuNKDd/9wGLoqnU3QJjpITlfNIbDvuB31NB88kVa7VHmFkM1JZAOcg==
   dependencies:
     "@babel/runtime" "^7.7.2"
 
@@ -14999,15 +14999,15 @@ q@^1.1.2, q@^1.5.1:
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
-qiankun@^2.0.7:
-  version "2.0.21"
-  resolved "https://registry.yarnpkg.com/qiankun/-/qiankun-2.0.21.tgz#6292195f4fb4c72c9d83a419f0e3609e55c60b26"
-  integrity sha512-TrwbeFB5xgXbibpkZGwFiTzSmq0Tb2H6SqENwLlKwLK5jfedGPPwaCctKUmpA08K4CtaTVLsJNkOHdQJFMw+tA==
+qiankun@^2.2.1:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/qiankun/-/qiankun-2.2.2.tgz#c528aefa3454889a063d755fb0c06b1b0446bdff"
+  integrity sha512-VMz7trkWbaQDnkUKgPDrS3Z83ZCwBHAvFXC/ivkpROR2tqNctPwfUc3K/PYWCy1eNhy9YiPhuPtf0UYBGLKd7g==
   dependencies:
     "@babel/runtime" "^7.10.5"
-    import-html-entry "^1.8.1"
+    import-html-entry "^1.9.0"
     lodash "^4.17.11"
-    single-spa "^5.3.1"
+    single-spa "^5.6.1"
     tslib "^1.10.0"
 
 qs@6.7.0:
@@ -17050,10 +17050,10 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-single-spa@^5.3.1:
-  version "5.5.5"
-  resolved "https://registry.yarnpkg.com/single-spa/-/single-spa-5.5.5.tgz#77a947516874d50b1e1a43aa6c316b550605d4fb"
-  integrity sha512-10YHGwETkAT6k9dkOTClig2h/R6yA5qvLdvk6i7Z4/PK8A2iD/pVvYKIud0aZVA69OzO1lrQOHB4VgT4t8/kXw==
+single-spa@^5.6.1:
+  version "5.8.0"
+  resolved "https://registry.yarnpkg.com/single-spa/-/single-spa-5.8.0.tgz#edfa0ab04e1fafbc4e1a46a110e1a692a6f1af88"
+  integrity sha512-lLjcRuljtaprvN0LRBf8358awAjWU29II1y20yqmuablGYXw0RIpYDWDl+oLMS5ZzTAJk2t7L1NY47LFP5Qw/Q==
 
 sisteransi@^1.0.4:
   version "1.0.5"
