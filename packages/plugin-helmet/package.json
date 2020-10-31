@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-helmet",
-  "version": "1.0.2",
+  "version": "1.1.1",
   "description": "@umijs/plugin-helmet",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -28,7 +28,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@types/react-helmet": "6.0.0",
-    "react-helmet": "6.0.0"
+    "@types/react-helmet": "^6.1.0",
+    "react-helmet": "^6.1.0"
   }
 }

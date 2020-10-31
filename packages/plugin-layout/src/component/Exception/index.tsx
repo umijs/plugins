@@ -3,13 +3,6 @@ import { Result, Button } from 'antd';
 import { history } from 'umi';
 import { IRouteLayoutConfig } from '../../types/interface.d';
 
-interface ExceptionProps {
-  exceptionImg: string | any;
-  title: string | number;
-  description: string;
-  footer?: any;
-}
-
 function backToHome() {
   history.push('/');
 }

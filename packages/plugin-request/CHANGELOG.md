@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.4.2...@umijs/plugin-request@2.5.0) (2020-08-25)
+
+### Features
+
+- enhancement for mfsu ([#326](https://github.com/umijs/plugins/issues/326)) ([655c0da](https://github.com/umijs/plugins/commit/655c0da475748a0671dd3a5de8ab079dbe1bed5a))
+
+## [2.4.2](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.4.1...@umijs/plugin-request@2.4.2) (2020-08-12)
+
+### Bug Fixes
+
+- 优化 plugin-request ts 类型 ([#319](https://github.com/umijs/plugins/issues/319)) ([4d4a930](https://github.com/umijs/plugins/commit/4d4a930375178727e00dc4da167d940c321f2ff5))
+
 ## [2.4.1](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.4.0...@umijs/plugin-request@2.4.1) (2020-07-07)
 
 **Note:** Version bump only for package @umijs/plugin-request

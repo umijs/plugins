@@ -60,7 +60,7 @@ export default function renderRightContent(
 
   return (
     initialState && (
-      <div className="umi-plugin-layout-right">
+      <div className="umi-plugin-layout-right anticon">
         {runtimeLayout.logout ? (
           <Dropdown
             overlay={menu}

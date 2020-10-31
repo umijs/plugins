@@ -2,37 +2,35 @@ import address from 'address';
 import assert from 'assert';
 import { isString, isEqual } from 'lodash';
 import { join } from 'path';
-import { IApi, utils } from 'umi';
+import { IApi } from 'umi';
+import { SlaveOptions } from '../types';
+import { addSpecifyPrefixedRoute } from './addSpecifyPrefixedRoute';
 import {
-  addSpecifyPrefixedRoute,
   defaultSlaveRootId,
   qiankunStateFromMasterModelNamespace,
-} from '../common';
-import { SlaveOptions } from '../types';
+} from '../constants';
+import { readFileSync } from 'fs';
 
-const localIpAddress = process.env.USE_REMOTE_IP ? address.ip() : 'localhost';
+export function isSlaveEnable(api: IApi) {
+  return (
+    !!api.userConfig?.qiankun?.slave ||
+    isEqual(api.userConfig?.qiankun, {}) ||
+    !!process.env.INITIAL_QIANKUN_SLAVE_OPTIONS
+  );
+}
 
 export default function(api: IApi) {
   api.describe({
-    enableBy() {
-      return (
-        !!api.userConfig?.qiankun?.slave ||
-        isEqual(api.userConfig?.qiankun, {}) ||
-        !!process.env.INITIAL_QIANKUN_SLAVE_OPTIONS
-      );
-    },
+    enableBy: () => isSlaveEnable(api),
   });
 
-  const options: SlaveOptions = api.userConfig?.qiankun?.slave!;
-  const { shouldNotModifyRuntimePublicPath = false } = options || {};
-
-  api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
+  api.addRuntimePlugin(() => '@@/plugin-qiankun/slaveRuntimePlugin');
 
   api.register({
     key: 'addExtraModels',
     fn: () => [
       {
-        absPath: utils.winPath(join(__dirname, '../qiankunModel.ts')),
+        absPath: '@@/plugin-qiankun/qiankunModel',
         namespace: qiankunStateFromMasterModelNamespace,
       },
     ],
@@ -40,62 +38,59 @@ export default function(api: IApi) {
 
   // eslint-disable-next-line import/no-dynamic-require, global-require
   api.modifyDefaultConfig(memo => {
-    const { shouldNotModifyDefaultBase }: SlaveOptions = {
+    const initialSlaveOptions: SlaveOptions = {
       ...JSON.parse(process.env.INITIAL_QIANKUN_SLAVE_OPTIONS || '{}'),
-      ...api.config?.qiankun?.slave,
+      ...(memo.qiankun || {}).slave,
     };
 
-    const modifiedConfig = {
+    const modifiedDefaultConfig = {
       ...memo,
       disableGlobalVariables: true,
       mountElementId: defaultSlaveRootId,
       // 默认开启 runtimePublicPath，避免出现 dynamic import 场景子应用资源地址出问题
       runtimePublicPath: true,
       runtimeHistory: {},
+      qiankun: {
+        ...memo.qiankun,
+        slave: initialSlaveOptions,
+      },
     };
 
-    if (!shouldNotModifyDefaultBase) {
-      modifiedConfig.base = `/${api.pkg.name}`;
+    if (!initialSlaveOptions.shouldNotModifyDefaultBase) {
+      modifiedDefaultConfig.base = `/${api.pkg.name}`;
     }
 
-    return modifiedConfig;
+    return modifiedDefaultConfig;
   });
 
-  api.modifyConfig(config => ({
-    ...config,
-    qiankun: {
-      ...config?.qiankun,
-      slave: {
-        ...JSON.parse(process.env.INITIAL_QIANKUN_SLAVE_OPTIONS || '{}'),
-        ...config?.qiankun?.slave,
-      },
-    },
-  }));
+  api.modifyPublicPathStr(publicPathStr => {
+    const { runtimePublicPath } = api.config;
+    const { shouldNotModifyRuntimePublicPath } = (
+      api.config.qiankun || {}
+    ).slave!;
 
-  if (
-    api.userConfig.runtimePublicPath !== false &&
-    !shouldNotModifyRuntimePublicPath
-  ) {
-    api.modifyPublicPathStr(
-      () =>
-        `window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || "${
-          // 开发阶段 publicPath 配置无效，默认为 /
-          process.env.NODE_ENV !== 'development'
-            ? api.config.publicPath || '/'
-            : '/'
-        }"`,
-    );
-  }
+    if (runtimePublicPath === true && !shouldNotModifyRuntimePublicPath) {
+      return `window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || "${
+        // 开发阶段 publicPath 配置无效，默认为 /
+        process.env.NODE_ENV !== 'development'
+          ? api.config.publicPath || '/'
+          : '/'
+      }"`;
+    }
 
-  const port = process.env.PORT;
-  const protocol = process.env.HTTPS ? 'https' : 'http';
+    return publicPathStr;
+  });
 
-  api.chainWebpack(config => {
+  api.chainWebpack((config, { webpack }) => {
     assert(api.pkg.name, 'You should have name in package.json');
-    config.output
-      .libraryTarget('umd')
-      .library(`${api.pkg.name}-[name]`)
-      .jsonpFunction(`webpackJsonp_${api.pkg.name}`);
+
+    config.output.libraryTarget('umd').library(`${api.pkg.name}-[name]`);
+    const usingWebpack5 = webpack.version?.startsWith('5');
+    // webpack5 移除了 jsonpFunction 配置，且不再需要配置 jsonpFunction，see https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-unique-naming
+    if (!usingWebpack5) {
+      config.output.jsonpFunction(`webpackJsonp_${api.pkg.name}`);
+    }
+
     return config;
   });
 
@@ -112,10 +107,16 @@ export default function(api: IApi) {
     return $;
   });
 
+  const port = process.env.PORT;
   // source-map 跨域设置
   if (process.env.NODE_ENV === 'development' && port) {
+    const localHostname = process.env.USE_REMOTE_IP
+      ? address.ip()
+      : process.env.HOST || 'localhost';
+
+    const protocol = process.env.HTTPS ? 'https' : 'http';
     // 变更 webpack-dev-server websocket 默认监听地址
-    process.env.SOCKET_SERVER = `${protocol}://${localIpAddress}:${port}/`;
+    process.env.SOCKET_SERVER = `${protocol}://${localHostname}:${port}/`;
     api.chainWebpack((memo, { webpack }) => {
       // 禁用 devtool，启用 SourceMapDevToolPlugin
       memo.devtool(false);
@@ -123,7 +124,7 @@ export default function(api: IApi) {
         {
           // @ts-ignore
           namespace: api.pkg.name,
-          append: `\n//# sourceMappingURL=${protocol}://${localIpAddress}:${port}/[url]`,
+          append: `\n//# sourceMappingURL=${protocol}://${localHostname}:${port}/[url]`,
           filename: '[file].map',
         },
       ]);
@@ -131,10 +132,9 @@ export default function(api: IApi) {
     });
   }
 
-  const lifecyclePath = require.resolve('./lifecycles');
   api.addEntryImports(() => {
     return {
-      source: lifecyclePath,
+      source: '@@/plugin-qiankun/lifecycles',
       specifier:
         '{ genMount as qiankun_genMount, genBootstrap as qiankun_genBootstrap, genUnmount as qiankun_genUnmount, genUpdate as qiankun_genUpdate }',
     };
@@ -143,7 +143,7 @@ export default function(api: IApi) {
     () =>
       `
     export const bootstrap = qiankun_genBootstrap(clientRender);
-    export const mount = qiankun_genMount();
+    export const mount = qiankun_genMount('${api.config.mountElementId}');
     export const unmount = qiankun_genUnmount('${api.config.mountElementId}');
     export const update = qiankun_genUpdate();
 
@@ -152,6 +152,40 @@ export default function(api: IApi) {
     }
     `,
   );
+
+  api.onGenerateFiles(() => {
+    api.writeTmpFile({
+      path: 'plugin-qiankun/slaveOptions.js',
+      content: `
+      let options = ${JSON.stringify((api.config.qiankun || {}).slave || {})};
+      export const getSlaveOptions = () => options;
+      export const setSlaveOptions = (newOpts) => options = ({ ...options, ...newOpts });
+      `,
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/qiankunModel.ts',
+      content: readFileSync(join(__dirname, 'qiankunModel.ts.tpl'), 'utf-8'),
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/connectMaster.tsx',
+      content: readFileSync(join(__dirname, 'connectMaster.tsx.tpl'), 'utf-8'),
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/slaveRuntimePlugin.ts',
+      content: readFileSync(
+        join(__dirname, 'slaveRuntimePlugin.ts.tpl'),
+        'utf-8',
+      ),
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/lifecycles.ts',
+      content: readFileSync(join(__dirname, 'lifecycles.ts.tpl'), 'utf-8'),
+    });
+  });
 
   useLegacyMode(api);
 }
@@ -182,6 +216,10 @@ function useLegacyMode(api: IApi) {
     {
       specifiers: ['useRootExports'],
       source: '../plugin-qiankun/qiankunContext',
+    },
+    {
+      specifiers: ['connectMaster'],
+      source: '../plugin-qiankun/connectMaster',
     },
   ]);
 

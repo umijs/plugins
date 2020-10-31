@@ -8,9 +8,32 @@ import { event, LANG_CHANGE_EVENT } from './locale';
 // @ts-ignore
 import warning from '{{{ warningPkgPath }}}';
 
-import { plugin } from '../core/umiExports';
+import { plugin } from '../core/plugin';
 
-export * from '{{{ reactIntlPkgPath }}}';
+export {
+  createIntl,
+};
+export {
+  FormattedDate,
+  FormattedDateParts,
+  FormattedDisplayName,
+  FormattedHTMLMessage,
+  FormattedList,
+  FormattedMessage,
+  FormattedNumber,
+  FormattedNumberParts,
+  FormattedPlural,
+  FormattedRelativeTime,
+  FormattedTime,
+  FormattedTimeParts,
+  IntlContext,
+  IntlProvider,
+  RawIntlProvider,
+  createIntlCache,
+  defineMessages,
+  injectIntl,
+  useIntl,
+} from '{{{ reactIntlPkgPath }}}';
 
 let g_intl: IntlShape;
 

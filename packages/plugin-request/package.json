@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-request",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "description": "@umijs/plugin-request",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

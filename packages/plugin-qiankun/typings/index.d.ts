@@ -15,3 +15,8 @@ declare module '@@/plugin-qiankun/masterOptions' {
   export const getMasterOptions: () => any;
   export const setMasterOptions: (options: any) => void;
 }
+
+declare module '@@/plugin-qiankun/MicroAppLoader' {
+  import { ReactNode } from 'react';
+  export default function Loader(props: { loading: boolean }): ReactNode;
+}

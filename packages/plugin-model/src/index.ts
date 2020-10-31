@@ -45,10 +45,7 @@ export default (api: IApi) => {
         initialValue: [],
       });
 
-      const tmpFiles = getTmpFile(files, additionalModels, [
-        getModelsPath(),
-        paths.absPagesPath!,
-      ]);
+      const tmpFiles = getTmpFile(files, additionalModels, paths.absSrcPath!);
 
       // provider.tsx
       api.writeTmpFile({

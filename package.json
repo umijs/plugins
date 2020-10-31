@@ -44,7 +44,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-test-renderer": "^16.9.0",
-    "umi": "^3.2.0",
+    "umi": "^3.2.21",
     "yorkie": "^2.0.0"
   },
   "gitHooks": {

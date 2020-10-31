@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.4](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.12.3...@umijs/plugin-layout@0.12.4) (2020-10-18)
+
+### Bug Fixes
+
+- **layout:** fix layout console some warning ([#410](https://github.com/umijs/plugins/issues/410)) ([d5efbf0](https://github.com/umijs/plugins/commit/d5efbf0856c072ec4c852b22187b7dd2512a4bce))
+
+## [0.12.3](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.12.2...@umijs/plugin-layout@0.12.3) (2020-10-16)
+
+### Bug Fixes
+
+- **layout:** 🛂 better domes ([#406](https://github.com/umijs/plugins/issues/406)) ([6f49726](https://github.com/umijs/plugins/commit/6f49726f87ef9e2fcbb1d45e5127c111305b90aa))
+
+## [0.12.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.12.1...@umijs/plugin-layout@0.12.2) (2020-09-15)
+
+### Bug Fixes
+
+- add anticon className to layout right content for support pro-layout mix mode ([#365](https://github.com/umijs/plugins/issues/365)) ([5d375e5](https://github.com/umijs/plugins/commit/5d375e5c307d1b4cd451b767baad8192612ed5bd))
+
+## [0.12.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.12.0...@umijs/plugin-layout@0.12.1) (2020-08-26)
+
+**Note:** Version bump only for package @umijs/plugin-layout
+
+# [0.12.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.15...@umijs/plugin-layout@0.12.0) (2020-08-25)
+
+### Features
+
+- enhancement for mfsu ([#326](https://github.com/umijs/plugins/issues/326)) ([655c0da](https://github.com/umijs/plugins/commit/655c0da475748a0671dd3a5de8ab079dbe1bed5a))
+
+## [0.11.15](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.14...@umijs/plugin-layout@0.11.15) (2020-08-19)
+
+### Bug Fixes
+
+- **layout:** 渲染 Breadcrumb 子节点,使用 Link 标签 ([#331](https://github.com/umijs/plugins/issues/331)) ([3c5e1dc](https://github.com/umijs/plugins/commit/3c5e1dc244920c41a7d5fb6364aee53187d07bb3))
+
+## [0.11.14](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.13...@umijs/plugin-layout@0.11.14) (2020-08-12)
+
+### Bug Fixes
+
+- **layout:** fix useIntl is null, error page will try error ([#316](https://github.com/umijs/plugins/issues/316)) ([ce7e136](https://github.com/umijs/plugins/commit/ce7e13603cee3e111583ba5a91bafc16c6ad8dae))
+
 ## [0.11.13](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.11.12...@umijs/plugin-layout@0.11.13) (2020-07-20)
 
 ### Bug Fixes
