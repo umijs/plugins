@@ -131,7 +131,7 @@ export default (api: IApi) => {
 
   api.addRuntimePluginKey(() => ['layout']);
 
-  api.onGenerateFiles(() => {
+  api.onGenerateFiles(async () => {
     // apply default options
     const { name } = api.pkg;
     layoutOpts = {
@@ -167,7 +167,12 @@ export default (api: IApi) => {
 
     // 生效临时的 icon 文件
     const { userConfig } = api;
-    const icons = formatter(userConfig.routes);
+    let routes = userConfig.routes;
+    if (!routes) {
+      // Trying to get convention routes when there is no configuring routes
+      routes = await api.getRoutes();
+    }
+    const icons = formatter(routes);
     let iconsString = icons.map(
       iconName =>
         `import ${iconName} from '@ant-design/icons/es/icons/${iconName}'`,
