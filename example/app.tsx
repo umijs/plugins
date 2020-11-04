@@ -9,6 +9,7 @@ export function render(oldRender: Function) {
 export function getInitialState() {
   return {
     name: 'test',
+    utils: true,
   };
 }
 

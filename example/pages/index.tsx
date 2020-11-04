@@ -9,6 +9,7 @@ import {
   setLocale,
   Access,
   useAccess,
+  useModel,
 } from 'umi';
 import { Table } from 'antd';
 import styles from './index.css';
@@ -18,7 +19,10 @@ export default connect(state => {
 })(function(props) {
   const intl = useIntl();
   const access = useAccess();
+  const { setInitialState } = useModel('@@initialState');
   const [list, setList] = useState<string[]>(getAllLocales());
+
+  console.log('access:', access);
 
   useEffect(() => {
     // 动态增加新语言
@@ -72,7 +76,14 @@ export default connect(state => {
       </button>
       <div>
         <Access accessible={access.readArticle}>
-          <button type="button">Read Article</button>
+          <button
+            type="button"
+            onClick={() => {
+              setInitialState({ name: 'test', utils: false });
+            }}
+          >
+            Set utils unaccessible
+          </button>
         </Access>
         <Access
           accessible={access.updateArticle()}

@@ -20,6 +20,7 @@ export default defineConfig({
       name: 'utils 测试',
       path: '/utils',
       component: './utils',
+      access: 'utils',
     },
     {
       name: 'request 测试',

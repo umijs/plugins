@@ -5,5 +5,6 @@ export default function accessFactory(initialState: InitialState) {
   return {
     readArticle: true,
     updateArticle: () => false,
+    utils: initialState.utils,
   };
 }
