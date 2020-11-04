@@ -64,7 +64,7 @@ export function traverseModifyRoutes(routes: Routes, access: any): Routes {
         currentRoute.unaccessible = true;
       }
       const finallyChildRoute = traverseModifyRoutes(childRoutes, access);
-      if (finallyChildRoute) {
+      if (finallyChildRoute && finallyChildRoute?.length > 0) {
         return {
           ...currentRoute,
           routes: finallyChildRoute,
