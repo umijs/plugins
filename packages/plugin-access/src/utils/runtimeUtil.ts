@@ -63,11 +63,13 @@ export function traverseModifyRoutes(routes: Routes, access: any): Routes {
       if (!currentRoute.unaccessible && isAllChildRoutesUnaccessible) {
         currentRoute.unaccessible = true;
       }
-
-      return {
-        ...currentRoute,
-        routes: traverseModifyRoutes(childRoutes, access),
-      };
+      const finallyChildRoute = traverseModifyRoutes(childRoutes, access);
+      if (finallyChildRoute) {
+        return {
+          ...currentRoute,
+          routes: finallyChildRoute,
+        };
+      }
     }
 
     return currentRoute;
