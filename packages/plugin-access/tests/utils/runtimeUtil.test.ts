@@ -70,66 +70,7 @@ describe('TraverseModifyRoutes', () => {
 
   it('should get expected accessible result', () => {
     const result = traverseModifyRoutes(routes, access);
-
-    expect(result).toEqual([
-      {
-        path: '/homepage',
-        access: 'canReadHomepage',
-        unaccessible: false,
-        routes: null,
-      },
-      {
-        path: '/admin',
-        access: 'canReadAdminPage',
-        unaccessible: true,
-        routes: [
-          {
-            path: '/adminList',
-            access: 'canReadAdminList',
-            unaccessible: false,
-          },
-          {
-            path: '/adminDetail',
-            access: 'canReadAdminDetail',
-            unaccessible: true,
-          },
-        ],
-      },
-      {
-        path: '/user',
-        access: 'canReadUser',
-        unaccessible: false,
-        routes: [
-          {
-            path: '/userDetail',
-            access: 'canReadUserDetail',
-            unaccessible: false,
-          },
-        ],
-      },
-      {
-        path: '/order',
-        access: 'canReadOrder',
-        unaccessible: true,
-        routes: [
-          {
-            path: '/orderAudit',
-            access: 'canReadOrderAudit',
-            unaccessible: true,
-          },
-          {
-            path: '/orderCancellation',
-            access: 'canReadOrderCancellation',
-            unaccessible: true,
-          },
-        ],
-      },
-      {
-        path: '/about',
-        access: 'canReadAbout',
-        unaccessible: false,
-      },
-    ]);
+    expect(result).toMatchSnapshot();
   });
 
   it('should throw error if access of arbitrary route is not a string', () => {

@@ -8,11 +8,14 @@ export function traverseModifyRoutes(routes: Routes, access: any): Routes {
     .concat(routes as any)
     .map((resultRoute: IRoute) => {
       const { routes } = resultRoute;
-      return {
-        ...resultRoute,
-        // return new route to routes.
-        routes: routes ? routes.map((route: any) => ({ ...route })) : routes,
-      };
+      if (routes) {
+        return {
+          ...resultRoute,
+          // return new route to routes.
+          routes: routes.map((route: any) => ({ ...route })),
+        };
+      }
+      return resultRoute;
     });
 
   return resultRoutes.map(currentRoute => {
@@ -70,6 +73,7 @@ export function traverseModifyRoutes(routes: Routes, access: any): Routes {
           routes: finallyChildRoute,
         };
       }
+      delete currentRoute.routes;
     }
 
     return currentRoute;
