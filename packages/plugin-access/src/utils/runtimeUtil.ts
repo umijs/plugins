@@ -8,11 +8,11 @@ export function traverseModifyRoutes(routes: Routes, access: any): Routes {
     .concat(routes as any)
     .map((resultRoute: IRoute) => {
       const { routes } = resultRoute;
-      if (routes) {
+      if (routes && routes?.map) {
         return {
           ...resultRoute,
           // return new route to routes.
-          routes: routes.map((route: any) => ({ ...route })),
+          routes: routes?.map((route: any) => ({ ...route })),
         };
       }
       return resultRoute;
@@ -57,16 +57,16 @@ export function traverseModifyRoutes(routes: Routes, access: any): Routes {
       childRoutes.forEach(childRoute => {
         childRoute.unaccessible = !currentRouteAccessible;
       });
+      const finallyChildRoute = traverseModifyRoutes(childRoutes, access);
 
       // 如果每个子节点都没有权限，那么自己也属于没有权限
       const isAllChildRoutesUnaccessible =
-        Array.isArray(childRoutes) &&
-        childRoutes.every(route => route.unaccessible);
+        Array.isArray(finallyChildRoute) &&
+        finallyChildRoute.every(route => route.unaccessible);
 
       if (!currentRoute.unaccessible && isAllChildRoutesUnaccessible) {
         currentRoute.unaccessible = true;
       }
-      const finallyChildRoute = traverseModifyRoutes(childRoutes, access);
       if (finallyChildRoute && finallyChildRoute?.length > 0) {
         return {
           ...currentRoute,

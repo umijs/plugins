@@ -73,6 +73,39 @@ describe('TraverseModifyRoutes', () => {
     expect(result).toMatchSnapshot();
   });
 
+  it('test no use code', () => {
+    const result = traverseModifyRoutes(
+      [
+        {
+          path: '/homepage',
+          access: 'canReadHomepage',
+          routes: {} as any,
+        },
+        {
+          path: '/admin',
+          access: 'canReadAdminPage',
+          routes: [],
+        },
+        {
+          path: '/order',
+          access: 'canReadUser',
+          routes: [
+            {
+              path: '/orderAudit',
+              access: 'canReadOrderAudit',
+            },
+            {
+              path: '/orderCancellation',
+              access: 'canReadOrderAudit',
+            },
+          ],
+        },
+      ],
+      access,
+    );
+    expect(result).toMatchSnapshot();
+  });
+
   it('should throw error if access of arbitrary route is not a string', () => {
     routes[0].access = () => {};
     expect(() => {

@@ -52,12 +52,45 @@ Array [
         "unaccessible": true,
       },
     ],
-    "unaccessible": false,
+    "unaccessible": true,
   },
   Object {
     "access": "canReadAbout",
     "path": "/about",
     "unaccessible": false,
+  },
+]
+`;
+
+exports[`TraverseModifyRoutes test no use code 1`] = `
+Array [
+  Object {
+    "access": "canReadHomepage",
+    "path": "/homepage",
+    "routes": Object {},
+    "unaccessible": false,
+  },
+  Object {
+    "access": "canReadAdminPage",
+    "path": "/admin",
+    "unaccessible": true,
+  },
+  Object {
+    "access": "canReadUser",
+    "path": "/order",
+    "routes": Array [
+      Object {
+        "access": "canReadOrderAudit",
+        "path": "/orderAudit",
+        "unaccessible": true,
+      },
+      Object {
+        "access": "canReadOrderAudit",
+        "path": "/orderCancellation",
+        "unaccessible": true,
+      },
+    ],
+    "unaccessible": true,
   },
 ]
 `;
