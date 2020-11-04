@@ -1,6 +1,6 @@
 {
   "name": "@umijs/preset-react",
-  "version": "1.6.16",
+  "version": "1.6.17",
   "description": "@umijs/preset-react",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -28,7 +28,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@umijs/plugin-access": "2.3.1",
+    "@umijs/plugin-access": "2.3.2",
     "@umijs/plugin-analytics": "0.2.2",
     "@umijs/plugin-antd": "0.9.0",
     "@umijs/plugin-crossorigin": "1.2.0",

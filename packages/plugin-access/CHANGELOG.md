@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.2](https://github.com/umijs/plugins/compare/@umijs/plugin-access@2.3.1...@umijs/plugin-access@2.3.2) (2020-11-04)
+
+### Bug Fixes
+
+- **access:** 修复因为可变数据导致的数据不同步的问题 ([#433](https://github.com/umijs/plugins/issues/433)) ([5ea0702](https://github.com/umijs/plugins/commit/5ea07023c34aa4f4e5af21ec698ffc274ea50364))
+
 ## [2.3.1](https://github.com/umijs/plugins/compare/@umijs/plugin-access@2.3.0...@umijs/plugin-access@2.3.1) (2020-04-15)
 
 **Note:** Version bump only for package @umijs/plugin-access
