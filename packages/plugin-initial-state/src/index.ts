@@ -19,6 +19,8 @@ export default (api: IApi) => {
   // 注册 getInitialState 方法
   api.addRuntimePluginKey(() => 'getInitialState');
 
+  api.addRuntimePluginKey(() => 'initialStateConfig');
+
   api.addRuntimePlugin(() => '../plugin-initial-state/runtime');
 
   api.addUmiExports(() => [
