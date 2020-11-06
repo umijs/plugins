@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-initial-state",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "description": "@umijs/plugin-initial-state",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
