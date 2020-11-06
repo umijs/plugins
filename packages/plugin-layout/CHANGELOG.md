@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.5](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.12.4...@umijs/plugin-layout@0.12.5) (2020-11-06)
+
+### Bug Fixes
+
+- **layout:** up peerDependencies ([5e33de1](https://github.com/umijs/plugins/commit/5e33de18d6123b89b57e9a54349d54803473dc4a))
+
 ## [0.12.4](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.12.3...@umijs/plugin-layout@0.12.4) (2020-10-18)
 
 ### Bug Fixes
