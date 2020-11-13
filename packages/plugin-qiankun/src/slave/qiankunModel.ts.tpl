@@ -7,7 +7,10 @@ let setModelState = (val: any) => {
 
 export default () => {
   const [state, setState] = useState(initState);
-  setModelState = setState;
+  setModelState = (val: any) => {
+    initState = val;
+    setState(val);
+  };
 
   return state;
 };
