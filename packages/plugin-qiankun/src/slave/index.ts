@@ -56,7 +56,8 @@ export default function(api: IApi) {
       },
     };
 
-    if (!initialSlaveOptions.shouldNotModifyDefaultBase) {
+    const shouldNotModifyDefaultBase = api.userConfig.qiankun?.slave.shouldNotModifyDefaultBase ?? initialSlaveOptions.shouldNotModifyDefaultBase;
+    if (!shouldNotModifyDefaultBase) {
       modifiedDefaultConfig.base = `/${api.pkg.name}`;
     }
 
