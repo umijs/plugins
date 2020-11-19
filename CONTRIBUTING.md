@@ -52,6 +52,7 @@ $ npm run release -- --skip-git-status-check
 $ npm run release -- --skip-build
 $ npm run release -- --conventional-graduate
 $ npm run release -- --conventional-graduate preset-react,plugin-dva
+$ npm run release -- --select-version
 ```
 
 ## Create new package
