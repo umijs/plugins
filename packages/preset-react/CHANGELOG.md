@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.6.19...@umijs/preset-react@1.7.0) (2020-11-19)
+
+### Bug Fixes
+
+- react undefined ([#447](https://github.com/umijs/plugins/issues/447)) ([fe71be1](https://github.com/umijs/plugins/commit/fe71be1c1d08c6297bcf5cc1b3764633fe75bee0))
+
+### Features
+
+- support React 17 new JSX syntax ([#445](https://github.com/umijs/plugins/issues/445)) ([7cdb18d](https://github.com/umijs/plugins/commit/7cdb18d81bd802416bc0778f80fe2fa2976d54b0))
+
 ## [1.6.19](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.6.18...@umijs/preset-react@1.6.19) (2020-11-06)
 
 **Note:** Version bump only for package @umijs/preset-react

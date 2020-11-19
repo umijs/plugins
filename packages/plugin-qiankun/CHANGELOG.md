@@ -1,84 +1,55 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [2.17.4](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.17.3...@umijs/plugin-qiankun@2.17.4) (2020-11-19)
+
+### Bug Fixes
+
+- **qiankun:** cannot disable default router base via config ([#444](https://github.com/umijs/plugins/issues/444)) ([88f6303](https://github.com/umijs/plugins/commit/88f63034c64b74796a0a37a1ca27ce5ac3293526))
+- **qiankun:** useModel 父子应用通信无法在切换应用时保持最新的全局数据 ([#436](https://github.com/umijs/plugins/issues/436)) ([d75f153](https://github.com/umijs/plugins/commit/d75f153fba0098005a32e74da95c1f3e761de9bb)), closes [#426](https://github.com/umijs/plugins/issues/426)
 
 ## [2.17.3](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.17.2...@umijs/plugin-qiankun@2.17.3) (2020-10-27)
 
-
 ### Bug Fixes
 
-* **qiankun:** 修复 clientRenderOpts 可能为空的问题 ([#424](https://github.com/umijs/plugins/issues/424)) ([28a1493](https://github.com/umijs/plugins/commit/28a1493c73c81f8c00435cf2946806cca5eaffdf))
-
-
-
-
+- **qiankun:** 修复 clientRenderOpts 可能为空的问题 ([#424](https://github.com/umijs/plugins/issues/424)) ([28a1493](https://github.com/umijs/plugins/commit/28a1493c73c81f8c00435cf2946806cca5eaffdf))
 
 ## [2.17.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.17.1...@umijs/plugin-qiankun@2.17.2) (2020-10-27)
 
-
 ### Bug Fixes
 
-* **qiankun:** remount 时创建的 history 为旧的 history ([#423](https://github.com/umijs/plugins/issues/423)) ([1801b4d](https://github.com/umijs/plugins/commit/1801b4df4527dc6e331d07f3c0edf08fe460aa3b))
-
-
-
-
+- **qiankun:** remount 时创建的 history 为旧的 history ([#423](https://github.com/umijs/plugins/issues/423)) ([1801b4d](https://github.com/umijs/plugins/commit/1801b4df4527dc6e331d07f3c0edf08fe460aa3b))
 
 ## [2.17.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.17.0...@umijs/plugin-qiankun@2.17.1) (2020-10-26)
 
-
 ### Bug Fixes
 
-* **qiankun:** 修复 slave 子应用独立运行时多创建了一个 history 导致的 业务 history.push 失效的问题 ([#421](https://github.com/umijs/plugins/issues/421)) ([9556420](https://github.com/umijs/plugins/commit/955642038bf3c76d3bf7173e69ff08a53e3ad753))
-
-
-
-
+- **qiankun:** 修复 slave 子应用独立运行时多创建了一个 history 导致的 业务 history.push 失效的问题 ([#421](https://github.com/umijs/plugins/issues/421)) ([9556420](https://github.com/umijs/plugins/commit/955642038bf3c76d3bf7173e69ff08a53e3ad753))
 
 # [2.17.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.16.0...@umijs/plugin-qiankun@2.17.0) (2020-10-23)
 
-
 ### Features
 
-* **qiankun:** 支持一屏展示多个 umi 应用渲染实例 ([#418](https://github.com/umijs/plugins/issues/418)) ([67a82e0](https://github.com/umijs/plugins/commit/67a82e0717b223445869173a4664292cda4a9f60))
-
-
-
-
+- **qiankun:** 支持一屏展示多个 umi 应用渲染实例 ([#418](https://github.com/umijs/plugins/issues/418)) ([67a82e0](https://github.com/umijs/plugins/commit/67a82e0717b223445869173a4664292cda4a9f60))
 
 # [2.16.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.15.0...@umijs/plugin-qiankun@2.16.0) (2020-10-12)
 
-
 ### Features
 
-* **qiankun:** 兼容 webpack5 ([#404](https://github.com/umijs/plugins/issues/404)) ([0f45586](https://github.com/umijs/plugins/commit/0f455861b219b9102e998a8f7b865ce3d7fc4bb8))
-
-
-
-
+- **qiankun:** 兼容 webpack5 ([#404](https://github.com/umijs/plugins/issues/404)) ([0f45586](https://github.com/umijs/plugins/commit/0f455861b219b9102e998a8f7b865ce3d7fc4bb8))
 
 # [2.15.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.14.3...@umijs/plugin-qiankun@2.15.0) (2020-10-09)
 
-
 ### Features
 
-* **qiankun:** 兼容配置了 routeBindingAlias 同时又使用了原 microApp 的方式 ([#402](https://github.com/umijs/plugins/issues/402)) ([9b330d0](https://github.com/umijs/plugins/commit/9b330d0a2873a529c3154c7171024339cb5fb995))
-
-
-
-
+- **qiankun:** 兼容配置了 routeBindingAlias 同时又使用了原 microApp 的方式 ([#402](https://github.com/umijs/plugins/issues/402)) ([9b330d0](https://github.com/umijs/plugins/commit/9b330d0a2873a529c3154c7171024339cb5fb995))
 
 ## [2.14.3](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.14.2...@umijs/plugin-qiankun@2.14.3) (2020-09-22)
 
-
 ### Bug Fixes
 
-* **qiankun:** 微应用支持读取运行时 history basename ([#396](https://github.com/umijs/plugins/issues/396)) ([b07435a](https://github.com/umijs/plugins/commit/b07435ae672a95d235b6509aef2a0d748cc85ee2))
-
-
-
-
+- **qiankun:** 微应用支持读取运行时 history basename ([#396](https://github.com/umijs/plugins/issues/396)) ([b07435a](https://github.com/umijs/plugins/commit/b07435ae672a95d235b6509aef2a0d748cc85ee2))
 
 ## [2.14.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.14.1...@umijs/plugin-qiankun@2.14.2) (2020-09-22)
 
