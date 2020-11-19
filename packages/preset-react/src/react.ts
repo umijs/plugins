@@ -11,7 +11,8 @@ export default (api: IApi) => {
       react = require(require.resolve('react', { paths: [api.cwd] }));
     } catch (e) {}
     return (
-      semver.valid(react.version) && semver.gte(react.version, '17.0.0-alpha.0')
+      semver.valid(react?.version) &&
+      semver.gte(react.version, '17.0.0-alpha.0')
     );
   };
 
