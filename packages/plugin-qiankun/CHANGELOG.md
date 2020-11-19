@@ -1,6 +1,18 @@
 # Change Log
 
-All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [2.17.5](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.17.4...@umijs/plugin-qiankun@2.17.5) (2020-11-19)
+
+
+### Bug Fixes
+
+* **qiankun:** api.userConfig.qiankun.slave 可能为空 ([#449](https://github.com/umijs/plugins/issues/449)) ([d3a41cf](https://github.com/umijs/plugins/commit/d3a41cfe07d838bb9efe4f02f7adc0307c43e33d))
+
+
+
+
 
 ## [2.17.4](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.17.3...@umijs/plugin-qiankun@2.17.4) (2020-11-19)
 
