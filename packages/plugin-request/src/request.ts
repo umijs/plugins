@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 /**
  * Base on https://github.com/umijs/umi-request
  */
@@ -73,6 +74,8 @@ function useRequest<Item = any, U extends Item = any>(
   options: BasePaginatedOptions<U>,
 ): PaginatedResult<Item>;
 function useRequest(service: any, options: any = {}) {
+  // @ts-ignore
+  const providerConfig: any = useContext(UseRequestProvider._context);
   return useUmiRequest(service, {
     /*FRS*/ formatResult: res => res?.data /*FRE*/,
     requestMethod: (requestOptions: any) => {
@@ -85,6 +88,7 @@ function useRequest(service: any, options: any = {}) {
       }
       throw new Error('request options error');
     },
+    ...providerConfig, // 防止 UseRequestProvider 中 formatResult, requestMethod 被覆盖的问题
     ...options,
   });
 }
@@ -143,7 +147,7 @@ const getRequestMethod = () => {
   });
 
   const errorAdaptor =
-    requestConfig.errorConfig?.adaptor || (resData => resData);
+  requestConfig.errorConfig?.adaptor || (resData => resData);
 
   requestMethodInstance = extend({
     errorHandler: (error: RequestError) => {
