@@ -75,12 +75,14 @@ export default function(api: IApi) {
     } = api;
     const { master: options } = api.config?.qiankun || {};
     const masterHistoryType = (history && history?.type) || defaultHistoryType;
+    const base = api.config.base || '/';
 
     api.writeTmpFile({
       path: 'plugin-qiankun/masterOptions.js',
       content: `
       let options = ${JSON.stringify({
         masterHistoryType,
+        base,
         ...options,
       })};
       export const getMasterOptions = () => options;

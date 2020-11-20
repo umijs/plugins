@@ -1,24 +1,18 @@
 /* eslint-disable import/no-unresolved, import/extensions */
 
-import {
-  getMasterOptions,
-  setMasterOptions,
-} from './masterOptions';
-// @ts-ignore
-import { deferred } from './qiankunDefer.js';
 import '@@/plugin-qiankun/qiankunRootExports.js';
+import { IRouteProps } from '@umijs/types';
 import assert from 'assert';
 import { prefetchApps, registerMicroApps, start } from 'qiankun';
 // @ts-ignore
 import { ApplyPluginsType, plugin } from 'umi';
-import {
-  defaultMountContainerId,
-  noop,
-  testPathWithPrefix,
-  toArray,
-} from './common';
-import { App, HistoryType, MasterOptions } from './types';
+
+import { defaultMountContainerId, noop, patchMicroAppRoute, testPathWithPrefix, toArray } from './common';
 import { defaultHistoryType } from './constants';
+import { getMasterOptions, setMasterOptions } from './masterOptions';
+// @ts-ignore
+import { deferred } from './qiankunDefer.js';
+import { App, HistoryType, MasterOptions, MicroAppRoute } from './types';
 
 async function getMasterRuntime() {
   const config = await plugin.applyPlugins({
@@ -31,15 +25,18 @@ async function getMasterRuntime() {
   return master || config;
 }
 
+let microAppRuntimeRoutes: MicroAppRoute[];
+
 export async function render(oldRender: typeof noop) {
   const masterOptions = getMasterOptions();
   const runtimeOptions = await getMasterRuntime();
 
   setMasterOptions({ ...masterOptions, ...runtimeOptions });
+  const { apps, routes, ...options } = getMasterOptions() as MasterOptions;
+  microAppRuntimeRoutes = routes;
+
   // 主应用相关的配置注册完毕后即可开启渲染
   oldRender();
-
-  const { apps, ...options } = getMasterOptions() as MasterOptions;
 
   // 使用了 base 配置的应用为可注册应用
   const registrableApps = apps.filter(app => app.base);
@@ -53,6 +50,29 @@ export async function render(oldRender: typeof noop) {
   if (loadableApps.length) {
     const { prefetch, ...importEntryOpts } = options;
     if (prefetch) prefetchApps(loadableApps, importEntryOpts);
+  }
+}
+
+export function patchRoutes(opts: { routes: IRouteProps[] }) {
+  if (microAppRuntimeRoutes) {
+    const getRootRoutes = (routes: IRouteProps[]) => {
+      const rootRoute = routes.find(route => route.path === '/');
+      if (rootRoute) {
+        return rootRoute.routes;
+      }
+
+      return routes;
+    };
+
+    const { routes } = opts;
+    const rootRoutes = getRootRoutes(routes);
+    if (rootRoutes) {
+      const { routeBindingAlias, base, masterHistoryType } = getMasterOptions() as MasterOptions;
+      microAppRuntimeRoutes.forEach(microAppRoute => {
+        patchMicroAppRoute(microAppRoute, true, { base, masterHistoryType, routeBindingAlias });
+        rootRoutes.push(microAppRoute);
+      });
+    }
   }
 }
 
@@ -121,13 +141,13 @@ async function useLegacyRegisterMode(
   registerMicroApps(
     apps.map(
       ({
-        name,
-        entry,
-        base,
-        history = masterHistoryType,
-        mountElementId = defaultMountContainerId,
-        props,
-      }) => {
+         name,
+         entry,
+         base,
+         history = masterHistoryType,
+         mountElementId = defaultMountContainerId,
+         props,
+       }) => {
         let matchedBase = base;
 
         return {
