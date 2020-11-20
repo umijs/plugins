@@ -58,6 +58,9 @@ export function patchRoutes(opts: { routes: IRouteProps[] }) {
     const getRootRoutes = (routes: IRouteProps[]) => {
       const rootRoute = routes.find(route => route.path === '/');
       if (rootRoute) {
+        if (!rootRoute.routes) {
+          rootRoute.routes = [];
+        }
         return rootRoute.routes;
       }
 
@@ -68,9 +71,9 @@ export function patchRoutes(opts: { routes: IRouteProps[] }) {
     const rootRoutes = getRootRoutes(routes);
     if (rootRoutes) {
       const { routeBindingAlias, base, masterHistoryType } = getMasterOptions() as MasterOptions;
-      microAppRuntimeRoutes.forEach(microAppRoute => {
+      microAppRuntimeRoutes.reverse().forEach(microAppRoute => {
         patchMicroAppRoute(microAppRoute, true, { base, masterHistoryType, routeBindingAlias });
-        rootRoutes.push(microAppRoute);
+        rootRoutes.unshift(microAppRoute);
       });
     }
   }
