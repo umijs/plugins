@@ -147,7 +147,7 @@ const getRequestMethod = () => {
   });
 
   const errorAdaptor =
-  requestConfig.errorConfig?.adaptor || (resData => resData);
+    requestConfig.errorConfig?.adaptor || (resData => resData);
 
   requestMethodInstance = extend({
     errorHandler: (error: RequestError) => {
