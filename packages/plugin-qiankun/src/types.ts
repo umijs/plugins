@@ -15,10 +15,17 @@ export type App = {
   props?: any;
 } & Pick<BaseIConfig, 'mountElementId'>;
 
+export type MicroAppRoute = {
+  path: string;
+  microApp: string;
+} & Record<string, any>;
+
 export type MasterOptions = {
   apps: App[];
+  routes?: MicroAppRoute[];
   lifeCycles?: FrameworkLifeCycles<object>;
   masterHistoryType?: HistoryType;
+  base?: string;
   // 关联路由标记的别名，默认 microApp
   routeBindingAlias?: string;
   // 导出的组件别名，默认 MicroApp
@@ -33,6 +40,7 @@ export type SlaveOptions = {
 
 declare module '@umijs/types' {
   interface BaseIConfig {
+    // @ts-ignore
     qiankun: {
       master?: MasterOptions;
       slave?: SlaveOptions;
