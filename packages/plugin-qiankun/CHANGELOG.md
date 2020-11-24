@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.18.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.17.5...@umijs/plugin-qiankun@2.18.0) (2020-11-24)
+
+
+### Bug Fixes
+
+* **qiankun:** MicroAppWithMemoHistory 组件 name 变化时，history 也需要发生变化 ([#456](https://github.com/umijs/plugins/issues/456)) ([7f15836](https://github.com/umijs/plugins/commit/7f1583642b8999b516688ac21bdf9cf30f475646))
+* MicroApp 每次 name 变更需要重新加载微应用 ([#438](https://github.com/umijs/plugins/issues/438)) ([3173c7d](https://github.com/umijs/plugins/commit/3173c7da90851be9f4ca03fd5bf67276957f9f4d))
+
+
+### Features
+
+* **qiankun:** 支持 runtime 期间配置微应用绑定的路由 ([#453](https://github.com/umijs/plugins/issues/453)) ([3a9e805](https://github.com/umijs/plugins/commit/3a9e8050255a15a9157d38d27a56116bb89d3d3c))
+
+
+
+
+
 ## [2.17.5](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.17.4...@umijs/plugin-qiankun@2.17.5) (2020-11-19)
 
 
