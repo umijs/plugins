@@ -147,7 +147,7 @@ const BasicLayout = (props: any) => {
       <ErrorBoundary>
         <WithExceptionOpChildren currentPathConfig={currentPathConfig}>
           {userConfig.childrenRender
-            ? userConfig.childrenRender(children)
+            ? userConfig.childrenRender(children, props)
             : children}
         </WithExceptionOpChildren>
       </ErrorBoundary>
