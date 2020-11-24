@@ -187,17 +187,29 @@ export default (api: IApi) => {
       content: readFileSync(join(__dirname, 'runtime.tsx.tpl'), 'utf-8'),
     });
   });
-  api.modifyRoutes(routes => {
-    return [
-      {
-        path: '/',
-        component: utils.winPath(
-          join(api.paths.absTmpPath || '', DIR_NAME, 'Layout.tsx'),
-        ),
-        routes,
-      },
-    ];
-  });
+
+  if (!api.userConfig?.layout?.useCustomLayout) {
+    api.modifyRoutes(routes => {
+      return [
+        {
+          path: '/',
+          component: utils.winPath(
+            join(api.paths.absTmpPath || '', DIR_NAME, 'Layout.tsx'),
+          ),
+          routes,
+        },
+      ];
+    });
+  }
+
+  api.addUmiExports(() => [
+    {
+      specifiers: [{ local: 'default', exported: 'PluginLayout' }],
+      source: utils.winPath(
+        join(api.paths.absTmpPath || '', DIR_NAME, 'Layout.tsx'),
+      ),
+    },
+  ]);
 
   api.addRuntimePlugin(() => ['@@/plugin-layout/runtime.tsx']);
 };
