@@ -44,6 +44,7 @@ export function isValidModel({ content }: { content: string }) {
       'objectRestSpread',
       'optionalChaining',
       'decorators-legacy',
+      'jsx',
     ],
   });
 
