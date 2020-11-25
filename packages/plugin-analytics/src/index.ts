@@ -27,23 +27,17 @@ export default (api: IApi) => {
   `;
   };
 
-  // 引入gtag.js
-  const requireGtagJs=(code:string)=>{
-    return `
-    (function() {
-      var gtag = document.createElement("script");
-      gtag.async = true;
-      gtag.src = "https://www.googletagmanager.com/gtag/js?id=${code}";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(gtag, s);
-    })();
-  `;
-  }
-
   const gaTpl = (code: string) => {
     return `
     (function(){
       if (!location.port) {
+        // 引入gtag.js
+        var gtag = document.createElement("script");
+        gtag.async = true;
+        gtag.src = "https://www.googletagmanager.com/gtag/js?id=${code}";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(gtag, s);
+
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -57,14 +51,6 @@ export default (api: IApi) => {
     api.addHTMLHeadScripts(() => [
       {
         content: 'var _hmt = _hmt || [];',
-      },
-    ]);
-  }
-
-  if (ga) {
-    api.addHTMLHeadScripts(() => [
-      {
-        content: requireGtagJs(ga),
       },
     ]);
   }
