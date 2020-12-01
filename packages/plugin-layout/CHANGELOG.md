@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.12.5...@umijs/plugin-layout@0.13.0) (2020-12-01)
+
+### Features
+
+- **layout:** no use formatMessage ([#462](https://github.com/umijs/plugins/issues/462)) ([bd61e8e](https://github.com/umijs/plugins/commit/bd61e8ec529facdec3e79579a3a11258d52cbab3))
+
 ## [0.12.5](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.12.4...@umijs/plugin-layout@0.12.5) (2020-11-06)
 
 ### Bug Fixes
