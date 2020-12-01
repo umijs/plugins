@@ -3,8 +3,12 @@ import { LayoutConfig } from '../types/interface.d';
 export default (
   userConfig: LayoutConfig,
   path: string,
+  formatMessage: boolean,
 ) => `import React, { useState, useEffect } from "react";
-import { ApplyPluginsType, useModel } from "umi";
+import { ApplyPluginsType, useModel ${
+  // 没有 formatMessage 就不打开国际化
+  formatMessage ? `, useIntl` : ''
+} } from "umi";
 import { plugin } from "../core/umiExports";
 import LayoutComponent from '${path}';
 
@@ -38,12 +42,15 @@ export default props => {
     ...runtimeConfig || {}
   };
 
+  ${formatMessage ? 'const { formatMessage } = useIntl();' : ''}
+
   if(!runtimeConfig){
     return null
   }
 
   return React.createElement(LayoutComponent, {
     userConfig,
+    ${formatMessage ? 'formatMessage,' : ''}
     ...props
   });
 };
