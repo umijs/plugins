@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.3](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.13.2...@umijs/plugin-layout@0.13.3) (2020-12-02)
+
+### Bug Fixes
+
+- **layout:** no use d.ts ([7336e32](https://github.com/umijs/plugins/commit/7336e32843bc0c1280e24d2ccebd2883bd235aeb))
+
 ## [0.13.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.13.1...@umijs/plugin-layout@0.13.2) (2020-12-02)
 
 ### Bug Fixes
