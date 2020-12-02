@@ -105,7 +105,7 @@ export const getIntl = (locale?: string, changeIntl?: boolean) => {
   {{#ExistLocaleDir}}
   // 不存在需要一个报错提醒
   warning(
-    !locale||!localeInfo[locale],
+    !locale||!!localeInfo[locale],
     `The current popular language does not exist, please check the {{{LocaleDir}}} folder!`,
   );
   {{/ExistLocaleDir}}
