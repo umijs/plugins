@@ -210,7 +210,7 @@ export default (api: IApi) => {
   api.addUmiExports(() => {
     return {
       exportAll: true,
-      source: `../plugin-layout/layoutExports`,
+      source: `../plugin-layout/Layout`,
     };
   });
 
