@@ -205,13 +205,13 @@ export default (api: IApi) => {
       path: join(DIR_NAME, 'runtime.tsx'),
       content: readFileSync(join(__dirname, 'runtime.tsx.tpl'), 'utf-8'),
     });
-  });
 
-  api.addUmiExports(() => {
-    return {
-      exportAll: true,
-      source: `../plugin-layout/layoutExports`,
-    };
+    api.addUmiExports(() => {
+      return {
+        exportAll: true,
+        source: '../plugin-layout/layoutExports',
+      };
+    });
   });
 
   api.modifyRoutes(routes => {
