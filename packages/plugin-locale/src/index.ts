@@ -1,6 +1,6 @@
 import { IApi } from 'umi';
 import { join, dirname } from 'path';
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import {
   IGetLocaleFileListResult,
   IAddAntdLocales,
@@ -164,13 +164,16 @@ export default (api: IApi) => {
       join(__dirname, 'templates', 'localeExports.tpl'),
       'utf-8',
     );
+    const localeDirName = api.config.singular ? 'locale' : 'locales';
+    const localeDirPath = join(api.paths!.absSrcPath, localeDirName);
     api.writeTmpFile({
       path: 'plugin-locale/localeExports.ts',
       content: Mustache.render(localeExportsTpl, {
         BaseSeparator: baseSeparator,
         BaseNavigator: baseNavigator,
         UseLocalStorage: !!useLocalStorage,
-        LocaleDir: api.config.singular ? 'locale' : 'locales',
+        LocaleDir: localeDirName,
+        ExistLocaleDir: existsSync(localeDirPath),
         LocaleList: localeList,
         Antd: !!antd,
         DefaultLocale: JSON.stringify(defaultLocale),
