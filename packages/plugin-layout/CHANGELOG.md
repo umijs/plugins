@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.13.1...@umijs/plugin-layout@0.13.2) (2020-12-02)
+
+### Bug Fixes
+
+- **layout:** use new addUmiExports api ([bf0e781](https://github.com/umijs/plugins/commit/bf0e7812d7c394c4540bc4c25f2d0e0eef4cf196))
+
 ## [0.13.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.13.0...@umijs/plugin-layout@0.13.1) (2020-12-02)
 
 ### Bug Fixes
