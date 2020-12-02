@@ -4,6 +4,7 @@ import * as allIcons from '@ant-design/icons';
 import getLayoutContent from './utils/getLayoutContent';
 import { LayoutConfig } from './types';
 import { readFileSync, copyFileSync, statSync } from 'fs';
+import fs from '../../plugin-access/tests/__mocks__/fs';
 
 const DIR_NAME = 'plugin-layout';
 
@@ -205,13 +206,6 @@ export default (api: IApi) => {
       path: join(DIR_NAME, 'runtime.tsx'),
       content: readFileSync(join(__dirname, 'runtime.tsx.tpl'), 'utf-8'),
     });
-
-    api.addUmiExports(() => {
-      return {
-        exportAll: true,
-        source: '../plugin-layout/layoutExports',
-      };
-    });
   });
 
   api.modifyRoutes(routes => {
@@ -226,5 +220,11 @@ export default (api: IApi) => {
     ];
   });
 
+  api.addUmiExports(() => [
+    {
+      exportAll: true,
+      source: '../plugin-layout/layoutExports',
+    },
+  ]);
   api.addRuntimePlugin(() => ['@@/plugin-layout/runtime.tsx']);
 };
