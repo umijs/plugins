@@ -162,7 +162,7 @@ export default (api: IApi) => {
       layoutComponent[theme] || layoutComponent['PRO'];
 
     api.writeTmpFile({
-      path: 'plugin-layout/layoutExports.d.ts',
+      path: 'plugin-layout/layoutExports.ts',
       content: `
   import { BasicLayoutProps } from '@ant-design/pro-layout';
   import { Models } from '@@/plugin-model/useModel'
