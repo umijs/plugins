@@ -5,7 +5,7 @@ import createTestServer from './createTestServer';
 import { request } from '../src/request';
 
 jest.mock('umi', () => require('./mocks/umi'));
-jest.mock('antd', () => require('./mocks/antd'));
+jest.mock('@umijs/plugin-request/lib/ui', () => require('./mocks/antd'));
 
 jest.mock(
   'runtimeConfig',
