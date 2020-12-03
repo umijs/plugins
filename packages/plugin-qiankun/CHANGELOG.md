@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.18.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.18.0...@umijs/plugin-qiankun@2.18.1) (2020-12-03)
+
+
+### Bug Fixes
+
+* **qiankun:** 修复 runtimePublicPath 开发环境无法读取用户配置的 publicPath 的问题 ([#470](https://github.com/umijs/plugins/issues/470)) ([843772a](https://github.com/umijs/plugins/commit/843772aca8b512d78615493bf1b5c781a0fb214f))
+
+
+
+
+
 # [2.18.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.17.5...@umijs/plugin-qiankun@2.18.0) (2020-11-24)
 
 
