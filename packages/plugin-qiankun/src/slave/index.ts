@@ -73,12 +73,8 @@ export default function(api: IApi) {
     ).slave!;
 
     if (runtimePublicPath === true && !shouldNotModifyRuntimePublicPath) {
-      return `window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || "${
-        // 开发阶段 publicPath 配置无效，默认为 /
-        process.env.NODE_ENV !== 'development'
-          ? api.config.publicPath || '/'
-          : '/'
-      }"`;
+      return `window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || "${api.config
+        .publicPath || '/'}"`;
     }
 
     return publicPathStr;
