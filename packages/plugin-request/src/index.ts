@@ -59,7 +59,6 @@ export default function(api: IApi) {
   api.onGenerateFiles(() => {
     const { dataField = 'data' } = api.config.request as RequestOptions;
     const source = join(__dirname, '..', 'src', 'request.ts.tpl');
-    console.log('api.config.antd', api.config.antd);
     const requestTemplate = Mustache.render(readFileSync(source, 'utf-8'), {
       // 与 antd 解耦
       Antd: !!api.config.antd,
