@@ -50,7 +50,7 @@ export default (api: IApi) => {
     };
   });
 
-  const opts: IAntdOpts = api.userConfig.antd || {};
+  const opts: IAntdOpts = api.userConfig.antd;
 
   if (opts?.dark || opts?.compact) {
     // support dark mode, user use antd 4 by default

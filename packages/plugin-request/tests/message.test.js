@@ -14,7 +14,7 @@ jest.mock(
   { virtual: true },
 );
 
-jest.mock('antd', () => {
+jest.mock('@umijs/plugin-request/lib/ui', () => {
   // mock antd throw error for test
   return {
     message: {
