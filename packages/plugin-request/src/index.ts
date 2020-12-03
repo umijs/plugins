@@ -6,23 +6,6 @@ export interface RequestOptions {
   dataField?: string;
 }
 
-/**
- * remove antd pkg deps if using `antd: false`
- *
- * export for test case
- * @param content request.ts
- */
-export const filterAntd = (content: string): string => {
-  return content
-    .replace(/import\s+.*from 'antd';/, '')
-    .replace(/message\.warn\(/g, 'console.warn(')
-    .replace(/message\.error\(/g, 'console.error(')
-    .replace(
-      /notification\.open\({\n\s+message:\s+(.*?),\n\s+}\)/g,
-      'console.info($1)',
-    );
-};
-
 export default function(api: IApi) {
   const {
     paths,
@@ -72,8 +55,20 @@ export default function(api: IApi) {
   });
 
   const source = join(__dirname, '..', 'src', 'request.ts');
-  let requestTemplate = readFileSync(source, 'utf-8');
+  const requestTemplate = readFileSync(source, 'utf-8');
   const namespace = 'plugin-request';
+
+  api.chainWebpack(webpackConfig => {
+    // decoupling antd ui library
+    if (api.config.antd === false) {
+      webpackConfig.resolve.alias.set(
+        '@umijs/plugin-request/lib/ui',
+        '@umijs/plugin-request/lib/ui/noop',
+      );
+    }
+
+    return webpackConfig;
+  });
 
   api.onGenerateFiles(() => {
     const { dataField = 'data' } = api.config.request as RequestOptions;
@@ -84,10 +79,6 @@ export default function(api: IApi) {
         formatResultStr = 'formatResult: result => result';
       } else {
         formatResultStr = `formatResult: result => result?.${dataField}`;
-      }
-      if (!api.config.antd) {
-        // user close antd, replace antd pkg
-        requestTemplate = filterAntd(requestTemplate);
       }
       api.writeTmpFile({
         path: `${namespace}/request.ts`,
