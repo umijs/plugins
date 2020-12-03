@@ -180,7 +180,7 @@ const getRequestMethod = () => {
             {{#Antd}}
             message.warn(errorMessage);
             {{/Antd}}
-            {{#Antd}}
+            {{^Antd}}
             console.warn(errorMessage);
             {{/Antd}}
             break;
@@ -188,7 +188,7 @@ const getRequestMethod = () => {
             {{#Antd}}
             message.error(errorMessage);
             {{/Antd}}
-            {{#Antd}}
+            {{^Antd}}
             console.error(errorMessage);
             {{/Antd}}
             break;
@@ -198,7 +198,7 @@ const getRequestMethod = () => {
               message: errorMessage,
             });
             {{/Antd}}
-            {{#Antd}}
+            {{^Antd}}
             console.error(errorMessage);
             {{/Antd}}
             break;
