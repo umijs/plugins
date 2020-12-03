@@ -9,10 +9,6 @@ export default (api: IApi) => {
       .set('preact', require.resolve('preact'))
       .set('react', dirname(require.resolve('preact/compat/package.json')))
       .set('react-dom', dirname(require.resolve('preact/compat/package.json')))
-      .set(
-        'create-react-class',
-        require.resolve('preact-compat/lib/create-react-class'),
-      );
     return memo;
   });
 
