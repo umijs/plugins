@@ -102,11 +102,13 @@ export const getIntl = (locale?: string, changeIntl?: boolean) => {
   if (locale&&localeInfo[locale]) {
     return createIntl(localeInfo[locale]);
   }
+  {{#ExistLocaleDir}}
   // 不存在需要一个报错提醒
   warning(
     !locale||!!localeInfo[locale],
     `The current popular language does not exist, please check the {{{LocaleDir}}} folder!`,
   );
+  {{/ExistLocaleDir}}
   // 使用 zh-CN
   if (localeInfo[{{{ DefaultLocale }}}]) return createIntl(localeInfo[{{{ DefaultLocale }}}]);
 
