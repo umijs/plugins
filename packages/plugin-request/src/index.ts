@@ -6,6 +6,23 @@ export interface RequestOptions {
   dataField?: string;
 }
 
+/**
+ * remove antd pkg deps if using `antd: false`
+ *
+ * export for test case
+ * @param content request.ts
+ */
+export const filterAntd = (content: string): string => {
+  return content
+    .replace(/import\s+.*from 'antd';/, '')
+    .replace(/message\.warn\(/g, 'console.warn(')
+    .replace(/message\.error\(/g, 'console.error(')
+    .replace(
+      /notification\.open\({\n\s+message:\s+(.*?),\n\s+}\)/g,
+      'console.info($1)',
+    );
+};
+
 export default function(api: IApi) {
   const {
     paths,
@@ -70,14 +87,7 @@ export default function(api: IApi) {
       }
       if (!api.config.antd) {
         // user close antd, replace antd pkg
-        requestTemplate = requestTemplate
-          .replace(/import\s+.*from 'antd';/, '')
-          .replace(/message\.warn\(/, 'console.warn(')
-          .replace(/message\.error\(/, 'console.error(')
-          .replace(
-            /notification\.open\({\n\s+message:\s+(.*?),\n\s+}\)/,
-            'console.info($1)',
-          );
+        requestTemplate = filterAntd(requestTemplate);
       }
       api.writeTmpFile({
         path: `${namespace}/request.ts`,
