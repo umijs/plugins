@@ -1,14 +1,14 @@
-import { IApi, utils } from 'umi';
+import { IApi } from 'umi';
 import { join, dirname } from 'path';
 import { readFileSync } from 'fs';
 
-const { Mustache } = utils;
 export interface RequestOptions {
   dataField?: string;
 }
 
 export default function(api: IApi) {
   const {
+    paths,
     utils: { winPath },
   } = api;
 
@@ -54,15 +54,12 @@ export default function(api: IApi) {
     },
   });
 
+  const source = join(__dirname, '..', 'src', 'request.ts');
+  let requestTemplate = readFileSync(source, 'utf-8');
   const namespace = 'plugin-request';
 
   api.onGenerateFiles(() => {
     const { dataField = 'data' } = api.config.request as RequestOptions;
-    const source = join(__dirname, '..', 'src', 'request.ts.tpl');
-    const requestTemplate = Mustache.render(readFileSync(source, 'utf-8'), {
-      // 与 antd 解耦
-      Antd: !!api.config.antd,
-    });
     try {
       // Write .umi/plugin-request/request.ts
       let formatResultStr;
@@ -70,6 +67,17 @@ export default function(api: IApi) {
         formatResultStr = 'formatResult: result => result';
       } else {
         formatResultStr = `formatResult: result => result?.${dataField}`;
+      }
+      if (!api.config.antd) {
+        // user close antd, replace antd pkg
+        requestTemplate = requestTemplate
+          .replace(/import\s+.*from 'antd';/, '')
+          .replace(/message\.warn\(/, 'console.warn(')
+          .replace(/message\.error\(/, 'console.error(')
+          .replace(
+            /notification\.open\({\n\s+message:\s+(.*?),\n\s+}\)/,
+            'console.info($1)',
+          );
       }
       api.writeTmpFile({
         path: `${namespace}/request.ts`,

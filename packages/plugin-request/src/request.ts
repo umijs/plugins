@@ -15,9 +15,7 @@ import {
 } from 'umi-request';
 // @ts-ignore
 import { ApplyPluginsType, history, plugin } from 'umi';
-{{#Antd}}
 import { message, notification } from 'antd';
-{{/Antd}}
 import useUmiRequest, { UseRequestProvider } from '@ahooksjs/use-request';
 import {
   BaseOptions,
@@ -177,30 +175,15 @@ const getRequestMethod = () => {
             // do nothing
             break;
           case ErrorShowType.WARN_MESSAGE:
-            {{#Antd}}
             message.warn(errorMessage);
-            {{/Antd}}
-            {{^Antd}}
-            console.warn(errorMessage);
-            {{/Antd}}
             break;
           case ErrorShowType.ERROR_MESSAGE:
-            {{#Antd}}
             message.error(errorMessage);
-            {{/Antd}}
-            {{^Antd}}
-            console.error(errorMessage);
-            {{/Antd}}
             break;
           case ErrorShowType.NOTIFICATION:
-            {{#Antd}}
             notification.open({
               message: errorMessage,
             });
-            {{/Antd}}
-            {{^Antd}}
-            console.error(errorMessage);
-            {{/Antd}}
             break;
           case ErrorShowType.REDIRECT:
             // @ts-ignore
@@ -211,21 +194,11 @@ const getRequestMethod = () => {
             // redirect to error page
             break;
           default:
-            {{#Antd}}
             message.error(errorMessage);
-            {{/Antd}}
-            {{^Antd}}
-            console.error(errorMessage);
-            {{/Antd}}
             break;
         }
       } else {
-        {{#Antd}}
         message.error(error.message || 'Request error, please retry.');
-        {{/Antd}}
-        {{^Antd}}
-        console.error(error.message || 'Request error, please retry.');
-        {{/Antd}}
       }
       throw error;
     },
