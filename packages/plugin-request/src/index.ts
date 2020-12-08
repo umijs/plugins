@@ -60,12 +60,12 @@ export default function(api: IApi) {
 
   api.chainWebpack(webpackConfig => {
     // decoupling antd ui library
-    if (api.config.antd === false) {
-      webpackConfig.resolve.alias.set(
-        '@umijs/plugin-request/lib/ui',
-        '@umijs/plugin-request/lib/ui/noop',
-      );
-    }
+    webpackConfig.resolve.alias.set(
+      '@umijs/plugin-request/lib/ui',
+      api.config.antd === false
+        ? join(__dirname, './ui/noop.ts')
+        : join(__dirname, './ui/index.ts'),
+    );
 
     return webpackConfig;
   });
