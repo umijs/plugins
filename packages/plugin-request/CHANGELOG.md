@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.2](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.5.1...@umijs/plugin-request@2.5.2) (2020-12-08)
+
+### Bug Fixes
+
+- **request:** ui alias path ([#471](https://github.com/umijs/plugins/issues/471)) ([b77471f](https://github.com/umijs/plugins/commit/b77471f4d53ff4521dab34869d660c2911e04eaa))
+
 ## [2.5.1](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.5.0...@umijs/plugin-request@2.5.1) (2020-12-03)
 
 ### Bug Fixes
