@@ -63,8 +63,8 @@ export default function(api: IApi) {
     webpackConfig.resolve.alias.set(
       '@umijs/plugin-request/lib/ui',
       api.config.antd === false
-        ? join(__dirname, './ui/noop.ts')
-        : join(__dirname, './ui/index.ts'),
+        ? require.resolve('./ui/noop')
+        : require.resolve('./ui/index'),
     );
 
     return webpackConfig;
