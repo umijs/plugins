@@ -4,7 +4,6 @@ import * as allIcons from '@ant-design/icons';
 import getLayoutContent from './utils/getLayoutContent';
 import { LayoutConfig } from './types';
 import { readFileSync, copyFileSync, statSync } from 'fs';
-import fs from '../../plugin-access/tests/__mocks__/fs';
 
 const DIR_NAME = 'plugin-layout';
 
@@ -161,20 +160,13 @@ export default (api: IApi) => {
     const currentLayoutComponentPath =
       layoutComponent[theme] || layoutComponent['PRO'];
 
+    const layoutExportsContent = readFileSync(
+      join(__dirname, 'layoutExports.ts.tpl'),
+      'utf-8',
+    );
     api.writeTmpFile({
       path: 'plugin-layout/layoutExports.ts',
-      content: `
-  import { BasicLayoutProps } from '@ant-design/pro-layout';
-  import { Models } from '@@/plugin-model/useModel'
-  
-  export type RunTimeLayoutConfig = (
-    initData: Models<"@@initialState">
-  ) => BasicLayoutProps & {
-    childrenRender?: (dom: JSX.Element) => React.ReactNode;
-    unAccessible?: JSX.Element;
-    noFound?: JSX.Element;
-  };
-      `,
+      content: utils.Mustache.render(layoutExportsContent, {}),
     });
 
     api.writeTmpFile({
