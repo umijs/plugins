@@ -31,6 +31,6 @@
     "mini-css-extract-plugin": "0.9.0",
     "tty-browserify": "0.0.1",
     "url": "0.11.0",
-    "webpack": "5.0.0-beta.12"
+    "webpack": "^5.6.0"
   }
 }
