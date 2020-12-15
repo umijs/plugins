@@ -28,6 +28,6 @@
     "access": "public"
   },
   "dependencies": {
-    "esbuild-webpack-plugin": "^1.0.0-beta.3"
+    "esbuild-loader": "~2.6.3"
   }
 }
