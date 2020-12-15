@@ -1,4 +1,4 @@
-import { IApi } from 'umi';
+import { IApi, BundlerConfigType } from 'umi';
 
 export default (api: IApi) => {
   api.describe({
@@ -11,10 +11,21 @@ export default (api: IApi) => {
     enableBy: api.EnableBy.config,
   });
 
-  api.modifyBundleConfig(memo => {
+  api.modifyBundleConfig((memo, { type }) => {
     if (memo.optimization) {
+      const optsMap = {
+        [BundlerConfigType.csr]: {
+          target: 'chrome49',
+          platform: 'browser',
+        },
+        [BundlerConfigType.ssr]: {
+          target: 'node10',
+          platform: 'node',
+        },
+      };
+      const opts = optsMap[type] || optsMap[BundlerConfigType.csr];
       memo.optimization.minimizer = [
-        new (require('esbuild-webpack-plugin').default)({ target: 'chrome49' }),
+        new (require('esbuild-webpack-plugin').default)(opts),
       ];
     }
     return memo;
