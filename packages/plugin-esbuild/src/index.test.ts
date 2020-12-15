@@ -1,12 +1,13 @@
 import { join } from 'path';
+import { existsSync } from 'fs';
 import { Service } from 'umi';
 
 const fixtures = join(__dirname, 'fixtures');
 
 describe('normal build', () => {
   let err: any;
+  const cwd = join(fixtures, 'normal');
   beforeAll(async () => {
-    const cwd = join(fixtures, 'normal');
     const service = new Service({
       cwd,
       env: 'production',
@@ -25,13 +26,14 @@ describe('normal build', () => {
 
   it('normal', () => {
     expect(err).toBeFalsy();
+    expect(existsSync(join(cwd, 'dist', 'umi.js'))).toBeTruthy();
   });
 });
 
 describe('ssr build', () => {
   let err: any;
+  const cwd = join(fixtures, 'ssr');
   beforeAll(async () => {
-    const cwd = join(fixtures, 'ssr');
     const service = new Service({
       cwd,
       env: 'production',
@@ -50,5 +52,7 @@ describe('ssr build', () => {
 
   it('ssr build', () => {
     expect(err).toBeFalsy();
+    expect(existsSync(join(cwd, 'dist', 'umi.js'))).toBeTruthy();
+    expect(existsSync(join(cwd, 'dist', 'umi.server.js'))).toBeTruthy();
   });
 });

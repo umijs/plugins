@@ -4,7 +4,6 @@ export default {
     type: 'none',
   },
   ssr: {},
-  exportStatic: {},
   history: {
     type: 'memory',
     options: {
