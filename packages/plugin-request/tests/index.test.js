@@ -24,6 +24,7 @@ describe('plugin-request', () => {
           return '/winpathtest';
         },
       },
+      chainWebpack() {},
       addUmiExports() {},
       addDepInfo() {},
       writeTmpFile,

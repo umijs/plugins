@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.4](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.13.3...@umijs/plugin-layout@0.13.4) (2020-12-10)
+
+### Bug Fixes
+
+- layout exports ([#472](https://github.com/umijs/plugins/issues/472)) ([69d47ea](https://github.com/umijs/plugins/commit/69d47ead6e98521415fc3815d2580af69f67fe41))
+
+## [0.13.3](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.13.2...@umijs/plugin-layout@0.13.3) (2020-12-02)
+
+### Bug Fixes
+
+- **layout:** no use d.ts ([7336e32](https://github.com/umijs/plugins/commit/7336e32843bc0c1280e24d2ccebd2883bd235aeb))
+
+## [0.13.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.13.1...@umijs/plugin-layout@0.13.2) (2020-12-02)
+
+### Bug Fixes
+
+- **layout:** use new addUmiExports api ([bf0e781](https://github.com/umijs/plugins/commit/bf0e7812d7c394c4540bc4c25f2d0e0eef4cf196))
+
+## [0.13.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.13.0...@umijs/plugin-layout@0.13.1) (2020-12-02)
+
+### Bug Fixes
+
+- **layout:** fix layoutExports no has error ([#464](https://github.com/umijs/plugins/issues/464)) ([df029b0](https://github.com/umijs/plugins/commit/df029b03d08c37487c29d749a752b5ded44eadb9))
+
+# [0.13.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.12.5...@umijs/plugin-layout@0.13.0) (2020-12-01)
+
+### Features
+
+- **layout:** no use formatMessage ([#462](https://github.com/umijs/plugins/issues/462)) ([bd61e8e](https://github.com/umijs/plugins/commit/bd61e8ec529facdec3e79579a3a11258d52cbab3))
+
+## [0.12.5](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.12.4...@umijs/plugin-layout@0.12.5) (2020-11-06)
+
+### Bug Fixes
+
+- **layout:** up peerDependencies ([5e33de1](https://github.com/umijs/plugins/commit/5e33de18d6123b89b57e9a54349d54803473dc4a))
+
 ## [0.12.4](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.12.3...@umijs/plugin-layout@0.12.4) (2020-10-18)
 
 ### Bug Fixes

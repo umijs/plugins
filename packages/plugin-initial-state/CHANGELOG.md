@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/umijs/plugins/compare/@umijs/plugin-initial-state@2.2.1...@umijs/plugin-initial-state@2.3.0) (2020-11-06)
+
+### Features
+
+- **initialState:** support initialStateConfig ([#437](https://github.com/umijs/plugins/issues/437)) ([10be075](https://github.com/umijs/plugins/commit/10be07500f3a5908f9ad211008e0a24f8cb349bd))
+
 ## [2.2.1](https://github.com/umijs/plugins/compare/@umijs/plugin-initial-state@2.2.0...@umijs/plugin-initial-state@2.2.1) (2020-04-21)
 
 ### Bug Fixes

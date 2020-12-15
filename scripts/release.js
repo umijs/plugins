@@ -105,8 +105,9 @@ async function release() {
         // '--no-push',
         '--message',
         'chore(release): Publish',
-        '--conventional-commits',
+        args.selectVersion ? '' : '--conventional-commits',
       ]
+        .filter(Boolean)
         .concat(conventionalGraduate)
         .concat(conventionalPrerelease),
       {

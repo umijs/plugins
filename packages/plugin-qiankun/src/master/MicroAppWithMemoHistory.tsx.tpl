@@ -24,6 +24,12 @@ export function MicroAppWithMemoHistory(componentProps: Props) {
     }
   }, [url]);
 
+  useEffect(() => {
+    // reset the history when name changed
+    historyOpts.current.initialEntries = [url];
+    historyOpts.current.initialIndex = 1;
+  }, [componentProps.name]);
+
   return (
     <MicroApp
       {...rest}

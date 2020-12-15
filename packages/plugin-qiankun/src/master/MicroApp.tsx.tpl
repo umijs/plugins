@@ -103,7 +103,7 @@ export function MicroApp(componentProps: Props) {
     );
 
     return () => unmountMicroApp(microAppRef.current);
-  }, []);
+  }, [name]);
 
   useEffect(() => {
     const microApp = microAppRef.current;

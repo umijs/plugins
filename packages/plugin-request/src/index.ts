@@ -58,6 +58,18 @@ export default function(api: IApi) {
   const requestTemplate = readFileSync(source, 'utf-8');
   const namespace = 'plugin-request';
 
+  api.chainWebpack(webpackConfig => {
+    // decoupling antd ui library
+    webpackConfig.resolve.alias.set(
+      '@umijs/plugin-request/lib/ui',
+      api.config.antd === false
+        ? require.resolve('./ui/noop')
+        : require.resolve('./ui/index'),
+    );
+
+    return webpackConfig;
+  });
+
   api.onGenerateFiles(() => {
     const { dataField = 'data' } = api.config.request as RequestOptions;
     try {

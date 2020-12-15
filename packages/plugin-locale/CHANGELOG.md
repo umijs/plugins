@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.5](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.4...@umijs/plugin-locale@0.10.5) (2020-12-03)
+
+
+### Bug Fixes
+
+* localeInfo warning ([#468](https://github.com/umijs/plugins/issues/468)) ([dea36df](https://github.com/umijs/plugins/commit/dea36df2a8431649a0300f033422646db59334a1))
+
+
+
+
+
 ## [0.10.4](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.3...@umijs/plugin-locale@0.10.4) (2020-10-12)
 
 **Note:** Version bump only for package @umijs/plugin-locale

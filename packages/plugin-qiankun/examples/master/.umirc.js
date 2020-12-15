@@ -22,15 +22,6 @@ export default {
       component: '../layouts/index.js',
       routes: [
         {
-          path: '/app1',
-          microApp: 'app1',
-          microAppProps: {
-            autoSetLoading: true,
-            className: 'appClassName',
-            wrapperClassName: 'wrapperClass',
-          },
-        },
-        {
           path: '/app2',
           exact: false,
           component: './app2/index.js',
@@ -38,6 +29,14 @@ export default {
         {
           path: '/app3',
           microApp: 'app3',
+          settings: {
+            singular: false,
+          },
+          microAppProps: {
+            autoSetLoading: true,
+            className: 'appClassName',
+            wrapperClassName: 'wrapperClass',
+          },
         },
         {
           path: '/',

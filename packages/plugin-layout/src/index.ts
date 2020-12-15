@@ -3,7 +3,7 @@ import { join } from 'path';
 import * as allIcons from '@ant-design/icons';
 import getLayoutContent from './utils/getLayoutContent';
 import { LayoutConfig } from './types';
-import { readFileSync, writeFileSync, copyFileSync, statSync } from 'fs';
+import { readFileSync, copyFileSync, statSync } from 'fs';
 
 const DIR_NAME = 'plugin-layout';
 
@@ -160,9 +160,22 @@ export default (api: IApi) => {
     const currentLayoutComponentPath =
       layoutComponent[theme] || layoutComponent['PRO'];
 
+    const layoutExportsContent = readFileSync(
+      join(__dirname, 'layoutExports.ts.tpl'),
+      'utf-8',
+    );
+    api.writeTmpFile({
+      path: 'plugin-layout/layoutExports.ts',
+      content: utils.Mustache.render(layoutExportsContent, {}),
+    });
+
     api.writeTmpFile({
       path: join(DIR_NAME, 'Layout.tsx'),
-      content: getLayoutContent(layoutOpts, currentLayoutComponentPath),
+      content: getLayoutContent(
+        layoutOpts,
+        currentLayoutComponentPath,
+        api.hasPlugins(['@umijs/plugin-locale']),
+      ),
     });
 
     // 生效临时的 icon 文件
@@ -178,8 +191,7 @@ export default (api: IApi) => {
   ${iconsString.join(';\n')}
   export default {
     ${icons.join(',\n')}
-  }
-      `,
+  }`,
     });
 
     api.writeTmpFile({
@@ -187,6 +199,7 @@ export default (api: IApi) => {
       content: readFileSync(join(__dirname, 'runtime.tsx.tpl'), 'utf-8'),
     });
   });
+
   api.modifyRoutes(routes => {
     return [
       {
@@ -199,5 +212,11 @@ export default (api: IApi) => {
     ];
   });
 
+  api.addUmiExports(() => [
+    {
+      exportAll: true,
+      source: '../plugin-layout/layoutExports',
+    },
+  ]);
   api.addRuntimePlugin(() => ['@@/plugin-layout/runtime.tsx']);
 };

@@ -1,5 +1,5 @@
 import { IApi, IRoute } from 'umi';
-import { testPathWithPrefix, toArray } from '../common';
+import { patchMicroAppRoute, testPathWithPrefix, toArray } from '../common';
 import { App } from '../types';
 import { defaultHistoryType } from '../constants';
 
@@ -37,58 +37,15 @@ function modifyRoutesWithAttachMode(
     base?: string;
   },
 ) {
-  const normalizeJsonStringInUmiRoute = (str: string) =>
-    str.replace(/\"/g, "'");
-
   const { routeBindingAlias = 'microApp', base = '/' } = opts;
   const patchRoutes = (routes: IRoute[]) => {
     if (routes.length) {
       routes.forEach(route => {
-        // 当配置了 routeBindingAlias 时，优先从 routeBindingAlias 里取配置，但同时也兼容使用了默认的 microApp 方式
-        const microAppName = route[routeBindingAlias] || route.microApp;
-        const microAppProps =
-          route[`${routeBindingAlias}Props`] || route.microAppProps || {};
-        if (microAppName) {
-          if (route.routes?.length) {
-            throw new Error(
-              '[@umijs/plugin-qiankun]: You can not attach micro app to a route who has children!',
-            );
-          }
-
-          route.exact = false;
-          const { settings = {}, ...componentProps } = microAppProps;
-          // 兼容以前的 settings 配置
-          const microAppSettings = route.settings || settings || {};
-          route.component = `({match}: any) => {
-            const { MicroApp, getCreateHistoryOptions } = umiExports as any;
-            const { url } = match;
-
-            // 默认取静态配置的 base
-            let umiConfigBase = '${base === '/' ? '' : base}';
-            // 存在 getCreateHistoryOptions 说明当前应用开启了 runtimeHistory，此时取运行时的 history 配置的 basename
-            if (typeof getCreateHistoryOptions === 'function') {
-              const { basename = '/' } = getCreateHistoryOptions();
-              umiConfigBase = basename === '/' ? '' : basename;
-            }
-
-            const runtimeMatchedBase = umiConfigBase + (url.endsWith('/') ? url.substr(0, url.length - 1) : url);
-
-            return React.createElement(
-              MicroApp,
-              {
-                name: '${microAppName}',
-                base: runtimeMatchedBase,
-                history: '${masterHistoryType}',
-                settings: ${normalizeJsonStringInUmiRoute(
-                  JSON.stringify(microAppSettings),
-                )},
-                ...${normalizeJsonStringInUmiRoute(
-                  JSON.stringify(componentProps),
-                )}
-              },
-            );
-          }`;
-        }
+        patchMicroAppRoute(route, false, {
+          base,
+          masterHistoryType,
+          routeBindingAlias,
+        });
 
         if (route.routes?.length) {
           patchRoutes(route.routes);

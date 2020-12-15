@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 // @ts-ignore
-import { Link, useModel, history } from 'umi';
+import { Link, useModel, history, formatMessage } from 'umi';
 import ProLayout, { BasicLayoutProps } from '@ant-design/pro-layout';
 import './style.less';
-import ErrorBoundary from '../component/ErrorBoundary';
 import renderRightContent from './renderRightContent';
 import { WithExceptionOpChildren } from '../component/Exception';
 import { getMatchMenu, MenuDataItem, transformRoute } from '@umijs/route-utils';
 // @ts-ignore
 import logo from '../component/logo';
-import { formatMessage } from '../utils/intl';
 
 const getLayoutRender = (currentPathConfig: {
   layout:
@@ -107,7 +105,7 @@ const BasicLayout = (props: any) => {
           ? menuData => userConfig.patchMenus(menuData, initialInfo)
           : undefined
       }
-      formatMessage={formatMessage}
+      formatMessage={userConfig.formatMessage}
       logo={logo}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (menuItemProps.isUrl || menuItemProps.children) {
@@ -144,13 +142,15 @@ const BasicLayout = (props: any) => {
         })
       }
     >
-      <ErrorBoundary>
-        <WithExceptionOpChildren currentPathConfig={currentPathConfig}>
-          {userConfig.childrenRender
-            ? userConfig.childrenRender(children)
-            : children}
-        </WithExceptionOpChildren>
-      </ErrorBoundary>
+      <WithExceptionOpChildren
+        noFound={userConfig?.noFound}
+        unAccessible={userConfig?.unAccessible}
+        currentPathConfig={currentPathConfig}
+      >
+        {userConfig.childrenRender
+          ? userConfig.childrenRender(children)
+          : children}
+      </WithExceptionOpChildren>
     </ProLayout>
   );
 };
