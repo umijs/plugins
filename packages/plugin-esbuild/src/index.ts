@@ -16,11 +16,9 @@ export default (api: IApi) => {
       const optsMap = {
         [BundlerConfigType.csr]: {
           target: 'chrome49',
-          platform: 'browser',
         },
         [BundlerConfigType.ssr]: {
           target: 'node10',
-          platform: 'node',
         },
       };
       const opts = optsMap[type] || optsMap[BundlerConfigType.csr];
