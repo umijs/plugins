@@ -12,12 +12,18 @@ export default (api: IApi) => {
   });
 
   api.modifyBundleConfig((memo, { type }) => {
-    if (memo.optimization && type === BundlerConfigType.csr) {
+    if (memo.optimization) {
+      const opts =
+        type === BundlerConfigType.csr
+          ? {
+              target: 'chrome49',
+              platform: 'browser',
+            }
+          : {
+              platform: 'node',
+            };
       memo.optimization.minimizer = [
-        new (require('esbuild-webpack-plugin').default)({
-          target: 'chrome49',
-          platform: 'browser',
-        }),
+        new (require('esbuild-webpack-plugin').default)(opts),
       ];
     }
     return memo;
