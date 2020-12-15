@@ -1,46 +1,35 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [2.18.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.18.1...@umijs/plugin-qiankun@2.18.2) (2020-12-15)
+
+### Bug Fixes
+
+- qiankun expor types ([#476](https://github.com/umijs/plugins/issues/476)) ([136652a](https://github.com/umijs/plugins/commit/136652a51b9c93eb2679a1ca19bffc405532abd3))
 
 ## [2.18.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.18.0...@umijs/plugin-qiankun@2.18.1) (2020-12-03)
 
-
 ### Bug Fixes
 
-* **qiankun:** 修复 runtimePublicPath 开发环境无法读取用户配置的 publicPath 的问题 ([#470](https://github.com/umijs/plugins/issues/470)) ([843772a](https://github.com/umijs/plugins/commit/843772aca8b512d78615493bf1b5c781a0fb214f))
-
-
-
-
+- **qiankun:** 修复 runtimePublicPath 开发环境无法读取用户配置的 publicPath 的问题 ([#470](https://github.com/umijs/plugins/issues/470)) ([843772a](https://github.com/umijs/plugins/commit/843772aca8b512d78615493bf1b5c781a0fb214f))
 
 # [2.18.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.17.5...@umijs/plugin-qiankun@2.18.0) (2020-11-24)
 
-
 ### Bug Fixes
 
-* **qiankun:** MicroAppWithMemoHistory 组件 name 变化时，history 也需要发生变化 ([#456](https://github.com/umijs/plugins/issues/456)) ([7f15836](https://github.com/umijs/plugins/commit/7f1583642b8999b516688ac21bdf9cf30f475646))
-* MicroApp 每次 name 变更需要重新加载微应用 ([#438](https://github.com/umijs/plugins/issues/438)) ([3173c7d](https://github.com/umijs/plugins/commit/3173c7da90851be9f4ca03fd5bf67276957f9f4d))
-
+- **qiankun:** MicroAppWithMemoHistory 组件 name 变化时，history 也需要发生变化 ([#456](https://github.com/umijs/plugins/issues/456)) ([7f15836](https://github.com/umijs/plugins/commit/7f1583642b8999b516688ac21bdf9cf30f475646))
+- MicroApp 每次 name 变更需要重新加载微应用 ([#438](https://github.com/umijs/plugins/issues/438)) ([3173c7d](https://github.com/umijs/plugins/commit/3173c7da90851be9f4ca03fd5bf67276957f9f4d))
 
 ### Features
 
-* **qiankun:** 支持 runtime 期间配置微应用绑定的路由 ([#453](https://github.com/umijs/plugins/issues/453)) ([3a9e805](https://github.com/umijs/plugins/commit/3a9e8050255a15a9157d38d27a56116bb89d3d3c))
-
-
-
-
+- **qiankun:** 支持 runtime 期间配置微应用绑定的路由 ([#453](https://github.com/umijs/plugins/issues/453)) ([3a9e805](https://github.com/umijs/plugins/commit/3a9e8050255a15a9157d38d27a56116bb89d3d3c))
 
 ## [2.17.5](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.17.4...@umijs/plugin-qiankun@2.17.5) (2020-11-19)
 
-
 ### Bug Fixes
 
-* **qiankun:** api.userConfig.qiankun.slave 可能为空 ([#449](https://github.com/umijs/plugins/issues/449)) ([d3a41cf](https://github.com/umijs/plugins/commit/d3a41cfe07d838bb9efe4f02f7adc0307c43e33d))
-
-
-
-
+- **qiankun:** api.userConfig.qiankun.slave 可能为空 ([#449](https://github.com/umijs/plugins/issues/449)) ([d3a41cf](https://github.com/umijs/plugins/commit/d3a41cfe07d838bb9efe4f02f7adc0307c43e33d))
 
 ## [2.17.4](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.17.3...@umijs/plugin-qiankun@2.17.4) (2020-11-19)
 

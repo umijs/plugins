@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2](https://github.com/umijs/plugins/compare/@umijs/plugin-esbuild@1.0.1...@umijs/plugin-esbuild@1.0.2) (2020-12-15)
+
+### Bug Fixes
+
+- esbuild ssr ([#309](https://github.com/umijs/plugins/issues/309)) ([68ca76f](https://github.com/umijs/plugins/commit/68ca76fd22e23a67e9928d2addb9209c9955ef42))
+
 ## [1.0.1](https://github.com/umijs/plugins/compare/@umijs/plugin-esbuild@1.0.0...@umijs/plugin-esbuild@1.0.1) (2020-08-21)
 
 ### Bug Fixes
