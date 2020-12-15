@@ -7,6 +7,7 @@ test('normal build', async () => {
   const cwd = join(fixtures, 'normal');
   const service = new Service({
     cwd,
+    env: 'production',
     plugins: [require.resolve('./index.ts')],
   });
   let err;
@@ -26,6 +27,7 @@ test('ssr build', async () => {
   const cwd = join(fixtures, 'ssr');
   const service = new Service({
     cwd,
+    env: 'production',
     plugins: [require.resolve('./index.ts')],
   });
   let err;
