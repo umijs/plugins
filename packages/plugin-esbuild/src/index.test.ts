@@ -17,7 +17,6 @@ describe('normal build', () => {
       await service.run({
         name: 'build',
       });
-      err = false;
     } catch (e) {
       console.error('normal build error', e);
       err = true;
@@ -38,7 +37,6 @@ describe('ssr build', async () => {
       env: 'production',
       plugins: [require.resolve('./index.ts')],
     });
-    let err;
     try {
       await service.run({
         name: 'build',
