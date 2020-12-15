@@ -2,7 +2,7 @@
  * copy from https://github.com/umijs/plugins/blob/master/packages/plugin-initial-state/src/utils/shouldPluginEnable.ts#L7
  */
 
-import { ParserPlugin } from '@babel/parser';
+import type { ParserPlugin } from '@babel/parser';
 import { readFileSync } from 'fs';
 import { extname } from 'path';
 import { utils } from 'umi';
@@ -25,9 +25,9 @@ export function hasExportWithName(opts: { name: string; filePath: string }) {
     p.push('typescript');
   }
 
-  // @ts-ignore
   const ast = parser.parse(content, {
     sourceType: 'module',
+    // @ts-ignore
     plugins: [
       ...p,
       // 支持更多语法
@@ -77,6 +77,7 @@ export function hasExportWithName(opts: { name: string; filePath: string }) {
       // export { getInitialState };
       if (
         node.specifiers &&
+        // @ts-ignore
         node.specifiers.some(specifier => specifier.exported.name === name)
       ) {
         hasExport = true;
