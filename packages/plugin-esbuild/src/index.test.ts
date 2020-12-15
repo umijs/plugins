@@ -28,7 +28,7 @@ describe('normal build', () => {
   });
 });
 
-describe('ssr build', async () => {
+describe('ssr build', () => {
   let err: any;
   beforeAll(async () => {
     const cwd = join(fixtures, 'ssr');
