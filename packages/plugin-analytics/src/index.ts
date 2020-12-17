@@ -32,11 +32,11 @@ export default (api: IApi) => {
     (function(){
       if (!location.port) {
         // 引入gtag.js
-        var gtag = document.createElement("script");
-        gtag.async = true;
-        gtag.src = "https://www.googletagmanager.com/gtag/js?id=${code}";
+        var gaScriptTag = document.createElement("script");
+        gaScriptTag.async = true;
+        gaScriptTag.src = "https://www.googletagmanager.com/gtag/js?id=${code}";
         var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(gtag, s);
+        s.parentNode.insertBefore(gaScriptTag, s);
 
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
