@@ -5,10 +5,7 @@ import { join } from 'path';
 import { IApi } from 'umi';
 import { SlaveOptions } from '../types';
 import { addSpecifyPrefixedRoute } from './addSpecifyPrefixedRoute';
-import {
-  defaultSlaveRootId,
-  qiankunStateFromMasterModelNamespace,
-} from '../constants';
+import { qiankunStateFromMasterModelNamespace } from '../constants';
 import { readFileSync } from 'fs';
 
 export function isSlaveEnable(api: IApi) {
@@ -46,7 +43,6 @@ export default function(api: IApi) {
     const modifiedDefaultConfig = {
       ...memo,
       disableGlobalVariables: true,
-      mountElementId: defaultSlaveRootId,
       // 默认开启 runtimePublicPath，避免出现 dynamic import 场景子应用资源地址出问题
       runtimePublicPath: true,
       runtimeHistory: {},
