@@ -111,7 +111,7 @@ const BasicLayout = (props: any) => {
         if (menuItemProps.isUrl || menuItemProps.children) {
           return defaultDom;
         }
-        if (menuItemProps.path) {
+        if (menuItemProps.path && location.pathname !== menuItemProps.path) {
           return <Link to={menuItemProps.path}>{defaultDom}</Link>;
         }
         return defaultDom;
