@@ -373,54 +373,59 @@ const defaultLangUConfigMap = {
 
 export const SelectLang: React.FC<SelectLangProps> = (props) => {
   {{#ShowSelectLang}}
-  const { globalIconClassName, postLocalesData, onItemClick, style, ...restProps } = props;
+  const {
+  globalIconClassName,
+  postLocalesData,
+  onItemClick,
+  style,
+  ...restProps
+} = props;
   const selectedLang = getLocale();
 
   const changeLang = ({ key }: ClickParam): void => setLocale(key);
 
   const defaultLangUConfig = getAllLocales().map(
-    key =>
+    (key) =>
       defaultLangUConfigMap[key] || {
         lang: key,
         label: key,
-        icon: '🌐',
-        title: key
+        icon: "🌐",
+        title: key,
       }
   );
 
+  const allLangUIConfig =
+    postLocalesData?.(defaultLangUConfig) || defaultLangUConfig;
+  const handleClick = onItemClick
+    ? (params: ClickParam) => onItemClick(params)
+    : changeLang;
 
-  const allLangUIConfig = transformArrayToObject(postLocalesData ?  postLocalesData(defaultLangUConfig): defaultLangUConfig);
-
- const handleClick = onItemClick
-  ? (params: ClickParam) => onItemClick(params)
-  : changeLang;
-
-  const menuItemStyle = { minWidth: '160px' }
+  const menuItemStyle = { minWidth: "160px" };
   const langMenu = (
-    <Menu
-      selectedKeys={[selectedLang]} onClick={handleClick}
-    >
-     {{#LocaleList}}
-        <Menu.Item key={'{{locale}}'} style={menuItemStyle}>
-          <span role='img' aria-label={allLangUIConfig['{{locale}}']?.label  || '{{locale}}'}>
-            {allLangUIConfig['{{locale}}']?.icon || "🌐"}
-          </span>{' '}
-          {allLangUIConfig['{{locale}}']?.label || '{{locale}}'}
-        </Menu.Item>
-      {{/LocaleList}}
+    <Menu selectedKeys={[selectedLang]} onClick={handleClick}>
+      {allLangUIConfig.map((localeObj) => {
+        return (
+          <Menu.Item key={localeObj.key} style={menuItemStyle}>
+            <span role="img" aria-label={localeObj?.label || "en-US"}>
+              {localeObj?.icon || "🌐"}
+            </span>
+            {localeObj?.label || "en-US"}
+          </Menu.Item>
+        );
+      })}
     </Menu>
   );
 
   const inlineStyle = {
-    cursor: 'pointer',
-    padding: '12px',
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize:18,
-    verticalAlign: 'middle',
+    cursor: "pointer",
+    padding: "12px",
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: 18,
+    verticalAlign: "middle",
     ...style,
-  }
+  };
 
   return (
     <HeaderDropdown overlay={langMenu} placement="bottomRight" {...restProps}>
