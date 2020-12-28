@@ -38,6 +38,7 @@ interface LocalData {
 
 interface SelectLangProps {
   globalIconClassName?: string,
+  realReload?: string,
   postLocalesData?: (locales: LocalData[]) => LocalData[],
   onItemClick?: (params:ClickParam) => void,
   className?:string;
@@ -375,6 +376,7 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
   {{#ShowSelectLang}}
   const {
   globalIconClassName,
+  realReload = true,
   postLocalesData,
   onItemClick,
   style,
@@ -382,7 +384,7 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
 } = props;
   const selectedLang = getLocale();
 
-  const changeLang = ({ key }: ClickParam): void => setLocale(key);
+  const changeLang = ({ key }: ClickParam): void => setLocale(key, realReload);
 
   const defaultLangUConfig = getAllLocales().map(
     (key) =>
