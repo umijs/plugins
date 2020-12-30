@@ -116,13 +116,13 @@ export function getMicroAppRouteComponent(opts: {
       umiConfigBase = basename === '/' ? '' : basename;
     }
 
-    const runtimeMatchedBase =
-      umiConfigBase + (url.endsWith('/') ? url.substr(0, url.length - 1) : url);
+//     const runtimeMatchedBase =
+//       umiConfigBase + (url.endsWith('/') ? url.substr(0, url.length - 1) : url);
 
     const React = require('react');
     const componentProps = {
       name: appName,
-      base: runtimeMatchedBase,
+//       base: runtimeMatchedBase,
       history: masterHistoryType,
       ...routeProps,
     };
