@@ -101,7 +101,7 @@ export function getMicroAppRouteComponent(opts: {
   routeProps?: any;
 }) {
   const { masterHistoryType, appName, routeProps } = opts;
-  const RouteComponent = () => { // { match }: any
+  const RouteComponent = () => {
     const {
       MicroApp,
 //       getCreateHistoryOptions,
