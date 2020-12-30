@@ -96,17 +96,17 @@ export function patchMicroAppRoute(
 
 export function getMicroAppRouteComponent(opts: {
   appName: string;
-  base: string;
+//   base: string;
   masterHistoryType: string;
   routeProps?: any;
 }) {
-  const { base, masterHistoryType, appName, routeProps } = opts;
-  const RouteComponent = ({ match }: any) => {
+  const { masterHistoryType, appName, routeProps } = opts;
+  const RouteComponent = () => { // { match }: any
     const {
       MicroApp,
-      getCreateHistoryOptions,
+//       getCreateHistoryOptions,
     } = require('@@/core/umiExports') as any;
-    const { url } = match;
+//     const { url } = match;
 
     // 默认取静态配置的 base
 //     let umiConfigBase = base === '/' ? '' : base;
