@@ -109,12 +109,12 @@ export function getMicroAppRouteComponent(opts: {
     const { url } = match;
 
     // 默认取静态配置的 base
-    let umiConfigBase = base === '/' ? '' : base;
-    // 存在 getCreateHistoryOptions 说明当前应用开启了 runtimeHistory，此时取运行时的 history 配置的 basename
-    if (typeof getCreateHistoryOptions === 'function') {
-      const { basename = '/' } = getCreateHistoryOptions();
-      umiConfigBase = basename === '/' ? '' : basename;
-    }
+//     let umiConfigBase = base === '/' ? '' : base;
+//     // 存在 getCreateHistoryOptions 说明当前应用开启了 runtimeHistory，此时取运行时的 history 配置的 basename
+//     if (typeof getCreateHistoryOptions === 'function') {
+//       const { basename = '/' } = getCreateHistoryOptions();
+//       umiConfigBase = basename === '/' ? '' : basename;
+//     }
 
 //     const runtimeMatchedBase =
 //       umiConfigBase + (url.endsWith('/') ? url.substr(0, url.length - 1) : url);
