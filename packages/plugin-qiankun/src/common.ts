@@ -122,7 +122,7 @@ export function getMicroAppRouteComponent(opts: {
     const React = require('react');
     const componentProps = {
       name: appName,
-      runtimeMatchedBase,
+      base: runtimeMatchedBase,
       history: masterHistoryType,
       ...routeProps,
     };
