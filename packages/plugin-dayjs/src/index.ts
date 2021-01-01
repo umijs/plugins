@@ -6,7 +6,7 @@ export default (api: IApi) => {
     key: 'dayjs',
     config: {
       schema(joi) {
-        return joi.string();
+        return joi.object();
       },
     },
   });
