@@ -5885,6 +5885,11 @@ ansicolors@~0.3.2:
   resolved "https://registry.yarnpkg.com/ansicolors/-/ansicolors-0.3.2.tgz#665597de86a9ffe3aa9bfbe6cae5c6ea426b4979"
   integrity sha1-ZlWX3oap/+Oqm/vmyuXG6kJrSXk=
 
+antd-dayjs-webpack-plugin@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/antd-dayjs-webpack-plugin/-/antd-dayjs-webpack-plugin-1.0.2.tgz#795724eddcae439addd8591533e9af4872ef82b8"
+  integrity sha512-y49JdmwSF8B7JLSFB+A/0RmvYoXi+TR0FzvwcAydDCJlZjqb4UJdRCcKduhZg2ByFpz/mE8XKhKMqgF24T9Yhw==
+
 antd-mobile@^2.3.1:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/antd-mobile/-/antd-mobile-2.3.3.tgz#550591e4be91b52090c8b88156c457fbd99c6a2e"

@@ -1,0 +1,37 @@
+{
+  "name": "@umijs/plugin-dayjs",
+  "version": "1.0.0-beta.1",
+  "description": "@umijs/plugin-dayjs",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/umijs/plugins"
+  },
+  "keywords": [
+    "umi",
+    "webpack",
+    "dayjs",
+    "moment",
+    "moment.js"
+  ],
+  "authors": [
+    "chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/umijs/plugins/issues",
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-dayjs#readme",
+  "peerDependencies": {
+    "umi": "3.x"
+  },
+  "dependencies": {
+    "antd-dayjs-webpack-plugin": "^1.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
