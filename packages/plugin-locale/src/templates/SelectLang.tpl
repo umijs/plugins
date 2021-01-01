@@ -279,6 +279,12 @@ const defaultLangUConfigMap = {
     icon: '🇳🇱',
     title: 'Taal'
   },
+  'pl-PL': {
+    lang: 'pl-PL',
+    label: 'Polski',
+    icon: '🇵🇱',
+    title: 'Język'
+  },
   'pt-BR': {
     lang: 'pt-BR',
     label: 'Português',
