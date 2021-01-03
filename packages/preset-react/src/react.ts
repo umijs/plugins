@@ -36,6 +36,7 @@ export default (api: IApi) => {
   api.modifyBabelPresetOpts(opts => {
     return {
       ...opts,
+      reactRequire: false,
       react: {
         ...(opts.react || {}),
         // support React 17 New Jsx syntax
