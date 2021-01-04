@@ -198,7 +198,7 @@ export const setLocale = (lang: string, realReload: boolean = true) => {
     // for reset when lang === undefined
     throw new Error('setLocale lang format error');
   }
-  if (getLocale() !== lang) {
+  if (typeof window !== 'undefined' && getLocale() !== lang) {
     if (typeof window.localStorage !== 'undefined' && useLocalStorage) {
       window.localStorage.setItem('umi_locale', lang || '');
     }
