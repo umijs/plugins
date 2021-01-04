@@ -21,7 +21,11 @@ export default (api: IApi) => {
       }
     } catch (e) {}
 
-    if (hasJsxRuntime && !tsconfigContent?.includes('react-jsx')) {
+    if (
+      hasJsxRuntime &&
+      tsconfigContent &&
+      !tsconfigContent?.includes('react-jsx')
+    ) {
       api.logger.warn(
         '[WARN] update `jsx: "react"` into `jsx: "react-jsx"` to suport the new JSX transform in tsconfig.json',
       );
@@ -31,9 +35,9 @@ export default (api: IApi) => {
   api.modifyBabelPresetOpts((opts) => {
     return {
       ...opts,
+      reactRequire: !hasJsxRuntime,
       react: {
         ...(opts.react || {}),
-        reactRequire: !hasJsxRuntime,
         // support the new JSX transform
         runtime: hasJsxRuntime ? 'automatic' : 'classic',
       },
