@@ -37,10 +37,11 @@ interface LocalData {
 }
 
 interface SelectLangProps {
-  globalIconClassName?: string,
-  postLocalesData?: (locales: LocalData[]) => LocalData[],
-  onItemClick?: (params:ClickParam) => void,
-  className?:string;
+  globalIconClassName?: string;
+  postLocalesData?: (locales: LocalData[]) => LocalData[];
+  onItemClick?: (params: ClickParam) => void;
+  className?: string;
+  reload?: boolean;
 }
 
 const transformArrayToObject = (allLangUIConfig:LocalData[])=>{
@@ -378,11 +379,12 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
   postLocalesData,
   onItemClick,
   style,
+  reload,
   ...restProps
 } = props;
   const selectedLang = getLocale();
 
-  const changeLang = ({ key }: ClickParam): void => setLocale(key);
+  const changeLang = ({ key }: ClickParam): void => setLocale(key, reload);
 
   const defaultLangUConfig = getAllLocales().map(
     (key) =>
