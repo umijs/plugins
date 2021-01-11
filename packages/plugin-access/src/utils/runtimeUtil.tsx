@@ -18,7 +18,7 @@ export function traverseModifyRoutes(routes: Routes, access: any): Routes {
       return resultRoute;
     });
 
-  return resultRoutes.map(currentRoute => {
+  return resultRoutes.map((currentRoute) => {
     let currentRouteAccessible =
       typeof currentRoute.unaccessible === 'boolean'
         ? !currentRoute.unaccessible
@@ -54,7 +54,7 @@ export function traverseModifyRoutes(routes: Routes, access: any): Routes {
       }
       // 父亲没权限，理论上每个孩子都没权限
       // 可能有打平 的事情发生，所以都执行一下
-      childRoutes.forEach(childRoute => {
+      childRoutes.forEach((childRoute) => {
         childRoute.unaccessible = !currentRouteAccessible;
       });
       const finallyChildRoute = traverseModifyRoutes(childRoutes, access);
@@ -62,7 +62,7 @@ export function traverseModifyRoutes(routes: Routes, access: any): Routes {
       // 如果每个子节点都没有权限，那么自己也属于没有权限
       const isAllChildRoutesUnaccessible =
         Array.isArray(finallyChildRoute) &&
-        finallyChildRoute.every(route => route.unaccessible);
+        finallyChildRoute.every((route) => route.unaccessible);
 
       if (!currentRoute.unaccessible && isAllChildRoutesUnaccessible) {
         currentRoute.unaccessible = true;
