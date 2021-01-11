@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.10](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.7.9...@umijs/preset-react@1.7.10) (2021-01-11)
+
+### Bug Fixes
+
+- remove babel-plugin-react-require when using automatic runtime ([#497](https://github.com/umijs/plugins/issues/497)) ([5d9ba02](https://github.com/umijs/plugins/commit/5d9ba02aab752a12c7505eb60f65843f3d6df84c))
+- 修复在 React 17 下当不使用 ts 的情况下，启动项目仍然会提示更新 tsconfig.json 中 jsx 字段的问题 ([#482](https://github.com/umijs/plugins/issues/482)) ([84f9a91](https://github.com/umijs/plugins/commit/84f9a919efb9b28e854912429039b8d1e1a5be7a))
+
 ## [1.7.9](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.7.8...@umijs/preset-react@1.7.9) (2020-12-24)
 
 **Note:** Version bump only for package @umijs/preset-react
