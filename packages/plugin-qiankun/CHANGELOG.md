@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.19.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.18.3...@umijs/plugin-qiankun@2.19.0) (2021-01-12)
+
+### Features
+
+- **qiankun:** 优化代码，移除运行时 require 方式引入模块 ([#503](https://github.com/umijs/plugins/issues/503)) ([6e38d82](https://github.com/umijs/plugins/commit/6e38d8245682b2b12f6b9d403b2c07d372651087))
+
 ## [2.18.3](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.18.2...@umijs/plugin-qiankun@2.18.3) (2020-12-24)
 
 **Note:** Version bump only for package @umijs/plugin-qiankun
