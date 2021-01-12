@@ -131,6 +131,14 @@ export default function(api: IApi) {
         ? readFileSync(join(__dirname, 'AntdLoader.tsx.tpl'), 'utf-8')
         : `export default function Loader() { console.warn(\`[@umijs/plugin-qiankun]: Seems like you'r not using @umijs/plugin-antd, you need to provide a customer loader or set autoSetLoading false to shut down this warning!\`); return null; }`,
     });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/getMicroAppRouteComponent.ts',
+      content: readFileSync(
+        join(__dirname, 'getMicroAppRouteComponent.ts.tpl'),
+        'utf-8',
+      ),
+    });
   });
 
   api.addUmiExports(() => {
@@ -165,6 +173,13 @@ export default function(api: IApi) {
     return {
       specifiers: ['MicroAppWithMemoHistory'],
       source: winPath('../plugin-qiankun/MicroAppWithMemoHistory'),
+    };
+  });
+
+  api.addUmiExports(() => {
+    return {
+      specifiers: ['getMicroAppRouteComponent'],
+      source: winPath('../plugin-qiankun/getMicroAppRouteComponent'),
     };
   });
 

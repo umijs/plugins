@@ -1,7 +1,7 @@
 import { IApi, IRoute } from 'umi';
 import { patchMicroAppRoute, testPathWithPrefix, toArray } from '../common';
-import { App } from '../types';
 import { defaultHistoryType } from '../constants';
+import { App } from '../types';
 
 export default function modifyRoutes(api: IApi) {
   api.modifyRoutes(routes => {
@@ -40,8 +40,25 @@ function modifyRoutesWithAttachMode(
   const { routeBindingAlias = 'microApp', base = '/' } = opts;
   const patchRoutes = (routes: IRoute[]) => {
     if (routes.length) {
+      const getMicroAppRouteComponent = (opts: {
+        appName: string;
+        base: string;
+        masterHistoryType: string;
+        routeProps?: any;
+      }) => {
+        const { base, masterHistoryType, appName, routeProps } = opts;
+        const normalizeJsonStringInUmiRoute = (str: string) =>
+          str.replace(/"/g, "'");
+        const normalizedRouteProps = normalizeJsonStringInUmiRoute(JSON.stringify(routeProps));
+
+        return `(() => {
+          const { getMicroAppRouteComponent } = umiExports;
+          return getMicroAppRouteComponent({ appName: '${appName}', base: '${base}', masterHistoryType: '${masterHistoryType}', routeProps: ${normalizedRouteProps} })
+        })()`;
+      };
+
       routes.forEach(route => {
-        patchMicroAppRoute(route, false, {
+        patchMicroAppRoute(route, getMicroAppRouteComponent, {
           base,
           masterHistoryType,
           routeBindingAlias,
