@@ -4,6 +4,7 @@
  */
 
 import * as pathToRegexp from 'path-to-regexp';
+import { ReactComponentElement } from 'react';
 
 export const defaultMountContainerId = 'root-subapp';
 
@@ -20,7 +21,7 @@ function testPathWithStaticPrefix(pathPrefix: string, realPath: string) {
     return realPath.startsWith(pathPrefix);
   }
 
-  const pathRegex = new RegExp(`^${pathPrefix}(\\/|\\?)+.*$`, 'g');
+  const pathRegex = new RegExp(`^${pathPrefix}([/?])+.*$`, 'g');
   const normalizedPath = `${realPath}/`;
   return pathRegex.test(normalizedPath);
 }
@@ -43,7 +44,12 @@ export function testPathWithPrefix(pathPrefix: string, realPath: string) {
 
 export function patchMicroAppRoute(
   route: any,
-  runtime = false,
+  getMicroAppRouteComponent: (opts: {
+    appName: string;
+    base: string;
+    masterHistoryType: string;
+    routeProps?: any;
+  }) => string | ReactComponentElement<any>,
   masterOptions: {
     base: string;
     masterHistoryType: string;
@@ -63,84 +69,19 @@ export function patchMicroAppRoute(
     }
 
     route.exact = false;
+
     const { settings = {}, ...componentProps } = microAppProps;
-    // 兼容以前的 settings 配置
-    const microAppSettings = route.settings || settings || {};
-
-    const normalizeJsonStringInUmiRoute = (str: string) =>
-      str.replace(/\"/g, "'");
-    const routeProps = runtime
-      ? {
-          settings: microAppSettings,
-          ...componentProps,
-        }
-      : normalizeJsonStringInUmiRoute(
-          JSON.stringify({
-            settings: microAppSettings,
-            ...componentProps,
-          }),
-        );
-
+    const routeProps = {
+      // 兼容以前的 settings 配置
+      settings: route.settings || settings || {},
+      ...componentProps,
+    };
     const opts = {
       appName: microAppName,
       base,
       masterHistoryType,
       routeProps,
     };
-    // 如果是运行时则返回真实的函数引用，编译时则返回字符串
-    route.component = runtime
-      ? getMicroAppRouteComponent(opts)
-      : getMicroAppRouteComponentStr(opts);
+    route.component = getMicroAppRouteComponent(opts);
   }
-}
-
-export function getMicroAppRouteComponent(opts: {
-  appName: string;
-  base: string;
-  masterHistoryType: string;
-  routeProps?: any;
-}) {
-  const { base, masterHistoryType, appName, routeProps } = opts;
-  const RouteComponent = ({ match }: any) => {
-    const {
-      MicroApp,
-      getCreateHistoryOptions,
-    } = require('@@/core/umiExports') as any;
-    const { url } = match;
-
-    // 默认取静态配置的 base
-    let umiConfigBase = base === '/' ? '' : base;
-    // 存在 getCreateHistoryOptions 说明当前应用开启了 runtimeHistory，此时取运行时的 history 配置的 basename
-    if (typeof getCreateHistoryOptions === 'function') {
-      const { basename = '/' } = getCreateHistoryOptions();
-      umiConfigBase = basename === '/' ? '' : basename;
-    }
-
-    const runtimeMatchedBase =
-      umiConfigBase + (url.endsWith('/') ? url.substr(0, url.length - 1) : url);
-
-    const React = require('react');
-    const componentProps = {
-      name: appName,
-      base: runtimeMatchedBase,
-      history: masterHistoryType,
-      ...routeProps,
-    };
-    return React.createElement(MicroApp, componentProps);
-  };
-
-  return RouteComponent;
-}
-
-function getMicroAppRouteComponentStr(opts: {
-  appName: string;
-  base: string;
-  masterHistoryType: string;
-  routeProps?: any;
-}) {
-  const { base, masterHistoryType, appName, routeProps } = opts;
-  return `(() => {
-    const getMicroAppRouteComponent = require('@@/plugin-qiankun/common').getMicroAppRouteComponent;
-    return getMicroAppRouteComponent({ appName: '${appName}', base: '${base}', masterHistoryType: '${masterHistoryType}', routeProps: ${routeProps} })
-  })()`;
 }

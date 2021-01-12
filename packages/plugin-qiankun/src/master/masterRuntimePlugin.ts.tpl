@@ -5,7 +5,7 @@ import { IRouteProps } from '@umijs/types';
 import assert from 'assert';
 import { prefetchApps, registerMicroApps, start } from 'qiankun';
 // @ts-ignore
-import { ApplyPluginsType, plugin } from 'umi';
+import { ApplyPluginsType, plugin, getMicroAppRouteComponent } from 'umi';
 
 import { defaultMountContainerId, noop, patchMicroAppRoute, testPathWithPrefix, toArray } from './common';
 import { defaultHistoryType } from './constants';
@@ -72,7 +72,7 @@ export function patchRoutes(opts: { routes: IRouteProps[] }) {
     if (rootRoutes) {
       const { routeBindingAlias, base, masterHistoryType } = getMasterOptions() as MasterOptions;
       microAppRuntimeRoutes.reverse().forEach(microAppRoute => {
-        patchMicroAppRoute(microAppRoute, true, { base, masterHistoryType, routeBindingAlias });
+        patchMicroAppRoute(microAppRoute, getMicroAppRouteComponent, { base, masterHistoryType, routeBindingAlias });
         rootRoutes.unshift(microAppRoute);
       });
     }
