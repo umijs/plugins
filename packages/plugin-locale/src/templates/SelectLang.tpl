@@ -407,7 +407,7 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
     <Menu selectedKeys={[selectedLang]} onClick={handleClick}>
       {allLangUIConfig.map((localeObj) => {
         return (
-          <Menu.Item key={localeObj.key} style={menuItemStyle}>
+          <Menu.Item key={localeObj.lang || localeObj.key} style={menuItemStyle}>
             <span role="img" aria-label={localeObj?.label || "en-US"}>
               {localeObj?.icon || "🌐"}
             </span>
