@@ -35,7 +35,7 @@ export default (api: IApi) => {
           disableModelsReExport: joi.boolean(),
           extraModels: joi.array().items(joi.string()),
           hmr: joi.boolean(),
-          immer: joi.boolean(),
+          immer: joi.alternatives(joi.boolean(), joi.object()),
           skipModelValidate: joi.boolean(),
         });
       },
@@ -99,12 +99,11 @@ export default (api: IApi) => {
         content: Mustache.render(dvaTpl, {
           ExtendDvaConfig: '',
           EnhanceApp: '',
-          RegisterPlugins: [
-            api.config.dva?.immer &&
-              `app.use(require('${winPath(require.resolve('dva-immer'))}')());`,
-          ]
-            .filter(Boolean)
-            .join('\n'),
+          dvaImmer: api.config.dva?.immer,
+          dvaImmerPath: winPath(require.resolve('dva-immer')),
+          dvaImmerES5:
+            lodash.isPlainObject(api.config.dva?.immer) &&
+            api.config.dva?.immer.enableES5,
           RegisterModelImports: models
             .map((path, index) => {
               return `import Model${lodash.upperFirst(
@@ -170,13 +169,13 @@ app.model({ namespace: '${basename(path, extname(path))}', ...Model${lodash.uppe
           dvaHeadExport: api.config.dva?.disableModelsReExport
             ? ``
             : models
-                .map(path => {
+                .map((path) => {
                   // prettier-ignore
                   return `export * from '${winPath(dirname(path) + "/" + basename(path, extname(path)))}';`;
                 })
                 .join('\r\n'),
           dvaLoadingModels: models
-            .map(path => {
+            .map((path) => {
               // prettier-ignore
               return `    ${basename(path, extname(path))
                 } ?: boolean;`;
@@ -199,7 +198,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...Model${lodash.uppe
   ]);
 
   // Babel Plugin for HMR
-  api.modifyBabelOpts(babelOpts => {
+  api.modifyBabelOpts((babelOpts) => {
     const hmr = api.config.dva?.hmr;
     if (hmr) {
       const hmrOpts = lodash.isPlainObject(hmr) ? hmr : {};
@@ -241,7 +240,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...Model${lodash.uppe
         console.log();
         console.log(utils.chalk.bold('  Models in your project:'));
         console.log();
-        models.forEach(model => {
+        models.forEach((model) => {
           console.log(`    - ${relative(api.cwd, model)}`);
         });
         console.log();

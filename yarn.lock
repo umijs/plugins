@@ -8696,10 +8696,10 @@ dva-core@2.0.2:
     redux-saga "^0.16.0"
     warning "^3.0.0"
 
-dva-immer@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/dva-immer/-/dva-immer-0.5.0.tgz#cc949b20aae266f0a1ab76385ae567dd14a16ffa"
-  integrity sha512-pyKL35pxO6xXYzMtkXc9z4F2BmMbx6dyoEQxuXcxAVoOJMRTjt04RVoCxv/uwuYs8CBVdsj73P7gGCzV5i5cRg==
+dva-immer@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/dva-immer/-/dva-immer-0.5.2.tgz#128bd6d96b25f11e6f137807b614b9c58cf03f32"
+  integrity sha512-xg23ktGsrdzgiU0ACl8vFm2+E2GBWbtXndXRKM9wtHDR+yMH27NfttVuAZQWvv4aaj6f5/bC+TdsZ9t7n6cAhQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     immer "^7.0.5"
