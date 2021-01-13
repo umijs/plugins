@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.7](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.6...@umijs/plugin-locale@0.10.7) (2021-01-13)
+
+### Bug Fixes
+
+- **layout:** fix SelectLang keys error ([#504](https://github.com/umijs/plugins/issues/504)) ([10236ba](https://github.com/umijs/plugins/commit/10236bad419261d8a244616e9bf085770327dce5))
+
 ## [0.10.6](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.5...@umijs/plugin-locale@0.10.6) (2021-01-11)
 
 ### Bug Fixes
