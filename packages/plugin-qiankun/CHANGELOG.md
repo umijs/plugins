@@ -1,6 +1,18 @@
 # Change Log
 
-All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [2.20.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.19.0...@umijs/plugin-qiankun@2.20.0) (2021-01-14)
+
+
+### Features
+
+* **qiankun:** 移除子应用对 mountElementId 的变更 ([#481](https://github.com/umijs/plugins/issues/481)) ([f37d07b](https://github.com/umijs/plugins/commit/f37d07b53b50ec57c8300964aff1bcfb0d563284))
+
+
+
+
 
 # [2.19.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.18.3...@umijs/plugin-qiankun@2.19.0) (2021-01-12)
 
