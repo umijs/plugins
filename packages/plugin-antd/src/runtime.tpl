@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConfigProvider, Modal, message } from 'antd';
+import { ConfigProvider, Modal, message, notification } from 'antd';
 import { ApplyPluginsType } from 'umi';
 import { plugin } from '../core/umiExports';
 
@@ -18,6 +18,9 @@ export function rootContainer(container) {
     });
     message.config({
       prefixCls: `${finalConfig.prefixCls}-message`,
+    });
+    notification.config({
+      prefixCls: `${finalConfig.prefixCls}-notification`,
     });
   }
   return React.createElement(ConfigProvider, finalConfig, container);
