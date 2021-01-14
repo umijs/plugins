@@ -1,9 +1,9 @@
 import { IRoute } from '@umijs/core';
 import { AnyAction } from 'redux';
 import React from 'react';
-import { EffectsCommandMap, SubscriptionAPI } from 'dva';
+import { EffectsCommandMap } from 'dva';
 import { match } from 'react-router-dom';
-import { Location, LocationState, History } from 'history';
+import { Location, LocationState, History } from 'history-with-query';
 
 {{{ dvaHeadExport }}}
 
@@ -36,6 +36,11 @@ export type Dispatch = <P = any, C = (payload: P) => void>(action: {
   callback?: C;
   [key: string]: any;
 }) => any;
+
+export interface SubscriptionAPI {
+  history: History,
+  dispatch: Dispatch,
+}
 
 export type Subscription = (api: SubscriptionAPI, done: Function) => void | Function;
 
