@@ -61,14 +61,14 @@ export const _LocaleContainer = (props:any) => {
     {{/DefaultAntdLocales}}
   }
   const direcition = getDirection();
-  
+
   return (
     <ConfigProvider  direction={direcition} locale={localeInfo[locale]?.antd || defaultAntdLocale}>
       <RawIntlProvider value={intl}>{props.children}</RawIntlProvider>
     </ConfigProvider>
   )
-
   {{/Antd}}
-
+  {{^Antd}}
   return <RawIntlProvider value={intl}>{props.children}</RawIntlProvider>;
+  {{/Antd}}
 };
