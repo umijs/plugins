@@ -6,8 +6,6 @@
 import * as pathToRegexp from 'path-to-regexp';
 import { ReactComponentElement } from 'react';
 
-export const defaultMountContainerId = 'root-subapp';
-
 // @formatter:off
 export const noop = () => {};
 // @formatter:on
