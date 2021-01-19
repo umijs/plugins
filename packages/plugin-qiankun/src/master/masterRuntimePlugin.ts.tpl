@@ -7,7 +7,7 @@ import { prefetchApps, registerMicroApps, start } from 'qiankun';
 // @ts-ignore
 import { ApplyPluginsType, plugin, getMicroAppRouteComponent } from 'umi';
 
-import { noop, patchMicroAppRoute, testPathWithPrefix, toArray } from './common';
+import { defaultMountContainerId, noop, patchMicroAppRoute, testPathWithPrefix, toArray } from './common';
 import { defaultHistoryType } from './constants';
 import { getMasterOptions, setMasterOptions } from './masterOptions';
 // @ts-ignore
@@ -141,7 +141,6 @@ async function useLegacyRegisterMode(
     'sub apps must be config when using umi-plugin-qiankun',
   );
 
-  const defaultMountContainerId = 'root-subapp';
   registerMicroApps(
     apps.map(
       ({

@@ -7,6 +7,7 @@ import modifyRoutes from './modifyRoutes';
 import { hasExportWithName } from './utils';
 import {
   defaultHistoryType,
+  defaultMasterRootId,
   qiankunStateForSlaveModelNamespace,
 } from '../constants';
 
@@ -28,6 +29,7 @@ export default function(api: IApi) {
 
   api.modifyDefaultConfig(config => ({
     ...config,
+    mountElementId: defaultMasterRootId,
     disableGlobalVariables: true,
     qiankun: {
       ...config.qiankun,
