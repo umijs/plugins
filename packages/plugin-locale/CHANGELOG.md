@@ -1,6 +1,18 @@
 # Change Log
 
-All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [0.10.8](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.7...@umijs/plugin-locale@0.10.8) (2021-01-19)
+
+
+### Bug Fixes
+
+* **locale:** unused return statement ([#513](https://github.com/umijs/plugins/issues/513)) ([05251df](https://github.com/umijs/plugins/commit/05251df6e33a58084fcd5b7d36d8e0cb60f7f07e))
+
+
+
+
 
 ## [0.10.7](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.6...@umijs/plugin-locale@0.10.7) (2021-01-13)
 
