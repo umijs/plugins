@@ -1,5 +1,5 @@
 import React from 'react';
-import { getCreateHistoryOptions, MicroApp } from 'umi';
+import * as umi from 'umi';
 
 export function getMicroAppRouteComponent(opts: {
   appName: string;
@@ -8,6 +8,7 @@ export function getMicroAppRouteComponent(opts: {
   routeProps?: any;
 }) {
   const { base, masterHistoryType, appName, routeProps } = opts;
+  const { getCreateHistoryOptions, MicroApp } = umi;
   const RouteComponent = ({ match }: any) => {
     const { url } = match;
 
