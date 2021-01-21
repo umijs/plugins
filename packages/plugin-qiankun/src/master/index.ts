@@ -3,13 +3,9 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 // eslint-disable-next-line import/no-unresolved
 import { IApi, utils } from 'umi';
+import { defaultHistoryType, defaultMasterRootId, qiankunStateForSlaveModelNamespace } from '../constants';
 import modifyRoutes from './modifyRoutes';
 import { hasExportWithName } from './utils';
-import {
-  defaultHistoryType,
-  defaultMasterRootId,
-  qiankunStateForSlaveModelNamespace,
-} from '../constants';
 
 const { getFile, winPath } = utils;
 
@@ -134,9 +130,12 @@ export default function(api: IApi) {
 
     api.writeTmpFile({
       path: 'plugin-qiankun/getMicroAppRouteComponent.ts',
-      content: readFileSync(
-        join(__dirname, 'getMicroAppRouteComponent.ts.tpl'),
-        'utf-8',
+      content: utils.Mustache.render(
+        readFileSync(
+          join(__dirname, 'getMicroAppRouteComponent.ts.tpl'),
+          'utf-8',
+        ),
+        { runtimeHistory: api.config.runtimeHistory },
       ),
     });
   });
