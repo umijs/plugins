@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.21.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.21.0...@umijs/plugin-qiankun@2.21.1) (2021-01-21)
+
+
+### Bug Fixes
+
+* 修复启动阶段的 warning ([#517](https://github.com/umijs/plugins/issues/517)) ([97f3ee4](https://github.com/umijs/plugins/commit/97f3ee47d33df73f45d58d0b384942960a261f2c))
+
+
+
+
+
 # [2.21.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.20.0...@umijs/plugin-qiankun@2.21.0) (2021-01-19)
 
 
