@@ -8,7 +8,11 @@ export default (api: IApi) => {
     key: 'openApi',
     config: {
       schema(joi) {
-        return joi.object();
+        return joi.object({
+          requestLibPath: joi.string(),
+          schemaPath: joi.string(),
+          mock: joi.boolean(),
+        });
       },
     },
     enableBy: api.EnableBy.config,
@@ -17,7 +21,7 @@ export default (api: IApi) => {
   api.registerCommand({
     name: 'openapi',
     fn: async () => {
-      const openAPIConfig = api.config.openapi;
+      const openAPIConfig = api.config.openApi;
       const pageConfig = require(join(api.cwd, 'package.json'));
       const mockFolder = openAPIConfig.mock
         ? join(api.cwd, 'mocks')

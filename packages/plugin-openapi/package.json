@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-openapi",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0",
   "description": "@umijs/plugin-openapi",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
