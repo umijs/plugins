@@ -5,7 +5,7 @@ import { existsSync, mkdirSync } from 'fs';
 
 export default (api: IApi) => {
   api.describe({
-    key: 'openApi',
+    key: 'openAPI',
     config: {
       schema(joi) {
         return joi.object({
@@ -21,7 +21,7 @@ export default (api: IApi) => {
   api.registerCommand({
     name: 'openapi',
     fn: async () => {
-      const openAPIConfig = api.config.openApi;
+      const openAPIConfig = api.config.openAPI;
       const pageConfig = require(join(api.cwd, 'package.json'));
       const mockFolder = openAPIConfig.mock
         ? join(api.cwd, 'mocks')
