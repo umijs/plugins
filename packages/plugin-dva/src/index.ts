@@ -108,14 +108,14 @@ export default (api: IApi) => {
             .map((path, index) => {
               return `const Model${lodash.upperFirst(
                 lodash.camelCase(basename(path, extname(path))),
-              )}${index} = await import('${path}');`;
+              )}${index} = (await import('${path}')).default;`;
             })
             .join('\r\n'),
           RegisterModels: models
             .map((path, index) => {
               // prettier-ignore
               return `
-app.model({ namespace: '${basename(path, extname(path))}', ...Model${lodash.upperFirst(lodash.camelCase(basename(path, extname(path))))}${index}.default });
+app.model({ namespace: '${basename(path, extname(path))}', ...Model${lodash.upperFirst(lodash.camelCase(basename(path, extname(path))))}${index} });
           `.trim();
             })
             .join('\r\n'),
