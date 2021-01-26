@@ -70,6 +70,9 @@ export class _DvaContainer extends Component {
 
   render() {
     const app = getApp();
+    if (!app) {
+      return null;
+    }
     app.router(() => this.props.children);
     return app.start()();
   }
