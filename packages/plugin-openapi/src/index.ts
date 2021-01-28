@@ -12,6 +12,7 @@ export default (api: IApi) => {
           requestLibPath: joi.string(),
           schemaPath: joi.string(),
           mock: joi.boolean(),
+          projectName: joi.string(),
         });
       },
     },
@@ -23,10 +24,8 @@ export default (api: IApi) => {
     fn: async () => {
       const openAPIConfig = api.config.openAPI;
       const pageConfig = require(join(api.cwd, 'package.json'));
-      const mockFolder = openAPIConfig.mock
-        ? join(api.cwd, 'mocks')
-        : undefined;
-      const serversFolder = join(api.cwd, 'src', 'servers');
+      const mockFolder = openAPIConfig.mock ? join(api.cwd, 'mock') : undefined;
+      const serversFolder = join(api.cwd, 'src', 'services');
       // 如果mock 文件不存在，创建一下
       if (mockFolder && !existsSync(mockFolder)) {
         mkdirSync(mockFolder);
