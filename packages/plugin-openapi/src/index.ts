@@ -59,7 +59,7 @@ export default App;
     api.modifyRoutes((routes) => {
       return [
         {
-          path: 'umi/plugin/openapi',
+          path: '/umi/plugin/openapi',
           component: join(absTmpPath!, 'plugin-openapi', 'openapi.tsx'),
         },
         ...routes,
@@ -70,7 +70,7 @@ export default App;
   api.onDevCompileDone(async () => {
     try {
       const openAPIConfig = api.config.openAPI;
-      const openAPIJson = getSchema(openAPIConfig.schemaPath);
+      const openAPIJson = await getSchema(openAPIConfig.schemaPath);
       writeFileSync(
         join(openAPIFilesPath, 'umi-plugins_openapi.json'),
         JSON.stringify(openAPIJson, null, 2),
