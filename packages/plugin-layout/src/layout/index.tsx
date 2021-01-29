@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // @ts-ignore
-import { Link, useModel, history, formatMessage } from 'umi';
+import { Link, useModel, history } from 'umi';
 import ProLayout, { BasicLayoutProps } from '@ant-design/pro-layout';
 import './style.less';
 import renderRightContent from './renderRightContent';
