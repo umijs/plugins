@@ -16,7 +16,7 @@ export function isSlaveEnable(api: IApi) {
   );
 }
 
-export default function(api: IApi) {
+export default function (api: IApi) {
   api.describe({
     enableBy: () => isSlaveEnable(api),
   });
@@ -34,7 +34,7 @@ export default function(api: IApi) {
   });
 
   // eslint-disable-next-line import/no-dynamic-require, global-require
-  api.modifyDefaultConfig(memo => {
+  api.modifyDefaultConfig((memo) => {
     const initialSlaveOptions: SlaveOptions = {
       ...JSON.parse(process.env.INITIAL_QIANKUN_SLAVE_OPTIONS || '{}'),
       ...(memo.qiankun || {}).slave,
@@ -62,15 +62,16 @@ export default function(api: IApi) {
     return modifiedDefaultConfig;
   });
 
-  api.modifyPublicPathStr(publicPathStr => {
+  api.modifyPublicPathStr((publicPathStr) => {
     const { runtimePublicPath } = api.config;
     const { shouldNotModifyRuntimePublicPath } = (
       api.config.qiankun || {}
     ).slave!;
 
     if (runtimePublicPath === true && !shouldNotModifyRuntimePublicPath) {
-      return `window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || "${api.config
-        .publicPath || '/'}"`;
+      return `window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || "${
+        api.config.publicPath || '/'
+      }"`;
     }
 
     return publicPathStr;
@@ -90,7 +91,7 @@ export default function(api: IApi) {
   });
 
   // umi bundle 添加 entry 标记
-  api.modifyHTML($ => {
+  api.modifyHTML(($) => {
     $('script').each((_, el) => {
       const scriptEl = $(el);
       const umiEntryJs = /\/?umi(\.\w+)?\.js$/g;
@@ -199,7 +200,7 @@ function useLegacyMode(api: IApi) {
       export function useRootExports() {
         if (process.env.NODE_ENV === 'development') {
           console.error(
-            '[@umijs/plugin-qiankun] Deprecated: useRootExports 通信方式不再推荐，建议您升级到新的应用通信模式，以获得更好的开发体验。详见 https://umijs.org/plugins/plugin-qiankun#%E7%88%B6%E5%AD%90%E5%BA%94%E7%94%A8%E9%80%9A%E8%AE%AF',
+            '[@umijs/plugin-qiankun] Deprecated: useRootExports 通信方式不再推荐，并将在后续版本中移除，请尽快升级到新的应用通信模式，以获得更好的开发体验。详见 https://umijs.org/plugins/plugin-qiankun#%E7%88%B6%E5%AD%90%E5%BA%94%E7%94%A8%E9%80%9A%E8%AE%AF',
           );
         }
         return useContext(Context);
@@ -218,7 +219,7 @@ function useLegacyMode(api: IApi) {
     },
   ]);
 
-  api.modifyRoutes(routes => {
+  api.modifyRoutes((routes) => {
     // 开启keepOriginalRoutes配置
     if (keepOriginalRoutes === true || isString(keepOriginalRoutes)) {
       return addSpecifyPrefixedRoute(routes, keepOriginalRoutes, api.pkg.name);
