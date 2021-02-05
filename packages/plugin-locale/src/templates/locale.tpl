@@ -27,12 +27,12 @@ export function _onCreate() {
   setIntl(locale);
 }
 
-const useIsomorphicLayoutEffect = 
- typeof window !== 'undefined' && 
- typeof window.document !== 'undefined' && 
- typeof window.document.createElement !== 'undefined' 
-   ? React.useLayoutEffect 
-   : React.useEffect 
+const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' &&
+  typeof window.document !== 'undefined' &&
+  typeof window.document.createElement !== 'undefined'
+    ? React.useLayoutEffect
+    : React.useEffect
 
 export const _LocaleContainer = (props:any) => {
   const [locale, setLocale] = React.useState(() => getLocale());
