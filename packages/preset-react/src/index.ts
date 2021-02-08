@@ -10,6 +10,7 @@ export default () => {
       require.resolve('@umijs/plugin-initial-state'),
       require.resolve('@umijs/plugin-locale'),
       require.resolve('@umijs/plugin-layout'),
+      require.resolve('@umijs/plugin-lodash'),
       require.resolve('@umijs/plugin-model'),
       require.resolve('@umijs/plugin-request'),
       require.resolve('@umijs/plugin-test'),
