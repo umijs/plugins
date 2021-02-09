@@ -33,6 +33,7 @@ export type MasterOptions = {
 } & FrameworkConfiguration;
 
 export type SlaveOptions = {
+  devSourceMap?: boolean;
   keepOriginalRoutes?: boolean | string;
   shouldNotModifyRuntimePublicPath?: boolean;
   shouldNotModifyDefaultBase?: boolean;

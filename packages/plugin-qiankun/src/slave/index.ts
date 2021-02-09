@@ -36,6 +36,7 @@ export default function (api: IApi) {
   // eslint-disable-next-line import/no-dynamic-require, global-require
   api.modifyDefaultConfig((memo) => {
     const initialSlaveOptions: SlaveOptions = {
+      devSourceMap: true,
       ...JSON.parse(process.env.INITIAL_QIANKUN_SLAVE_OPTIONS || '{}'),
       ...(memo.qiankun || {}).slave,
     };
@@ -114,16 +115,19 @@ export default function (api: IApi) {
     // 变更 webpack-dev-server websocket 默认监听地址
     process.env.SOCKET_SERVER = `${protocol}://${localHostname}:${port}/`;
     api.chainWebpack((memo, { webpack }) => {
-      // 禁用 devtool，启用 SourceMapDevToolPlugin
-      memo.devtool(false);
-      memo.plugin('source-map').use(webpack.SourceMapDevToolPlugin, [
-        {
-          // @ts-ignore
-          namespace: api.pkg.name,
-          append: `\n//# sourceMappingURL=${protocol}://${localHostname}:${port}/[url]`,
-          filename: '[file].map',
-        },
-      ]);
+      // 开启了 devSourceMap 配置，默认为 true
+      if (api.config.qiankun && api.config.qiankun.slave!.devSourceMap) {
+        // 禁用 devtool，启用 SourceMapDevToolPlugin
+        memo.devtool(false);
+        memo.plugin('source-map').use(webpack.SourceMapDevToolPlugin, [
+          {
+            // @ts-ignore
+            namespace: api.pkg.name,
+            append: `\n//# sourceMappingURL=${protocol}://${localHostname}:${port}/[url]`,
+            filename: '[file].map',
+          },
+        ]);
+      }
       return memo;
     });
   }
