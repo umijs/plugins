@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.22.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.21.2...@umijs/plugin-qiankun@2.22.0) (2021-02-09)
+
+
+### Features
+
+* 增加 devSourceMap 配置用于关闭开发阶段 sourcemap 插件 ([#536](https://github.com/umijs/plugins/issues/536)) ([1441b19](https://github.com/umijs/plugins/commit/1441b1997ffbf66b3d7d9c172348583783d5f4df))
+
+
+
+
+
 ## [2.21.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.21.1...@umijs/plugin-qiankun@2.21.2) (2021-01-21)
 
 
