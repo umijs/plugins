@@ -31,7 +31,6 @@
     "@umijs/plugin-access": "2.3.3",
     "@umijs/plugin-analytics": "0.2.2",
     "@umijs/plugin-antd": "0.9.1",
-    "@umijs/plugin-lodash": "1.0.0-beta.1",
     "@umijs/plugin-crossorigin": "1.2.0",
     "@umijs/plugin-dva": "0.10.0",
     "@umijs/plugin-helmet": "1.1.1",
