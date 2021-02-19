@@ -19,6 +19,7 @@ export function modifyClientRenderOpts(memo: any) {
   if (clientRenderOpts) {
     const history = clientRenderOpts.getHistory();
     delete clientRenderOpts.getHistory;
+    delete clientRenderOpts.rootElement;
     clientRenderOpts.history = history;
   }
 
