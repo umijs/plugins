@@ -27,6 +27,13 @@ export function _onCreate() {
   setIntl(locale);
 }
 
+const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' &&
+  typeof window.document !== 'undefined' &&
+  typeof window.document.createElement !== 'undefined'
+    ? React.useLayoutEffect
+    : React.useEffect
+
 export const _LocaleContainer = (props:any) => {
   const [locale, setLocale] = React.useState(() => getLocale());
   const [intl, setContainerIntl] = React.useState(() => getIntl(locale, true));
@@ -41,7 +48,7 @@ export const _LocaleContainer = (props:any) => {
     setContainerIntl(getIntl(locale));
   };
 
-  React.useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     event.on(LANG_CHANGE_EVENT, handleLangChange);
     {{#Title}}
     // avoid reset route title
