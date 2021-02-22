@@ -186,34 +186,40 @@ export const setLocale = (lang: string, realReload: boolean = true) => {
     type: ApplyPluginsType.modify,
     initialValue: {},
   });
+
+  const updater = () => {
+    if (lang !== undefined && !localeExp.test(lang)) {
+      // for reset when lang === undefined
+      throw new Error('setLocale lang format error');
+    }
+    if (getLocale() !== lang) {
+      if (typeof window.localStorage !== 'undefined' && useLocalStorage) {
+        window.localStorage.setItem('umi_locale', lang || '');
+      }
+      setIntl(lang);
+      if (realReload) {
+        window.location.reload();
+      } else {
+        event.emit(LANG_CHANGE_EVENT, lang);
+        // chrome 不支持这个事件。所以人肉触发一下
+        if (window.dispatchEvent) {
+          const event = new Event('languagechange');
+          window.dispatchEvent(event);
+        }
+      }
+    }
+  }
+
   if (typeof runtimeLocale?.setLocale === 'function') {
     runtimeLocale.setLocale({
       lang,
       realReload,
-      updater: (updateLang = lang) => event.emit(LANG_CHANGE_EVENT, updateLang),
+      updater: updater,
     });
     return;
   }
-  if (lang !== undefined && !localeExp.test(lang)) {
-    // for reset when lang === undefined
-    throw new Error('setLocale lang format error');
-  }
-  if (getLocale() !== lang) {
-    if (typeof window.localStorage !== 'undefined' && useLocalStorage) {
-      window.localStorage.setItem('umi_locale', lang || '');
-    }
-    setIntl(lang);
-    if (realReload) {
-      window.location.reload();
-    } else {
-      event.emit(LANG_CHANGE_EVENT, lang);
-      // chrome 不支持这个事件。所以人肉触发一下
-      if (window.dispatchEvent) {
-        const event = new Event('languagechange');
-        window.dispatchEvent(event);
-      }
-    }
-  }
+  
+  updater();
 };
 
 let firstWaring = true;
