@@ -1,9 +1,0 @@
-{
-  "public": "dist",
-  "rewrites": [
-    {
-      "source": "/app2/*",
-      "destination": "/app2/index.html"
-    }
-  ]
-}

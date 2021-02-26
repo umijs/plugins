@@ -1,5 +1,0 @@
-
-function getInitialState() {
-}
-
-export { getInitialState };
