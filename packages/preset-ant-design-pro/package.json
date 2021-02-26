@@ -1,0 +1,35 @@
+{
+  "name": "@umijs/preset-ant-design-pro",
+  "version": "1.3.0",
+  "description": "@umijs/preset-ant-design-pro",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/umijs/plugins"
+  },
+  "keywords": [
+    "umi"
+  ],
+  "authors": [
+    "ycjcl868"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/umijs/plugins/issues",
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/preset-ant-design-pro#readme",
+  "peerDependencies": {
+    "umi": "3.x"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@umijs/plugin-block-devtool": "1.2.3",
+    "umi-plugin-antd-icon-config": "^2.0.0",
+    "umi-plugin-pro-block": "^2.0.1"
+  }
+}

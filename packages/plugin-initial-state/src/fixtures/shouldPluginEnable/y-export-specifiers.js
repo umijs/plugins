@@ -1,0 +1,5 @@
+
+function getInitialState() {
+}
+
+export { getInitialState };

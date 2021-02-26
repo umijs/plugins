@@ -1,0 +1,31 @@
+{
+  "name": "@umijs/plugin-initial-state",
+  "version": "2.3.0",
+  "description": "@umijs/plugin-initial-state",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/umijs/plugins"
+  },
+  "keywords": [
+    "umi"
+  ],
+  "authors": [
+    "Troy Li <a@tianyi.li>",
+    "chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/umijs/plugins/issues",
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-initial-state#readme",
+  "peerDependencies": {
+    "umi": "3.x"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

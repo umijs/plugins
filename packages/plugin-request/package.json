@@ -1,0 +1,34 @@
+{
+  "name": "@umijs/plugin-request",
+  "version": "2.5.2",
+  "description": "@umijs/plugin-request",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/umijs/plugins"
+  },
+  "keywords": [
+    "umi"
+  ],
+  "authors": [
+    "yutingzhao1991 <yutingzhao1991@sina.com> (https://github.com/yutingzhao1991)"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/umijs/plugins/issues",
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-request#readme",
+  "peerDependencies": {
+    "umi": "3.x"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@ahooksjs/use-request": "^2.0.0",
+    "umi-request": "^1.2.14"
+  }
+}
