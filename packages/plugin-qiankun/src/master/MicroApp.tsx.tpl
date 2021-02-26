@@ -10,7 +10,9 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 // @ts-ignore
 import { useModel, History } from 'umi';
-import { concat, mergeWith, noop } from 'lodash';
+import concat from 'lodash/concat';
+import mergeWith from 'lodash/mergeWith';
+import noop from 'lodash/noop';
 import { BrowserHistoryBuildOptions, HashHistoryBuildOptions, MemoryHistoryBuildOptions, } from 'history-with-query';
 
 const qiankunStateForSlaveModelNamespace = '@@qiankunStateForSlave';
