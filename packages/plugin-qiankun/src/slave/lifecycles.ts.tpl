@@ -42,8 +42,8 @@ function normalizeHistory(
   return normalizedHistory;
 }
 
-function getSlaveRuntime() {
-  const config = plugin.applyPlugins({
+async function getSlaveRuntime() {
+  const config = await plugin.applyPlugins({
     key: 'qiankun',
     type: ApplyPluginsType.modify,
     initialValue: {},
@@ -55,7 +55,7 @@ function getSlaveRuntime() {
 
 export function genBootstrap(oldRender: typeof noop) {
   return async (props: any) => {
-    const slaveRuntime = getSlaveRuntime();
+    const slaveRuntime = await getSlaveRuntime();
     if (slaveRuntime.bootstrap) {
       await slaveRuntime.bootstrap(props);
     }
