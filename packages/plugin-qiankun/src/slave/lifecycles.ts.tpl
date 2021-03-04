@@ -47,6 +47,7 @@ async function getSlaveRuntime() {
     key: 'qiankun',
     type: ApplyPluginsType.modify,
     initialValue: {},
+    async: true,
   });
   // 应用既是 master 又是 slave 的场景，运行时 slave 配置方式为 export const qiankun = { slave: {} }
   const { slave } = config;
