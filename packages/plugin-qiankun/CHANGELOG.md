@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.22.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.22.0...@umijs/plugin-qiankun@2.22.1) (2021-03-04)
+
+
+### Bug Fixes
+
+* make getSlaveRuntime function asynchronous ([#548](https://github.com/umijs/plugins/issues/548)) ([6cee8e6](https://github.com/umijs/plugins/commit/6cee8e6c44e5f291941bf643c1cd69c27aae739f))
+* **qiankun:** lodash bundled all ([#534](https://github.com/umijs/plugins/issues/534)) ([ebb7a68](https://github.com/umijs/plugins/commit/ebb7a68fdc72d1d27ae26eb75ccb12fb4439daa0))
+
+
+
+
+
 # [2.22.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.21.2...@umijs/plugin-qiankun@2.22.0) (2021-02-09)
 
 

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.9](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.8...@umijs/plugin-locale@0.10.9) (2021-03-04)
+
+
+### Bug Fixes
+
+* useLayoutEffect will be warning in ssr mode ([#533](https://github.com/umijs/plugins/issues/533)) ([2b2c169](https://github.com/umijs/plugins/commit/2b2c16996fd228ecab411d916f8ab255d1982416))
+* when has runtimeLocale.setLocale setLocale not work ([#543](https://github.com/umijs/plugins/issues/543)) ([afc144c](https://github.com/umijs/plugins/commit/afc144c282d0156626432ce167dcf9ac3023ca98))
+
+
+
+
+
 ## [0.10.8](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.7...@umijs/plugin-locale@0.10.8) (2021-01-19)
 
 

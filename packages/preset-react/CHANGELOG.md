@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.7.13...@umijs/preset-react@1.8.0) (2021-03-04)
+
+
+### Features
+
+* **lodash:** on demand loaded ([#535](https://github.com/umijs/plugins/issues/535)) ([0dd2998](https://github.com/umijs/plugins/commit/0dd29985bf4a9669ea43606c876c8dec3f35178a))
+
+
+### Reverts
+
+* Revert "feat(lodash): on demand loaded (#535)" (#539) ([d931276](https://github.com/umijs/plugins/commit/d93127667e2c696b410312f59f883f4e887eb6ff)), closes [#535](https://github.com/umijs/plugins/issues/535) [#539](https://github.com/umijs/plugins/issues/539)
+
+
+
+
+
 ## [1.7.13](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.7.12...@umijs/preset-react@1.7.13) (2021-01-19)
 
 **Note:** Version bump only for package @umijs/preset-react
