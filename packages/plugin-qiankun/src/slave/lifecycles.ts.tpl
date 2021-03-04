@@ -69,7 +69,7 @@ export function genMount(mountElementId: string) {
     if (typeof props !== 'undefined') {
       setModelState(props);
 
-      const slaveRuntime = getSlaveRuntime();
+      const slaveRuntime = await getSlaveRuntime();
       if (slaveRuntime.mount) {
         await slaveRuntime.mount(props);
       }
@@ -125,7 +125,7 @@ export function genUpdate() {
   return async (props: any) => {
     setModelState(props);
 
-    const slaveRuntime = getSlaveRuntime();
+    const slaveRuntime = await getSlaveRuntime();
     if (slaveRuntime.update) {
       await slaveRuntime.update(props);
     }
@@ -141,7 +141,7 @@ export function genUnmount(mountElementId: string) {
       ReactDOM.unmountComponentAtNode(container);
     }
 
-    const slaveRuntime = getSlaveRuntime();
+    const slaveRuntime = await getSlaveRuntime();
     if (slaveRuntime.unmount) await slaveRuntime.unmount(props);
   };
 }
