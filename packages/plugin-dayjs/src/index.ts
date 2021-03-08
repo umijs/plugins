@@ -6,7 +6,11 @@ export default (api: IApi) => {
     key: 'dayjs',
     config: {
       schema(joi) {
-        return joi.object();
+        return joi.object({
+          plugins: joi.array(),
+          replaceMoment: joi.boolean(),
+          preset: joi.string(),
+        });
       },
     },
   });
