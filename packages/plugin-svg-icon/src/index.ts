@@ -14,6 +14,7 @@ export default (api: IApi) => {
   const srcDir = api.paths.absSrcPath;
   const svgsDir = join(srcDir!, 'assets/svgs');
   const svgoConfigFile = api.utils.winPath(join(srcDir!, 'svgo-config.json'));
+  const svgoDefaultIcon = join(api.cwd!, '../svgo-config.json');
   api.chainWebpack((config) => {
     // 默认的svg的模块规则中不去匹配src/assets/svgs，避免此文件中的内容使用默认的url-loader的加载形式
     config.module.rule('svg').exclude.add(svgsDir).end();
@@ -30,7 +31,9 @@ export default (api: IApi) => {
       .end()
       .use('svgo-loader')
       .loader('svgo-loader')
-      .options(api.config.svgIcon.svgoConfig || svgoConfigFile);
+      .options(
+        api.config.svgIcon.svgoConfig || svgoConfigFile || svgoDefaultIcon,
+      );
     return config;
   });
 };
