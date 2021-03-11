@@ -20,15 +20,18 @@ $ yarn add @umijs/plugin-svg-icon --dev
 
 ## 功能
 
-自动配置 svg-loader 和 svg 雪碧图
+自动配置 svgo 并将 svg 打包为 svg 雪碧图
 
 ## 使用方法
 
 在.umirc 配置文件中配置开启插件
 
 ```js
- svgIcon: {},
+svgIcon: {
+}
 ```
+
+如果想要自己配置 svgo 配置，可以在.umirc 配置文件同级下增加 svgo-config.json
 
 实际使用：
 
