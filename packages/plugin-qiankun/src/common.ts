@@ -28,7 +28,9 @@ function testPathWithStaticPrefix(pathPrefix: string, realPath: string) {
 function testPathWithDynamicRoute(dynamicRoute: string, realPath: string) {
   // FIXME 这个是旧的使用方式才会调到的 api，先临时这么苟一下消除报错，引导用户去迁移吧
   const pathToRegexp = require('path-to-regexp');
-  return pathToRegexp(dynamicRoute, { strict: true, end: false }).test(realPath);
+  return pathToRegexp(dynamicRoute, { strict: true, end: false }).test(
+    realPath,
+  );
 }
 
 export function testPathWithPrefix(pathPrefix: string, realPath: string) {
@@ -59,9 +61,14 @@ export function patchMicroAppRoute(
     route[`${routeBindingAlias}Props`] || route.microAppProps || {};
   if (microAppName) {
     if (route.routes?.length) {
-      throw new Error(
-        '[@umijs/plugin-qiankun]: You can not attach micro app to a route who has children!',
+      const childrenRouteHasComponent = route.routes.some(
+        (r: any) => r.component,
       );
+      if (childrenRouteHasComponent) {
+        throw new Error(
+          `[@umijs/plugin-qiankun]: You can not attach micro app ${microAppName} to route ${route.path} whose children has own component!`,
+        );
+      }
     }
 
     route.exact = false;
