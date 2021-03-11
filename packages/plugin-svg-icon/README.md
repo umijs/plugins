@@ -24,12 +24,7 @@ $ yarn add @umijs/plugin-svg-icon --dev
 
 ## 使用方法
 
-在.umirc 配置文件中配置开启插件
-
-```js
-svgIcon: {
-}
-```
+安装即可开启
 
 如果想要自己配置 svgo 配置，可以在.umirc 配置文件同级下增加 svgo-config.json
 
@@ -43,13 +38,14 @@ const req = require.context('./assets/svgs', false, /\.svg$/);
 requireAll(req);
 
 export const Icon = forwardRef((props, ref) => {
-  const { type, className, ...htmlProps } = props;
+  const { type, className, link, ...htmlProps } = props;
   const iconName = `#icon-${type}`;
   const iconClassName = classNames(
     'svg-icon',
     `svg-icon-${props.type}`,
     className,
   );
+  const Parent = link ? 'a' : 'i';
   const icon = (
     <Parent ref={ref} className={iconClassName} {...htmlProps}>
       <svg aria-hidden="true">
