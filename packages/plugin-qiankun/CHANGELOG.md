@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.23.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.22.1...@umijs/plugin-qiankun@2.23.0) (2021-03-11)
+
+
+### Features
+
+* 支持微应用配置嵌套的子路由 ([#552](https://github.com/umijs/plugins/issues/552)) ([7a7f77b](https://github.com/umijs/plugins/commit/7a7f77b43658d23723794931d9cf6fe6bce23a8f))
+
+
+
+
+
 ## [2.22.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.22.0...@umijs/plugin-qiankun@2.22.1) (2021-03-04)
 
 
