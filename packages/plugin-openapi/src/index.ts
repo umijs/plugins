@@ -41,17 +41,20 @@ export default (api: IApi) => {
     api.writeTmpFile({
       path: join('plugin-openapi', 'openapi.tsx'),
       content: `
-import SwaggerUI from 'swagger-ui-react';
-import 'swagger-ui-react/swagger-ui.css';
-import { Card } from 'antd';
-      
+import SwaggerUI from "swagger-ui-react";
+import "swagger-ui-react/swagger-ui.css";
+
 const App = () => (
-  <Card>
+  <div
+    style={{
+      padding: 24,
+    }}
+  >
     <SwaggerUI url="/umi-plugins_openapi.json" />
-  </Card>
+  </div>
 );
 export default App;
-      `,
+`,
     });
   });
 
