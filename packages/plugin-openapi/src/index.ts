@@ -63,7 +63,9 @@ export default App;
       return [
         {
           path: '/umi/plugin/openapi',
-          component: join(absTmpPath!, 'plugin-openapi', 'openapi.tsx'),
+          component: api.utils.winPath(
+            join(absTmpPath!, 'plugin-openapi', 'openapi.tsx'),
+          ),
         },
         ...routes,
       ];
