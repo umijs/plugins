@@ -12,6 +12,8 @@ export type App = {
   entry: string | { scripts: string[]; styles: string[] };
   base?: string | string[];
   history?: HistoryType;
+  // 取 entry 时是否需要开启跨域 credentials
+  credentials?: boolean;
   props?: any;
 } & Pick<BaseIConfig, 'mountElementId'>;
 

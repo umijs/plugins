@@ -5,7 +5,7 @@ import { IRouteProps } from '@umijs/types';
 import assert from 'assert';
 import { prefetchApps, registerMicroApps, start } from 'qiankun';
 // @ts-ignore
-import { ApplyPluginsType, plugin, getMicroAppRouteComponent } from 'umi';
+import { ApplyPluginsType, getMicroAppRouteComponent, plugin } from 'umi';
 
 import { defaultMountContainerId, noop, patchMicroAppRoute, testPathWithPrefix, toArray } from './common';
 import { defaultHistoryType } from './constants';
@@ -28,28 +28,50 @@ async function getMasterRuntime() {
 let microAppRuntimeRoutes: MicroAppRoute[];
 
 export async function render(oldRender: typeof noop) {
-  const masterOptions = getMasterOptions();
   const runtimeOptions = await getMasterRuntime();
+  let masterOptions: MasterOptions = { ...getMasterOptions(), ...runtimeOptions };
 
-  setMasterOptions({ ...masterOptions, ...runtimeOptions });
-  const { apps, routes, ...options } = getMasterOptions() as MasterOptions;
+  const credentialsApps = masterOptions.apps.filter(app => app.credentials);
+  if (credentialsApps.length) {
+    const defaultFetch = masterOptions.fetch || window.fetch;
+    const fetchWithCredentials = (url: string, init?: RequestInit) => {
+      // 如果当前 url 为 credentials 应用的 entry，则为其加上 cors 相关配置
+      if (credentialsApps.some(app => app.entry === url)) {
+        return defaultFetch(url, {
+          ...init,
+          mode: 'cors',
+          credentials: 'include',
+        });
+      }
+
+      return defaultFetch(url, init);
+    };
+
+    // 设置新的 fetch
+    masterOptions = { ...masterOptions, fetch: fetchWithCredentials };
+  }
+
+  // 更新 master options
+  setMasterOptions(masterOptions);
+
+  const { apps, routes, ...options } = masterOptions;
   microAppRuntimeRoutes = routes;
 
   // 主应用相关的配置注册完毕后即可开启渲染
   oldRender();
-
-  // 使用了 base 配置的应用为可注册应用
-  const registrableApps = apps.filter(app => app.base);
-  if (registrableApps.length) {
-    // 不要在 oldRender 调用之前调用 useRegisterMode 方法，因为里面可能会 await defer promise 从而造成死锁
-    await useLegacyRegisterMode(registrableApps, options);
-  }
 
   // 未使用 base 配置的可以认为是路由关联或者使用标签装载的应用
   const loadableApps = apps.filter(app => !app.base);
   if (loadableApps.length) {
     const { prefetch, ...importEntryOpts } = options;
     if (prefetch) prefetchApps(loadableApps, importEntryOpts);
+  }
+
+  // 使用了 base 配置的应用为可注册应用
+  const registrableApps = apps.filter(app => app.base);
+  if (registrableApps.length) {
+    // 不要在 oldRender 调用之前调用 useRegisterMode 方法，因为里面可能会 await defer promise 从而造成死锁
+    await useLegacyRegisterMode(registrableApps, options);
   }
 }
 
