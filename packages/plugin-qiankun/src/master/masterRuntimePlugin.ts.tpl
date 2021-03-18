@@ -80,10 +80,7 @@ export function patchRoutes(opts: { routes: IRouteProps[] }) {
     const getRootRoutes = (routes: IRouteProps[]) => {
       const rootRoute = routes.find(route => route.path === '/');
       if (rootRoute) {
-        if (!rootRoute.routes) {
-          rootRoute.routes = [];
-        }
-        return rootRoute.routes;
+        return getRootRoutes(rootRoute.routes || []);
       }
 
       return routes;
