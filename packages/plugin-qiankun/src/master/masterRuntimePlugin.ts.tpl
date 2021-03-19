@@ -64,7 +64,9 @@ export async function render(oldRender: typeof noop) {
   const loadableApps = apps.filter(app => !app.base);
   if (loadableApps.length) {
     const { prefetch, ...importEntryOpts } = options;
-    if (prefetch) prefetchApps(loadableApps, importEntryOpts);
+    if (prefetch === 'all') {
+      prefetchApps(loadableApps, importEntryOpts);
+    }
   }
 
   // 使用了 base 配置的应用为可注册应用
