@@ -1,6 +1,18 @@
 # Change Log
 
-All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [0.14.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.14.0...@umijs/plugin-layout@0.14.1) (2021-03-19)
+
+
+### Bug Fixes
+
+* menuItem should support target ([#558](https://github.com/umijs/plugins/issues/558)) ([ec0f461](https://github.com/umijs/plugins/commit/ec0f46134b7a9002fcdd565d81e6582a2e63a840))
+
+
+
+
 
 # [0.14.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.13.5...@umijs/plugin-layout@0.14.0) (2021-03-15)
 
