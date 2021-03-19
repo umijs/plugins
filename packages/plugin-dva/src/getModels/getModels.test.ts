@@ -9,7 +9,7 @@ test('getModels', () => {
   const models = getModels({
     base,
   });
-  expect(models.map(m => relative(base, m))).toEqual([
+  expect(models.map((m) => relative(base, m))).toEqual([
     'b.js',
     'c.ts',
     'e.jsx',
@@ -23,7 +23,7 @@ test('getModels with opts.skipModelValidate', () => {
     base,
     skipModelValidate: true,
   });
-  expect(models.map(m => relative(base, m))).toEqual(['no_content.js']);
+  expect(models.map((m) => relative(base, m))).toEqual(['no_content.js']);
 });
 
 test('getModels with opts.extraModels', () => {
@@ -36,7 +36,7 @@ test('getModels with opts.extraModels', () => {
     ],
   });
   expect(
-    models.map(m => utils.winPath(relative(join(base, '..'), m))),
+    models.map((m) => utils.winPath(relative(join(base, '..'), m))),
   ).toEqual(['models-for-extraModels/a_valid.js']);
 });
 
@@ -51,9 +51,22 @@ test('getModels with opts.extraModels and opts.skipModelValidate', () => {
     skipModelValidate: true,
   });
   expect(
-    models.map(m => utils.winPath(relative(join(base, '..'), m))),
+    models.map((m) => utils.winPath(relative(join(base, '..'), m))),
   ).toEqual([
     'models-for-extraModels/a_valid.js',
     'models-for-extraModels/b_invalid.js',
   ]);
+});
+
+test('parser error when has jsx', () => {
+  const base = join(fixtures, 'jsx');
+  const filePath = join(base, 'a.jsx');
+  expect(() => {
+    getModels({
+      base,
+      skipModelValidate: false,
+    });
+  }).toThrow(
+    `Dva model ${filePath} validate failed, SyntaxError: Unterminated regular expression (3:26)`,
+  );
 });
