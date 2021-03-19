@@ -80,10 +80,12 @@ export function patchRoutes(opts: { routes: IRouteProps[] }) {
     const getRootRoutes = (routes: IRouteProps[]) => {
       const rootRoute = routes.find(route => route.path === '/');
       if (rootRoute) {
-        if (!rootRoute.routes) {
-          rootRoute.routes = [];
+        // 如果根路由是叶子节点，则直接返回其父节点
+        if (!rootRoute.routes?.length) {
+          return routes;
         }
-        return rootRoute.routes;
+
+        return getRootRoutes(rootRoute.routes);
       }
 
       return routes;
