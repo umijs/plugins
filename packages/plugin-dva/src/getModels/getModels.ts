@@ -1,10 +1,11 @@
 import { utils } from 'umi';
 import { readFileSync } from 'fs';
-import { join } from 'path';
+import { join, relative } from 'path';
 import { isValidModel } from './isValidModel';
 
 export function getModels(opts: {
   base: string;
+  cwd: string;
   pattern?: string;
   skipModelValidate?: boolean;
   extraModels?: string[];
@@ -32,7 +33,11 @@ export function getModels(opts: {
           content: readFileSync(f, 'utf-8'),
         });
       } catch (error) {
-        throw new Error(`Dva model ${f} validate failed, ${error}`);
+        throw new Error(
+          `Dva model ${utils.winPath(
+            relative(opts.cwd, f),
+          )} parse failed, ${error}`,
+        );
       }
     });
 }
