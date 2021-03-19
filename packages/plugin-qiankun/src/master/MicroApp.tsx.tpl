@@ -2,18 +2,15 @@
 import { getMasterOptions } from '@@/plugin-qiankun/masterOptions';
 // @ts-ignore
 import MicroAppLoader from '@@/plugin-qiankun/MicroAppLoader';
-import {
-  FrameworkConfiguration,
-  loadMicroApp,
-  MicroApp as MicroAppType,
-} from 'qiankun';
-import React, { useEffect, useRef, useState } from 'react';
-// @ts-ignore
-import { useModel, History } from 'umi';
+import { BrowserHistoryBuildOptions, HashHistoryBuildOptions, MemoryHistoryBuildOptions } from 'history-with-query';
 import concat from 'lodash/concat';
 import mergeWith from 'lodash/mergeWith';
 import noop from 'lodash/noop';
-import { BrowserHistoryBuildOptions, HashHistoryBuildOptions, MemoryHistoryBuildOptions, } from 'history-with-query';
+import { FrameworkConfiguration, loadMicroApp, MicroApp as MicroAppType, prefetchApps } from 'qiankun';
+import React, { useEffect, useRef, useState } from 'react';
+// @ts-ignore
+import { History, useModel } from 'umi';
+import { MasterOptions } from './types';
 
 const qiankunStateForSlaveModelNamespace = '@@qiankunStateForSlave';
 
@@ -49,13 +46,16 @@ function unmountMicroApp(microApp?: MicroAppType) {
   }
 }
 
+let noneMounted = true;
+
 export function MicroApp(componentProps: Props) {
   const {
     masterHistoryType,
     apps = [],
     lifeCycles: globalLifeCycles,
+    prefetch = true,
     ...globalSettings
-  } = getMasterOptions() as any;
+  } = getMasterOptions() as MasterOptions;
 
   const {
     name,
@@ -78,13 +78,17 @@ export function MicroApp(componentProps: Props) {
   const stateForSlave = (useModel || noop)(qiankunStateForSlaveModelNamespace);
   const { entry, props: propsFromConfig = {} } = appConfig;
 
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>();
   const microAppRef = useRef<MicroAppType>();
   const updatingPromise = useRef<Promise<any>>();
   const [loading, setLoading] = useState(true);
   const updatingTimestamp = useRef(Date.now());
 
   useEffect(() => {
+    const configuration = {
+      ...globalSettings,
+      ...settingsFromProps,
+    };
     microAppRef.current = loadMicroApp(
       {
         name,
@@ -92,17 +96,25 @@ export function MicroApp(componentProps: Props) {
         container: containerRef.current!,
         props: { ...propsFromConfig, ...stateForSlave, ...propsFromParams, setLoading },
       },
-      {
-        ...globalSettings,
-        ...settingsFromProps,
-      },
+      configuration,
       mergeWith(
         {},
         globalLifeCycles,
         lifeCycles,
-        (v1, v2) => concat(v1 ?? [], v2 ?? [])
+        (v1, v2) => concat(v1 ?? [], v2 ?? []),
       ),
     );
+
+    // 当配置了 prefetch true 时，在第一个应用 mount 完成之后，再去预加载其他应用
+    if (prefetch && prefetch !== 'all' && noneMounted) {
+      microAppRef.current?.mountPromise.then(() => {
+        if (noneMounted) {
+          const otherNotMountedApps = apps.filter(app => app.name !== name);
+          prefetchApps(otherNotMountedApps, configuration);
+          noneMounted = false;
+        }
+      });
+    }
 
     return () => unmountMicroApp(microAppRef.current);
   }, [name]);
