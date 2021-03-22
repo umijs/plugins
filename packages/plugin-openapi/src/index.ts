@@ -49,6 +49,7 @@ export default (api: IApi) => {
 
   api.onGenerateFiles(() => {
     const openAPIConfig = api.config.openAPI;
+    const arrayConfig = api.utils.lodash.flatten([openAPIConfig]);
     api.writeTmpFile({
       path: join('plugin-openapi', 'openapi.tsx'),
       content: `
@@ -72,8 +73,7 @@ const App = () => {
         }}
         onChange={(e) => setValue(e.target.value)}
       >
-        ${[openAPIConfig]
-          .flat(1)
+        ${arrayConfig
           .map((item) => {
             return `<option value="${item.projectName || 'openapi'}">${
               item.projectName || 'openapi'
