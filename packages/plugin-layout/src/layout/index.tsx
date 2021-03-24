@@ -66,7 +66,7 @@ const BasicLayout = (props: any) => {
     );
     // 动态路由匹配
     const currentPathConfig = getMatchMenu(location.pathname, menuData).pop();
-    setCurrentPathConfig(currentPathConfig || {});
+    setCurrentPathConfig(currentPathConfig);
   }, [location.pathname]);
 
   // layout 是否渲染相关
