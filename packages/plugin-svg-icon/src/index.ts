@@ -14,9 +14,12 @@ export default (api: IApi) => {
   const srcDir = api.paths.absSrcPath;
   const svgsDir = join(srcDir!, 'assets/svgs');
   let svgoConfigDirFile = null;
+  //项目根目录位置
   const svgoConfigDirFilePath = api.utils.winPath(
     join(srcDir!, '../svgo-config.json'),
   );
+  //插件根目录位置
+  const svgoConfigDefaultFilePath = api.utils.winPath('../svgo-config.json');
   try {
     svgoConfigDirFile = require.resolve(svgoConfigDirFilePath);
   } catch (e) {
@@ -26,8 +29,9 @@ export default (api: IApi) => {
       ),
     );
   }
-  const svgoConfigDefaultFile = require.resolve('./svgo-config.json');
+  const svgoConfigDefaultFile = require.resolve(svgoConfigDefaultFilePath);
   const svgoConfigFile = svgoConfigDirFile ?? svgoConfigDefaultFile;
+
   const svgoConfig = require(svgoConfigFile);
   api.chainWebpack((config) => {
     // 默认的svg的模块规则中不去匹配src/assets/svgs，避免此文件中的内容使用默认的url-loader的加载形式
