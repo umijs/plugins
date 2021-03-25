@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.24.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.24.0...@umijs/plugin-qiankun@2.24.1) (2021-03-19)
+
+
+### Bug Fixes
+
+* 修复 prefetch true 行为 ([#564](https://github.com/umijs/plugins/issues/564)) ([efa1472](https://github.com/umijs/plugins/commit/efa1472d754af2b1cfed895b70606747d32b94f2))
+* 修复运行时路由不支持嵌套根路由的问题 ([#565](https://github.com/umijs/plugins/issues/565)) ([5388f04](https://github.com/umijs/plugins/commit/5388f040c036537167b60adb6f1355acb56795a4))
+
+
+
+
+
+# [2.24.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.23.0...@umijs/plugin-qiankun@2.24.0) (2021-03-19)
+
+
+### Bug Fixes
+
+* **qiankun:** runtime routes not loaded correctly ([#541](https://github.com/umijs/plugins/issues/541)) ([ea086ee](https://github.com/umijs/plugins/commit/ea086eef269d277d49d261e49aa865a2bd30744a))
+
+
+### Features
+
+* 增加 credentials 参数，自动携带跨域 cookie ([#560](https://github.com/umijs/plugins/issues/560)) ([f494a22](https://github.com/umijs/plugins/commit/f494a222a9e33b766f896a46833f72eb113e3044))
+
+
+
+
+
+# [2.23.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.22.1...@umijs/plugin-qiankun@2.23.0) (2021-03-11)
+
+
+### Features
+
+* 支持微应用配置嵌套的子路由 ([#552](https://github.com/umijs/plugins/issues/552)) ([7a7f77b](https://github.com/umijs/plugins/commit/7a7f77b43658d23723794931d9cf6fe6bce23a8f))
+
+
+
+
+
 ## [2.22.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.22.0...@umijs/plugin-qiankun@2.22.1) (2021-03-04)
 
 

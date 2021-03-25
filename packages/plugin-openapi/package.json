@@ -1,7 +1,7 @@
 {
-  "name": "@umijs/plugin-locale",
-  "version": "0.10.10",
-  "description": "@umijs/plugin-locale",
+  "name": "@umijs/plugin-openapi",
+  "version": "1.2.0",
+  "description": "@umijs/plugin-openapi",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -20,7 +20,7 @@
   ],
   "license": "MIT",
   "bugs": "http://github.com/umijs/plugins/issues",
-  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-locale#readme",
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-openapi#readme",
   "peerDependencies": {
     "umi": "3.x"
   },
@@ -28,15 +28,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@ant-design/icons": "^4.1.0",
-    "@formatjs/intl-pluralrules": "^1.5.0",
-    "@formatjs/intl-relativetimeformat": "^4.5.7",
-    "intl": "1.2.5",
-    "moment": "^2.29.1",
-    "react-intl": "3.12.1",
-    "warning": "^4.0.3"
-  },
-  "devDependencies": {
-    "@types/warning": "^3.0.0"
+    "@umijs/openapi": "^1.1.6",
+    "serve-static": "^1.14.1",
+    "swagger-ui-react": "^3.41.1"
   }
 }

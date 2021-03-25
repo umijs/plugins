@@ -51,15 +51,18 @@ export default (api: IApi) => {
     return lodash.uniq([
       ...getModels({
         base: srcModelsPath,
+        cwd: api.cwd,
         ...baseOpts,
       }),
       ...getModels({
         base: api.paths.absPagesPath!,
+        cwd: api.cwd,
         pattern: `**/${getModelDir()}/**/*.{ts,tsx,js,jsx}`,
         ...baseOpts,
       }),
       ...getModels({
         base: api.paths.absPagesPath!,
+        cwd: api.cwd,
         pattern: `**/model.{ts,tsx,js,jsx}`,
         ...baseOpts,
       }),

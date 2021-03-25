@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // @ts-ignore
-import { Link, useModel, history, formatMessage } from 'umi';
+import { Link, useModel, history } from 'umi';
 import ProLayout, { BasicLayoutProps } from '@ant-design/pro-layout';
 import './style.less';
 import renderRightContent from './renderRightContent';
@@ -112,7 +112,11 @@ const BasicLayout = (props: any) => {
           return defaultDom;
         }
         if (menuItemProps.path && location.pathname !== menuItemProps.path) {
-          return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+          return (
+            <Link to={menuItemProps.path} target={menuItemProps.target}>
+              {defaultDom}
+            </Link>
+          );
         }
         return defaultDom;
       }}

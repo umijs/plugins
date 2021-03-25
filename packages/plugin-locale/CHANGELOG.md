@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.10](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.9...@umijs/plugin-locale@0.10.10) (2021-03-19)
+
+**Note:** Version bump only for package @umijs/plugin-locale
+
+
+
+
+
 ## [0.10.9](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.8...@umijs/plugin-locale@0.10.9) (2021-03-04)
 
 
