@@ -16,7 +16,7 @@ export default (api: IApi) => {
     if (memo.optimization) {
       const optsMap = {
         [BundlerConfigType.csr]: {
-          target: 'es2015',
+          target: 'es5',
           minify: true,
         },
         [BundlerConfigType.ssr]: {
