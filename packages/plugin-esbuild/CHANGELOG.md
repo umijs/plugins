@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/umijs/plugins/compare/@umijs/plugin-esbuild@1.1.0...@umijs/plugin-esbuild@1.1.1) (2021-03-26)
+
+### Bug Fixes
+
+- **esbuild:** minify exposes target config for es5 projects ([#571](https://github.com/umijs/plugins/issues/571)) ([cb93b3a](https://github.com/umijs/plugins/commit/cb93b3a969d9f94c808eda8e02828f347cc2eca0))
+
 ## [1.0.3](https://github.com/umijs/plugins/compare/@umijs/plugin-esbuild@1.0.2...@umijs/plugin-esbuild@1.0.3) (2020-12-15)
 
 ### Bug Fixes

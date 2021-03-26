@@ -1,15 +1,14 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [1.8.3](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.2...@umijs/preset-react@1.8.3) (2021-03-26)
+
+**Note:** Version bump only for package @umijs/preset-react
 
 ## [1.8.2](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.1...@umijs/preset-react@1.8.2) (2021-03-19)
 
 **Note:** Version bump only for package @umijs/preset-react
-
-
-
-
 
 ## [1.8.1](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.0...@umijs/preset-react@1.8.1) (2021-03-15)
 
