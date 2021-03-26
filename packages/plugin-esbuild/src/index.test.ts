@@ -32,7 +32,7 @@ describe('normal build', () => {
   });
 });
 
-describe.only('es5 build', () => {
+describe('es5 build', () => {
   let err: any;
   const cwd = join(fixtures, 'es5');
   beforeAll(async () => {
