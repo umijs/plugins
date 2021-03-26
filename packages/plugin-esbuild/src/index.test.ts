@@ -29,6 +29,9 @@ describe('normal build', () => {
   it('normal', () => {
     expect(err).toBeFalsy();
     expect(existsSync(join(cwd, 'dist', 'umi.js'))).toBeTruthy();
+    expect(readFileSync(join(cwd, 'dist', 'umi.js'), 'utf8')).toContain(
+      'new TypeError(`Invalid attempt to spread non-iterable',
+    );
   });
 });
 
