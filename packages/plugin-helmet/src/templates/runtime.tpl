@@ -21,7 +21,7 @@ if (process.env.__IS_SERVER) {
         $('head').append(meta);
       }
       if (link) {
-        $('link').append(link);
+        $('head').append(link);
       }
       if (Object.keys(htmlAttributes)) {
         Object.keys(htmlAttributes).forEach(attrKey => {
