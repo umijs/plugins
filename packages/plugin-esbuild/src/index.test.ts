@@ -1,8 +1,10 @@
 import { join } from 'path';
-import { existsSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { Service } from 'umi';
 
 const fixtures = join(__dirname, 'fixtures');
+
+jest.setTimeout(300000);
 
 describe('normal build', () => {
   let err: any;
@@ -27,6 +29,38 @@ describe('normal build', () => {
   it('normal', () => {
     expect(err).toBeFalsy();
     expect(existsSync(join(cwd, 'dist', 'umi.js'))).toBeTruthy();
+    expect(readFileSync(join(cwd, 'dist', 'umi.js'), 'utf8')).toContain(
+      'new TypeError(`Invalid attempt to spread non-iterable',
+    );
+  });
+});
+
+describe('es5 build', () => {
+  let err: any;
+  const cwd = join(fixtures, 'es5');
+  beforeAll(async () => {
+    const service = new Service({
+      cwd,
+      env: 'production',
+      plugins: [require.resolve('./index.ts')],
+    });
+    let err;
+    try {
+      await service.run({
+        name: 'build',
+      });
+    } catch (e) {
+      console.error('es5 build error', e);
+      err = true;
+    }
+  });
+
+  it('es5', () => {
+    expect(err).toBeFalsy();
+    expect(existsSync(join(cwd, 'dist', 'umi.js'))).toBeTruthy();
+    expect(readFileSync(join(cwd, 'dist', 'umi.js'), 'utf8')).toContain(
+      'new TypeError("Invalid attempt to spread non-iterable',
+    );
   });
 });
 

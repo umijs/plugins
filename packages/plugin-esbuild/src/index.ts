@@ -6,7 +6,12 @@ export default (api: IApi) => {
     key: 'esbuild',
     config: {
       schema(joi) {
-        return joi.object();
+        return joi.object({
+          target: joi.alternatives(
+            joi.string(),
+            joi.array().items(joi.string()),
+          ),
+        });
       },
     },
     enableBy: api.EnableBy.config,
@@ -14,9 +19,10 @@ export default (api: IApi) => {
 
   api.modifyBundleConfig((memo, { type }) => {
     if (memo.optimization) {
+      const target = api.config.esbuild?.target || ['es2015'];
       const optsMap = {
         [BundlerConfigType.csr]: {
-          target: 'es2015',
+          target,
           minify: true,
         },
         [BundlerConfigType.ssr]: {
