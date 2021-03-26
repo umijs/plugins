@@ -45,7 +45,6 @@ export default (api: IApi) => {
   api.modifyBundleConfig((memo, { type }) => {
     if (memo.optimization) {
       const targetForCSR = getEsbuildTargetFromEngine(api.config.targets || {});
-      console.log('targetForCSR', targetForCSR);
       const optsMap = {
         [BundlerConfigType.csr]: {
           target: targetForCSR,

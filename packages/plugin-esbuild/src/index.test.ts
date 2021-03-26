@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { existsSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { Service } from 'umi';
 
 import { getEsbuildTargetFromEngine } from './index';
@@ -29,6 +29,35 @@ describe('normal build', () => {
   it('normal', () => {
     expect(err).toBeFalsy();
     expect(existsSync(join(cwd, 'dist', 'umi.js'))).toBeTruthy();
+  });
+});
+
+describe.only('es5 build', () => {
+  let err: any;
+  const cwd = join(fixtures, 'es5');
+  beforeAll(async () => {
+    const service = new Service({
+      cwd,
+      env: 'production',
+      plugins: [require.resolve('./index.ts')],
+    });
+    let err;
+    try {
+      await service.run({
+        name: 'build',
+      });
+    } catch (e) {
+      console.error('es5 build error', e);
+      err = true;
+    }
+  });
+
+  it('es5', () => {
+    expect(err).toBeFalsy();
+    expect(existsSync(join(cwd, 'dist', 'umi.js'))).toBeTruthy();
+    expect(readFileSync(join(cwd, 'dist', 'umi.js'), 'utf8')).toContain(
+      'new TypeError("Invalid attempt to spread non-iterable',
+    );
   });
 });
 
