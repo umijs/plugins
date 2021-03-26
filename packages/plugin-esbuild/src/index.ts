@@ -7,7 +7,10 @@ export default (api: IApi) => {
     config: {
       schema(joi) {
         return joi.object({
-          target: joi.array().items(joi.string()),
+          target: joi.alternatives(
+            joi.string(),
+            joi.array().items(joi.string()),
+          ),
         });
       },
     },
