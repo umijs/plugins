@@ -16,5 +16,7 @@ export default {
   routes: [
     { path: '/', component: 'index' },
   ],
-  esbuild: {},
+  esbuild: {
+    target: ['es5'],
+  },
 }

@@ -1,42 +1,14 @@
-import { IApi, BundlerConfigType, ITargets } from 'umi';
+import { IApi, BundlerConfigType } from 'umi';
 import { ESBuildPlugin, ESBuildMinifyPlugin } from 'esbuild-loader';
-
-/**
- * convert umi targets into esbuild targets
- * issue: https://github.com/evanw/esbuild/issues/1060#issuecomment-807864917
- *
- * @param targets
- * @returns
- */
-export const getEsbuildTargetFromEngine = (targets: ITargets): string[] => {
-  const userTargets = targets;
-  switch (true) {
-    case 'ie' in userTargets:
-      return ['es5'];
-    default: {
-      const target = Object.keys(userTargets)
-        .map((browser) => {
-          const version = userTargets[browser];
-          if (
-            ['chrome', 'edge', 'ios', 'firefox', 'safari'].includes(browser) &&
-            Number.isSafeInteger(version)
-          ) {
-            return `${browser}${version}`;
-          }
-          return '';
-        })
-        .filter(Boolean);
-      return target?.length > 0 ? target : ['esnext'];
-    }
-  }
-};
 
 export default (api: IApi) => {
   api.describe({
     key: 'esbuild',
     config: {
       schema(joi) {
-        return joi.object();
+        return joi.object({
+          target: joi.array().items(joi.string()),
+        });
       },
     },
     enableBy: api.EnableBy.config,
@@ -44,10 +16,10 @@ export default (api: IApi) => {
 
   api.modifyBundleConfig((memo, { type }) => {
     if (memo.optimization) {
-      const targetForCSR = getEsbuildTargetFromEngine(api.config.targets || {});
+      const target = api.config.esbuild?.target || ['es2015'];
       const optsMap = {
         [BundlerConfigType.csr]: {
-          target: targetForCSR,
+          target,
           minify: true,
         },
         [BundlerConfigType.ssr]: {

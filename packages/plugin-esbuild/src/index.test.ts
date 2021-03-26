@@ -2,8 +2,6 @@ import { join } from 'path';
 import { existsSync, readFileSync } from 'fs';
 import { Service } from 'umi';
 
-import { getEsbuildTargetFromEngine } from './index';
-
 const fixtures = join(__dirname, 'fixtures');
 
 jest.setTimeout(300000);
@@ -90,43 +88,5 @@ describe('ssr build', () => {
     expect(err).toBeFalsy();
     expect(existsSync(join(cwd, 'dist', 'umi.js'))).toBeTruthy();
     expect(existsSync(join(cwd, 'dist', 'umi.server.js'))).toBeTruthy();
-  });
-});
-
-describe('getEsbuildTargetFromEngine', () => {
-  it('normal', () => {
-    expect(getEsbuildTargetFromEngine({})).toEqual(['esnext']);
-    expect(
-      getEsbuildTargetFromEngine({
-        ie: 11,
-      }),
-    ).toEqual(['es5']);
-    expect(
-      getEsbuildTargetFromEngine({
-        notexisted: 11,
-      }),
-    ).toEqual(['esnext']);
-    expect(
-      getEsbuildTargetFromEngine({
-        node: true,
-        chrome: 49,
-        firefox: 64,
-        safari: 10,
-        edge: 13,
-        ios: 10,
-      }),
-    ).toEqual(['chrome49', 'firefox64', 'safari10', 'edge13', 'ios10']);
-
-    expect(
-      getEsbuildTargetFromEngine({
-        node: true,
-        chrome: 49,
-        firefox: 64,
-        safari: 10,
-        edge: 13,
-        ios: 10,
-        notExisted: 100,
-      }),
-    ).toEqual(['chrome49', 'firefox64', 'safari10', 'edge13', 'ios10']);
   });
 });
