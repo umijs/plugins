@@ -6,6 +6,8 @@ import { getEsbuildTargetFromEngine } from './index';
 
 const fixtures = join(__dirname, 'fixtures');
 
+jest.setTimeout(300000);
+
 describe('normal build', () => {
   let err: any;
   const cwd = join(fixtures, 'normal');
