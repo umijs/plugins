@@ -24,10 +24,12 @@ export default (api: IApi) => {
         [BundlerConfigType.csr]: {
           target,
           minify: true,
+          pure: api.config.esbuild?.pure,
         },
         [BundlerConfigType.ssr]: {
           target: 'node10',
           minify: true,
+          pure: api.config.esbuild?.pure,
         },
       };
       const opts = optsMap[type] || optsMap[BundlerConfigType.csr];
