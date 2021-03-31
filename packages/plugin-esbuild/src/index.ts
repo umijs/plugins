@@ -22,9 +22,10 @@ export default (api: IApi) => {
       const target = api.config.esbuild?.target || ['es2015'];
       const optsMap = {
         [BundlerConfigType.csr]: {
-          target,
+const { target = 'es2015', pure } = api.config.esbuild || {};
           minify: true,
-          pure: api.config.esbuild?.pure,
+          target,
+          pure,
         },
         [BundlerConfigType.ssr]: {
           target: 'node10',
