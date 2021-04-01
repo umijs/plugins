@@ -106,9 +106,9 @@ export default (api: IApi) => {
             api.config.dva?.immer.enableES5,
           RegisterModelImports: models
             .map((path, index) => {
-              return `const Model${lodash.upperFirst(
+              return `import Model${lodash.upperFirst(
                 lodash.camelCase(basename(path, extname(path))),
-              )}${index} = (await import('${path}')).default;`;
+              )}${index} from '${path}';`;
             })
             .join('\r\n'),
           RegisterModels: models

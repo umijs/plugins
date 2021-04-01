@@ -16,6 +16,7 @@ export async function _onCreate(options = {}) {
     type: ApplyPluginsType.modify,
     initialValue: {},
   });
+  {{{ RegisterModelImports }}}
   app = dva({
     history,
     {{{ ExtendDvaConfig }}}
@@ -35,7 +36,6 @@ export async function _onCreate(options = {}) {
   (runtimeDva.plugins || []).forEach((plugin:any) => {
     app.use(plugin);
   });
-  {{{ RegisterModelImports }}}
   {{{ RegisterModels }}}
   return app;
 }
@@ -49,7 +49,10 @@ export class _DvaContainer extends Component {
     super(props);
     // run only in client, avoid override server _onCreate()
     if (typeof window !== 'undefined') {
-      _onCreate();
+      _onCreate().then(() => {
+        // force update
+        this.forceUpdate();
+      });
     }
   }
 
