@@ -13,7 +13,7 @@ import dvaImmer, { enableES5 } from '{{{ dvaImmerPath }}}';
 
 let app:any = null;
 
-export async function _onCreate(options = {}) {
+export {{ #LazyLoad }}async {{ /LazyLoad }}function _onCreate(options = {}) {
   const runtimeDva = plugin.applyPlugins({
     key: 'dva',
     type: ApplyPluginsType.modify,
