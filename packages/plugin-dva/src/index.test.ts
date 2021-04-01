@@ -10,7 +10,7 @@ afterEach(cleanup);
 test('normal', async () => {
   const cwd = join(fixtures, 'normal');
   await generateTmp({ cwd });
-  const { container } = await render({ cwd });
+  const { container } = render({ cwd });
   expect(container.innerHTML).toEqual(
     '<div><h1 class="title">Page index foo 0</h1></div>',
   );
@@ -36,5 +36,15 @@ test('with-immer', async () => {
   await utils.delay(100);
   expect(container.innerHTML).toEqual(
     '<div><h1 class="title">Page index foo 1</h1><button>add</button></div>',
+  );
+});
+
+test('disableModelsReExport', async () => {
+  const cwd = join(fixtures, 'disableModelsReExport');
+  await generateTmp({ cwd });
+  const { container } = render({ cwd });
+  await utils.delay(100);
+  expect(container.innerHTML).toEqual(
+    '<div><h1 class="title">Page index foo 0</h1></div>',
   );
 });
