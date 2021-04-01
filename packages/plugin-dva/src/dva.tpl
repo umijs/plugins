@@ -81,9 +81,11 @@ export class _DvaContainer extends Component {
 
   render() {
     const app = getApp();
+    {{ #LazyLoad }}
     if (!app) {
       return null;
     }
+    {{ /LazyLoad }}
     app.router(() => this.props.children);
     return app.start()();
   }
