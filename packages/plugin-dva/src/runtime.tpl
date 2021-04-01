@@ -10,7 +10,7 @@ export const ssr = {
   modifyGetInitialPropsCtx: async (ctx) => {
     // 服务端执行早于 constructor 中的 onCreate
     if (process.env.__IS_SERVER && ctx.history) {
-      const tmpApp = await _onCreate({
+      const tmpApp = _onCreate({
         // server
         history: ctx.history,
       })
