@@ -10,7 +10,7 @@ afterEach(cleanup);
 test('normal', async () => {
   const cwd = join(fixtures, 'normal');
   await generateTmp({ cwd });
-  const { container } = render({ cwd });
+  const { container } = await render({ cwd });
   expect(container.innerHTML).toEqual(
     '<div><h1 class="title">Page index foo 0</h1></div>',
   );

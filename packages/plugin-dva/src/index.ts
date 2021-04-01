@@ -104,11 +104,15 @@ export default (api: IApi) => {
           dvaImmerES5:
             lodash.isPlainObject(api.config.dva?.immer) &&
             api.config.dva?.immer.enableES5,
+          DisableModelsReExport: api.config.dva?.disableModelsReExport,
           RegisterModelImports: models
             .map((path, index) => {
-              return `import Model${lodash.upperFirst(
+              const modelName = `Model${lodash.upperFirst(
                 lodash.camelCase(basename(path, extname(path))),
-              )}${index} from '${path}';`;
+              )}${index}`;
+              return api.config.dva?.disableModelsReExport
+                ? `const ${modelName} = (await import('${path}')).default;`
+                : `import ${modelName} from '${path}';`;
             })
             .join('\r\n'),
           RegisterModels: models
