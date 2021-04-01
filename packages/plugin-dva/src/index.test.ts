@@ -39,8 +39,8 @@ test('with-immer', async () => {
   );
 });
 
-test('disableModelsReExport', async () => {
-  const cwd = join(fixtures, 'disableModelsReExport');
+test('lazyLoad', async () => {
+  const cwd = join(fixtures, 'lazyLoad');
   await generateTmp({ cwd });
   const { container } = render({ cwd });
   await utils.delay(100);

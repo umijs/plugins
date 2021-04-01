@@ -4,7 +4,7 @@ export default {
     { path: '/', component: 'index' },
   ],
   dva: {
-    disableModelsReExport: true,
+    lazyLoad: true,
   },
   plugins: [
     require.resolve('../../'),

@@ -4,9 +4,9 @@ import dva from 'dva';
 // @ts-ignore
 import createLoading from '{{{ dvaLoadingPkgPath }}}';
 import { plugin, history } from '../core/umiExports';
-{{ ^DisableModelsReExport }}
+{{ ^LazyLoad }}
 {{{ RegisterModelImports }}}
-{{ /DisableModelsReExport }}
+{{ /LazyLoad }}
 {{ #dvaImmer }}
 import dvaImmer, { enableES5 } from '{{{ dvaImmerPath }}}';
 {{ /dvaImmer }}
@@ -19,9 +19,9 @@ export async function _onCreate(options = {}) {
     type: ApplyPluginsType.modify,
     initialValue: {},
   });
-  {{ #DisableModelsReExport }}
+  {{ #LazyLoad }}
   {{{ RegisterModelImports }}}
-  {{ /DisableModelsReExport }}
+  {{ /LazyLoad }}
   app = dva({
     history,
     {{{ ExtendDvaConfig }}}
@@ -55,12 +55,12 @@ export class _DvaContainer extends Component {
     // run only in client, avoid override server _onCreate()
     if (typeof window !== 'undefined') {
       _onCreate()
-      {{ #DisableModelsReExport }}
+      {{ #LazyLoad }}
         .then(() => {
           // force update
           this.forceUpdate();
         });
-      {{ /DisableModelsReExport }}
+      {{ /LazyLoad }}
     }
   }
 
