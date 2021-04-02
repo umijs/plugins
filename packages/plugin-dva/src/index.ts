@@ -36,7 +36,7 @@ export default (api: IApi) => {
           lazyLoad: joi
             .boolean()
             .description(
-              'lazy load dva model avoding the import modules from umi undefined',
+              'lazy load dva model avoiding the import modules from umi undefined',
             ),
           extraModels: joi.array().items(joi.string()),
           hmr: joi.boolean(),
