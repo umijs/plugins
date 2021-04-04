@@ -107,6 +107,9 @@ export default (api: IApi) => {
           dvaImmerES5:
             lodash.isPlainObject(api.config.dva?.immer) &&
             api.config.dva?.immer.enableES5,
+          dvaImmerAllPlugins:
+            lodash.isPlainObject(api.config.dva?.immer) &&
+            api.config.dva?.immer.enableAllPlugins,
           RegisterModelImports: models
             .map((path, index) => {
               return `import Model${lodash.upperFirst(
