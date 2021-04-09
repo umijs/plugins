@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.1](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.11.0...@umijs/plugin-dva@0.11.1) (2021-04-09)
+
+### Bug Fixes
+
+- **dva:** dva model import undefined when from umi ([#523](https://github.com/umijs/plugins/issues/523)) ([1d8fb78](https://github.com/umijs/plugins/commit/1d8fb78e6ccda237307867bb0954fb840c95f930))
+
 # [0.11.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.10.0...@umijs/plugin-dva@0.11.0) (2021-03-26)
 
 ### Features

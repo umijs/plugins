@@ -1,38 +1,33 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [0.11.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.10...@umijs/plugin-locale@0.11.0) (2021-04-09)
+
+### Bug Fixes
+
+- to solve the problem that FormattedMessage report [React Intl] Missing message error, it was encountered in the situation when calling addLocale to add/merge translation key-value pairs which were fetched from backend server for current language. ([#573](https://github.com/umijs/plugins/issues/573)) ([e6f5625](https://github.com/umijs/plugins/commit/e6f56255b5df987030dd29468fa67d992036fb78))
+
+### Features
+
+- **locale:** add 8px margin between icon and label for SelectLang ([#557](https://github.com/umijs/plugins/issues/557)) ([ff99186](https://github.com/umijs/plugins/commit/ff991860d6ce5308d64eca5129583cceec587ea1))
 
 ## [0.10.10](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.9...@umijs/plugin-locale@0.10.10) (2021-03-19)
 
 **Note:** Version bump only for package @umijs/plugin-locale
 
-
-
-
-
 ## [0.10.9](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.8...@umijs/plugin-locale@0.10.9) (2021-03-04)
-
 
 ### Bug Fixes
 
-* useLayoutEffect will be warning in ssr mode ([#533](https://github.com/umijs/plugins/issues/533)) ([2b2c169](https://github.com/umijs/plugins/commit/2b2c16996fd228ecab411d916f8ab255d1982416))
-* when has runtimeLocale.setLocale setLocale not work ([#543](https://github.com/umijs/plugins/issues/543)) ([afc144c](https://github.com/umijs/plugins/commit/afc144c282d0156626432ce167dcf9ac3023ca98))
-
-
-
-
+- useLayoutEffect will be warning in ssr mode ([#533](https://github.com/umijs/plugins/issues/533)) ([2b2c169](https://github.com/umijs/plugins/commit/2b2c16996fd228ecab411d916f8ab255d1982416))
+- when has runtimeLocale.setLocale setLocale not work ([#543](https://github.com/umijs/plugins/issues/543)) ([afc144c](https://github.com/umijs/plugins/commit/afc144c282d0156626432ce167dcf9ac3023ca98))
 
 ## [0.10.8](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.7...@umijs/plugin-locale@0.10.8) (2021-01-19)
 
-
 ### Bug Fixes
 
-* **locale:** unused return statement ([#513](https://github.com/umijs/plugins/issues/513)) ([05251df](https://github.com/umijs/plugins/commit/05251df6e33a58084fcd5b7d36d8e0cb60f7f07e))
-
-
-
-
+- **locale:** unused return statement ([#513](https://github.com/umijs/plugins/issues/513)) ([05251df](https://github.com/umijs/plugins/commit/05251df6e33a58084fcd5b7d36d8e0cb60f7f07e))
 
 ## [0.10.7](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.6...@umijs/plugin-locale@0.10.7) (2021-01-13)
 
