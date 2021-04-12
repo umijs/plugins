@@ -4,19 +4,24 @@ import dva from 'dva';
 // @ts-ignore
 import createLoading from '{{{ dvaLoadingPkgPath }}}';
 import { plugin, history } from '../core/umiExports';
+{{ ^LazyLoad }}
 {{{ RegisterModelImports }}}
+{{ /LazyLoad }}
 {{ #dvaImmer }}
 import dvaImmer, { enableES5 } from '{{{ dvaImmerPath }}}';
 {{ /dvaImmer }}
 
 let app:any = null;
 
-export function _onCreate(options = {}) {
+export {{ #LazyLoad }}async {{ /LazyLoad }}function _onCreate(options = {}) {
   const runtimeDva = plugin.applyPlugins({
     key: 'dva',
     type: ApplyPluginsType.modify,
     initialValue: {},
   });
+  {{ #LazyLoad }}
+  {{{ RegisterModelImports }}}
+  {{ /LazyLoad }}
   app = dva({
     history,
     {{{ ExtendDvaConfig }}}
@@ -49,7 +54,13 @@ export class _DvaContainer extends Component {
     super(props);
     // run only in client, avoid override server _onCreate()
     if (typeof window !== 'undefined') {
-      _onCreate();
+      _onCreate()
+      {{ #LazyLoad }}
+        .then(() => {
+          // force update
+          this.forceUpdate();
+        });
+      {{ /LazyLoad }}
     }
   }
 
@@ -70,6 +81,11 @@ export class _DvaContainer extends Component {
 
   render() {
     const app = getApp();
+    {{ #LazyLoad }}
+    if (!app) {
+      return null;
+    }
+    {{ /LazyLoad }}
     app.router(() => this.props.children);
     return app.start()();
   }

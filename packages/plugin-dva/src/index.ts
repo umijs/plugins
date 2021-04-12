@@ -33,6 +33,11 @@ export default (api: IApi) => {
       schema(joi) {
         return joi.object({
           disableModelsReExport: joi.boolean(),
+          lazyLoad: joi
+            .boolean()
+            .description(
+              'lazy load dva model avoiding the import modules from umi undefined',
+            ),
           extraModels: joi.array().items(joi.string()),
           hmr: joi.boolean(),
           immer: joi.alternatives(joi.boolean(), joi.object()),
@@ -107,11 +112,15 @@ export default (api: IApi) => {
           dvaImmerES5:
             lodash.isPlainObject(api.config.dva?.immer) &&
             api.config.dva?.immer.enableES5,
+          LazyLoad: api.config.dva?.lazyLoad,
           RegisterModelImports: models
             .map((path, index) => {
-              return `import Model${lodash.upperFirst(
+              const modelName = `Model${lodash.upperFirst(
                 lodash.camelCase(basename(path, extname(path))),
-              )}${index} from '${path}';`;
+              )}${index}`;
+              return api.config.dva?.lazyLoad
+                ? `const ${modelName} = (await import('${path}')).default;`
+                : `import ${modelName} from '${path}';`;
             })
             .join('\r\n'),
           RegisterModels: models

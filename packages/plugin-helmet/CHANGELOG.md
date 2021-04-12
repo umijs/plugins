@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/umijs/plugins/compare/@umijs/plugin-helmet@1.1.1...@umijs/plugin-helmet@1.1.2) (2021-03-26)
+
+### Bug Fixes
+
+- **ssr:** 修复 SSR 下 helmet 无法添加<link>的问题 ([#561](https://github.com/umijs/plugins/issues/561)) ([8072710](https://github.com/umijs/plugins/commit/8072710bb433a109eb01f9d4e56059ff18270592))
+
 ## [1.1.1](https://github.com/umijs/plugins/compare/@umijs/plugin-helmet@1.1.0...@umijs/plugin-helmet@1.1.1) (2020-08-27)
 
 **Note:** Version bump only for package @umijs/plugin-helmet

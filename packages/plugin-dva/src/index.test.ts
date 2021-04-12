@@ -38,3 +38,13 @@ test('with-immer', async () => {
     '<div><h1 class="title">Page index foo 1</h1><button>add</button></div>',
   );
 });
+
+test('lazyLoad', async () => {
+  const cwd = join(fixtures, 'lazyLoad');
+  await generateTmp({ cwd });
+  const { container } = render({ cwd });
+  await utils.delay(100);
+  expect(container.innerHTML).toEqual(
+    '<div><h1 class="title">Page index foo 0</h1></div>',
+  );
+});
