@@ -46,17 +46,15 @@ export default (api: IApi) => {
             defaultEsbuildTargets.push(`${key}${userConfigTargets[key]}`);
           });
       }
-      const { target = defaultEsbuildTargets, pure } = api.config.esbuild || {};
+      const { target = defaultEsbuildTargets } = api.config.esbuild || {};
       const optsMap = {
         [BundlerConfigType.csr]: {
           minify: true,
           target,
-          pure,
         },
         [BundlerConfigType.ssr]: {
           target: 'node10',
           minify: true,
-          pure,
         },
       };
       const opts = optsMap[type] || optsMap[BundlerConfigType.csr];
