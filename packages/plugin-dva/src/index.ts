@@ -112,6 +112,9 @@ export default (api: IApi) => {
           dvaImmerES5:
             lodash.isPlainObject(api.config.dva?.immer) &&
             api.config.dva?.immer.enableES5,
+          dvaImmerAllPlugins:
+            lodash.isPlainObject(api.config.dva?.immer) &&
+            api.config.dva?.immer.enableAllPlugins,
           LazyLoad: api.config.dva?.lazyLoad,
           RegisterModelImports: models
             .map((path, index) => {
