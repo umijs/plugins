@@ -30,7 +30,7 @@ describe('normal build', () => {
     expect(err).toBeFalsy();
     expect(existsSync(join(cwd, 'dist', 'umi.js'))).toBeTruthy();
     expect(readFileSync(join(cwd, 'dist', 'umi.js'), 'utf8')).toContain(
-      'new TypeError(`Invalid attempt to spread non-iterable',
+      'throw new TypeError("Invalid attempt to spread non-iterable instance',
     );
   });
 });
@@ -59,7 +59,36 @@ describe('es5 build', () => {
     expect(err).toBeFalsy();
     expect(existsSync(join(cwd, 'dist', 'umi.js'))).toBeTruthy();
     expect(readFileSync(join(cwd, 'dist', 'umi.js'), 'utf8')).toContain(
-      'new TypeError("Invalid attempt to spread non-iterable',
+      'throw new TypeError("Invalid attempt to spread non-iterable instance',
+    );
+  });
+});
+
+describe('no-es5 build', () => {
+  let err: any;
+  const cwd = join(fixtures, 'no-es5');
+  beforeAll(async () => {
+    const service = new Service({
+      cwd,
+      env: 'production',
+      plugins: [require.resolve('./index.ts')],
+    });
+    let err;
+    try {
+      await service.run({
+        name: 'build',
+      });
+    } catch (e) {
+      console.error('no-es5 build error', e);
+      err = true;
+    }
+  });
+
+  it('no-es5', () => {
+    expect(err).toBeFalsy();
+    expect(existsSync(join(cwd, 'dist', 'umi.js'))).toBeTruthy();
+    expect(readFileSync(join(cwd, 'dist', 'umi.js'), 'utf8')).toContain(
+      'new TypeError(`Invalid attempt to spread non-iterable',
     );
   });
 });
