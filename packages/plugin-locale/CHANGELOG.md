@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.11.0...@umijs/plugin-locale@0.11.1) (2021-04-20)
+
+### Bug Fixes
+
+- **locale:** runtime plugin register order ([#590](https://github.com/umijs/plugins/issues/590)) ([81fb79a](https://github.com/umijs/plugins/commit/81fb79a0111f1e0f701fa2354cfd9b28ed7e8bd6))
+
 # [0.11.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.10...@umijs/plugin-locale@0.11.0) (2021-04-09)
 
 ### Bug Fixes

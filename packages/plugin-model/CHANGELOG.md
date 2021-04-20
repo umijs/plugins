@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.7](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.6...@umijs/plugin-model@2.5.7) (2021-04-20)
+
+### Bug Fixes
+
+- ie11 useModel throw error on state changes ([#588](https://github.com/umijs/plugins/issues/588)) ([9100e4d](https://github.com/umijs/plugins/commit/9100e4d9364edaae17c0b12a6f69f8918dbbb639))
+
 ## [2.5.6](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.5...@umijs/plugin-model@2.5.6) (2020-10-27)
 
 ### Bug Fixes
