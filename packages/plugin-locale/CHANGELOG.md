@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.2](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.11.1...@umijs/plugin-locale@0.11.2) (2021-04-20)
+
+### Bug Fixes
+
+- **locale:** emit dispatch rerender ([#594](https://github.com/umijs/plugins/issues/594)) ([5d49953](https://github.com/umijs/plugins/commit/5d499530d524055bb07d9b6afaa31d2f6708eb2a))
+
 ## [0.11.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.11.0...@umijs/plugin-locale@0.11.1) (2021-04-20)
 
 ### Bug Fixes
