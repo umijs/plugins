@@ -19,34 +19,7 @@ export default (api: IApi) => {
 
   api.modifyBundleConfig((memo, { type }) => {
     if (memo.optimization) {
-      const userConfigTargets = api.config.targets;
-      let defaultEsbuildTargets: string | string[] = 'es5';
-      function isTargetsES5() {
-        return (
-          userConfigTargets &&
-          (userConfigTargets.ie !== false ||
-            userConfigTargets.chrome < 51 ||
-            userConfigTargets.edge < 15 ||
-            userConfigTargets.ios < 10 ||
-            userConfigTargets.safari < 10 ||
-            userConfigTargets.firefox < 54)
-        );
-      }
-      if (!isTargetsES5()) {
-        userConfigTargets &&
-          Object.keys(userConfigTargets).forEach((key) => {
-            if (
-              key === 'node' ||
-              key === 'ie' ||
-              userConfigTargets[key] === false
-            )
-              return;
-            if (!Array.isArray(defaultEsbuildTargets))
-              defaultEsbuildTargets = [];
-            defaultEsbuildTargets.push(`${key}${userConfigTargets[key]}`);
-          });
-      }
-      const { target = defaultEsbuildTargets } = api.config.esbuild || {};
+      const { target = 'es2015' } = api.config.esbuild || {};
       const optsMap = {
         [BundlerConfigType.csr]: {
           minify: true,
