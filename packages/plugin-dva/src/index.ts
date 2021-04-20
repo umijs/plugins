@@ -1,5 +1,5 @@
 import { IApi, utils } from 'umi';
-import { basename, dirname, extname, join, relative } from 'path';
+import { basename, dirname, extname, join, relative, resolve } from 'path';
 import { readFileSync } from 'fs';
 import { getModels } from './getModels/getModels';
 import { getUserLibDir } from './getUserLibDir';
@@ -26,6 +26,22 @@ export default (api: IApi) => {
     );
   }
 
+  function getExtraModelsRegex(
+    extraModelsRegex: string[],
+    skipModelValidate?: boolean,
+  ) {
+    return extraModelsRegex
+      .map((regex) =>
+        getModels({
+          base: resolve(),
+          cwd: api.cwd,
+          pattern: regex,
+          skipModelValidate,
+        }),
+      )
+      .flat();
+  }
+
   // 配置
   api.describe({
     key: 'dva',
@@ -39,6 +55,7 @@ export default (api: IApi) => {
               'lazy load dva model avoiding the import modules from umi undefined',
             ),
           extraModels: joi.array().items(joi.string()),
+          extraModelsRegex: joi.array().items(joi.string()),
           hmr: joi.boolean(),
           immer: joi.alternatives(joi.boolean(), joi.object()),
           skipModelValidate: joi.boolean(),
@@ -53,6 +70,7 @@ export default (api: IApi) => {
       skipModelValidate: api.config.dva?.skipModelValidate,
       extraModels: api.config.dva?.extraModels,
     };
+    const extraModelsRegex = api.config.dva?.extraModelsRegex || [];
     return lodash.uniq([
       ...getModels({
         base: srcModelsPath,
@@ -71,6 +89,7 @@ export default (api: IApi) => {
         pattern: `**/model.{ts,tsx,js,jsx}`,
         ...baseOpts,
       }),
+      ...getExtraModelsRegex(extraModelsRegex, baseOpts.skipModelValidate),
     ]);
   }
 
