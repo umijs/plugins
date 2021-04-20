@@ -210,11 +210,11 @@ export default (api: IApi) => {
     });
   });
 
-  api.addRuntimePluginKey(() => 'locale');
   // Runtime Plugin
-  api.addRuntimePlugin(() =>
-    join(paths.absTmpPath!, 'plugin-locale/runtime.tsx'),
-  );
+  api.addRuntimePlugin({
+    fn: () => join(paths.absTmpPath!, 'plugin-locale/runtime.tsx'),
+    stage: -1,
+  });
 
   // Modify entry js
   api.addEntryCodeAhead(() =>
