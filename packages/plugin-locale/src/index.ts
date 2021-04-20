@@ -78,7 +78,7 @@ export default (api: IApi) => {
     }));
   }
 
-  const addAntdLocales: IAddAntdLocales = async args =>
+  const addAntdLocales: IAddAntdLocales = async (args) =>
     await api.applyPlugins({
       key: 'addAntdLocales',
       type: api.ApplyPluginsType.add,
@@ -117,10 +117,10 @@ export default (api: IApi) => {
     const localeList = await getList();
     const momentLocales = localeList
       .map(({ momentLocale }) => momentLocale)
-      .filter(locale => locale);
+      .filter((locale) => locale);
     const antdLocales = localeList
       .map(({ antdLocale }) => antdLocale)
-      .filter(locale => locale);
+      .filter((locale) => locale);
 
     let MomentLocales = momentLocales;
     let DefaultMomentLocale = '';
@@ -210,11 +210,11 @@ export default (api: IApi) => {
     });
   });
 
-  api.addRuntimePluginKey(() => 'locale');
   // Runtime Plugin
-  api.addRuntimePlugin(() =>
-    join(paths.absTmpPath!, 'plugin-locale/runtime.tsx'),
-  );
+  api.addRuntimePlugin({
+    fn: () => join(paths.absTmpPath!, 'plugin-locale/runtime.tsx'),
+    stage: -1,
+  });
 
   // Modify entry js
   api.addEntryCodeAhead(() =>
