@@ -8,7 +8,7 @@ import { plugin, history } from '../core/umiExports';
 {{{ RegisterModelImports }}}
 {{ /LazyLoad }}
 {{ #dvaImmer }}
-import dvaImmer, { enableES5 } from '{{{ dvaImmerPath }}}';
+import dvaImmer, { enableES5, enableAllPlugins } from '{{{ dvaImmerPath }}}';
 {{ /dvaImmer }}
 
 let app:any = null;
@@ -38,6 +38,9 @@ export {{ #LazyLoad }}async {{ /LazyLoad }}function _onCreate(options = {}) {
   {{ #dvaImmerES5 }}
   enableES5();
   {{ /dvaImmerES5 }}
+  {{ #dvaImmerAllPlugins }}
+  enableAllPlugins();
+  {{ /dvaImmerAllPlugins }}
   (runtimeDva.plugins || []).forEach((plugin:any) => {
     app.use(plugin);
   });

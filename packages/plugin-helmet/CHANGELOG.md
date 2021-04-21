@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.3](https://github.com/umijs/plugins/compare/@umijs/plugin-helmet@1.1.2...@umijs/plugin-helmet@1.1.3) (2021-04-20)
+
+### Bug Fixes
+
+- **ssr:** 修复 SSR 下 helmet 无法添加 <style> 的问题 ([#584](https://github.com/umijs/plugins/issues/584)) ([e0ab706](https://github.com/umijs/plugins/commit/e0ab706f9f82e8e1234ac444ca4802186e9731d2))
+
 ## [1.1.2](https://github.com/umijs/plugins/compare/@umijs/plugin-helmet@1.1.1...@umijs/plugin-helmet@1.1.2) (2021-03-26)
 
 ### Bug Fixes

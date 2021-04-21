@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.11.1...@umijs/plugin-dva@0.12.0) (2021-04-20)
+
+### Features
+
+- plugin dva support config immer.enableAllPlugins ([#585](https://github.com/umijs/plugins/issues/585)) ([2fe25d5](https://github.com/umijs/plugins/commit/2fe25d50581d869ed694fb886ea5649fd860dc90))
+
 ## [0.11.1](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.11.0...@umijs/plugin-dva@0.11.1) (2021-04-09)
 
 ### Bug Fixes
