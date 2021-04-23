@@ -1,8 +1,8 @@
 import React from 'react';
 import { _DvaContainer, getApp, _onCreate } from './dva';
 
-export function rootContainer(container) {
-  return React.createElement(_DvaContainer, null, container);
+export function rootContainer(container, opts) {
+  return React.createElement(_DvaContainer, {...(process.env.__IS_SERVER && {app: opts.app})}, container);
 }
 
 {{#SSR}}
@@ -16,6 +16,9 @@ export const ssr = {
       })
       tmpApp.router(() => {})
       tmpApp.start();
+
+      // 保持 rootContainer 执行时 dva 对象的一致性
+      ctx.app = tmpApp
     }
     // 一定有 app
     const { _store } = getApp();

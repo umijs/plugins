@@ -68,7 +68,7 @@ export class _DvaContainer extends Component {
   }
 
   componentWillUnmount() {
-    let app = getApp();
+    let app = process.env.__IS_SERVER ? this.props.app : getApp();
     app._models.forEach((model:any) => {
       app.unmodel(model.namespace);
     });
@@ -83,7 +83,7 @@ export class _DvaContainer extends Component {
   }
 
   render() {
-    const app = getApp();
+    const app = process.env.__IS_SERVER ? this.props.app : getApp();
     {{ #LazyLoad }}
     if (!app) {
       return null;
