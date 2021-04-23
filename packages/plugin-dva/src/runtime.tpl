@@ -2,7 +2,7 @@ import React from 'react';
 import { _DvaContainer, getApp, _onCreate } from './dva';
 
 export function rootContainer(container, opts) {
-  return React.createElement(_DvaContainer, {...(process.env.__IS_SERVER && {app: opts.app})}, container);
+  return React.createElement(_DvaContainer, {...(process.env.__IS_SERVER ? {app: opts.app} : {})}, container);
 }
 
 {{#SSR}}
