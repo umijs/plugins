@@ -5,17 +5,10 @@ orbs:
 workflows:
   build:
     jobs:
-      - cypress/install:
+      - cypress/run:
           executor: cypress/base-14
           install-command: yarn install --frozen-lockfile --ignore-engines
           build: yarn build
-      - cypress/run:
-          executor: cypress/base-14
-          requires:
-            - cypress/install
-          working_directory: example
-          start: npm start
+          start: cd example && npm start
           wait-on: 'http://localhost:8000'
-          parallel: true
-          parallelism: 2
 
