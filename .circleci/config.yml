@@ -13,4 +13,5 @@ workflows:
           start: cd example && npm start
           wait-on: 'http://localhost:8000'
           config-file: ./example/cypress.json
+          spec: ./example/cypress/**
 
