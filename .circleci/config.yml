@@ -29,5 +29,5 @@ workflows:
           spec: ./example/cypress/**/*
   unit-test:
     jobs:
-      - unit-node
+      - unit-test
 
