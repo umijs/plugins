@@ -4,7 +4,7 @@ orbs:
   node: circleci/node@4.3.0
 
 jobs:
-  unit-node:
+  unit-test:
     docker:
       - image: 'cimg/base:stable'
     steps:
