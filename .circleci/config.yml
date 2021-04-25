@@ -1,9 +1,10 @@
 version: 2.1
 orbs:
   cypress: cypress-io/cypress@1.26.0
+  node: circleci/node@4.3.0
 
 workflows:
-  build:
+  e2e:
     jobs:
       - cypress/run:
           executor: cypress/base-14
@@ -13,5 +14,16 @@ workflows:
           start: cd example && npm start
           wait-on: 'http://localhost:8000'
           config-file: ./example/cypress.json
-          spec: ./example/cypress/**
+          spec: ./example/cypress/**/*
+  unit:
+    jobs:
+      - test:
+          executor: node/default
+          steps:
+            - checkout
+            - node/install-packages:
+                override-ci-command: yarn install --frozen-lockfile --ignore-engines
+            - run: yarn build
+            - run: yarn test --forceExit
+
 
