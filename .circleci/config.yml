@@ -6,9 +6,11 @@ workflows:
   build:
     jobs:
       - cypress/install:
-          install-command: yarn install --frozen-lockfile
+          executor: cypress/base-14
+          install-command: yarn install --frozen-lockfile --ignore-engines
           build: yarn build
       - cypress/run:
+          executor: cypress/base-14
           requires:
             - cypress/install
           working_directory: example
