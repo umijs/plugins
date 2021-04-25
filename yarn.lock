@@ -5435,7 +5435,7 @@
 
 "@umijs/openapi@^1.1.6":
   version "1.1.6"
-  resolved "https://registry.yarnpkg.com/@umijs/openapi/-/@umijs/openapi-1.1.6.tgz#47b6a3aafe853f30b3d95f15108882a384664b83"
+  resolved "https://registry.npmjs.org/@umijs/openapi/-/openapi-1.1.6.tgz#47b6a3aafe853f30b3d95f15108882a384664b83"
   integrity sha1-R7ajqv6FPzCz2V8VEIiCo4RmS4M=
   dependencies:
     "@umijs/fabric" "^2.5.6"
