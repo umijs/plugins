@@ -17,7 +17,5 @@ workflows:
           start: npm start
           wait-on: 'http://localhost:8000'
           parallel: true
-          record: true
           parallelism: 2
-          store_artifacts: true
 
