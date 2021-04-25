@@ -7,7 +7,8 @@ workflows:
     jobs:
       - cypress/run:
           executor: cypress/base-14
-          install-command: yarn install --frozen-lockfile --ignore-engines
+          yarn: true
+          cache-key: yarn-packages-{{ arch }}-{{ checksum "yarn.lock" }}
           build: yarn build
           start: cd example && npm start
           wait-on: 'http://localhost:8000'
