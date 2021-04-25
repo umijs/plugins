@@ -5,8 +5,12 @@ orbs:
 workflows:
   build:
     jobs:
-      - cypress/run:
+      - cypress/install:
           install-command: yarn install --frozen-lockfile
+          build: yarn build
+      - cypress/run:
+          requires:
+            - cypress/install
           working_directory: example
           start: npm start
           wait-on: 'http://localhost:8000'
