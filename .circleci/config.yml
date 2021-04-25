@@ -11,6 +11,7 @@ jobs:
       - checkout
       - node/install:
           install-yarn: true
+          install-npm: false
       - run: yarn install --frozen-lockfile --ignore-engines
       - run: yarn build
       - run: yarn test --forceExit
@@ -22,12 +23,13 @@ workflows:
       - cypress/run:
           executor: cypress/base-14
           yarn: true
+          no-workspace: true
           cache-key: yarn-packages-{{ arch }}-{{ checksum "yarn.lock" }}
           build: yarn build
           start: cd example && npm start
           wait-on: 'http://localhost:8000'
           config-file: ./example/cypress.json
-          spec: ./example/cypress/**/*
+          spec: ./example/cypress/integration/**/*
   unit-test:
     jobs:
       - unit-test
