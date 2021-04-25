@@ -6,8 +6,6 @@ workflows:
   build:
     jobs:
       - cypress/run:
-          post-install:
-            - run: npx cypress info
           install-command: yarn install --frozen-lockfile
           working_directory: example
           start: npm start
