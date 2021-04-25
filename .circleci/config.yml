@@ -14,7 +14,10 @@ jobs:
           install-npm: false
       - run: yarn install --frozen-lockfile --ignore-engines
       - run: yarn build
-      - run: yarn test --forceExit
+      - run:
+          name: Run Test
+          command: yarn test:coverage --forceExit --detectOpenHandles --maxWorkers=2
+          no_output_timeout: 300m
 
 
 workflows:
