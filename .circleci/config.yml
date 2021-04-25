@@ -11,6 +11,7 @@ jobs:
       - checkout
       - node/install:
           install-yarn: true
+      - run: yarn install --frozen-lockfile --ignore-engines
       - run: yarn build
       - run: yarn test --forceExit
 
