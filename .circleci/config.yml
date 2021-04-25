@@ -1,6 +1,5 @@
 version: 2.1
 orbs:
-  # use Cypress orb from CircleCI registry
   cypress: cypress-io/cypress@1.26.0
 
 workflows:
