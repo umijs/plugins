@@ -3,8 +3,20 @@ orbs:
   cypress: cypress-io/cypress@1.26.0
   node: circleci/node@4.3.0
 
+jobs:
+  unit-node:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - checkout
+      - node/install:
+          install-yarn: true
+      - run: yarn build
+      - run: yarn test --forceExit
+
+
 workflows:
-  e2e:
+  run:
     jobs:
       - cypress/run:
           executor: cypress/base-14
@@ -15,15 +27,7 @@ workflows:
           wait-on: 'http://localhost:8000'
           config-file: ./example/cypress.json
           spec: ./example/cypress/**/*
-  unit:
+  unit-test:
     jobs:
-      - test:
-          executor: node/default
-          steps:
-            - checkout
-            - node/install-packages:
-                override-ci-command: yarn install --frozen-lockfile --ignore-engines
-            - run: yarn build
-            - run: yarn test --forceExit
-
+      - unit-node
 
