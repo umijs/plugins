@@ -39,6 +39,7 @@ export default connect((state) => {
           onClick={() => {
             setLocale(locale, false);
           }}
+          data-cy={`link-${locale}`}
           style={{
             margin: 8,
           }}
@@ -49,7 +50,7 @@ export default connect((state) => {
       <h1>
         Page index {props.count} {props.foo + 2}
       </h1>
-      <button>
+      <button data-cy="locale-text">
         {formatMessage(
           {
             id: 'name',

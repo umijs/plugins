@@ -1,36 +1,17 @@
-version: 2
-jobs:
+version: 2.1
+orbs:
+  # use Cypress orb from CircleCI registry
+  cypress: cypress-io/cypress@1.26.0
+
+workflows:
   build:
-    docker:
-      - image: circleci/node:latest-browsers
+    jobs:
+      - cypress/run:
+          post-install:
+            - run: npx cypress info
+          install-command: yarn install --frozen-lockfile
+          working_directory: example
+          start: npm start
+          wait-on: 'http://localhost:8000'
+          store_artifacts: true
 
-    working_directory: ~/repo
-
-    steps:
-      - checkout
-
-      - restore_cache:
-          key: node-modules-{{ checksum "yarn.lock" }}
-
-      - run:
-          name: Install Dependencies
-          command: yarn --frozen-lockfile
-
-      - save_cache:
-          key: node-modules-{{ checksum "yarn.lock" }}
-          paths:
-            - ./node_modules
-            - ~/.cache/yarn
-
-      - run:
-          name: Run Build
-          command: yarn build
-
-      - run:
-          name: Run Tests
-          command: yarn test:coverage --forceExit --detectOpenHandles --maxWorkers=2
-          no_output_timeout: 300m
-
-      - run:
-          name: Generate coverage
-          command: bash <(curl -s https://codecov.io/bash)

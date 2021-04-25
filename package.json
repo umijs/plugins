@@ -25,6 +25,8 @@
     ]
   },
   "devDependencies": {
+    "cypress": "^7.1.0",
+    "cypress-wait-until": "^1.7.1",
     "@testing-library/react": "^9.4.0",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/jest": "^25.1.3",

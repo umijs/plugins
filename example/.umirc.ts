@@ -20,14 +20,23 @@ export default defineConfig({
       icon: 'star',
     },
     {
-      name: 'utils 测试',
-      path: '/utils',
-      component: './utils',
-    },
-    {
       name: 'request 测试',
       path: '/request',
       component: './request',
+      menu: false,
+    },
+    {
+      name: 'access 测试（有权限）',
+      path: '/plugin-access',
+      component: './plugin-access',
+      access: 'readArticle',
+      menu: false,
+    },
+    {
+      name: 'access 测试（没有权限）',
+      path: '/plugin-no-access',
+      component: './plugin-no-access',
+      access: 'updateArticle',
       menu: false,
     },
     {
