@@ -3,7 +3,11 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 // eslint-disable-next-line import/no-unresolved
 import { IApi, utils } from 'umi';
-import { defaultHistoryType, defaultMasterRootId, qiankunStateForSlaveModelNamespace } from '../constants';
+import {
+  defaultHistoryType,
+  defaultMasterRootId,
+  qiankunStateForSlaveModelNamespace,
+} from '../constants';
 import modifyRoutes from './modifyRoutes';
 import { hasExportWithName } from './utils';
 
@@ -16,14 +20,14 @@ export function isMasterEnable(api: IApi) {
   );
 }
 
-export default function(api: IApi) {
+export default function (api: IApi) {
   api.describe({
     enableBy: () => isMasterEnable(api),
   });
 
   api.addRuntimePlugin(() => '@@/plugin-qiankun/masterRuntimePlugin');
 
-  api.modifyDefaultConfig(config => ({
+  api.modifyDefaultConfig((config) => ({
     ...config,
     mountElementId: defaultMasterRootId,
     disableGlobalVariables: true,
@@ -35,6 +39,23 @@ export default function(api: IApi) {
       },
     },
   }));
+
+  api.chainWebpack((config, { webpack }) => {
+    // 获取包名，没有包名暂时用时间戳代替
+    let pkgName = api.pkg.name;
+    if (!pkgName) {
+      api.logger.warn('Not find name in package.json, please set it firstly!');
+      pkgName = String(Date.now());
+    }
+
+    const usingWebpack5 = webpack.version?.startsWith('5');
+    // webpack5 移除了 jsonpFunction 配置，且不再需要配置 jsonpFunction，see https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-unique-naming
+    if (!usingWebpack5) {
+      config.output.jsonpFunction(`webpackJsonp_${pkgName}`);
+    }
+
+    return config;
+  });
 
   modifyRoutes(api);
 
