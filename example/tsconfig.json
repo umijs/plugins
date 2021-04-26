@@ -4,6 +4,7 @@
     "module": "esnext",
     "target": "esnext",
     "lib": ["esnext", "dom"],
+    "types": ["cypress"],
     "sourceMap": true,
     "baseUrl": ".",
     "jsx": "react",

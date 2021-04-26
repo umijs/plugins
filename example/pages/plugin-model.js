@@ -7,9 +7,14 @@ export default () => {
   // const setCount = useModel('bar', c => c.setCount);
   return (
     <div>
-      <h1 className={styles.title}>Page plugin-model {bar}</h1>
-      <button onClick={() => setCount(c => c + 1)}>add</button>
+      <h1 className={styles.title} data-cy="model-count">
+        Page plugin-model {bar}
+      </h1>
+      <button data-cy="model-add-btn" onClick={() => setCount((c) => c + 1)}>
+        add
+      </button>
       <button
+        data-cy="go-to-plugin-initial-state"
         onClick={() => {
           setCount(999);
           history.push('plugin-initial-state');

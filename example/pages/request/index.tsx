@@ -6,8 +6,8 @@ export default () => {
   const { data, loading } = useRequest(services.fetchCurrentUser);
 
   if (loading) {
-    return <div>loading...</div>;
+    return <div data-cy="loading">loading...</div>;
   }
 
-  return <div>{data.name}</div>;
+  return <div data-cy="data-text">{data.name}</div>;
 };

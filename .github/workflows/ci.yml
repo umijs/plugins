@@ -14,10 +14,11 @@ jobs:
         with:
             fetch-depth: '1'
       - name: Use Node.js ${{ matrix.node_version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node_version }}
-      - run: yarn --ignore-engines --frozen-lockfile
+          registry-url: 'https://registry.yarnpkg.com'
+      - run: yarn --ignore-engines --frozen-lockfile --silent
       - run: yarn build
       - run: yarn test --forceExit
         env:
