@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node_version }}
-      - run: yarn --ignore-engines --frozen-lockfile
+      - run: yarn --ignore-engines --frozen-lockfile --silent
       - run: yarn build
       - run: yarn test --forceExit
         env:

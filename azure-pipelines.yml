@@ -31,7 +31,7 @@ jobs:
               yarn | "$(Agent.OS)"
           path: $(YARN_CACHE_FOLDER)
         displayName: Cache Yarn packages
-      - script: yarn install --frozen-lockfile --ignore-engines
+      - script: yarn install --frozen-lockfile --ignore-engines --silent
         displayName: install
       - script: yarn build
         displayName: build

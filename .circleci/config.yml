@@ -12,7 +12,7 @@ jobs:
       - node/install:
           install-yarn: true
           install-npm: false
-      - run: yarn install --frozen-lockfile --ignore-engines
+      - run: yarn install --frozen-lockfile --ignore-engines --silent
       - run: yarn build
       - run:
           name: Run Test
