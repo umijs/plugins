@@ -83,7 +83,10 @@ export class _DvaContainer extends Component {
   }
 
   render() {
-    const app = !isBrowser() ? this.props.ctx?.app : getApp();
+    let app = getApp();
+    if (!isBrowser() && this.props.ctx?.app) {
+      app = this.props.ctx.app;
+    }
     {{ #LazyLoad }}
     if (!app) {
       return null;
