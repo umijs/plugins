@@ -138,6 +138,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...Model${lodash.uppe
           dvaLoadingPkgPath: winPath(
             require.resolve('dva-loading/dist/index.esm.js'),
           ),
+          SSR: !!api.config?.ssr,
         }),
       });
 
