@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { ApplyPluginsType } from 'umi';
+import { ApplyPluginsType, isBrowser } from 'umi';
 import dva from 'dva';
 // @ts-ignore
 import createLoading from '{{{ dvaLoadingPkgPath }}}';
@@ -83,7 +83,7 @@ export class _DvaContainer extends Component {
   }
 
   render() {
-    const app = getApp();
+    const app = !isBrowser() ? this.props.ctx?.app : getApp();
     {{ #LazyLoad }}
     if (!app) {
       return null;
