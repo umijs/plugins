@@ -52,11 +52,22 @@ export function getApp() {
   return app;
 }
 
+/**
+ * whether browser env
+ * 
+ * @returns boolean
+ */
+function isBrowser(): boolean {
+  return typeof window !== 'undefined' &&
+  typeof window.document !== 'undefined' &&
+  typeof window.document.createElement !== 'undefined'
+}
+
 export class _DvaContainer extends Component {
   constructor(props: any) {
     super(props);
     // run only in client, avoid override server _onCreate()
-    if (typeof window !== 'undefined') {
+    if (isBrowser()) {
       _onCreate()
       {{ #LazyLoad }}
         .then(() => {
@@ -83,7 +94,13 @@ export class _DvaContainer extends Component {
   }
 
   render() {
-    const app = getApp();
+    let app = getApp();
+    {{#SSR}}
+    // fix https://github.com/umijs/umi/issues/6404#issuecomment-828151923
+    if (!isBrowser() && this.props.ctx?.app) {
+      app = this.props.ctx.app;
+    }
+    {{/SSR}}
     {{ #LazyLoad }}
     if (!app) {
       return null;
