@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { ApplyPluginsType, isBrowser } from 'umi';
+import { ApplyPluginsType } from 'umi';
 import dva from 'dva';
 // @ts-ignore
 import createLoading from '{{{ dvaLoadingPkgPath }}}';
@@ -50,6 +50,17 @@ export {{ #LazyLoad }}async {{ /LazyLoad }}function _onCreate(options = {}) {
 
 export function getApp() {
   return app;
+}
+
+/**
+ * whether browser env
+ * 
+ * @returns boolean
+ */
+function isBrowser(): boolean {
+  return typeof window !== 'undefined' &&
+  typeof window.document !== 'undefined' &&
+  typeof window.document.createElement !== 'undefined'
 }
 
 export class _DvaContainer extends Component {
