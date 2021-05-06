@@ -21,6 +21,7 @@ export default (api: IApi) => {
   //插件根目录位置
   const svgoConfigDefaultFilePath = api.utils.winPath('../svgo-config.json');
   try {
+    //如果配置文件不存在使用默认配置
     svgoConfigDirFile = require.resolve(svgoConfigDirFilePath);
   } catch (e) {
     console.log(
