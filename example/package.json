@@ -1,3 +1,8 @@
 {
+  "scripts": {
+    "dev": "../node_modules/umi/bin/umi.js dev",
+    "start": "../node_modules/umi/bin/umi.js dev",
+    "build": "../node_modules/umi/bin/umi.js build"
+  },
   "dependencies": {}
 }

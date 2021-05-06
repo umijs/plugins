@@ -9,7 +9,7 @@ trigger:
 
 jobs:
   - job: windows_test
-    timeoutInMinutes: 30
+    timeoutInMinutes: 60
     pool:
       vmImage: 'vs2017-win2016'
     strategy:
@@ -31,11 +31,11 @@ jobs:
               yarn | "$(Agent.OS)"
           path: $(YARN_CACHE_FOLDER)
         displayName: Cache Yarn packages
-      - script: yarn install --frozen-lockfile
+      - script: yarn install --frozen-lockfile --ignore-engines --silent
         displayName: install
       - script: yarn build
         displayName: build
-      - script: yarn test --forceExit --detectOpenHandles --maxWorkers=2
+      - script: yarn test --forceExit --maxWorkers=2
         env:
           PROGRESS: none
           CI: true

@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1](https://github.com/umijs/plugins/compare/@umijs/plugin-esbuild@1.3.0...@umijs/plugin-esbuild@1.3.1) (2021-04-20)
+
+### Bug Fixes
+
+- **esbuild:** default target ([#592](https://github.com/umijs/plugins/issues/592)) ([33b62d9](https://github.com/umijs/plugins/commit/33b62d9be089cef6d6120460f2948295b8bbee4b))
+
+# [1.3.0](https://github.com/umijs/plugins/compare/@umijs/plugin-esbuild@1.2.0...@umijs/plugin-esbuild@1.3.0) (2021-04-20)
+
+### Bug Fixes
+
+- **esbuild:** rm pure setting & bump esbuild-loader to 2.9.2 ([#587](https://github.com/umijs/plugins/issues/587)) ([98bb5ab](https://github.com/umijs/plugins/commit/98bb5ab3e35af90dad4daef1f2c58577c3b52efc)), closes [umijs/umi#6422](https://github.com/umijs/umi/issues/6422)
+
+### Features
+
+- **esbuild:** apply userconfig targets to esbuild ([#586](https://github.com/umijs/plugins/issues/586)) ([7bf5ce8](https://github.com/umijs/plugins/commit/7bf5ce8a758b6fcc77c7f32cf70c7070aa6a0b1c)), closes [umijs/umi#6359](https://github.com/umijs/umi/issues/6359)
+
 # [1.2.0](https://github.com/umijs/plugins/compare/@umijs/plugin-esbuild@1.1.1...@umijs/plugin-esbuild@1.2.0) (2021-04-09)
 
 ### Features

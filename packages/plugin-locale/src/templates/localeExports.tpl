@@ -85,17 +85,6 @@ export const addLocale = (
     momentLocale: momentLocale,
     {{#Antd}}antd,{{/Antd}}
   };
-
-  // 在通过后台接口异步加载翻译键值对或补充某个语言的翻译时，通知react去替换成包含了最新翻译的intl对象
-  // 从而解决在调用addLocale之后，当前语言不变的情况下，FormattedMessage无法更新最新的翻译出现[React Intl] Missing message报错的问题
-  if (getLocale() === name) {
-    event.emit(LANG_CHANGE_EVENT, name);
-    // chrome 不支持这个事件。所以人肉触发一下
-    if (window.dispatchEvent) {
-      const event = new Event('languagechange');
-      window.dispatchEvent(event);
-    }
-  }
 };
 
 /**
@@ -229,7 +218,7 @@ export const setLocale = (lang: string, realReload: boolean = true) => {
     });
     return;
   }
-  
+
   updater();
 };
 

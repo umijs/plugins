@@ -112,6 +112,9 @@ export default (api: IApi) => {
           dvaImmerES5:
             lodash.isPlainObject(api.config.dva?.immer) &&
             api.config.dva?.immer.enableES5,
+          dvaImmerAllPlugins:
+            lodash.isPlainObject(api.config.dva?.immer) &&
+            api.config.dva?.immer.enableAllPlugins,
           LazyLoad: api.config.dva?.lazyLoad,
           RegisterModelImports: models
             .map((path, index) => {
@@ -135,6 +138,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...Model${lodash.uppe
           dvaLoadingPkgPath: winPath(
             require.resolve('dva-loading/dist/index.esm.js'),
           ),
+          SSR: !!api.config?.ssr,
         }),
       });
 

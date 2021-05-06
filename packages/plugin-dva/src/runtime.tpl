@@ -1,8 +1,8 @@
 import React from 'react';
 import { _DvaContainer, getApp, _onCreate } from './dva';
 
-export function rootContainer(container) {
-  return React.createElement(_DvaContainer, null, container);
+export function rootContainer(container, opts) {
+  return React.createElement(_DvaContainer, opts, container);
 }
 
 {{#SSR}}
@@ -16,6 +16,7 @@ export const ssr = {
       })
       tmpApp.router(() => {})
       tmpApp.start();
+      ctx.app = tmpApp;
     }
     // 一定有 app
     const { _store } = getApp();
