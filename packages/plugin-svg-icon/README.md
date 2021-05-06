@@ -35,30 +35,7 @@ $ yarn add @umijs/plugin-svg-icon --dev
 - 1. 需要声明一个通用组件 ICON
 
 ```jsx
-const requireAll = (requireContext) => {
-  requireContext.keys().map(requireContext);
-};
-const req = require.context('./assets/svgs', false, /\.svg$/);
-requireAll(req);
-
-export const Icon = forwardRef((props, ref) => {
-  const { type, className, link, ...htmlProps } = props;
-  const iconName = `#icon-${type}`;
-  const iconClassName = classNames(
-    'svg-icon',
-    `svg-icon-${props.type}`,
-    className,
-  );
-  const Parent = link ? 'a' : 'i';
-  const icon = (
-    <Parent ref={ref} className={iconClassName} {...htmlProps}>
-      <svg aria-hidden="true">
-        <use xlinkHref={iconName} />
-      </svg>
-    </Parent>
-  );
-  return icon;
-});
+import { SvgIcon } from 'umi';
 ```
 
 - 2. 使用此组件
@@ -69,15 +46,15 @@ export const Icon = forwardRef((props, ref) => {
 
 ## TODO
 
-1.  将示例的 jsx 代码整合到插件内部。
+- [ ] 1.将示例的 jsx 代码整合到插件内部。
 
-2.  暴露 svg-sprite-loader 选项入口
+- [ ] 2.升级 svgo 与 svg-sprite-loader 到最新版本
+
+- [ ] 3.暴露 svg-sprite-loader 选项入口
 
 ## 为什么要使用此插件
 
-- svg 优点多多，其在移动端有很强的适配能力，在 pc 端也可以防止图片变糊，可以多 svg 图片拼接组合等等，高效易用。
-
-  通常我们获得的 svg 图片并不能直接使用，它们可能来自第三方 svg 组件库，或者来自设计师的原稿输出，这些 svg 如果直接使用 svg as component 可能存在以下痛点：
+- svg 优点多多，其在移动端有很强的适配能力，在 pc 端也可以防止图片变糊，可以多 svg 图片拼接组合等等，高效易用。但是，通常我们获得的 svg 图片并不能直接使用，它们可能来自第三方 svg 组件库，或者来自设计师的原稿输出，这些 svg 如果直接使用 svg as component 可能存在以下痛点：
 
   1.  我们需要 svg 图标携带 hover 样式，但是 svg 被填充了 fill 属性
 
@@ -93,6 +70,6 @@ export const Icon = forwardRef((props, ref) => {
 
   1.  svg 确实需要内联样式的效果需要定制，请使用 svg as component。
 
-  2.  有些 svg 不是全局 icon，而是单个引用，并且非常庞大请使用 svg as component。
+  2.  有些 svg 不是全局 icon，而是单个引用，并且非常庞大还是需要使用 svg as component。
 
 更多可以参考：[svg-sprite-loader](https://github.com/JetBrains/svg-sprite-loader) 与 [svgo](https://github.com/svg/svgo)
