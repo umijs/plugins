@@ -1,6 +1,7 @@
 const { utils } = require('umi');
 const { join } = require('path');
 const exec = require('./utils/exec');
+const inquirer = require('inquirer');
 const getPackages = require('./utils/getPackages');
 const isNextVersion = require('./utils/isNextVersion');
 
