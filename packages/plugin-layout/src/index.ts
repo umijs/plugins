@@ -32,7 +32,7 @@ function haveProLayout() {
 }
 
 function toHump(name: string) {
-  return name.replace(/\-(\w)/g, function(all, letter) {
+  return name.replace(/\-(\w)/g, function (all, letter) {
     return letter.toUpperCase();
   });
 }
@@ -109,7 +109,7 @@ export default (api: IApi) => {
     });
     const base = join(api.paths.absTmpPath!, 'plugin-layout', 'layout');
     utils.mkdirp.sync(base);
-    files.forEach(file => {
+    files.forEach((file) => {
       if (['index.ts', 'runtime.tsx.tpl'].includes(file)) return;
       const source = join(cwd, file);
       const target = join(base, file);
@@ -121,7 +121,7 @@ export default (api: IApi) => {
     });
   });
 
-  api.modifyDefaultConfig(config => {
+  api.modifyDefaultConfig((config) => {
     // @ts-ignore
     config.title = false;
     return config;
@@ -182,7 +182,7 @@ export default (api: IApi) => {
     const { userConfig } = api;
     const icons = formatter(userConfig.routes);
     let iconsString = icons.map(
-      iconName =>
+      (iconName) =>
         `import ${iconName} from '@ant-design/icons/es/icons/${iconName}'`,
     );
     api.writeTmpFile({
@@ -200,7 +200,7 @@ export default (api: IApi) => {
     });
   });
 
-  api.modifyRoutes(routes => {
+  api.modifyRoutes((routes) => {
     return [
       {
         path: '/',
@@ -219,4 +219,5 @@ export default (api: IApi) => {
     },
   ]);
   api.addRuntimePlugin(() => ['@@/plugin-layout/runtime.tsx']);
+  api.addRuntimePluginKey(() => ['layoutActionRef']);
 };
