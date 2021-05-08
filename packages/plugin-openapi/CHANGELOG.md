@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/umijs/plugins/compare/@umijs/plugin-openapi@1.2.1...@umijs/plugin-openapi@1.3.0) (2021-05-08)
+
+### Features
+
+- **openapi:** sync some extra props with openapi generator. ([#599](https://github.com/umijs/plugins/issues/599)) ([ca2bb9d](https://github.com/umijs/plugins/commit/ca2bb9de50ffaba07a2cf4e90fe4793d477d2570))
+
 ## [1.2.1](https://github.com/umijs/plugins/compare/@umijs/plugin-openapi@1.2.0...@umijs/plugin-openapi@1.2.1) (2021-03-26)
 
 ### Bug Fixes

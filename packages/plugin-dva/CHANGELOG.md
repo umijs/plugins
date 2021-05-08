@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.1](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.12.0...@umijs/plugin-dva@0.12.1) (2021-05-08)
+
+### Bug Fixes
+
+- **ssr:** dva app ins conflict ([#603](https://github.com/umijs/plugins/issues/603)) ([c927a16](https://github.com/umijs/plugins/commit/c927a16c4f7106b1050c9f3d2f08384c2cc07bc7))
+
 # [0.12.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.11.1...@umijs/plugin-dva@0.12.0) (2021-04-20)
 
 ### Features

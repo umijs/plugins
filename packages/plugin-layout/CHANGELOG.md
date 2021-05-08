@@ -1,18 +1,23 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.14.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.14.0...@umijs/plugin-layout@0.14.1) (2021-03-19)
-
+# [0.15.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.14.1...@umijs/plugin-layout@0.15.0) (2021-05-08)
 
 ### Bug Fixes
 
-* menuItem should support target ([#558](https://github.com/umijs/plugins/issues/558)) ([ec0f461](https://github.com/umijs/plugins/commit/ec0f46134b7a9002fcdd565d81e6582a2e63a840))
+- **layout:** add React.FC to fix "React declared but never read" of "tsc --noEmit" ([#542](https://github.com/umijs/plugins/issues/542)) ([046125f](https://github.com/umijs/plugins/commit/046125f9f1cdeb44e3f9fb01bc0f65fd42404322))
+- **layout:** 修复 403 页面显示逻辑 ([#488](https://github.com/umijs/plugins/issues/488)) ([7ea8d7f](https://github.com/umijs/plugins/commit/7ea8d7f07c9702083877eebb1b70fc11ab31d9cb))
 
+### Features
 
+- **layout:** support layoutActionRef export ([#606](https://github.com/umijs/plugins/issues/606)) ([b82a43a](https://github.com/umijs/plugins/commit/b82a43a77be8302ff323a3e428e3f67e38378b9a))
 
+## [0.14.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.14.0...@umijs/plugin-layout@0.14.1) (2021-03-19)
 
+### Bug Fixes
+
+- menuItem should support target ([#558](https://github.com/umijs/plugins/issues/558)) ([ec0f461](https://github.com/umijs/plugins/commit/ec0f46134b7a9002fcdd565d81e6582a2e63a840))
 
 # [0.14.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.13.5...@umijs/plugin-layout@0.14.0) (2021-03-15)
 
