@@ -9,21 +9,21 @@ const { winPath } = utils;
 function getModels(files: string[], absSrcPath: string) {
   const sortedModels = genModels(files, absSrcPath);
   return sortedModels
-    .map(ele => `'${ele.namespace.replace(/'/g, "\\'")}': ${ele.importName}`)
+    .map((ele) => `'${ele.namespace.replace(/'/g, "\\'")}': ${ele.importName}`)
     .join(', ');
 }
 
 function getExtraModels(models: ModelItem[] = [], absSrcPath: string) {
   const extraModels = genExtraModels(models, absSrcPath);
   return extraModels
-    .map(ele => `'${ele.namespace}': ${ele.exportName || ele.importName}`)
+    .map((ele) => `'${ele.namespace}': ${ele.exportName || ele.importName}`)
     .join(', ');
 }
 
 function getExtraImports(models: ModelItem[] = [], absSrcPath: string) {
   const extraModels = genExtraModels(models, absSrcPath);
   return extraModels
-    .map(ele => {
+    .map((ele) => {
       if (ele.exportName) {
         return `import { ${ele.exportName} } from '${winPath(
           ele.importPath.replace(/'/g, "\\'"),

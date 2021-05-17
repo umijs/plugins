@@ -67,6 +67,28 @@ export default (api: IApi) => {
           {},
         ),
       });
+
+      api.writeTmpFile({
+        path: 'plugin-model/helpers/constant.tsx',
+        content: readFileSync(
+          join(__dirname, './helpers/constant.tsx.tpl'),
+          'utf-8',
+        ),
+      });
+      api.writeTmpFile({
+        path: 'plugin-model/helpers/dispatcher.tsx',
+        content: readFileSync(
+          join(__dirname, './helpers/dispatcher.tsx.tpl'),
+          'utf-8',
+        ),
+      });
+      api.writeTmpFile({
+        path: 'plugin-model/helpers/executor.tsx',
+        content: readFileSync(
+          join(__dirname, './helpers/executor.tsx.tpl'),
+          'utf-8',
+        ),
+      });
     } catch (e) {
       console.error(e);
     }
