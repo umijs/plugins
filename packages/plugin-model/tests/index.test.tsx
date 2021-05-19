@@ -64,11 +64,11 @@ readdirSync(fixtures)
       mkdirSync(helperTmpDir);
     }
     ['constant.tsx', 'dispatcher.tsx', 'executor.tsx'].forEach((helperFile) => {
-      const contect = readFileSync(
+      const content = readFileSync(
         join(__dirname, '../src/helpers', helperFile + '.tpl'),
         'utf-8',
       );
-      writeFileSync(join(helperTmpDir, helperFile), contect);
+      writeFileSync(join(helperTmpDir, helperFile), content);
     });
 
     test(file, async () => {
