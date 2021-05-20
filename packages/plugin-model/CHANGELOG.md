@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.7...@umijs/plugin-model@2.6.0) (2021-05-20)
+
+### Features
+
+- fix plugin-model runtime to adapt mfsu ([#615](https://github.com/umijs/plugins/issues/615)) ([48c69ff](https://github.com/umijs/plugins/commit/48c69ff2a296243045ea763aa857016da8e91379))
+
 ## [2.5.7](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.6...@umijs/plugin-model@2.5.7) (2021-04-20)
 
 ### Bug Fixes
