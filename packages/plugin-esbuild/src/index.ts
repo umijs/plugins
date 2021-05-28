@@ -1,5 +1,5 @@
 import { IApi, BundlerConfigType } from 'umi';
-import { ESBuildPlugin, ESBuildMinifyPlugin } from 'esbuild-loader';
+import { ESBuildMinifyPlugin } from 'esbuild-loader';
 
 export default (api: IApi) => {
   api.describe({
@@ -33,9 +33,6 @@ export default (api: IApi) => {
       const opts = optsMap[type] || optsMap[BundlerConfigType.csr];
       memo.optimization.minimize = true;
       memo.optimization.minimizer = [new ESBuildMinifyPlugin(opts)];
-    }
-    if (memo.plugins) {
-      memo.plugins.push(new ESBuildPlugin());
     }
     return memo;
   });
