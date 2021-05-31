@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.15.0...@umijs/plugin-layout@0.16.0) (2021-05-31)
+
+### Features
+
+- **plugin-access:** fix traverseModifyRoutes ([#617](https://github.com/umijs/plugins/issues/617)) ([38606e5](https://github.com/umijs/plugins/commit/38606e50ece6e88a714cf6683eb105ec284ecbf5))
+
 # [0.15.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.14.1...@umijs/plugin-layout@0.15.0) (2021-05-08)
 
 ### Bug Fixes
