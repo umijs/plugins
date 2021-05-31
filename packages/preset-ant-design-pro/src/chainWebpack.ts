@@ -5,8 +5,7 @@ const webpackPlugin = (config: any) => {
       minimize: true,
       splitChunks: {
         chunks: 'all',
-        minSize: 30000,
-        minChunks: 3,
+        minChunks: 2,
         automaticNameDelimiter: '.',
         cacheGroups: {
           vendor: {
