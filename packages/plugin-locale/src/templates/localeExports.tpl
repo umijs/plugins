@@ -39,6 +39,12 @@ let g_intl: IntlShape;
 
 const useLocalStorage = {{{UseLocalStorage}}};
 
+{{#LocaleList}}
+{{#antdLocale}}
+import {{lang}}{{country}} from '{{{.}}}';
+{{/antdLocale}}
+{{/LocaleList}}
+
 export const localeInfo: {[key: string]: any} = {
   {{#LocaleList}}
   '{{name}}': {
@@ -48,7 +54,7 @@ export const localeInfo: {[key: string]: any} = {
     locale: '{{locale}}',
     {{#Antd}}antd: {
       {{#antdLocale}}
-      ...require('{{{.}}}').default,
+      ...{{lang}}{{country}},
       {{/antdLocale}}
     },{{/Antd}}
     momentLocale: '{{momentLocale}}',
