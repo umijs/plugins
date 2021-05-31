@@ -41,7 +41,7 @@ const useLocalStorage = {{{UseLocalStorage}}};
 
 {{#LocaleList}}
 {{#antdLocale}}
-import {{lang}}{{country}} from '{{{.}}}';
+import {{lang}}{{country}}{{index}} from '{{{locale}}}';
 {{/antdLocale}}
 {{/LocaleList}}
 
@@ -54,7 +54,7 @@ export const localeInfo: {[key: string]: any} = {
     locale: '{{locale}}',
     {{#Antd}}antd: {
       {{#antdLocale}}
-      ...{{lang}}{{country}},
+      ...{{lang}}{{country}}{{index}},
       {{/antdLocale}}
     },{{/Antd}}
     momentLocale: '{{momentLocale}}',
