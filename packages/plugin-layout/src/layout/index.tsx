@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // @ts-ignore
-import { Link, useModel, history } from 'umi';
+import { Link, useModel, history, traverseModifyRoutes, useAccess } from 'umi';
 import ProLayout, { BasicLayoutProps } from '@ant-design/pro-layout';
 import './style.less';
 import renderRightContent from './renderRightContent';
@@ -79,11 +79,13 @@ const BasicLayout = (props: any) => {
           config: any,
         ) => React.ReactNode);
   } = {
-    itemRender: route => <Link to={route.path}>{route.breadcrumbName}</Link>,
+    itemRender: (route) => <Link to={route.path}>{route.breadcrumbName}</Link>,
     ...userConfig,
     ...restProps,
     ...getLayoutRender(currentPathConfig as any),
   };
+
+  const access = useAccess?.();
 
   return (
     <ProLayout
@@ -93,7 +95,7 @@ const BasicLayout = (props: any) => {
       className="umi-plugin-layout-main"
       navTheme="dark"
       siderWidth={256}
-      onMenuHeaderClick={e => {
+      onMenuHeaderClick={(e) => {
         e.stopPropagation();
         e.preventDefault();
         history.push('/');
@@ -102,7 +104,7 @@ const BasicLayout = (props: any) => {
       // 支持了一个 patchMenus，其实应该用 menuDataRender
       menuDataRender={
         userConfig.patchMenus
-          ? menuData => userConfig.patchMenus(menuData, initialInfo)
+          ? (menuData) => userConfig.patchMenus(menuData, initialInfo)
           : undefined
       }
       formatMessage={userConfig.formatMessage}
@@ -123,11 +125,16 @@ const BasicLayout = (props: any) => {
       disableContentMargin
       fixSiderbar
       fixedHeader
+      postMenuData={
+        traverseModifyRoutes
+          ? (menuData) => traverseModifyRoutes?.(menuData, access)
+          : undefined
+      }
       {...layoutRestProps}
       rightContentRender={
         // === false 应该关闭这个功能
         layoutRestProps?.rightContentRender !== false &&
-        (layoutProps => {
+        ((layoutProps) => {
           const dom = renderRightContent(
             userConfig,
             loading,

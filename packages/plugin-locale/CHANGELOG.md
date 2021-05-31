@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.11.2...@umijs/plugin-locale@0.12.0) (2021-05-31)
+
+### Features
+
+- **plugin-locale:** adapt mfsu ([#619](https://github.com/umijs/plugins/issues/619)) ([9bbf34b](https://github.com/umijs/plugins/commit/9bbf34b88330ce00f8e4636b5d609d1e1d860ecd))
+
 ## [0.11.2](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.11.1...@umijs/plugin-locale@0.11.2) (2021-04-20)
 
 ### Bug Fixes

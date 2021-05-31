@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-locale",
-  "version": "0.11.2",
+  "version": "0.12.0",
   "description": "@umijs/plugin-locale",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
