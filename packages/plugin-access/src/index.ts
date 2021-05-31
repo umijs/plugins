@@ -8,7 +8,7 @@ import { checkIfHasDefaultExporting } from './utils';
 
 const ACCESS_DIR = 'plugin-access'; // plugin-access 插件创建临时文件的专有文件夹
 
-export default function(api: IApi) {
+export default function (api: IApi) {
   const umiTmpDir = api.paths.absTmpPath;
   const srcDir = api.paths.absSrcPath;
   const accessFilePath = api.utils.winPath(join(srcDir!, 'access'));
@@ -31,7 +31,7 @@ export default function(api: IApi) {
       // 创建 access 的 hook
       api.writeTmpFile({
         path: `${ACCESS_DIR}/access.tsx`,
-        content: getAccessContent(),
+        content: getAccessContent(api.utils),
       });
 
       // 生成 rootContainer 运行时配置

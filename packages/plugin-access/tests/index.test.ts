@@ -33,7 +33,7 @@ describe('PluginAccess', () => {
     expect(mockApi.writeTmpFile).toHaveBeenCalledTimes(4);
     expect(mockApi.addUmiExports).toHaveBeenCalledTimes(1);
     expect(mockApi.addTmpGenerateWatcherPaths).toHaveBeenCalledTimes(1);
-    expect(mockApi.utils.winPath).toHaveBeenCalledTimes(2);
+    expect(mockApi.utils.winPath).toHaveBeenCalledTimes(3);
   });
 
   it('should not writeTmpFile and not addRuntimePlugin if there is no access file', () => {

@@ -8,7 +8,7 @@ export default (
 import { ApplyPluginsType, useModel ${
   // 没有 formatMessage 就不打开国际化
   formatMessage ? `, useIntl` : ''
-} } from "umi";
+}, traverseModifyRoutes, useAccess } from "umi";
 import { plugin } from "../core/umiExports";
 import LayoutComponent from '${path}';
 
@@ -21,21 +21,28 @@ export default props => {
     setInitialState: null
   }; // plugin-initial-state 未开启
 
+  const access = useAccess?.();
+
   useEffect(() => {
     const useRuntimeConfig =
       plugin.applyPlugins({
         key: "layout",
         type: ApplyPluginsType.modify,
-        initialValue: initialInfo
+        initialValue: {
+          ...initialInfo,
+          traverseModifyRoutes: (menuData) => {
+            return traverseModifyRoutes?.(menuData, access);
+          },
+        },
       }) || {};
     if (useRuntimeConfig instanceof Promise) {
-      useRuntimeConfig.then(config => {
+      useRuntimeConfig.then((config) => {
         setRuntimeConfig(config);
       });
       return;
     }
     setRuntimeConfig(useRuntimeConfig);
-  }, [initialInfo?.initialState]);
+  }, [initialInfo?.initialState, access]);
 
   const userConfig = {
     ...${JSON.stringify(userConfig).replace(/"/g, "'")},
