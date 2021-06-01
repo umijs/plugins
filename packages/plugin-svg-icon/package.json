@@ -1,0 +1,36 @@
+{
+  "name": "@umijs/plugin-svg-icon",
+  "version": "1.0.0",
+  "description": "@umijs/plugin-svg-icon",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/umijs/plugins"
+  },
+  "keywords": [
+    "umi"
+  ],
+  "authors": [
+    "Cyberhan123 <255542417@qq.com> (https://github.com/Cyberhan123)"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/umijs/plugins/issues",
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-svg-icon#readme",
+  "peerDependencies": {
+    "umi": "3.x"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "classnames": "^2.3.1",
+    "svg-sprite-loader": "^6.0.6",
+    "svgo": "^2.3.0",
+    "svgo-loader": "^3.0.0"
+  }
+}
