@@ -9686,8 +9686,8 @@ es6-weak-map@^2.0.2, es6-weak-map@^2.0.3:
 
 esbuild-loader@~2.13.1:
   version "2.13.1"
-  resolved "http://192.168.31.149:8848/esbuild-loader/-/esbuild-loader-2.13.1.tgz#9c89e654390a9a25d99b2f6d803ade30f4335418"
-  integrity sha1-nInmVDkKmiXZmy9tgDreMPQzVBg=
+  resolved "https://registry.yarnpkg.com/esbuild-loader/-/esbuild-loader-2.13.1.tgz#9c89e654390a9a25d99b2f6d803ade30f4335418"
+  integrity sha512-Tzc5nB5tVUmigXz6m4j1OYozJCjdix7E9vtd5RaE54fqz2Rz34Is9S8FbAf8uqR4xvQUBAXIi6Jkn1OeMxw2aQ==
   dependencies:
     esbuild "^0.11.19"
     joycon "^3.0.1"
@@ -9699,8 +9699,8 @@ esbuild-loader@~2.13.1:
 
 esbuild@^0.11.19:
   version "0.11.23"
-  resolved "http://192.168.31.149:8848/esbuild/-/esbuild-0.11.23.tgz#c42534f632e165120671d64db67883634333b4b8"
-  integrity sha1-xCU09jLhZRIGcdZNtniDY0MztLg=
+  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.11.23.tgz#c42534f632e165120671d64db67883634333b4b8"
+  integrity sha512-iaiZZ9vUF5wJV8ob1tl+5aJTrwDczlvGP0JoMmnpC2B0ppiMCu8n8gmy5ZTGl5bcG081XBVn+U+jP+mPFm5T5Q==
 
 escalade@^3.0.2:
   version "3.0.2"
@@ -13541,8 +13541,8 @@ joi2types@~1.0.7:
 
 joycon@^3.0.1:
   version "3.0.1"
-  resolved "http://192.168.31.149:8848/joycon/-/joycon-3.0.1.tgz#9074c9b08ccf37a6726ff74a18485f85efcaddaf"
-  integrity sha1-kHTJsIzPN6Zyb/dKGEhfhe/K3a8=
+  resolved "https://registry.yarnpkg.com/joycon/-/joycon-3.0.1.tgz#9074c9b08ccf37a6726ff74a18485f85efcaddaf"
+  integrity sha512-SJcJNBg32dGgxhPtM0wQqxqV0ax9k/9TaUskGDSJkSFSQOEWWvQ3zzWdGQRIUry2j1zA5+ReH13t0Mf3StuVZA==
 
 js-file-download@^0.4.12:
   version "0.4.12"
@@ -21245,8 +21245,8 @@ tapable@1.1.3, tapable@^1.0.0, tapable@^1.1.3:
 
 tapable@^2.2.0:
   version "2.2.0"
-  resolved "http://192.168.31.149:8848/tapable/-/tapable-2.2.0.tgz#5c373d281d9c672848213d0e037d1c4165ab426b"
-  integrity sha1-XDc9KB2cZyhIIT0OA30cQWWrQms=
+  resolved "https://registry.yarnpkg.com/tapable/-/tapable-2.2.0.tgz#5c373d281d9c672848213d0e037d1c4165ab426b"
+  integrity sha512-FBk4IesMV1rBxX2tfiK8RAmogtWn53puLOQlvO8XuwlgxcYbP4mVPS9Ph4aeamSyyVjOl24aYWAuc8U5kCVwMw==
 
 tar@^4.4.10, tar@^4.4.12, tar@^4.4.8:
   version "4.4.13"
@@ -21811,8 +21811,8 @@ type-fest@^0.8.1:
 
 type-fest@^1.0.1:
   version "1.1.3"
-  resolved "http://192.168.31.149:8848/type-fest/-/type-fest-1.1.3.tgz#ea1a602e98e5a968a56a289886a52f04c686fc81"
-  integrity sha1-6hpgLpjlqWilaiiYhqUvBMaG/IE=
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-1.1.3.tgz#ea1a602e98e5a968a56a289886a52f04c686fc81"
+  integrity sha512-CsiQeFMR1jZEq8R+H59qe+bBevnjoV5N2WZTTdlyqxeoODQOOepN2+msQOywcieDq5sBjabKzTn3U+sfHZlMdw==
 
 type-is@^1.6.4, type-is@~1.6.17, type-is@~1.6.18:
   version "1.6.18"
