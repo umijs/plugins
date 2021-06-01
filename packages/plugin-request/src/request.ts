@@ -95,6 +95,7 @@ export interface RequestConfig extends RequestOptionsInit {
   errorConfig?: {
     errorPage?: string;
     adaptor?: (resData: any, ctx: Context) => ErrorInfoStructure;
+    handleUnexpectedError?: (error: RequestError) => void;
   };
   middlewares?: OnionMiddleware[];
   requestInterceptors?: RequestInterceptor[];
@@ -146,6 +147,10 @@ const getRequestMethod = () => {
 
   const errorAdaptor =
     requestConfig.errorConfig?.adaptor || (resData => resData);
+
+  const handleUnexpectedError =
+    requestConfig.errorConfig?.handleUnexpectedError ||
+    (error => message.error(error.message || 'Request error, please retry.'));
 
   requestMethodInstance = extend({
     errorHandler: (error: RequestError) => {
@@ -200,7 +205,7 @@ const getRequestMethod = () => {
             break;
         }
       } else {
-        message.error(error.message || 'Request error, please retry.');
+        handleUnexpectedError(error);
       }
       throw error;
     },
