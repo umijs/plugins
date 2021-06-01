@@ -1,20 +1,16 @@
-import { IApi, utils } from 'umi';
+import { IApi } from 'umi';
 import { join } from 'path';
 import { readFileSync, existsSync } from 'fs';
 
-const { semver } = utils;
-
 export default (api: IApi) => {
-  const isReact17 = () => {
-    let react;
+  const hasJsxRuntime = (() => {
     try {
-      react = require(require.resolve('react', { paths: [api.cwd] }));
-    } catch (e) {}
-    return (
-      semver.valid(react?.version) &&
-      semver.gte(react.version, '17.0.0-alpha.0')
-    );
-  };
+      require.resolve('react/jsx-runtime');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  })();
 
   api.onStart(() => {
     const tsconfigPath = join(api.cwd, 'tsconfig.json');
@@ -25,22 +21,25 @@ export default (api: IApi) => {
       }
     } catch (e) {}
 
-    if (isReact17() && tsconfigContent && !tsconfigContent?.includes('react-jsx')) {
+    if (
+      hasJsxRuntime &&
+      tsconfigContent &&
+      !tsconfigContent?.includes('react-jsx')
+    ) {
       api.logger.warn(
-        '[WARN] update `jsx: "react"` into `jsx: "react-jsx"` to suport the new JSX transform in React 17 in tsconfig.json',
+        '[WARN] update `jsx: "react"` into `jsx: "react-jsx"` to suport the new JSX transform in tsconfig.json',
       );
     }
   });
 
-  // support react 17
-  api.modifyBabelPresetOpts(opts => {
+  api.modifyBabelPresetOpts((opts) => {
     return {
       ...opts,
-      reactRequire: !isReact17(),
+      reactRequire: !hasJsxRuntime,
       react: {
         ...(opts.react || {}),
-        // support React 17 New Jsx syntax
-        runtime: isReact17() ? 'automatic' : 'classic',
+        // support the new JSX transform
+        runtime: hasJsxRuntime ? 'automatic' : 'classic',
       },
     };
   });
