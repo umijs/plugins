@@ -6,7 +6,7 @@ export interface RequestOptions {
   dataField?: string;
 }
 
-export default function(api: IApi) {
+export default function (api: IApi) {
   const {
     paths,
     utils: { winPath },
@@ -58,7 +58,7 @@ export default function(api: IApi) {
   const requestTemplate = readFileSync(source, 'utf-8');
   const namespace = 'plugin-request';
 
-  api.chainWebpack(webpackConfig => {
+  api.chainWebpack((webpackConfig) => {
     // decoupling antd ui library
     webpackConfig.resolve.alias.set(
       '@umijs/plugin-request/lib/ui',

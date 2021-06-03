@@ -1,1 +1,3 @@
-﻿export default function renderRightContent(){return null}
+﻿export default function renderRightContent() {
+  return null;
+}

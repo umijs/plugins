@@ -45,7 +45,7 @@ const BasicLayout = (props: any) => {
           config: any,
         ) => React.ReactNode);
   } = {
-    itemRender: route => <Link to={route.path}>{route.breadcrumbName}</Link>,
+    itemRender: (route) => <Link to={route.path}>{route.breadcrumbName}</Link>,
     ...userConfig,
     ...restProps,
     ...getLayoutRenderConfig(currentPathConfig as any),
@@ -60,7 +60,7 @@ const BasicLayout = (props: any) => {
       title={userConfig?.name || userConfig?.title}
       navTheme="dark"
       siderWidth={256}
-      onMenuHeaderClick={e => {
+      onMenuHeaderClick={(e) => {
         e.stopPropagation();
         e.preventDefault();
         history.push('/');
@@ -69,7 +69,7 @@ const BasicLayout = (props: any) => {
       // 支持了一个 patchMenus，其实应该用 menuDataRender
       menuDataRender={
         userConfig.patchMenus
-          ? menuData => userConfig?.patchMenus(menuData, initialInfo)
+          ? (menuData) => userConfig?.patchMenus(menuData, initialInfo)
           : undefined
       }
       formatMessage={userConfig?.formatMessage}
@@ -92,14 +92,14 @@ const BasicLayout = (props: any) => {
       fixedHeader
       postMenuData={
         traverseModifyRoutes
-          ? menuData => traverseModifyRoutes?.(menuData, access)
+          ? (menuData) => traverseModifyRoutes?.(menuData, access)
           : undefined
       }
       {...layoutRestProps}
       rightContentRender={
         // === false 应该关闭这个功能
         layoutRestProps?.rightContentRender !== false &&
-        (layoutProps => {
+        ((layoutProps) => {
           const dom = renderRightContent?.(
             userConfig,
             loading,

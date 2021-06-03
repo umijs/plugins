@@ -55,7 +55,9 @@ describe('getLayoutRenderConfig', () => {
   });
 
   it('BlankLayout', () => {
-    const { container } = render(<Layout location={{pathname:"/"}}>Hello, World!</Layout>);
-    expect(container.firstChild).toMatchSnapshot()
+    const { container } = render(
+      <Layout location={{ pathname: '/' }}>Hello, World!</Layout>,
+    );
+    expect(container.firstChild).toMatchSnapshot();
   });
 });

@@ -35,7 +35,7 @@ import React, { useState, useEffect } from 'react';
 import { useIntl, getLocale, addLocale, getAllLocales, setLocale } from 'umi';
 import styles from './index.css';
 
-export default function() {
+export default function () {
   const intl = useIntl();
   const [list, setList] = useState<string[]>(getAllLocales());
   const locale = getLocale();
@@ -52,7 +52,7 @@ export default function() {
   return (
     <div className={styles.normal}>
       <h1>Current language:{locale}</h1>
-      {list.map(locale => (
+      {list.map((locale) => (
         <a
           key={locale}
           onClick={() => {
@@ -149,7 +149,7 @@ export default {
 import React, { useState } from 'react';
 import { useIntl } from 'umi';
 
-export default function() {
+export default function () {
   const intl = useIntl();
   return (
     <button type="primary">
@@ -187,10 +187,10 @@ Such as a component library based on antd ant-c, can be extended antd internatio
 
 ```jsx
 // pluginA.js
-export default api => {
+export default (api) => {
   api.register({
     key: 'addAntdLocales',
-    fn: args => {
+    fn: (args) => {
       const { ssr } = api.config;
       return [
         `ant-c/${ssr ? 'lib' : 'es'}/locale/${args.lang}_${(

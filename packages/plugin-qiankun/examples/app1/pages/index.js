@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useModel, MicroAppWithMemoHistory } from 'umi';
 import { Drawer } from 'antd';
 
-export default function() {
+export default function () {
   const { testProp1, globalState } = useModel('@@qiankunStateFromMaster') || {};
   const [visible, setVisible] = useState(false);
   return (

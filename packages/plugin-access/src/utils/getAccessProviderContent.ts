@@ -1,7 +1,7 @@
 import { utils } from 'umi';
 import { join } from 'path';
 
-export default function(util: typeof utils) {
+export default function (util: typeof utils) {
   return `\
 import React, { useMemo } from 'react';
 import { IRoute } from 'umi';

@@ -68,7 +68,7 @@ describe('antd error tip', () => {
     server.close();
   });
 
-  const prefix = api => `${server.url}${api}`;
+  const prefix = (api) => `${server.url}${api}`;
 
   test('antd message warn', async () => {
     const rawData = {

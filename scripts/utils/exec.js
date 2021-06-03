@@ -8,11 +8,11 @@ module.exports = function exec(command, args, opts) {
       env: process.env,
       ...opts,
     });
-    child.once('error', err => {
+    child.once('error', (err) => {
       console.log(err);
       reject(err);
     });
-    child.once('close', code => {
+    child.once('close', (code) => {
       if (code === 1) {
         process.exit(1);
       } else {
