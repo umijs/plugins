@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-antd",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "@umijs/plugin-antd",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

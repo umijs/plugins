@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.25.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.24.1...@umijs/plugin-qiankun@2.25.0) (2021-06-03)
+
+### Features
+
+- **layout:** renderRightContent support locale ([#624](https://github.com/umijs/plugins/issues/624)) ([6d3fc2d](https://github.com/umijs/plugins/commit/6d3fc2df3f75b3e700b78a9e267099c7f70be47b))
+
 ## [2.24.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.24.0...@umijs/plugin-qiankun@2.24.1) (2021-03-19)
 
 ### Bug Fixes

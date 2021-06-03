@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.2](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.9.1...@umijs/plugin-antd@0.9.2) (2021-06-03)
+
+**Note:** Version bump only for package @umijs/plugin-antd
+
 ## [0.9.1](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.9.0...@umijs/plugin-antd@0.9.1) (2020-12-03)
 
 ### Bug Fixes

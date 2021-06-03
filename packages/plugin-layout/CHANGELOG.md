@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.16.0...@umijs/plugin-layout@0.17.0) (2021-06-03)
+
+### Features
+
+- **layout:** renderRightContent support locale ([#624](https://github.com/umijs/plugins/issues/624)) ([6d3fc2d](https://github.com/umijs/plugins/commit/6d3fc2df3f75b3e700b78a9e267099c7f70be47b))
+
 # [0.16.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.15.0...@umijs/plugin-layout@0.16.0) (2021-05-31)
 
 ### Features
