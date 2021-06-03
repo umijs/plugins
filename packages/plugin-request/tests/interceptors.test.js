@@ -5,6 +5,7 @@ import createTestServer from './createTestServer';
 import { request } from '../src/request';
 
 jest.mock('umi', () => require('./mocks/umi'));
+jest.mock('@umijs/plugin-request/lib/ui', () => require('./mocks/antd'));
 
 jest.mock(
   'runtimeConfig',
@@ -53,7 +54,7 @@ describe('interceptors', () => {
     server.close();
   });
 
-  const prefix = api => `${server.url}${api}`;
+  const prefix = (api) => `${server.url}${api}`;
 
   test('normal', async () => {
     const rawData = {
