@@ -1,6 +1,7 @@
 ﻿import getLayoutRenderConfig from '../src/layout/getLayoutRenderConfig';
 import BlankLayout from '../src/layout/blankLayout';
 import Layout from '../src/layout/index';
+import { WithExceptionOpChildren } from '../src/component/Exception';
 import { render } from '@testing-library/react';
 import React from 'react';
 
@@ -17,6 +18,9 @@ if (!window.matchMedia) {
 }
 
 describe('getLayoutRenderConfig', () => {
+  beforeEach(() => {
+    console.error = jest.fn();
+  });
   it('getLayoutRenderConfig layout=false', () => {
     const layoutConfig = getLayoutRenderConfig(
       {
@@ -54,9 +58,41 @@ describe('getLayoutRenderConfig', () => {
     expect(container.firstChild).toMatchInlineSnapshot(`Hello, World!`);
   });
 
-  it('BlankLayout', () => {
+  it('ProLayout', () => {
     const { container } = render(
       <Layout location={{ pathname: '/' }}>Hello, World!</Layout>,
+    );
+    expect(container.firstChild).toMatchSnapshot();
+  });
+  it('WithExceptionOpChildren 404', () => {
+    const { container } = render(
+      <WithExceptionOpChildren location={{ pathname: '/' }}>
+        Hello, World!
+      </WithExceptionOpChildren>,
+    );
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  it('WithExceptionOpChildren 403', () => {
+    const { container } = render(
+      <WithExceptionOpChildren
+        currentPathConfig={{ unAccessible: true }}
+        location={{ pathname: '/' }}
+      >
+        Hello, World!
+      </WithExceptionOpChildren>,
+    );
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  it('WithExceptionOpChildren is ok', () => {
+    const { container } = render(
+      <WithExceptionOpChildren
+        currentPathConfig={{ unAccessible: false }}
+        location={{ pathname: '/' }}
+      >
+        Hello, World!
+      </WithExceptionOpChildren>,
     );
     expect(container.firstChild).toMatchSnapshot();
   });
