@@ -1,0 +1,233 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getLayoutRenderConfig BlankLayout 2`] = `
+<div
+  class="ant-design-pro ant-pro-basicLayout screen-xl ant-pro-basicLayout-fix-siderbar ant-pro-basicLayout-side"
+>
+  <section
+    class="ant-layout ant-layout-has-sider"
+    style="min-height: 100%;"
+  >
+    <div
+      style="width: 48px; overflow: hidden; flex: 0 0 48px; max-width: 48px; min-width: 48px; transition: background-color 0.3s, min-width 0.3s, max-width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);"
+    />
+    <aside
+      class="ant-layout-sider ant-layout-sider-dark ant-layout-sider-collapsed ant-layout-sider-below ant-pro-sider ant-pro-sider-fixed ant-pro-sider-layout-side"
+      style="overflow: hidden; flex: 0 0 48px; max-width: 48px; min-width: 48px; width: 48px;"
+    >
+      <div
+        class="ant-layout-sider-children"
+      >
+        <div
+          class="ant-pro-sider-logo ant-pro-sider-collapsed"
+          id="logo"
+        >
+          <a>
+            <svg
+              height="32"
+              viewBox="0 0 200 200"
+              width="32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <lineargradient
+                  id="linearGradient-1"
+                  x1="62.102%"
+                  x2="108.197%"
+                  y1="0%"
+                  y2="37.864%"
+                >
+                  <stop
+                    offset="0%"
+                    stop-color="#4285EB"
+                  />
+                  <stop
+                    offset="100%"
+                    stop-color="#2EC7FF"
+                  />
+                </lineargradient>
+                <lineargradient
+                  id="linearGradient-2"
+                  x1="69.644%"
+                  x2="54.043%"
+                  y1="0%"
+                  y2="108.457%"
+                >
+                  <stop
+                    offset="0%"
+                    stop-color="#29CDFF"
+                  />
+                  <stop
+                    offset="37.86%"
+                    stop-color="#148EFF"
+                  />
+                  <stop
+                    offset="100%"
+                    stop-color="#0A60FF"
+                  />
+                </lineargradient>
+                <lineargradient
+                  id="linearGradient-3"
+                  x1="69.691%"
+                  x2="16.723%"
+                  y1="-12.974%"
+                  y2="117.391%"
+                >
+                  <stop
+                    offset="0%"
+                    stop-color="#FA816E"
+                  />
+                  <stop
+                    offset="41.473%"
+                    stop-color="#F74A5C"
+                  />
+                  <stop
+                    offset="100%"
+                    stop-color="#F51D2C"
+                  />
+                </lineargradient>
+                <lineargradient
+                  id="linearGradient-4"
+                  x1="68.128%"
+                  x2="30.44%"
+                  y1="-35.691%"
+                  y2="114.943%"
+                >
+                  <stop
+                    offset="0%"
+                    stop-color="#FA8E7D"
+                  />
+                  <stop
+                    offset="51.264%"
+                    stop-color="#F74A5C"
+                  />
+                  <stop
+                    offset="100%"
+                    stop-color="#F51D2C"
+                  />
+                </lineargradient>
+              </defs>
+              <g
+                fill="none"
+                fill-rule="evenodd"
+                stroke="none"
+                stroke-width="1"
+              >
+                <g
+                  transform="translate(-20 -20)"
+                >
+                  <g
+                    transform="translate(20 20)"
+                  >
+                    <g>
+                      <g
+                        fill-rule="nonzero"
+                      >
+                        <g>
+                          <path
+                            d="M91.588 4.177L4.18 91.513a11.981 11.981 0 000 16.974l87.408 87.336a12.005 12.005 0 0016.989 0l36.648-36.618c4.209-4.205 4.209-11.023 0-15.228-4.208-4.205-11.031-4.205-15.24 0l-27.783 27.76c-1.17 1.169-2.945 1.169-4.114 0l-69.802-69.744c-1.17-1.169-1.17-2.942 0-4.11l69.802-69.745c1.17-1.169 2.944-1.169 4.114 0l27.783 27.76c4.209 4.205 11.032 4.205 15.24 0 4.209-4.205 4.209-11.022 0-15.227L108.581 4.056c-4.719-4.594-12.312-4.557-16.993.12z"
+                            fill="url(#linearGradient-1)"
+                          />
+                          <path
+                            d="M91.588 4.177L4.18 91.513a11.981 11.981 0 000 16.974l87.408 87.336a12.005 12.005 0 0016.989 0l36.648-36.618c4.209-4.205 4.209-11.023 0-15.228-4.208-4.205-11.031-4.205-15.24 0l-27.783 27.76c-1.17 1.169-2.945 1.169-4.114 0l-69.802-69.744c-1.17-1.169-1.17-2.942 0-4.11l69.802-69.745c2.912-2.51 7.664-7.596 14.642-8.786 5.186-.883 10.855 1.062 17.009 5.837L108.58 4.056c-4.719-4.594-12.312-4.557-16.993.12z"
+                            fill="url(#linearGradient-2)"
+                          />
+                        </g>
+                        <path
+                          d="M153.686 135.855c4.208 4.205 11.031 4.205 15.24 0l27.034-27.012c4.7-4.696 4.7-12.28 0-16.974l-27.27-27.15c-4.218-4.2-11.043-4.195-15.254.013-4.209 4.205-4.209 11.022 0 15.227l18.418 18.403c1.17 1.169 1.17 2.943 0 4.111l-18.168 18.154c-4.209 4.205-4.209 11.023 0 15.228z"
+                          fill="url(#linearGradient-3)"
+                        />
+                      </g>
+                      <ellipse
+                        cx="100.519"
+                        cy="100.437"
+                        fill="url(#linearGradient-4)"
+                        rx="23.6"
+                        ry="23.581"
+                      />
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </a>
+        </div>
+        <div
+          style="flex: 1; overflow-y: auto; overflow-x: hidden;"
+        />
+        <div
+          class="ant-pro-sider-links"
+        >
+          <ul
+            class="ant-menu ant-menu-root ant-menu-vertical ant-menu-dark ant-pro-sider-link-menu ant-menu-inline-collapsed"
+            data-menu-list="true"
+            role="menu"
+            tabindex="0"
+          >
+            <li
+              class="ant-menu-item ant-menu-item-only-child ant-pro-sider-collapsed-button"
+              data-menu-id="rc-menu-uuid-test-collapsed"
+              role="menuitem"
+              tabindex="-1"
+            >
+              <span
+                class="ant-menu-title-content"
+              >
+                <span
+                  aria-label="menu-unfold"
+                  class="anticon anticon-menu-unfold"
+                  role="img"
+                >
+                  <svg
+                    aria-hidden="true"
+                    data-icon="menu-unfold"
+                    fill="currentColor"
+                    focusable="false"
+                    height="1em"
+                    viewBox="64 64 896 896"
+                    width="1em"
+                  >
+                    <path
+                      d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM142.4 642.1L298.7 519a8.84 8.84 0 000-13.9L142.4 381.9c-5.8-4.6-14.4-.5-14.4 6.9v246.3a8.9 8.9 0 0014.4 7z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </li>
+          </ul>
+          <div
+            aria-hidden="true"
+            style="display: none;"
+          />
+        </div>
+      </div>
+    </aside>
+    <div
+      class="ant-layout"
+      style="position: relative;"
+    >
+      <header
+        class="ant-layout-header"
+        style="height: 48px; line-height: 48px; background: transparent;"
+      />
+      <header
+        class="ant-layout-header ant-pro-fixed-header ant-pro-header-dark"
+        style="padding: 0px; height: 48px; line-height: 48px; width: 100%; z-index: 19; right: 0px;"
+      >
+        <div
+          class="ant-pro-global-header ant-pro-global-header-layout-side"
+        >
+          <div
+            style="flex: 1;"
+          />
+        </div>
+      </header>
+      <main
+        class="ant-layout-content ant-pro-basicLayout-content ant-pro-basicLayout-has-header ant-pro-basicLayout-content-disable-margin"
+      >
+        Hello, World!
+      </main>
+    </div>
+  </section>
+</div>
+`;

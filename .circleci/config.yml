@@ -12,13 +12,12 @@ jobs:
       - node/install:
           install-yarn: true
           install-npm: false
-      - run: yarn install --frozen-lockfile --ignore-engines --silent
+      - run: yarn install
       - run: yarn build
       - run:
           name: Run Test
           command: yarn test:coverage --forceExit --detectOpenHandles --maxWorkers=2
           no_output_timeout: 300m
-
 
 workflows:
   run:
@@ -34,4 +33,3 @@ workflows:
   unit-test:
     jobs:
       - unit-test
-

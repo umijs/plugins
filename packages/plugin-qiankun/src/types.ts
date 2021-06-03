@@ -42,6 +42,7 @@ export type SlaveOptions = {
 };
 
 declare module '@umijs/types' {
+  //@ts-ignore
   interface BaseIConfig {
     // @ts-ignore
     qiankun: {

@@ -1,7 +1,9 @@
 import { IApi, utils } from 'umi';
 import { join } from 'path';
 import * as allIcons from '@ant-design/icons';
-import getLayoutContent from './utils/getLayoutContent';
+import getLayoutContent, {
+  genRenderRightContent,
+} from './utils/getLayoutContent';
 import { LayoutConfig } from './types';
 import { readFileSync, copyFileSync, statSync } from 'fs';
 
@@ -167,6 +169,14 @@ export default (api: IApi) => {
     api.writeTmpFile({
       path: 'plugin-layout/layoutExports.ts',
       content: utils.Mustache.render(layoutExportsContent, {}),
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-layout/renderRightContent.tsx',
+      content: genRenderRightContent({
+        locale: api.hasPlugins(['@umijs/plugin-locale']),
+        initialState: api.hasPlugins(['@umijs/plugin-initial-state']),
+      }),
     });
 
     api.writeTmpFile({

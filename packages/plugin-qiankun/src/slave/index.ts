@@ -65,9 +65,8 @@ export default function (api: IApi) {
 
   api.modifyPublicPathStr((publicPathStr) => {
     const { runtimePublicPath } = api.config;
-    const { shouldNotModifyRuntimePublicPath } = (
-      api.config.qiankun || {}
-    ).slave!;
+    const { shouldNotModifyRuntimePublicPath } = (api.config.qiankun || {})
+      .slave!;
 
     if (runtimePublicPath === true && !shouldNotModifyRuntimePublicPath) {
       return `window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || "${
@@ -93,7 +92,7 @@ export default function (api: IApi) {
 
   // umi bundle 添加 entry 标记
   api.modifyHTML(($) => {
-    $('script').each((_, el) => {
+    $('script').each((_: any, el: any) => {
       const scriptEl = $(el);
       const umiEntryJs = /\/?umi(\.\w+)?\.js$/g;
       if (umiEntryJs.test(scriptEl.attr('src') ?? '')) {
