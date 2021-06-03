@@ -3,6 +3,7 @@ import BlankLayout from '../src/layout/blankLayout';
 import Layout from '../src/layout/index';
 import { WithExceptionOpChildren } from '../src/component/Exception';
 import { render } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
 
 if (!window.matchMedia) {
@@ -62,6 +63,57 @@ describe('getLayoutRenderConfig', () => {
     );
     expect(container.firstChild).toMatchSnapshot();
   });
+
+  it('ProLayout rightContentRender', () => {
+    const { container } = render(
+      <Layout location={{ pathname: '/' }} rightContentRender={() => 'name'}>
+        Hello, World!
+      </Layout>,
+    );
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  it('ProLayout rightContentRender', () => {
+    const { container } = render(
+      <Layout
+        location={{ pathname: '/' }}
+        userConfig={{
+          childrenRender: () => 'hello childrenRender',
+        }}
+        rightContentRender={() => 'name'}
+      >
+        Hello, World!
+      </Layout>,
+    );
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  it('ProLayout patchMenus', () => {
+    const { container } = render(
+      <BrowserRouter>
+        <Layout
+          location={{ pathname: '/' }}
+          userConfig={{
+            patchMenus: () => [
+              {
+                name: 'qixian',
+                path: '/',
+              },
+              {
+                name: 'qixian2',
+                path: '/qixian',
+              },
+            ],
+          }}
+          rightContentRender={() => 'name'}
+        >
+          Hello, World!
+        </Layout>
+      </BrowserRouter>,
+    );
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
   it('WithExceptionOpChildren 404', () => {
     const { container } = render(
       <WithExceptionOpChildren location={{ pathname: '/' }}>
