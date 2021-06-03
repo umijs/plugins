@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   cypress: cypress-io/cypress@1.26.0
-  node: cimg/node@12.22.1
+  node: circleci/node@4.5.0
 
 jobs:
   unit-test:
