@@ -1,7 +1,20 @@
 ﻿import getLayoutRenderConfig from '../src/layout/getLayoutRenderConfig';
 import BlankLayout from '../src/layout/blankLayout';
+import Layout from '../src/layout/index';
 import { render } from '@testing-library/react';
 import React from 'react';
+
+if (!window.matchMedia) {
+  Object.defineProperty(global.window, 'matchMedia', {
+    writable: true,
+    configurable: true,
+    value: jest.fn((query) => ({
+      matches: query.includes('max-width'),
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+    })),
+  });
+}
 
 describe('getLayoutRenderConfig', () => {
   it('getLayoutRenderConfig layout=false', () => {
@@ -39,5 +52,10 @@ describe('getLayoutRenderConfig', () => {
   it('BlankLayout', () => {
     const { container } = render(<BlankLayout>Hello, World!</BlankLayout>);
     expect(container.firstChild).toMatchInlineSnapshot(`Hello, World!`);
+  });
+
+  it('BlankLayout', () => {
+    const { container } = render(<Layout location={{pathname:"/"}}>Hello, World!</Layout>);
+    expect(container.firstChild).toMatchSnapshot()
   });
 });

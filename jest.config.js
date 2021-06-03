@@ -7,6 +7,7 @@ module.exports = {
     return Object.assign(memo, {
       '^react$': require.resolve('react'),
       '^react-dom$': require.resolve('react-dom'),
+      '^@@/plugin-layout/renderRightContent$': require.resolve('./example/plugin-layout/renderRightContent')
     });
   },
 };

@@ -10,7 +10,10 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "suppressImplicitAnyIndexErrors": true,
-    "declaration": true
+    "declaration": true,
+    "paths": {
+      "@@": ["./example/*"]
+    }
   },
   "exclude": [
     "node_modules",
