@@ -2,7 +2,7 @@
 
 exports[`getLayoutRenderConfig BlankLayout 2`] = `
 <div
-  class="ant-design-pro ant-pro-basicLayout screen-md ant-pro-basicLayout-fix-siderbar ant-pro-basicLayout-side"
+  class="ant-design-pro ant-pro-basicLayout screen-xl ant-pro-basicLayout-fix-siderbar ant-pro-basicLayout-side"
 >
   <section
     class="ant-layout ant-layout-has-sider"
@@ -180,7 +180,6 @@ exports[`getLayoutRenderConfig BlankLayout 2`] = `
                 >
                   <svg
                     aria-hidden="true"
-                    class=""
                     data-icon="menu-unfold"
                     fill="currentColor"
                     focusable="false"
