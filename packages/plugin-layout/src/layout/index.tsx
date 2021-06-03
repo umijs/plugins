@@ -3,47 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { Link, useModel, history, traverseModifyRoutes, useAccess } from 'umi';
 import ProLayout, { BasicLayoutProps } from '@ant-design/pro-layout';
 import './style.less';
-import renderRightContent from './renderRightContent';
+// @ts-ignore
+import renderRightContent from '@@/plugin-layout/renderRightContent';
 import { WithExceptionOpChildren } from '../component/Exception';
 import { getMatchMenu, MenuDataItem, transformRoute } from '@umijs/route-utils';
 // @ts-ignore
 import logo from '../component/logo';
-
-const getLayoutRender = (currentPathConfig: {
-  layout:
-    | {
-        hideMenu: boolean;
-        hideNav: boolean;
-        hideFooter: boolean;
-      }
-    | false;
-  hideFooter: boolean;
-}) => {
-  const layoutRender: any = {};
-
-  if (currentPathConfig?.hideFooter) {
-    layoutRender.footerRender = false;
-  }
-
-  if (currentPathConfig?.layout == false) {
-    layoutRender.pure = true;
-    return layoutRender;
-  }
-
-  if (currentPathConfig?.layout?.hideMenu) {
-    layoutRender.menuRender = false;
-  }
-
-  if (currentPathConfig?.layout?.hideFooter) {
-    layoutRender.footerRender = false;
-  }
-
-  if (currentPathConfig?.layout?.hideNav) {
-    layoutRender.headerRender = false;
-  }
-
-  return layoutRender;
-};
+import getLayoutRenderConfig from './getLayoutRenderConfig';
 
 const BasicLayout = (props: any) => {
   const { children, userConfig, location, route, ...restProps } = props;
@@ -82,7 +48,7 @@ const BasicLayout = (props: any) => {
     itemRender: (route) => <Link to={route.path}>{route.breadcrumbName}</Link>,
     ...userConfig,
     ...restProps,
-    ...getLayoutRender(currentPathConfig as any),
+    ...getLayoutRenderConfig(currentPathConfig as any),
   };
 
   const access = useAccess?.();
