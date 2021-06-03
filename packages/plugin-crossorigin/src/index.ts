@@ -22,7 +22,7 @@ export default (api: IApi) => {
     },
   });
 
-  api.chainWebpack(webpackConfig => {
+  api.chainWebpack((webpackConfig) => {
     webpackConfig.output.crossOriginLoading('anonymous');
     return webpackConfig;
   });
@@ -32,7 +32,7 @@ export default (api: IApi) => {
 
   // last exec
   api.modifyHTML({
-    fn: $ => {
+    fn: ($) => {
       $('script').each((i: number, elem) => {
         const el = $(elem);
         const scriptSrc = el.attr('src');
@@ -46,7 +46,7 @@ export default (api: IApi) => {
           el.attr('crossorigin', 'anonymous');
         }
 
-        if (include.some(reg => reg.test(scriptSrc))) {
+        if (include.some((reg) => reg.test(scriptSrc))) {
           el.attr('crossorigin', 'anonymous');
         }
       });

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import request from './services/request';
 
-export const qiankun = request('/apps').then(apps => ({
+export const qiankun = request('/apps').then((apps) => ({
   apps,
   routes: [
     {
@@ -11,7 +11,7 @@ export const qiankun = request('/apps').then(apps => ({
         autoSetLoading: true,
         className: 'appClassName',
         wrapperClassName: 'wrapperClass',
-        loader: loading => {
+        loader: (loading) => {
           return loading ? <div>runtime loading</div> : null;
         },
       },

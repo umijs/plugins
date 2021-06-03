@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { MicroApp, useModel } from 'umi';
 import style from './index.css';
 
-export default function() {
+export default function () {
   const [microAppState, setState] = useState('Hello');
   const { setQiankunGlobalState } = useModel('@@qiankunStateForSlave');
 
@@ -25,7 +25,7 @@ export default function() {
       >
         修改全局 state
       </button>
-      <button onClick={() => setState(s => s + 'o')}>修改子应用 props</button>
+      <button onClick={() => setState((s) => s + 'o')}>修改子应用 props</button>
       <MicroApp testProp1={microAppState} name="app1" />
     </div>
   );

@@ -16,7 +16,7 @@ describe('utils', () => {
         separator: service.config?.locale?.baseSeparator,
         absSrcPath,
         absPagesPath,
-        addAntdLocales: async args => [
+        addAntdLocales: async (args) => [
           `antd/lib/locale/${args.lang}_${(
             args.country || args.lang
           ).toLocaleUpperCase()}`,
@@ -84,7 +84,7 @@ describe('utils', () => {
         separator: service.config?.locale?.baseSeparator,
         absSrcPath,
         absPagesPath,
-        addAntdLocales: async args => [
+        addAntdLocales: async (args) => [
           `antd/lib/locale/${args.lang}_${(
             args.country || args.lang
           ).toLocaleUpperCase()}`,

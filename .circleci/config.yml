@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   cypress: cypress-io/cypress@1.26.0
-  node: circleci/node@4.3.0
+  node: circleci/node@4.5.0
 
 jobs:
   unit-test:
@@ -13,11 +13,6 @@ jobs:
           install-yarn: true
           install-npm: false
       - run: yarn install
-      - run: yarn build
-      - run:
-          name: Run Test
-          command: yarn test:coverage --forceExit --detectOpenHandles --maxWorkers=2
-          no_output_timeout: 300m
 
 workflows:
   run:

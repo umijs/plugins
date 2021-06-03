@@ -6,14 +6,14 @@ import style from './style.less';
 
 const { Header, Content, Footer } = Layout;
 
-const renderBreadCrumb = pathname => {
+const renderBreadCrumb = (pathname) => {
   let arr = pathname.split('/').slice(1);
   if (arr[0] === '') {
     arr[0] = 'Home';
   }
   return (
     <Breadcrumb className={style.breadcrumb}>
-      {arr.map(name => {
+      {arr.map((name) => {
         return <Breadcrumb.Item key={name}>{name}</Breadcrumb.Item>;
       })}
     </Breadcrumb>

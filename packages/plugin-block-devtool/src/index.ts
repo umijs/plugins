@@ -32,7 +32,7 @@ function getNameFromPkg(pkg: { name: string }) {
   return pkg.name.split('/').pop();
 }
 
-module.exports = function(api: IApi) {
+module.exports = function (api: IApi) {
   const { paths, logger } = api;
   const cwd = paths.cwd || process.cwd();
   const blockPath = join(cwd, `${process.argv.slice(2)[1] || '.'}`);
@@ -53,8 +53,10 @@ module.exports = function(api: IApi) {
     },
   });
 
-  const blockConfig = require(join(paths.cwd || '', 'package.json'))
-    .blockConfig;
+  const blockConfig = require(join(
+    paths.cwd || '',
+    'package.json',
+  )).blockConfig;
   const options = api.service.userConfig.blockDevtool || {};
 
   let subBlocks: SubBlock[] = [];
@@ -102,7 +104,7 @@ export default (props) => {
     });
   });
 
-  api.modifyConfig(memo => {
+  api.modifyConfig((memo) => {
     // 这个环境变量是为了截图的时候可以动态设置 layout
     // 所以会优先从 环境变量里面取
     const path = process.env.BLOCK_DEV_PATH || options.path || '/';
@@ -127,7 +129,7 @@ export default (props) => {
   });
 
   // link locales 和 models
-  ['locales', 'models'].map(dirName => {
+  ['locales', 'models'].map((dirName) => {
     if (existsSync(join(cwd, dirName))) {
       rimraf.sync(join(cwd, dirName));
     }
@@ -138,7 +140,7 @@ export default (props) => {
 
   if (existsSync(localesPath)) {
     // copy 每个文件
-    readdirSync(localesPath).map(fileName => {
+    readdirSync(localesPath).map((fileName) => {
       const copyFilePath = join(blockPath, 'src', 'locales', fileName);
       if (existsSync(copyFilePath)) {
         copyFileSync(copyFilePath, join(cwd, 'locales', fileName));
@@ -147,7 +149,7 @@ export default (props) => {
   }
 
   // link models 文件
-  ['model.ts', 'service.ts', 'data.d.ts'].map(fileName => {
+  ['model.ts', 'service.ts', 'data.d.ts'].map((fileName) => {
     const copyFilePath = join(blockPath, 'src', fileName);
     if (existsSync(copyFilePath)) {
       copyFileSync(copyFilePath, join(cwd, 'models', fileName));
@@ -164,8 +166,8 @@ export default (props) => {
     },
   ]);
 
-  api.chainWebpack(webpackConfig => {
-    subBlocks.forEach(b => {
+  api.chainWebpack((webpackConfig) => {
+    subBlocks.forEach((b) => {
       webpackConfig.resolve.alias.set(`./${b.name}`, join(b.path, 'src'));
     });
 

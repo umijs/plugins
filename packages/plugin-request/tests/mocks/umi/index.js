@@ -1,7 +1,7 @@
 exports.ApplyPluginsType = {};
 
 exports.history = {
-  push: params => {
+  push: (params) => {
     require('historyPush')(params);
   },
 };

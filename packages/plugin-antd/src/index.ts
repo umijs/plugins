@@ -24,7 +24,7 @@ export default (api: IApi) => {
     },
   });
 
-  api.modifyBabelPresetOpts(opts => {
+  api.modifyBabelPresetOpts((opts) => {
     return {
       ...opts,
       import: (opts.import || []).concat([
@@ -55,7 +55,7 @@ export default (api: IApi) => {
   if (opts?.dark || opts?.compact) {
     // support dark mode, user use antd 4 by default
     const { getThemeVariables } = require('antd/dist/theme');
-    api.modifyDefaultConfig(config => {
+    api.modifyDefaultConfig((config) => {
       config.theme = {
         ...getThemeVariables(opts),
         ...config.theme,

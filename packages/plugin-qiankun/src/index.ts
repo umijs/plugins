@@ -3,7 +3,7 @@ import { IApi } from 'umi';
 export { isMasterEnable } from './master';
 export { isSlaveEnable } from './slave';
 
-export default function(api: IApi) {
+export default function (api: IApi) {
   api.addRuntimePluginKey(() => 'qiankun');
 
   api.describe({

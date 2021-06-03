@@ -19,16 +19,14 @@ describe('Utils', () => {
 
   describe('checkIfHasDefaultExporting', () => {
     it('should return true if file path has default exporting member', () => {
-      const hasDefaultExporting: boolean = checkIfHasDefaultExporting(
-        'path/to/access',
-      );
+      const hasDefaultExporting: boolean =
+        checkIfHasDefaultExporting('path/to/access');
       expect(hasDefaultExporting).toBe(true);
     });
 
     it('should return false if file path does not has default exporting member', () => {
-      const hasDefaultExporting: boolean = checkIfHasDefaultExporting(
-        'path/not/exist',
-      );
+      const hasDefaultExporting: boolean =
+        checkIfHasDefaultExporting('path/not/exist');
       expect(hasDefaultExporting).toBe(false);
     });
   });

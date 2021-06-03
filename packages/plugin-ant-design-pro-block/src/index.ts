@@ -4,7 +4,7 @@ import { join } from 'path';
 import { existsSync } from 'fs';
 import { IApi } from 'umi';
 
-export default function(api: IApi) {
+export default function (api: IApi) {
   const { paths, logger } = api;
 
   if (!api.hasPlugins(['@umijs/plugin-blocks'])) {

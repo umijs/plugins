@@ -1,4 +1,4 @@
-export default function(props) {
+export default function (props) {
   const { abc } = props.match.params;
   return (
     <div>

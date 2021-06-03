@@ -18431,10 +18431,10 @@ umi-request@^1.1.0, umi-request@^1.2.14:
     isomorphic-fetch "^2.2.1"
     qs "^6.9.1"
 
-umi@^3.3.2:
+umi@^3.4.24:
   version "3.4.24"
-  resolved "https://registry.yarnpkg.com/umi/-/umi-3.4.24.tgz#52a585e7d83dd99821d341d9b22f9a582bc99c9d"
-  integrity sha512-P+PfeRZLnlCCjKJ0NCVBN9waKbmyJPe04YjW7BZIlhEgbf2aVGLQIVW1VUhNGuyZuT6wT+oaVBI7t3lFkIW8bg==
+  resolved "https://registry.nlark.com/umi/download/umi-3.4.24.tgz#52a585e7d83dd99821d341d9b22f9a582bc99c9d"
+  integrity sha1-UqWF59g92Zgh00HZsi+aWCvJnJ0=
   dependencies:
     "@umijs/bundler-webpack" "3.4.24"
     "@umijs/core" "3.4.24"

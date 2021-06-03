@@ -3,7 +3,11 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 // eslint-disable-next-line import/no-unresolved
 import { IApi, utils } from 'umi';
-import { defaultHistoryType, defaultMasterRootId, qiankunStateForSlaveModelNamespace } from '../constants';
+import {
+  defaultHistoryType,
+  defaultMasterRootId,
+  qiankunStateForSlaveModelNamespace,
+} from '../constants';
 import modifyRoutes from './modifyRoutes';
 import { hasExportWithName } from './utils';
 
@@ -16,14 +20,14 @@ export function isMasterEnable(api: IApi) {
   );
 }
 
-export default function(api: IApi) {
+export default function (api: IApi) {
   api.describe({
     enableBy: () => isMasterEnable(api),
   });
 
   api.addRuntimePlugin(() => '@@/plugin-qiankun/masterRuntimePlugin');
 
-  api.modifyDefaultConfig(config => ({
+  api.modifyDefaultConfig((config) => ({
     ...config,
     mountElementId: defaultMasterRootId,
     disableGlobalVariables: true,

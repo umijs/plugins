@@ -1,4 +1,4 @@
-export default function() {
+export default function () {
   return `\
 import React from 'react';
 import AccessProvider from './AccessProvider';

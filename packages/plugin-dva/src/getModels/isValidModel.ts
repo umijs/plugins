@@ -53,7 +53,7 @@ export function isValidModel({ content }: { content: string }) {
   traverse.default(ast as any, {
     ImportDeclaration(path) {
       const { specifiers, source } = path.node;
-      specifiers.forEach(specifier => {
+      specifiers.forEach((specifier) => {
         if (t.isImportDefaultSpecifier(specifier)) {
           imports[specifier.local.name] = source.value;
         }
@@ -82,7 +82,7 @@ export function isValidModel({ content }: { content: string }) {
 
       if (
         t.isObjectExpression(node) &&
-        node.properties.some(property => {
+        node.properties.some((property) => {
           return [
             'state',
             'reducers',
