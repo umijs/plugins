@@ -40,11 +40,11 @@ export function hasExportWithName(opts: { name: string; filePath: string }) {
       'objectRestSpread',
       'optionalChaining',
       'decorators-legacy',
-    ],
+    ] as any[],
   });
 
   let hasExport = false;
-  ast.program.body.forEach(node => {
+  ast.program.body.forEach((node) => {
     if (t.isExportNamedDeclaration(node)) {
       if (node.declaration) {
         // export function xxx(){};
@@ -61,7 +61,7 @@ export function hasExportWithName(opts: { name: string; filePath: string }) {
           node.declaration.declarations
         ) {
           if (
-            node.declaration.declarations.some(declaration => {
+            node.declaration.declarations.some((declaration) => {
               return (
                 t.isVariableDeclarator(declaration) &&
                 t.isIdentifier(declaration.id) &&
@@ -78,7 +78,7 @@ export function hasExportWithName(opts: { name: string; filePath: string }) {
       if (
         node.specifiers &&
         // @ts-ignore
-        node.specifiers.some(specifier => specifier.exported.name === name)
+        node.specifiers.some((specifier) => specifier.exported.name === name)
       ) {
         hasExport = true;
       }

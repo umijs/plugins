@@ -20,6 +20,7 @@
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "typeRoots": ["./typings"]
+    "typeRoots": ["./typings"],
+    "skipLibCheck": true
   }
 }
