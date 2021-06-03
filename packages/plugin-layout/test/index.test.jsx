@@ -44,12 +44,10 @@ describe('getLayoutRenderConfig', () => {
   });
 
   it('getLayoutRenderConfig', () => {
-    const layoutConfig = getLayoutRenderConfig(
-      {
-        layout: {},
-      },
-      false,
-    );
+    const layoutConfig = getLayoutRenderConfig({
+      layout: {},
+      hideFooter: true,
+    });
     expect(layoutConfig.footerRender).toBeFalsy();
   });
 
