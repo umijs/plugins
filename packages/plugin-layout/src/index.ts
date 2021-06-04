@@ -6,7 +6,7 @@ import getLayoutContent, {
 } from './utils/getLayoutContent';
 import copySrcFiles from './utils/copySrcFiles';
 import { LayoutConfig } from './types';
-import { readFileSync, copyFileSync, statSync, writeFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 
 const DIR_NAME = 'plugin-layout';
 
@@ -101,8 +101,8 @@ export default (api: IApi) => {
       },
     ];
   });
-  const hasAccess = api.hasPlugins['@umijs/plugin-access'];
-
+  const accessPath = join(api.paths.absTmpPath!, 'plugin-access', 'access.tsx');
+  const hasAccess = existsSync(accessPath);
   let generatedOnce = false;
   api.onGenerateFiles(() => {
     if (generatedOnce) return;
