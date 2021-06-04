@@ -4,6 +4,7 @@ import * as allIcons from '@ant-design/icons';
 import getLayoutContent, {
   genRenderRightContent,
 } from './utils/getLayoutContent';
+import copySrcFiles from './utils/copySrcFiles';
 import { LayoutConfig } from './types';
 import { readFileSync, copyFileSync, statSync, writeFileSync } from 'fs';
 
@@ -107,30 +108,8 @@ export default (api: IApi) => {
     if (generatedOnce) return;
     generatedOnce = true;
     const cwd = join(__dirname, '../src');
-    const files = utils.glob.sync('**/*', {
-      cwd,
-    });
-    const base = join(api.paths.absTmpPath!, 'plugin-layout', 'layout');
-    utils.mkdirp.sync(base);
-    files.forEach((file) => {
-      if (['index.ts', 'runtime.tsx.tpl'].includes(file)) return;
-      const source = join(cwd, file);
-      const target = join(base, file);
-      if (statSync(source).isDirectory()) {
-        utils.mkdirp.sync(target);
-      } else {
-        if (target.endsWith('.tpl')) {
-          const sourceContent = readFileSync(source, 'utf-8');
-          writeFileSync(
-            target.replace(/\.tpl$/, ''),
-            utils.Mustache.render(sourceContent, { hasAccess }),
-            'utf-8',
-          );
-        } else {
-          copyFileSync(source, target);
-        }
-      }
-    });
+    const config = { hasAccess };
+    copySrcFiles({ cwd, absTmpPath: api.paths.absTmpPath!, config });
   });
 
   api.modifyDefaultConfig((config) => {

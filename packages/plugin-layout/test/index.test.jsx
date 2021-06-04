@@ -1,10 +1,14 @@
 ﻿import getLayoutRenderConfig from '../src/layout/getLayoutRenderConfig';
+import copySrcFiles from '../src/utils/copySrcFiles';
 import BlankLayout from '../src/layout/blankLayout';
-import Layout from '../src/layout/index';
 import { WithExceptionOpChildren } from '../src/component/Exception';
 import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
+import { join } from 'path';
+import { rimraf } from '@umijs/utils';
+
+const fixtures = join(__dirname, '..', 'fixtures');
 
 if (!window.matchMedia) {
   Object.defineProperty(global.window, 'matchMedia', {
@@ -21,7 +25,23 @@ if (!window.matchMedia) {
 describe('getLayoutRenderConfig', () => {
   beforeEach(() => {
     console.error = jest.fn();
+    rimraf.sync(fixtures);
+    copySrcFiles({
+      cwd: join(__dirname, '../src'),
+      absTmpPath: fixtures,
+      config: { hasAccess: false },
+    });
   });
+  afterEach(() => {
+    rimraf.sync(fixtures);
+  });
+  const Layout = require(join(
+    fixtures,
+    'plugin-layout',
+    'layout',
+    'layout',
+    'index.tsx',
+  )).default;
   it('getLayoutRenderConfig layout=false', () => {
     const layoutConfig = getLayoutRenderConfig(
       {
