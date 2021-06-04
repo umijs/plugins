@@ -41,7 +41,7 @@ export default function (api: IApi) {
         content: getRootContainerContent(),
       });
 
-      // 声称 Provider
+      // 生成 Provider
       api.writeTmpFile({
         path: `${ACCESS_DIR}/runtimeUtil.ts`,
         content: getRuntimeUtil(),
