@@ -13,6 +13,28 @@ describe('getLayoutContent', () => {
     expect(LayoutContent.includes(`...{}`)).toBeTruthy();
   });
 
+  it('getLayoutContent hasAccess=true', () => {
+    const LayoutContent = getLayoutContent({}, 'test', false, true);
+
+    expect(
+      LayoutContent.includes(
+        `import { ApplyPluginsType, useModel , traverseModifyRoutes, useAccess } from "umi";`,
+      ),
+    ).toBeTruthy();
+    expect(LayoutContent.includes(`...{}`)).toBeTruthy();
+  });
+
+  it('getLayoutContent hasAccess=false', () => {
+    const LayoutContent = getLayoutContent({}, 'test', false, false);
+
+    expect(
+      LayoutContent.includes(
+        `import { ApplyPluginsType, useModel  } from "umi";`,
+      ),
+    ).toBeTruthy();
+    expect(LayoutContent.includes(`...{}`)).toBeTruthy();
+  });
+
   it('genRenderRightContent locale=false', () => {
     expect(
       genRenderRightContent({

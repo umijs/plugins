@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // @ts-ignore
-import { Link, useModel, history, traverseModifyRoutes, useAccess } from 'umi';
+import { Link, useModel, history{{#hasAccess}}, traverseModifyRoutes, useAccess {{/hasAccess}} } from 'umi';
 import ProLayout, { BasicLayoutProps } from '@ant-design/pro-layout';
 import './style.less';
 // @ts-ignore
@@ -50,9 +50,9 @@ const BasicLayout = (props: any) => {
     ...restProps,
     ...getLayoutRenderConfig(currentPathConfig as any),
   };
-
+{{#hasAccess}}
   const access = useAccess?.();
-
+{{/hasAccess}}
   return (
     <ProLayout
       route={route}
@@ -65,7 +65,7 @@ const BasicLayout = (props: any) => {
         e.preventDefault();
         history.push('/');
       }}
-      menu={{ locale: userConfig.locale }}
+      menu={ { locale: userConfig.locale } }
       // 支持了一个 patchMenus，其实应该用 menuDataRender
       menuDataRender={
         userConfig.patchMenus
@@ -90,11 +90,13 @@ const BasicLayout = (props: any) => {
       disableContentMargin
       fixSiderbar
       fixedHeader
+{{#hasAccess}}
       postMenuData={
         traverseModifyRoutes
           ? (menuData) => traverseModifyRoutes?.(menuData, access)
           : undefined
       }
+{{/hasAccess}}
       {...layoutRestProps}
       rightContentRender={
         // === false 应该关闭这个功能
