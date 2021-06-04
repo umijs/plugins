@@ -1,12 +1,12 @@
 import { utils } from 'umi';
 import { join } from 'path';
 
-export default function (util: typeof utils) {
+export default function (util: typeof utils, accessFactoryPath: string) {
   return `\
 import React, { useMemo } from 'react';
 import { IRoute } from 'umi';
 import { useModel } from '../core/umiExports';
-import accessFactory from '../../access';
+import accessFactory from '${accessFactoryPath}';
 import AccessContext, { AccessInstance } from './context';
 import { traverseModifyRoutes } from '${util.winPath(
     join(__dirname, '..', 'utils', 'runtimeUtil'),
