@@ -102,14 +102,17 @@ export default (api: IApi) => {
     ];
   });
   const accessPath = join(api.paths.absTmpPath!, 'plugin-access', 'access.tsx');
-  const hasAccess = existsSync(accessPath);
   let generatedOnce = false;
-  api.onGenerateFiles(() => {
-    if (generatedOnce) return;
-    generatedOnce = true;
-    const cwd = join(__dirname, '../src');
-    const config = { hasAccess };
-    copySrcFiles({ cwd, absTmpPath: api.paths.absTmpPath!, config });
+  api.onGenerateFiles({
+    fn() {
+      if (generatedOnce) return;
+      generatedOnce = true;
+      const cwd = join(__dirname, '../src');
+      const config = { hasAccess: existsSync(accessPath) };
+      copySrcFiles({ cwd, absTmpPath: api.paths.absTmpPath!, config });
+    },
+    // 在其他文件生成之后，再执行
+    stage: 99,
   });
 
   api.modifyDefaultConfig((config) => {
@@ -174,7 +177,7 @@ export default (api: IApi) => {
         layoutOpts,
         currentLayoutComponentPath,
         api.hasPlugins(['@umijs/plugin-locale']),
-        hasAccess,
+        existsSync(accessPath),
       ),
     });
 
