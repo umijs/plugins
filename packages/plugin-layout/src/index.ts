@@ -5,7 +5,7 @@ import getLayoutContent, {
   genRenderRightContent,
 } from './utils/getLayoutContent';
 import { LayoutConfig } from './types';
-import { readFileSync, copyFileSync, statSync } from 'fs';
+import { readFileSync, copyFileSync, statSync, writeFileSync } from 'fs';
 
 const DIR_NAME = 'plugin-layout';
 
@@ -100,6 +100,7 @@ export default (api: IApi) => {
       },
     ];
   });
+  const hasAccess = api.hasPlugins['@umijs/plugin-access'];
 
   let generatedOnce = false;
   api.onGenerateFiles(() => {
@@ -118,7 +119,16 @@ export default (api: IApi) => {
       if (statSync(source).isDirectory()) {
         utils.mkdirp.sync(target);
       } else {
-        copyFileSync(source, target);
+        if (target.endsWith('.tpl')) {
+          const sourceContent = readFileSync(source, 'utf-8');
+          writeFileSync(
+            target.replace(/\.tpl$/, ''),
+            utils.Mustache.render(sourceContent, { hasAccess }),
+            'utf-8',
+          );
+        } else {
+          copyFileSync(source, target);
+        }
       }
     });
   });
@@ -185,6 +195,7 @@ export default (api: IApi) => {
         layoutOpts,
         currentLayoutComponentPath,
         api.hasPlugins(['@umijs/plugin-locale']),
+        hasAccess,
       ),
     });
 

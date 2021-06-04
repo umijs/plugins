@@ -1,6 +1,5 @@
 ﻿import getLayoutRenderConfig from '../src/layout/getLayoutRenderConfig';
 import BlankLayout from '../src/layout/blankLayout';
-import Layout from '../src/layout/index';
 import { WithExceptionOpChildren } from '../src/component/Exception';
 import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
@@ -55,63 +54,6 @@ describe('getLayoutRenderConfig', () => {
   it('BlankLayout', () => {
     const { container } = render(<BlankLayout>Hello, World!</BlankLayout>);
     expect(container.firstChild).toMatchInlineSnapshot(`Hello, World!`);
-  });
-
-  it('ProLayout', () => {
-    const { container } = render(
-      <Layout location={{ pathname: '/' }}>Hello, World!</Layout>,
-    );
-    expect(container.firstChild).toMatchSnapshot();
-  });
-
-  it('ProLayout rightContentRender', () => {
-    const { container } = render(
-      <Layout location={{ pathname: '/' }} rightContentRender={() => 'name'}>
-        Hello, World!
-      </Layout>,
-    );
-    expect(container.firstChild).toMatchSnapshot();
-  });
-
-  it('ProLayout rightContentRender', () => {
-    const { container } = render(
-      <Layout
-        location={{ pathname: '/' }}
-        userConfig={{
-          childrenRender: () => 'hello childrenRender',
-        }}
-        rightContentRender={() => 'name'}
-      >
-        Hello, World!
-      </Layout>,
-    );
-    expect(container.firstChild).toMatchSnapshot();
-  });
-
-  it('ProLayout patchMenus', () => {
-    const { container } = render(
-      <BrowserRouter>
-        <Layout
-          location={{ pathname: '/' }}
-          userConfig={{
-            patchMenus: () => [
-              {
-                name: 'qixian',
-                path: '/',
-              },
-              {
-                name: 'qixian2',
-                path: '/qixian',
-              },
-            ],
-          }}
-          rightContentRender={() => 'name'}
-        >
-          Hello, World!
-        </Layout>
-      </BrowserRouter>,
-    );
-    expect(container.firstChild).toMatchSnapshot();
   });
 
   it('WithExceptionOpChildren 404', () => {

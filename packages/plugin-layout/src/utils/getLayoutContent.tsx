@@ -4,11 +4,12 @@ export default (
   userConfig: LayoutConfig,
   path: string,
   formatMessage: boolean,
+  hasAccess: boolean,
 ) => `import React, { useState, useEffect } from "react";
 import { ApplyPluginsType, useModel ${
   // 没有 formatMessage 就不打开国际化
   formatMessage ? `, useIntl` : ''
-}, traverseModifyRoutes, useAccess } from "umi";
+}${hasAccess ? ', traverseModifyRoutes, useAccess' : ''} } from "umi";
 import { plugin } from "../core/umiExports";
 import LayoutComponent from '${path}';
 
@@ -21,7 +22,7 @@ export default props => {
     setInitialState: null
   }; // plugin-initial-state 未开启
 
-  const access = useAccess?.();
+  ${hasAccess ? 'const access = useAccess?.();' : ''}
 
   useEffect(() => {
     const useRuntimeConfig =
@@ -30,9 +31,11 @@ export default props => {
         type: ApplyPluginsType.modify,
         initialValue: {
           ...initialInfo,
-          traverseModifyRoutes: (menuData) => {
-            return traverseModifyRoutes?.(menuData, access);
-          },
+          ${
+            hasAccess
+              ? 'traverseModifyRoutes: (menuData) => {return traverseModifyRoutes?.(menuData, access);},'
+              : ''
+          }
         },
       }) || {};
     if (useRuntimeConfig instanceof Promise) {
@@ -42,7 +45,7 @@ export default props => {
       return;
     }
     setRuntimeConfig(useRuntimeConfig);
-  }, [initialInfo?.initialState, access]);
+  }, [initialInfo?.initialState, ${hasAccess ? 'access' : ''}]);
 
   const userConfig = {
     ...${JSON.stringify(userConfig).replace(/"/g, "'")},
@@ -78,7 +81,7 @@ const genRenderRightContent = (props: {
   ${props.locale ? "import { SelectLang } from 'umi';" : ''}
   import { LogoutOutlined } from '@ant-design/icons';
   import { ILayoutRuntimeConfig } from '../types/interface.d';
-  
+
   export default function renderRightContent(
     runtimeLayout: ILayoutRuntimeConfig,
     loading: boolean,
@@ -92,7 +95,7 @@ const genRenderRightContent = (props: {
         runtimeLayout,
       );
     }
-  
+
     const menu = (
       <Menu className="umi-plugin-layout-menu">
         <Menu.Item
@@ -106,7 +109,7 @@ const genRenderRightContent = (props: {
         </Menu.Item>
       </Menu>
     );
-  
+
     const avatar = (
       <span className="umi-plugin-layout-action">
         <Avatar
@@ -121,7 +124,7 @@ const genRenderRightContent = (props: {
         <span className="umi-plugin-layout-name">{initialState?.name}</span>
       </span>
     );
-  
+
     if (loading) {
       return (
         <div className="umi-plugin-layout-right">
@@ -129,7 +132,7 @@ const genRenderRightContent = (props: {
         </div>
       );
     }
-  
+
     return (
       <div className="umi-plugin-layout-right anticon">
         {runtimeLayout.logout ? (
