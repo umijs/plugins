@@ -4,6 +4,7 @@ import getContextContent from './utils/getContextContent';
 import getAccessProviderContent from './utils/getAccessProviderContent';
 import getAccessContent from './utils/getAccessContent';
 import getRootContainerContent from './utils/getRootContainerContent';
+import getRuntimeUtil from './utils/getRuntimeUtil';
 import { checkIfHasDefaultExporting } from './utils';
 
 const ACCESS_DIR = 'plugin-access'; // plugin-access 插件创建临时文件的专有文件夹
@@ -38,6 +39,12 @@ export default function (api: IApi) {
       api.writeTmpFile({
         path: `${ACCESS_DIR}/rootContainer.ts`,
         content: getRootContainerContent(),
+      });
+
+      // 声称 Provider
+      api.writeTmpFile({
+        path: `${ACCESS_DIR}/runtimeUtil.ts`,
+        content: getRuntimeUtil(),
       });
     }
   });

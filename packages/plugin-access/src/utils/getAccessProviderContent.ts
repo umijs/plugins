@@ -8,9 +8,7 @@ import { IRoute } from 'umi';
 import { useModel } from '../core/umiExports';
 import accessFactory from '../../access';
 import AccessContext, { AccessInstance } from './context';
-import { traverseModifyRoutes } from '${util.winPath(
-    join(__dirname, '..', 'utils', 'runtimeUtil'),
-  )}';
+import { traverseModifyRoutes } from './runtimeUtil';
 
 type Routes = IRoute[];
 

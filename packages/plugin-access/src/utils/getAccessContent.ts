@@ -5,9 +5,7 @@ export default function (util: typeof utils) {
   return `\
 import React, { useContext } from 'react';
 import AccessContext, { AccessInstance as AccessInstanceType } from './context';
-import { traverseModifyRoutes } from '${util.winPath(
-    join(__dirname, '..', 'utils', 'runtimeUtil'),
-  )}';
+import { traverseModifyRoutes } from './runtimeUtil';
 
 export { traverseModifyRoutes };
 
