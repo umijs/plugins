@@ -1,5 +1,6 @@
 // This file is for runtime, not the compile time.
-import { IRoute } from 'umi';
+export default () =>
+  `import { IRoute } from 'umi';
 
 type Routes = IRoute[];
 
@@ -78,4 +79,4 @@ export function traverseModifyRoutes(routes: Routes, access: any): Routes {
 
     return currentRoute;
   });
-}
+}`;

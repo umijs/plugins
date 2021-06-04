@@ -1,5 +1,24 @@
 import { IRoute } from 'umi';
-import { traverseModifyRoutes } from '../../src/utils/runtimeUtil';
+import { existsSync, mkdirSync, writeFileSync } from 'fs';
+import { join } from 'path';
+import getRuntimeUtil from '../../src/utils/getRuntimeUtil';
+
+const tmpDir = join(__dirname, './.umi-test');
+
+if (!existsSync(tmpDir)) {
+  mkdirSync(tmpDir);
+}
+
+writeFileSync(join(tmpDir, './runtimeUtil.ts'), getRuntimeUtil());
+
+type Routes = IRoute[];
+
+type TtraverseModifyRoutes = (routes: Routes, access: any) => Routes;
+const {
+  traverseModifyRoutes,
+}: {
+  traverseModifyRoutes: TtraverseModifyRoutes;
+} = require('./.umi-test/runtimeUtil');
 
 let routes: IRoute[] = [];
 const access = {

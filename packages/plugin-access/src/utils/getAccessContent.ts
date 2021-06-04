@@ -1,13 +1,8 @@
-import { utils } from 'umi';
-import { join } from 'path';
-
-export default function (util: typeof utils) {
+export default function () {
   return `\
 import React, { useContext } from 'react';
 import AccessContext, { AccessInstance as AccessInstanceType } from './context';
-import { traverseModifyRoutes } from '${util.winPath(
-    join(__dirname, '..', 'utils', 'runtimeUtil'),
-  )}';
+import { traverseModifyRoutes } from './runtimeUtil';
 
 export { traverseModifyRoutes };
 
