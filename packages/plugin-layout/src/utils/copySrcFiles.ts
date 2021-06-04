@@ -16,7 +16,7 @@ export default ({
   });
   const base = join(absTmpPath, 'plugin-layout', 'layout');
   utils.mkdirp.sync(base);
-  files.forEach((file) => {
+  files.forEach(async (file) => {
     if (['index.ts', 'runtime.tsx.tpl'].includes(file)) return;
     const source = join(cwd, file);
     const target = join(base, file);
@@ -25,13 +25,13 @@ export default ({
     } else {
       if (target.endsWith('.tpl')) {
         const sourceContent = readFileSync(source, 'utf-8');
-        writeFileSync(
+        await writeFileSync(
           target.replace(/\.tpl$/, ''),
           utils.Mustache.render(sourceContent, config),
           'utf-8',
         );
       } else {
-        copyFileSync(source, target);
+        await copyFileSync(source, target);
       }
     }
   });

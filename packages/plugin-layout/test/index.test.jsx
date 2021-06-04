@@ -1,9 +1,10 @@
 ﻿import getLayoutRenderConfig from '../src/layout/getLayoutRenderConfig';
-import copySrcFiles from '../src/utils/copySrcFiles';
 import BlankLayout from '../src/layout/blankLayout';
+import Logo from '../src/component/logo';
 import { WithExceptionOpChildren } from '../src/component/Exception';
-import { render } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { Service } from '@umijs/core';
 import React from 'react';
 import { join } from 'path';
 
@@ -21,23 +22,24 @@ if (!window.matchMedia) {
   });
 }
 
-beforeEach(async () => {
-  console.error = jest.fn();
-  copySrcFiles({
-    cwd: join(__dirname, '../src'),
-    absTmpPath: fixtures,
-    config: { hasAccess: false },
-  });
-});
+afterEach(cleanup);
 
 describe('getLayoutRenderConfig', () => {
-  const Layout = require(join(
-    fixtures,
-    'plugin-layout',
-    'layout',
-    'layout',
-    'index.tsx',
-  )).default;
+  beforeEach(async () => {
+    console.error = jest.fn();
+    const service = new Service({
+      cwd: fixtures,
+      presets: ['@umijs/preset-built-in'],
+      plugins: [require.resolve(join(fixtures, '..', 'src', 'index.ts'))],
+    });
+    await service.run({
+      name: 'g',
+      args: {
+        _: ['g', 'tmp'],
+      },
+    });
+  });
+
   it('getLayoutRenderConfig layout=false', () => {
     const layoutConfig = getLayoutRenderConfig(
       {
@@ -74,13 +76,34 @@ describe('getLayoutRenderConfig', () => {
   });
 
   it('ProLayout', () => {
+    const Layout = require(join(
+      fixtures,
+      '.umi-test',
+      'plugin-layout',
+      'layout',
+      'layout',
+      'index.tsx',
+    )).default;
     const { container } = render(
       <Layout location={{ pathname: '/' }}>Hello, World!</Layout>,
     );
     expect(container.firstChild).toMatchSnapshot();
   });
 
+  it('logo', () => {
+    const { container } = render(<Logo />);
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
   it('ProLayout rightContentRender', () => {
+    const Layout = require(join(
+      fixtures,
+      '.umi-test',
+      'plugin-layout',
+      'layout',
+      'layout',
+      'index.tsx',
+    )).default;
     const { container } = render(
       <Layout location={{ pathname: '/' }} rightContentRender={() => 'name'}>
         Hello, World!
@@ -90,6 +113,14 @@ describe('getLayoutRenderConfig', () => {
   });
 
   it('ProLayout rightContentRender', () => {
+    const Layout = require(join(
+      fixtures,
+      '.umi-test',
+      'plugin-layout',
+      'layout',
+      'layout',
+      'index.tsx',
+    )).default;
     const { container } = render(
       <Layout
         location={{ pathname: '/' }}
@@ -105,6 +136,14 @@ describe('getLayoutRenderConfig', () => {
   });
 
   it('ProLayout patchMenus', () => {
+    const Layout = require(join(
+      fixtures,
+      '.umi-test',
+      'plugin-layout',
+      'layout',
+      'layout',
+      'index.tsx',
+    )).default;
     const { container } = render(
       <BrowserRouter>
         <Layout
