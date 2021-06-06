@@ -4,24 +4,33 @@ import { readFileSync } from 'fs';
 import { utils } from 'umi';
 
 const { t, parser, traverse, winPath } = utils;
-export type ModelItem = { absPath: string; namespace: string } | string;
+export type ModelItem =
+  | { absPath: string; namespace: string; exportName?: string }
+  | string;
 
-export const getName = (absPath: string, srcDirPath?: string[]) => {
-  const suffix = /(\.model)?\.(j|t)sx?$/;
-  const dir = srcDirPath?.find(dir => absPath.includes(dir));
-
-  if (dir) {
-    const name = absPath
-      .replace(dir, '')
-      .split(path.sep)
-      .join('.')
-      .replace(/(models|model)\./g, '')
-      .replace(suffix, '');
-
-    return name.startsWith('.') ? name.slice(1) : name;
+const getFileName = (name: string) => {
+  const fileName = path.basename(name, path.extname(name));
+  if (fileName.endsWith('.model') || fileName.endsWith('.models')) {
+    return fileName.split('.').slice(0, -1).join('.');
   }
+  return fileName;
+};
 
-  return path.basename(absPath).replace(suffix, '');
+export const getName = (absPath: string, absSrcPath: string) => {
+  const relativePath = path.relative(absSrcPath, absPath);
+  // model files with namespace
+  const dirList = path.dirname(relativePath).split(path.sep);
+  try {
+    const validDirs = dirList.filter(
+      (ele) => !['src', 'page', 'pages', 'model', 'models'].includes(ele),
+    );
+    if (validDirs && validDirs.length) {
+      return `${validDirs.join('.')}.${getFileName(relativePath)}`;
+    }
+    return getFileName(relativePath);
+  } catch (e) {
+    return getFileName(relativePath);
+  }
 };
 
 export const getPath = (absPath: string) => {
@@ -36,19 +45,20 @@ export const genImports = (imports: string[]) =>
     )
     .join(EOL);
 
-export const genExtraModels = (models: ModelItem[] = []) =>
-  models.map(ele => {
+export const genExtraModels = (models: ModelItem[] = [], absSrcPath: string) =>
+  models.map((ele) => {
     if (typeof ele === 'string') {
       return {
         importPath: getPath(ele),
-        importName: getName(ele),
-        namespace: getName(ele),
+        importName: path.basename(ele).split('.')[0],
+        namespace: getName(ele, absSrcPath),
       };
     }
     return {
       importPath: getPath(ele.absPath),
-      importName: getName(ele.absPath),
+      importName: path.basename(ele.absPath).split('.')[0],
       namespace: ele.namespace,
+      exportName: ele.exportName,
     };
   });
 
@@ -62,7 +72,7 @@ export const sort = (ns: HookItem[]) => {
 
       const cannotUse = [item.namespace];
       for (let i = 0; i <= index; i += 1) {
-        if (ns[i].use.filter(v => cannotUse.includes(v)).length) {
+        if (ns[i].use.filter((v) => cannotUse.includes(v)).length) {
           if (!cannotUse.includes(ns[i].namespace)) {
             cannotUse.push(ns[i].namespace);
             i = -1;
@@ -70,7 +80,7 @@ export const sort = (ns: HookItem[]) => {
         }
       }
 
-      const errorList = item.use.filter(v => cannotUse.includes(v));
+      const errorList = item.use.filter((v) => cannotUse.includes(v));
       if (errorList.length) {
         throw Error(
           `Circular dependencies: ${item.namespace} can't use ${errorList.join(
@@ -79,7 +89,7 @@ export const sort = (ns: HookItem[]) => {
         );
       }
 
-      const intersection = final.filter(v => itemGroup.includes(v));
+      const intersection = final.filter((v) => itemGroup.includes(v));
       if (intersection.length) {
         // first intersection
         const finalIndex = final.indexOf(intersection[0]);
@@ -101,12 +111,12 @@ export const sort = (ns: HookItem[]) => {
   return [...new Set(final)];
 };
 
-export const genModels = (imports: string[], srcDirPath: string[]) => {
-  const contents = imports.map(absPath => ({
-    namespace: getName(absPath, srcDirPath),
+export const genModels = (imports: string[], absSrcPath: string) => {
+  const contents = imports.map((absPath) => ({
+    namespace: getName(absPath, absSrcPath),
     content: readFileSync(absPath).toString(),
   }));
-  const allUserModel = imports.map(absPath => getName(absPath, srcDirPath));
+  const allUserModel = imports.map((absPath) => getName(absPath, absSrcPath));
 
   const checkDuplicates = (list: string[]) =>
     new Set(list).size !== list.length;
@@ -140,7 +150,7 @@ export const genModels = (imports: string[], srcDirPath: string[]) => {
 
   const models = sort(raw);
 
-  if (checkDuplicates(contents.map(ele => ele.namespace))) {
+  if (checkDuplicates(contents.map((ele) => ele.namespace))) {
     throw Error('umi: models 中包含重复的 namespace！');
   }
   return raw.sort(
@@ -197,7 +207,7 @@ export const isValidHook = (filePath: string) => {
 
   try {
     if (identifierName) {
-      ast.program.body.forEach(ele => {
+      ast.program.body.forEach((ele) => {
         if (ele.type === 'FunctionDeclaration') {
           if (ele.id?.name === identifierName) {
             valid = true;
@@ -224,7 +234,7 @@ export const isValidHook = (filePath: string) => {
 
 export const getValidFiles = (files: string[], modelsDir: string) =>
   files
-    .map(file => {
+    .map((file) => {
       const filePath = path.join(modelsDir, file);
       const valid = isValidHook(filePath);
       if (valid) {
@@ -232,4 +242,4 @@ export const getValidFiles = (files: string[], modelsDir: string) =>
       }
       return '';
     })
-    .filter(ele => !!ele) as string[];
+    .filter((ele) => !!ele) as string[];

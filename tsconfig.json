@@ -10,14 +10,21 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "suppressImplicitAnyIndexErrors": true,
-    "declaration": true
+    "declaration": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@@": ["./example/*"]
+    }
   },
   "exclude": [
     "node_modules",
     "dist",
+    "example",
+    "jest.config.js",
     "**/*.spec.ts",
-    "lib",
     "fixtures",
-    "examples"
+    "examples",
+    "**/lib",
+    "**/scripts"
   ]
 }

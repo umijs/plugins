@@ -30,7 +30,7 @@ export type Effect = (
  * @type P: Type of payload
  * @type C: Type of callback
  */
-export type Dispatch = <P = any, C = (payload: P) => void>(action: {
+export type Dispatch<P = any, C = (payload: P) => void> = (action: {
   type: string;
   payload?: P;
   callback?: C;
@@ -50,17 +50,33 @@ export interface Loading {
 /**
  * @type P: Params matched in dynamic routing
  */
-export interface ConnectProps<P extends { [K in keyof P]?: string } = {}, S = LocationState> {
+export interface ConnectProps<
+  P extends { [K in keyof P]?: string } = {},
+  S = LocationState,
+  T = {}
+> {
   dispatch?: Dispatch;
   // https://github.com/umijs/umi/pull/2194
   match?: match<P>;
-  location: Location<S>;
+  location: Location<S> & { query: T };
   history: History;
   route: IRoute;
 }
+
+export type RequiredConnectProps<
+  P extends { [K in keyof P]?: string } = {},
+  S = LocationState,
+  T = {}
+  > = Required<ConnectProps<P, S, T>>
 
 /**
  * @type T: React props
  * @type U: match props types
  */
-export type ConnectRC<T = {}, U = {}> = React.ForwardRefRenderFunction<any, T & ConnectProps<U>>;
+export type ConnectRC<
+  T = {},
+  U = {},
+  S = {},
+  Q = {}
+> = React.ForwardRefRenderFunction<any, T & RequiredConnectProps<U, S, Q>>;
+

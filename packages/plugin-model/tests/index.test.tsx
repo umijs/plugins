@@ -1,7 +1,13 @@
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
 import React from 'react';
-import { existsSync, mkdirSync, readdirSync, writeFileSync } from 'fs';
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from 'fs';
 import { join } from 'path';
 import { utils } from 'umi';
 // import '@testing-library/jest-dom/extend-expect';
@@ -14,7 +20,7 @@ const { winPath } = utils;
 const fixtures = join(winPath(__dirname), 'fixtures');
 
 const delay = (ms: number) =>
-  new Promise(resolve => {
+  new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
 
@@ -28,8 +34,8 @@ const extraModelConfig = {
 };
 
 readdirSync(fixtures)
-  .filter(file => file.charAt(0) !== '.')
-  .forEach(file => {
+  .filter((file) => file.charAt(0) !== '.')
+  .forEach((file) => {
     const fixture = join(fixtures, file);
     const tmpDir = join(fixture, '.umi');
     const extraModel = extraModelConfig[file];
@@ -40,16 +46,30 @@ readdirSync(fixtures)
       ...getModels(pagesDir, `**/models/**/*.{ts,tsx,js,jsx}`),
       ...getModels(pagesDir, `**/*.model.{ts,tsx,js,jsx}`),
     ];
-    const { providerContent, useModelContent } = getTmpFile(files, extraModel, [
-      modulesDir,
-      pagesDir,
-    ]);
+    const { providerContent, useModelContent } = getTmpFile(
+      files,
+      extraModel,
+      fixture,
+    );
     const providerPath = join(tmpDir, 'Provider.tsx');
     if (!existsSync(tmpDir)) {
       mkdirSync(tmpDir);
     }
     writeFileSync(providerPath, providerContent, 'utf-8');
     writeFileSync(join(tmpDir, 'useModel.tsx'), useModelContent, 'utf-8');
+
+    // render helpers
+    const helperTmpDir = join(tmpDir, 'helpers');
+    if (!existsSync(helperTmpDir)) {
+      mkdirSync(helperTmpDir);
+    }
+    ['constant.tsx', 'dispatcher.tsx', 'executor.tsx'].forEach((helperFile) => {
+      const content = readFileSync(
+        join(__dirname, '../src/helpers', helperFile + '.tpl'),
+        'utf-8',
+      );
+      writeFileSync(join(helperTmpDir, helperFile), content);
+    });
 
     test(file, async () => {
       const Provider = require(providerPath).default;

@@ -1,6 +1,7 @@
 export default () => {
   return {
     plugins: [
+      require.resolve('./react'),
       require.resolve('@umijs/plugin-access'),
       require.resolve('@umijs/plugin-analytics'),
       require.resolve('@umijs/plugin-antd'),
@@ -12,6 +13,7 @@ export default () => {
       require.resolve('@umijs/plugin-model'),
       require.resolve('@umijs/plugin-request'),
       require.resolve('@umijs/plugin-test'),
+      require.resolve('@umijs/plugin-helmet'),
     ],
   };
 };

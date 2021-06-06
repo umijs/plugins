@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.2](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.9.1...@umijs/plugin-antd@0.9.2) (2021-06-03)
+
+**Note:** Version bump only for package @umijs/plugin-antd
+
+## [0.9.1](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.9.0...@umijs/plugin-antd@0.9.1) (2020-12-03)
+
+### Bug Fixes
+
+- request include antd ([#460](https://github.com/umijs/plugins/issues/460)) ([dbfa31c](https://github.com/umijs/plugins/commit/dbfa31c46e57970405fa7cb444423340ed7ad416))
+
+# [0.9.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.8.0...@umijs/plugin-antd@0.9.0) (2020-10-22)
+
+### Features
+
+- **antd:** prefixCls support message antd Modal ([#417](https://github.com/umijs/plugins/issues/417)) ([d352267](https://github.com/umijs/plugins/commit/d352267e937a5508fc62a17b942ad5b8e63bb14a))
+
+# [0.8.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.7.0...@umijs/plugin-antd@0.8.0) (2020-08-25)
+
+### Features
+
+- enhancement for mfsu ([#326](https://github.com/umijs/plugins/issues/326)) ([655c0da](https://github.com/umijs/plugins/commit/655c0da475748a0671dd3a5de8ab079dbe1bed5a))
+
+# [0.7.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.6.0...@umijs/plugin-antd@0.7.0) (2020-07-01)
+
+### Features
+
+- don't filter antd.config.locale ([#283](https://github.com/umijs/plugins/issues/283)) ([2bb8f78](https://github.com/umijs/plugins/commit/2bb8f78ed931c8f725867610527322e52daed8a6))
+
+# [0.6.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.5.1...@umijs/plugin-antd@0.6.0) (2020-06-03)
+
+### Features
+
+- support ConfigProcider ([#246](https://github.com/umijs/plugins/issues/246)) ([de86818](https://github.com/umijs/plugins/commit/de868181a54f2c53497d7ed2eb2e014d93d80d62))
+
 ## [0.5.1](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.5.0...@umijs/plugin-antd@0.5.1) (2020-04-24)
 
 ### Bug Fixes

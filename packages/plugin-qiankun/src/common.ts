@@ -3,18 +3,9 @@
  * @since 2019-06-20
  */
 
-import { cloneDeep } from 'lodash';
-import pathToRegexp from 'path-to-regexp';
-import { IRoute } from 'umi';
-import { SlaveOptions } from './types';
+import { ReactComponentElement } from 'react';
 
 export const defaultMountContainerId = 'root-subapp';
-
-// 主应用跟子应用的默认 root id 区分开，避免冲突
-export const defaultMasterRootId = 'root-master';
-export const defaultSlaveRootId = 'root-slave';
-
-export const defaultHistoryType = 'browser';
 
 // @formatter:off
 export const noop = () => {};
@@ -29,13 +20,15 @@ function testPathWithStaticPrefix(pathPrefix: string, realPath: string) {
     return realPath.startsWith(pathPrefix);
   }
 
-  const pathRegex = new RegExp(`^${pathPrefix}(\\/|\\?)+.*$`, 'g');
+  const pathRegex = new RegExp(`^${pathPrefix}([/?])+.*$`, 'g');
   const normalizedPath = `${realPath}/`;
   return pathRegex.test(normalizedPath);
 }
 
 function testPathWithDynamicRoute(dynamicRoute: string, realPath: string) {
-  return !!pathToRegexp(dynamicRoute, { strict: true, end: false }).exec(
+  // FIXME 这个是旧的使用方式才会调到的 api，先临时这么苟一下消除报错，引导用户去迁移吧
+  const pathToRegexp = require('path-to-regexp');
+  return pathToRegexp(dynamicRoute, { strict: true, end: false }).test(
     realPath,
   );
 }
@@ -47,38 +40,51 @@ export function testPathWithPrefix(pathPrefix: string, realPath: string) {
   );
 }
 
-const recursiveCoverRouter = (source: Array<IRoute>, nameSpacePath: string) =>
-  source.map((router: IRoute) => {
-    if (router.routes) {
-      recursiveCoverRouter(router.routes, nameSpacePath);
+export function patchMicroAppRoute(
+  route: any,
+  getMicroAppRouteComponent: (opts: {
+    appName: string;
+    base: string;
+    masterHistoryType: string;
+    routeProps?: any;
+  }) => string | ReactComponentElement<any>,
+  masterOptions: {
+    base: string;
+    masterHistoryType: string;
+    routeBindingAlias: string;
+  },
+) {
+  const { base, masterHistoryType, routeBindingAlias } = masterOptions;
+  // 当配置了 routeBindingAlias 时，优先从 routeBindingAlias 里取配置，但同时也兼容使用了默认的 microApp 方式
+  const microAppName = route[routeBindingAlias] || route.microApp;
+  const microAppProps =
+    route[`${routeBindingAlias}Props`] || route.microAppProps || {};
+  if (microAppName) {
+    if (route.routes?.length) {
+      const childrenRouteHasComponent = route.routes.some(
+        (r: any) => r.component,
+      );
+      if (childrenRouteHasComponent) {
+        throw new Error(
+          `[@umijs/plugin-qiankun]: You can not attach micro app ${microAppName} to route ${route.path} whose children has own component!`,
+        );
+      }
     }
-    if (router.path !== '/' && router.path) {
-      return {
-        ...router,
-        path: `${nameSpacePath}${router.path}`,
-      };
-    }
-    return router;
-  });
 
-export const addSpecifyPrefixedRoute = (
-  originRoute: Array<IRoute>,
-  keepOriginalRoutes: SlaveOptions['keepOriginalRoutes'],
-  pkgName?: string,
-) => {
-  const copyBase = originRoute.filter(_ => _.path === '/');
-  if (!copyBase[0]) {
-    return originRoute;
+    route.exact = false;
+
+    const { settings = {}, ...componentProps } = microAppProps;
+    const routeProps = {
+      // 兼容以前的 settings 配置
+      settings: route.settings || settings || {},
+      ...componentProps,
+    };
+    const opts = {
+      appName: microAppName,
+      base,
+      masterHistoryType,
+      routeProps,
+    };
+    route.component = getMicroAppRouteComponent(opts);
   }
-
-  const nameSpaceRouter: any = cloneDeep(copyBase[0]);
-  const nameSpace = keepOriginalRoutes === true ? pkgName : keepOriginalRoutes;
-
-  nameSpaceRouter.path = `/${nameSpace}`;
-  nameSpaceRouter.routes = recursiveCoverRouter(
-    nameSpaceRouter.routes,
-    `/${nameSpace}`,
-  );
-
-  return [nameSpaceRouter, ...originRoute];
-};
+}

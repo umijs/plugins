@@ -8,13 +8,42 @@ import { event, LANG_CHANGE_EVENT } from './locale';
 // @ts-ignore
 import warning from '{{{ warningPkgPath }}}';
 
-import { plugin } from '../core/umiExports';
+import { plugin } from '../core/plugin';
 
-export * from '{{{ reactIntlPkgPath }}}';
+export {
+  createIntl,
+};
+export {
+  FormattedDate,
+  FormattedDateParts,
+  FormattedDisplayName,
+  FormattedHTMLMessage,
+  FormattedList,
+  FormattedMessage,
+  FormattedNumber,
+  FormattedNumberParts,
+  FormattedPlural,
+  FormattedRelativeTime,
+  FormattedTime,
+  FormattedTimeParts,
+  IntlContext,
+  IntlProvider,
+  RawIntlProvider,
+  createIntlCache,
+  defineMessages,
+  injectIntl,
+  useIntl,
+} from '{{{ reactIntlPkgPath }}}';
 
 let g_intl: IntlShape;
 
 const useLocalStorage = {{{UseLocalStorage}}};
+
+{{#LocaleList}}
+{{#antdLocale}}
+import {{lang}}{{country}}{{index}} from '{{{locale}}}';
+{{/antdLocale}}
+{{/LocaleList}}
 
 export const localeInfo: {[key: string]: any} = {
   {{#LocaleList}}
@@ -25,7 +54,7 @@ export const localeInfo: {[key: string]: any} = {
     locale: '{{locale}}',
     {{#Antd}}antd: {
       {{#antdLocale}}
-      ...require('{{{.}}}').default,
+      ...{{lang}}{{country}}{{index}},
       {{/antdLocale}}
     },{{/Antd}}
     momentLocale: '{{momentLocale}}',
@@ -79,11 +108,13 @@ export const getIntl = (locale?: string, changeIntl?: boolean) => {
   if (locale&&localeInfo[locale]) {
     return createIntl(localeInfo[locale]);
   }
+  {{#ExistLocaleDir}}
   // 不存在需要一个报错提醒
   warning(
     !locale||!!localeInfo[locale],
     `The current popular language does not exist, please check the {{{LocaleDir}}} folder!`,
   );
+  {{/ExistLocaleDir}}
   // 使用 zh-CN
   if (localeInfo[{{{ DefaultLocale }}}]) return createIntl(localeInfo[{{{ DefaultLocale }}}]);
 
@@ -134,6 +165,19 @@ export const getLocale = () => {
   return lang || browserLang || {{{DefaultLocale}}};
 };
 
+
+/**
+ * 获取当前选择的方向
+ * @returns string
+ */
+export const getDirection = () => {
+  const lang = getLocale();
+  // array with all prefixs for rtl langueges ex: ar-EG , he-IL
+  const rtlLangs = ['he', 'ar', 'fa', 'ku']
+  const direction =  rtlLangs.filter(lng => lang.startsWith(lng)).length ? 'rtl' : 'ltr';
+  return direction;
+};
+
 /**
  * 切换语言
  * @param lang 语言的 key
@@ -148,34 +192,40 @@ export const setLocale = (lang: string, realReload: boolean = true) => {
     type: ApplyPluginsType.modify,
     initialValue: {},
   });
+
+  const updater = () => {
+    if (lang !== undefined && !localeExp.test(lang)) {
+      // for reset when lang === undefined
+      throw new Error('setLocale lang format error');
+    }
+    if (getLocale() !== lang) {
+      if (typeof window.localStorage !== 'undefined' && useLocalStorage) {
+        window.localStorage.setItem('umi_locale', lang || '');
+      }
+      setIntl(lang);
+      if (realReload) {
+        window.location.reload();
+      } else {
+        event.emit(LANG_CHANGE_EVENT, lang);
+        // chrome 不支持这个事件。所以人肉触发一下
+        if (window.dispatchEvent) {
+          const event = new Event('languagechange');
+          window.dispatchEvent(event);
+        }
+      }
+    }
+  }
+
   if (typeof runtimeLocale?.setLocale === 'function') {
     runtimeLocale.setLocale({
       lang,
       realReload,
-      updater: (updateLang = lang) => event.emit(LANG_CHANGE_EVENT, updateLang),
+      updater: updater,
     });
     return;
   }
-  if (lang !== undefined && !localeExp.test(lang)) {
-    // for reset when lang === undefined
-    throw new Error('setLocale lang format error');
-  }
-  if (getLocale() !== lang) {
-    if (typeof window.localStorage !== 'undefined' && useLocalStorage) {
-      window.localStorage.setItem('umi_locale', lang || '');
-    }
-    setIntl(lang);
-    if (realReload) {
-      window.location.reload();
-    } else {
-      event.emit(LANG_CHANGE_EVENT, lang);
-      // chrome 不支持这个事件。所以人肉触发一下
-      if (window.dispatchEvent) {
-        const event = new Event('languagechange');
-        window.dispatchEvent(event);
-      }
-    }
-  }
+
+  updater();
 };
 
 let firstWaring = true;

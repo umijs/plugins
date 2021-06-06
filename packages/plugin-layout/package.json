@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-layout",
-  "version": "0.10.2",
+  "version": "0.17.0",
   "description": "@umijs/plugin-layout",
   "keywords": [
     "umi"
@@ -19,13 +19,14 @@
     "src"
   ],
   "dependencies": {
+    "@umijs/route-utils": "^1.0.7",
     "antd": "^4.1.2",
     "lodash": "^4.17.15",
     "path-to-regexp": "1.x"
   },
   "peerDependencies": {
     "@ant-design/icons": "^4.0.0",
-    "@ant-design/pro-layout": "^5.0.0",
+    "@ant-design/pro-layout": "^6.0.0",
     "@umijs/plugin-initial-state": "2.x",
     "@umijs/plugin-locale": "0.x",
     "@umijs/plugin-model": "2.x",

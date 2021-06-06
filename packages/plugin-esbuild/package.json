@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-esbuild",
-  "version": "1.0.0-beta.3",
+  "version": "1.3.1",
   "description": "@umijs/plugin-esbuild",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -28,6 +28,6 @@
     "access": "public"
   },
   "dependencies": {
-    "esbuild-webpack-plugin": "^1.0.0-beta.3"
+    "esbuild-loader": "~2.9.2"
   }
 }

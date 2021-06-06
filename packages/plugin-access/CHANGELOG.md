@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.1](https://github.com/umijs/plugins/compare/@umijs/plugin-access@2.4.0...@umijs/plugin-access@2.4.1) (2021-06-03)
+
+**Note:** Version bump only for package @umijs/plugin-access
+
+# [2.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-access@2.3.3...@umijs/plugin-access@2.4.0) (2021-05-31)
+
+### Features
+
+- **plugin-access:** fix traverseModifyRoutes ([#617](https://github.com/umijs/plugins/issues/617)) ([38606e5](https://github.com/umijs/plugins/commit/38606e50ece6e88a714cf6683eb105ec284ecbf5))
+
+## [2.3.3](https://github.com/umijs/plugins/compare/@umijs/plugin-access@2.3.2...@umijs/plugin-access@2.3.3) (2021-01-11)
+
+**Note:** Version bump only for package @umijs/plugin-access
+
+## [2.3.2](https://github.com/umijs/plugins/compare/@umijs/plugin-access@2.3.1...@umijs/plugin-access@2.3.2) (2020-11-04)
+
+### Bug Fixes
+
+- **access:** 修复因为可变数据导致的数据不同步的问题 ([#433](https://github.com/umijs/plugins/issues/433)) ([5ea0702](https://github.com/umijs/plugins/commit/5ea07023c34aa4f4e5af21ec698ffc274ea50364))
+
 ## [2.3.1](https://github.com/umijs/plugins/compare/@umijs/plugin-access@2.3.0...@umijs/plugin-access@2.3.1) (2020-04-15)
 
 **Note:** Version bump only for package @umijs/plugin-access

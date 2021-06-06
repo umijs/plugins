@@ -2,6 +2,72 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.1](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.6.0...@umijs/plugin-model@2.6.1) (2021-06-03)
+
+**Note:** Version bump only for package @umijs/plugin-model
+
+# [2.6.0](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.7...@umijs/plugin-model@2.6.0) (2021-05-20)
+
+### Features
+
+- fix plugin-model runtime to adapt mfsu ([#615](https://github.com/umijs/plugins/issues/615)) ([48c69ff](https://github.com/umijs/plugins/commit/48c69ff2a296243045ea763aa857016da8e91379))
+
+## [2.5.7](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.6...@umijs/plugin-model@2.5.7) (2021-04-20)
+
+### Bug Fixes
+
+- ie11 useModel throw error on state changes ([#588](https://github.com/umijs/plugins/issues/588)) ([9100e4d](https://github.com/umijs/plugins/commit/9100e4d9364edaae17c0b12a6f69f8918dbbb639))
+
+## [2.5.6](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.5...@umijs/plugin-model@2.5.6) (2020-10-27)
+
+### Bug Fixes
+
+- 通过改变 key 卸载时导致的循环问题 ([#422](https://github.com/umijs/plugins/issues/422)) ([54278e3](https://github.com/umijs/plugins/commit/54278e3c96dc33b722eb49c8839db4f6cfb30533))
+
+## [2.5.5](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.4...@umijs/plugin-model@2.5.5) (2020-10-16)
+
+### Bug Fixes
+
+- useModel 首次注册 handler 后没有立即同步状态到 dispatcher ([#408](https://github.com/umijs/plugins/issues/408)) ([ebd1225](https://github.com/umijs/plugins/commit/ebd122517827bc55604cf74fd5f0800fe668fc2e))
+
+## [2.5.4](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.3...@umijs/plugin-model@2.5.4) (2020-09-21)
+
+### Bug Fixes
+
+- update state failed when unmount component immediate after update ([#381](https://github.com/umijs/plugins/issues/381)) ([c8078ac](https://github.com/umijs/plugins/commit/c8078ac31ef9df6d501aa3074f116dfe569afb26))
+
+## [2.5.3](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.2...@umijs/plugin-model@2.5.3) (2020-08-12)
+
+**Note:** Version bump only for package @umijs/plugin-model
+
+## [2.5.2](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.1...@umijs/plugin-model@2.5.2) (2020-08-12)
+
+**Note:** Version bump only for package @umijs/plugin-model
+
+## [2.5.1](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.0...@umijs/plugin-model@2.5.1) (2020-07-07)
+
+### Bug Fixes
+
+- ssr ([#295](https://github.com/umijs/plugins/issues/295)) ([1135b88](https://github.com/umijs/plugins/commit/1135b881f179973ad33a52fb7636fb2b57c874c2))
+
+# [2.5.0](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.4.0...@umijs/plugin-model@2.5.0) (2020-07-03)
+
+### Features
+
+- useModel devTool 支持 ([#276](https://github.com/umijs/plugins/issues/276)) ([d381aa2](https://github.com/umijs/plugins/commit/d381aa230c33545aa12614caa3a627852d142972))
+
+# [2.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.3.2...@umijs/plugin-model@2.4.0) (2020-06-22)
+
+### Features
+
+- useModel register support exportName ([#264](https://github.com/umijs/plugins/issues/264)) ([b1c6ed3](https://github.com/umijs/plugins/commit/b1c6ed373acae333cf5729af9757a6243103d293))
+
+## [2.3.2](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.3.1...@umijs/plugin-model@2.3.2) (2020-06-20)
+
+### Bug Fixes
+
+- the lastStateRef repeat setting ([#229](https://github.com/umijs/plugins/issues/229)) ([#260](https://github.com/umijs/plugins/issues/260)) ([2b8e12c](https://github.com/umijs/plugins/commit/2b8e12c6618bc7df05b8df11dde270331c1a606a))
+
 ## [2.3.1](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.3.0...@umijs/plugin-model@2.3.1) (2020-05-01)
 
 ### Bug Fixes

@@ -2,6 +2,149 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.2](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.12.1...@umijs/plugin-locale@0.12.2) (2021-06-03)
+
+**Note:** Version bump only for package @umijs/plugin-locale
+
+## [0.12.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.12.0...@umijs/plugin-locale@0.12.1) (2021-06-01)
+
+**Note:** Version bump only for package @umijs/plugin-locale
+
+# [0.12.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.11.2...@umijs/plugin-locale@0.12.0) (2021-05-31)
+
+### Features
+
+- **plugin-locale:** adapt mfsu ([#619](https://github.com/umijs/plugins/issues/619)) ([9bbf34b](https://github.com/umijs/plugins/commit/9bbf34b88330ce00f8e4636b5d609d1e1d860ecd))
+
+## [0.11.2](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.11.1...@umijs/plugin-locale@0.11.2) (2021-04-20)
+
+### Bug Fixes
+
+- **locale:** emit dispatch rerender ([#594](https://github.com/umijs/plugins/issues/594)) ([5d49953](https://github.com/umijs/plugins/commit/5d499530d524055bb07d9b6afaa31d2f6708eb2a))
+
+## [0.11.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.11.0...@umijs/plugin-locale@0.11.1) (2021-04-20)
+
+### Bug Fixes
+
+- **locale:** runtime plugin register order ([#590](https://github.com/umijs/plugins/issues/590)) ([81fb79a](https://github.com/umijs/plugins/commit/81fb79a0111f1e0f701fa2354cfd9b28ed7e8bd6))
+
+# [0.11.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.10...@umijs/plugin-locale@0.11.0) (2021-04-09)
+
+### Bug Fixes
+
+- to solve the problem that FormattedMessage report [React Intl] Missing message error, it was encountered in the situation when calling addLocale to add/merge translation key-value pairs which were fetched from backend server for current language. ([#573](https://github.com/umijs/plugins/issues/573)) ([e6f5625](https://github.com/umijs/plugins/commit/e6f56255b5df987030dd29468fa67d992036fb78))
+
+### Features
+
+- **locale:** add 8px margin between icon and label for SelectLang ([#557](https://github.com/umijs/plugins/issues/557)) ([ff99186](https://github.com/umijs/plugins/commit/ff991860d6ce5308d64eca5129583cceec587ea1))
+
+## [0.10.10](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.9...@umijs/plugin-locale@0.10.10) (2021-03-19)
+
+**Note:** Version bump only for package @umijs/plugin-locale
+
+## [0.10.9](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.8...@umijs/plugin-locale@0.10.9) (2021-03-04)
+
+### Bug Fixes
+
+- useLayoutEffect will be warning in ssr mode ([#533](https://github.com/umijs/plugins/issues/533)) ([2b2c169](https://github.com/umijs/plugins/commit/2b2c16996fd228ecab411d916f8ab255d1982416))
+- when has runtimeLocale.setLocale setLocale not work ([#543](https://github.com/umijs/plugins/issues/543)) ([afc144c](https://github.com/umijs/plugins/commit/afc144c282d0156626432ce167dcf9ac3023ca98))
+
+## [0.10.8](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.7...@umijs/plugin-locale@0.10.8) (2021-01-19)
+
+### Bug Fixes
+
+- **locale:** unused return statement ([#513](https://github.com/umijs/plugins/issues/513)) ([05251df](https://github.com/umijs/plugins/commit/05251df6e33a58084fcd5b7d36d8e0cb60f7f07e))
+
+## [0.10.7](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.6...@umijs/plugin-locale@0.10.7) (2021-01-13)
+
+### Bug Fixes
+
+- **layout:** fix SelectLang keys error ([#504](https://github.com/umijs/plugins/issues/504)) ([10236ba](https://github.com/umijs/plugins/commit/10236bad419261d8a244616e9bf085770327dce5))
+
+## [0.10.6](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.5...@umijs/plugin-locale@0.10.6) (2021-01-11)
+
+### Bug Fixes
+
+- **locale:** fix locale postLocalesData now work error ([#486](https://github.com/umijs/plugins/issues/486)) ([0df0867](https://github.com/umijs/plugins/commit/0df086789829696e1a45df0e398db10de1fe3e37))
+- **locale:** support SelectLang props reload ([#501](https://github.com/umijs/plugins/issues/501)) ([1814cf3](https://github.com/umijs/plugins/commit/1814cf3135309b02869b9d8bc573b4412fac8443))
+
+## [0.10.5](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.4...@umijs/plugin-locale@0.10.5) (2020-12-03)
+
+### Bug Fixes
+
+- localeInfo warning ([#468](https://github.com/umijs/plugins/issues/468)) ([dea36df](https://github.com/umijs/plugins/commit/dea36df2a8431649a0300f033422646db59334a1))
+
+## [0.10.4](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.3...@umijs/plugin-locale@0.10.4) (2020-10-12)
+
+**Note:** Version bump only for package @umijs/plugin-locale
+
+## [0.10.3](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.2...@umijs/plugin-locale@0.10.3) (2020-10-09)
+
+**Note:** Version bump only for package @umijs/plugin-locale
+
+## [0.10.2](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.1...@umijs/plugin-locale@0.10.2) (2020-09-17)
+
+### Bug Fixes
+
+- **locale:** import order problem ([#369](https://github.com/umijs/plugins/issues/369)) ([ba7d20c](https://github.com/umijs/plugins/commit/ba7d20c41d6d2176c216fb82a7cba9298646ee08))
+
+## [0.10.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.10.0...@umijs/plugin-locale@0.10.1) (2020-08-26)
+
+**Note:** Version bump only for package @umijs/plugin-locale
+
+# [0.10.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.9.1...@umijs/plugin-locale@0.10.0) (2020-08-25)
+
+### Features
+
+- enhancement for mfsu ([#326](https://github.com/umijs/plugins/issues/326)) ([655c0da](https://github.com/umijs/plugins/commit/655c0da475748a0671dd3a5de8ab079dbe1bed5a))
+
+## [0.9.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.9.0...@umijs/plugin-locale@0.9.1) (2020-08-12)
+
+**Note:** Version bump only for package @umijs/plugin-locale
+
+# [0.9.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.8.0...@umijs/plugin-locale@0.9.0) (2020-06-28)
+
+### Features
+
+- RTL for pro [URGENT!!!](<[#269](https://github.com/umijs/plugins/issues/269)>) ([16fd164](https://github.com/umijs/plugins/commit/16fd164788d37470636de32527423d0ac9810c5b)), closes [#6599](https://github.com/umijs/plugins/issues/6599)
+
+# [0.8.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.7.1...@umijs/plugin-locale@0.8.0) (2020-06-15)
+
+### Features
+
+- **plugin-locale:** do no use antd icon ([#257](https://github.com/umijs/plugins/issues/257)) ([8b8b847](https://github.com/umijs/plugins/commit/8b8b8470d6c9112450c79e007880f679835fb3a0))
+
+## [0.7.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.7.0...@umijs/plugin-locale@0.7.1) (2020-06-14)
+
+### Bug Fixes
+
+- **plugin-locale:** fix locale bugs ([#256](https://github.com/umijs/plugins/issues/256)) ([46cda6a](https://github.com/umijs/plugins/commit/46cda6af35836468523e3325a0c3dbc555e9ea2c))
+- antd icons all in bundle when enable locale antd ([#250](https://github.com/umijs/plugins/issues/250)) ([11219b5](https://github.com/umijs/plugins/commit/11219b5f84b140709d03a97c778ce9436d522a04))
+
+# [0.7.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.6.1...@umijs/plugin-locale@0.7.0) (2020-05-20)
+
+### Bug Fixes
+
+- **plugin-locale:** fix ts error in 3.9 ([#221](https://github.com/umijs/plugins/issues/221)) ([010c35d](https://github.com/umijs/plugins/commit/010c35df900b614bfcfb25cb9419c34567d0ca82))
+
+### Features
+
+- add helmet plugin ([#180](https://github.com/umijs/plugins/issues/180)) ([70ffc80](https://github.com/umijs/plugins/commit/70ffc801a92d784d31f64acbb7488d8296131611))
+
+## [0.6.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.6.0...@umijs/plugin-locale@0.6.1) (2020-05-17)
+
+**Note:** Version bump only for package @umijs/plugin-locale
+
+# [0.6.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.4.5...@umijs/plugin-locale@0.6.0) (2020-05-15)
+
+### Bug Fixes
+
+- **plugin:** 🚑 Uncommitted version changes ([e0c37b5](https://github.com/umijs/plugins/commit/e0c37b5594f3148ea3431c35aff98bfb9d5cf04a))
+
+### Features
+
+- **locale:** export Selectlang component ([#200](https://github.com/umijs/plugins/issues/200)) ([16278a4](https://github.com/umijs/plugins/commit/16278a4253bc4b635a9932e4c2a967129e7ec688))
+
 ## [0.4.5](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.4.4...@umijs/plugin-locale@0.4.5) (2020-04-24)
 
 ### Bug Fixes

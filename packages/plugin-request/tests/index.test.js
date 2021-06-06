@@ -24,7 +24,9 @@ describe('plugin-request', () => {
           return '/winpathtest';
         },
       },
+      chainWebpack() {},
       addUmiExports() {},
+      addDepInfo() {},
       writeTmpFile,
     };
   };
@@ -49,7 +51,7 @@ describe('plugin-request', () => {
 
     expect(writeTmpFile).toHaveBeenLastCalledWith({
       path: 'plugin-request/request.ts',
-      content: expect.stringContaining('result: T;'),
+      content: expect.stringContaining('result?: T;'),
     });
 
     expect(writeTmpFile).toHaveBeenLastCalledWith({

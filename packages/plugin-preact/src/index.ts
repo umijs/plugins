@@ -2,17 +2,13 @@ import { IApi } from 'umi';
 import { dirname, join } from 'path';
 
 export default (api: IApi) => {
-  api.chainWebpack(memo => {
+  api.chainWebpack((memo) => {
     memo.resolve.alias
       .set('preact/devtools', require.resolve('preact/devtools'))
       .set('preact/hooks', require.resolve('preact/hooks'))
       .set('preact', require.resolve('preact'))
       .set('react', dirname(require.resolve('preact/compat/package.json')))
-      .set('react-dom', dirname(require.resolve('preact/compat/package.json')))
-      .set(
-        'create-react-class',
-        require.resolve('preact-compat/lib/create-react-class'),
-      );
+      .set('react-dom', dirname(require.resolve('preact/compat/package.json')));
     return memo;
   });
 

@@ -1,0 +1,35 @@
+{
+  "name": "@umijs/plugin-openapi",
+  "version": "1.3.0",
+  "description": "@umijs/plugin-openapi",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/umijs/plugins"
+  },
+  "keywords": [
+    "umi"
+  ],
+  "authors": [
+    "chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/umijs/plugins/issues",
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-openapi#readme",
+  "peerDependencies": {
+    "umi": "3.x"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@umijs/openapi": "^1.1.6",
+    "serve-static": "^1.14.1",
+    "swagger-ui-react": "^3.41.1"
+  }
+}

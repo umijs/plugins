@@ -1,36 +1,30 @@
-version: 2
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@1.26.0
+  node: circleci/node@4.5.0
+
 jobs:
-  build:
+  unit-test:
     docker:
-      - image: circleci/node:latest-browsers
-
-    working_directory: ~/repo
-
+      - image: 'cimg/base:stable'
     steps:
       - checkout
+      - node/install:
+          install-yarn: true
+          install-npm: false
+      - run: yarn install
 
-      - restore_cache:
-          key: node-modules-{{ checksum "yarn.json" }}
-
-      - run:
-          name: Install Dependencies
-          command: yarn --frozen-lockfile
-
-      - save_cache:
-          key: node-modules-{{ checksum "yarn.lock" }}
-          paths:
-            - ./node_modules
-            - ~/.cache/yarn
-
-      - run:
-          name: Run Build
-          command: yarn build
-
-      - run:
-          name: Run Tests
-          command: yarn test:coverage -- --forceExit --detectOpenHandles --runInBand --maxWorkers=2
-          no_output_timeout: 300m
-
-      - run:
-          name: Generate coverage
-          command: bash <(curl -s https://codecov.io/bash)
+workflows:
+  run:
+    jobs:
+      - cypress/run:
+          executor: cypress/base-14
+          yarn: true
+          no-workspace: true
+          cache-key: yarn-packages-{{ arch }}-{{ checksum "yarn.lock" }}
+          build: yarn build
+          start: cd example && npm start
+          wait-on: 'http://localhost:8000'
+  unit-test:
+    jobs:
+      - unit-test

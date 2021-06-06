@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-qiankun",
-  "version": "2.1.1",
+  "version": "2.25.0",
   "description": "umi plugin for qiankun",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -13,9 +13,7 @@
   },
   "files": [
     "lib",
-    "master.js",
-    "slave.js",
-    "index.js"
+    "src"
   ],
   "repository": {
     "type": "git",
@@ -36,7 +34,7 @@
   "peerDependencies": {
     "react": "16",
     "react-dom": "16",
-    "umi": "3.x",
+    "umi": "^3.2.21",
     "webpack": "^4.41.0"
   },
   "publishConfig": {
@@ -47,7 +45,7 @@
     "address": "^1.1.2",
     "lodash": "^4.17.15",
     "path-to-regexp": "^1.7.0",
-    "qiankun": "^1.4.2"
+    "qiankun": "^2.2.1"
   },
   "devDependencies": {
     "mockjs": "^1.0.1-beta3",

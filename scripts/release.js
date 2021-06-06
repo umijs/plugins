@@ -1,6 +1,7 @@
 const { utils } = require('umi');
 const { join } = require('path');
 const exec = require('./utils/exec');
+const inquirer = require('inquirer');
 const getPackages = require('./utils/getPackages');
 const isNextVersion = require('./utils/isNextVersion');
 
@@ -57,7 +58,7 @@ async function release() {
     const updatedStdout = execa.sync(lernaCli, ['changed']).stdout;
     updated = updatedStdout
       .split('\n')
-      .map(pkg => {
+      .map((pkg) => {
         return pkg.split('/')[1];
       })
       .filter(Boolean);
@@ -105,10 +106,14 @@ async function release() {
         // '--no-push',
         '--message',
         'chore(release): Publish',
-        '--conventional-commits',
+        args.selectVersion ? '' : '--conventional-commits',
       ]
+        .filter(Boolean)
         .concat(conventionalGraduate)
         .concat(conventionalPrerelease),
+      {
+        shell: false,
+      },
     );
   }
 
@@ -116,6 +121,17 @@ async function release() {
   // Umi must be the latest.
   const pkgs = args.publishOnly ? getPackages() : updated;
   logStep(`publish packages: ${chalk.blue(pkgs.join(', '))}`);
+
+  // 获取 opt 的输入
+  const { otp } = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'otp',
+      message: '请输入 otp 的值，留空表示不使用 otp',
+    },
+  ]);
+
+  process.env.NPM_CONFIG_OTP = otp;
 
   pkgs.forEach((pkg, index) => {
     const pkgPath = join(cwd, 'packages', pkg);
@@ -147,7 +163,7 @@ async function release() {
   logStep('done');
 }
 
-release().catch(err => {
+release().catch((err) => {
   console.error(err);
   process.exit(1);
 });

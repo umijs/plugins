@@ -1,6 +1,6 @@
 import { IApi } from 'umi';
 import { join, dirname } from 'path';
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import {
   IGetLocaleFileListResult,
   IAddAntdLocales,
@@ -21,6 +21,15 @@ interface ILocaleConfig {
   baseSeparator?: string;
 }
 
+let hasAntd = false;
+try {
+  hasAntd = !!require.resolve('antd');
+} catch (_) {
+  console.log(
+    '@umijs/plugin-locale WARNING: antd is not installed, <SelectLang /> unavailable.',
+  );
+}
+
 export default (api: IApi) => {
   const {
     paths,
@@ -34,6 +43,7 @@ export default (api: IApi) => {
         baseNavigator: true,
         useLocalStorage: true,
         baseSeparator: '-',
+        antd: !!hasAntd,
       },
       schema(joi) {
         return joi.object({
@@ -49,6 +59,18 @@ export default (api: IApi) => {
     enableBy: api.EnableBy.config,
   });
 
+  const reactIntlPkgPath = winPath(
+    dirname(require.resolve('react-intl/package')),
+  );
+
+  api.addDepInfo(() => {
+    return {
+      name: 'react-intl',
+      range: require('../package.json').dependencies['react-intl'],
+      alias: [reactIntlPkgPath],
+    };
+  });
+
   // polyfill
   if (isNeedPolyfill(api.userConfig?.targets || {})) {
     api.addEntryImportsAhead(() => ({
@@ -56,7 +78,7 @@ export default (api: IApi) => {
     }));
   }
 
-  const addAntdLocales: IAddAntdLocales = async args =>
+  const addAntdLocales: IAddAntdLocales = async (args) =>
     await api.applyPlugins({
       key: 'addAntdLocales',
       type: api.ApplyPluginsType.add,
@@ -95,10 +117,10 @@ export default (api: IApi) => {
     const localeList = await getList();
     const momentLocales = localeList
       .map(({ momentLocale }) => momentLocale)
-      .filter(locale => locale);
+      .filter((locale) => locale);
     const antdLocales = localeList
       .map(({ antdLocale }) => antdLocale)
-      .filter(locale => locale);
+      .filter((locale) => locale);
 
     let MomentLocales = momentLocales;
     let DefaultMomentLocale = '';
@@ -142,22 +164,27 @@ export default (api: IApi) => {
       join(__dirname, 'templates', 'localeExports.tpl'),
       'utf-8',
     );
+    const localeDirName = api.config.singular ? 'locale' : 'locales';
+    const localeDirPath = join(api.paths!.absSrcPath, localeDirName);
     api.writeTmpFile({
       path: 'plugin-locale/localeExports.ts',
       content: Mustache.render(localeExportsTpl, {
         BaseSeparator: baseSeparator,
         BaseNavigator: baseNavigator,
         UseLocalStorage: !!useLocalStorage,
-        LocaleDir: api.config.singular ? 'locale' : 'locales',
-        LocaleList: localeList,
+        LocaleDir: localeDirName,
+        ExistLocaleDir: existsSync(localeDirPath),
+        LocaleList: localeList.map((locale) => ({
+          ...locale,
+          antdLocale: locale.antdLocale.map((antdLocale, index) => ({
+            locale: antdLocale,
+            index: index,
+          })),
+        })),
         Antd: !!antd,
         DefaultLocale: JSON.stringify(defaultLocale),
         warningPkgPath: winPath(require.resolve('warning')),
-        // react-intl main use `dist/index.js`
-        // use dirname let webpack identify main or module
-        reactIntlPkgPath: winPath(
-          dirname(require.resolve('react-intl/package')),
-        ),
+        reactIntlPkgPath,
       }),
     });
     // runtime.tsx
@@ -171,9 +198,24 @@ export default (api: IApi) => {
         Title: !!title,
       }),
     });
+
+    // SelectLang.tsx
+    const selectLang = readFileSync(
+      join(__dirname, 'templates', 'SelectLang.tpl'),
+      'utf-8',
+    );
+
+    api.writeTmpFile({
+      path: 'plugin-locale/SelectLang.tsx',
+      content: Mustache.render(selectLang, {
+        Antd: !!antd,
+        LocaleList: localeList,
+        ShowSelectLang: localeList.length > 1 && !!antd,
+        antdFiles: api.config?.ssr ? 'lib' : 'es',
+      }),
+    });
   });
 
-  api.addRuntimePluginKey(() => 'locale');
   // Runtime Plugin
   api.addRuntimePlugin(() =>
     join(paths.absTmpPath!, 'plugin-locale/runtime.tsx'),
@@ -181,7 +223,7 @@ export default (api: IApi) => {
 
   // Modify entry js
   api.addEntryCodeAhead(() =>
-    `require('./plugin-locale/locale')._onCreate();`.trim(),
+    `import { _onCreate } from './plugin-locale/locale';\n_onCreate();`.trim(),
   );
 
   // watch locale files
@@ -194,6 +236,13 @@ export default (api: IApi) => {
     return {
       exportAll: true,
       source: `../plugin-locale/localeExports`,
+    };
+  });
+
+  api.addUmiExports(() => {
+    return {
+      exportAll: true,
+      source: `../plugin-locale/SelectLang`,
     };
   });
 };

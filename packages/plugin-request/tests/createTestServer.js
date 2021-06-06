@@ -49,9 +49,9 @@ const createTestServer = (opts = {}) => {
     );
   }
 
-  const send = fn => (req, res, next) => {
+  const send = (fn) => (req, res, next) => {
     const cb = typeof fn === 'function' ? fn(req, res, next) : fn;
-    Promise.resolve(cb).then(val => {
+    Promise.resolve(cb).then((val) => {
       if (val) {
         res.send(val);
       }
@@ -59,7 +59,7 @@ const createTestServer = (opts = {}) => {
   };
 
   const get = server.get.bind(server);
-  server.get = function() {
+  server.get = function () {
     const [path, ...handlers] = [...arguments];
 
     for (const handler of handlers) {

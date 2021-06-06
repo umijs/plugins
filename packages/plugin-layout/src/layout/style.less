@@ -1,13 +1,9 @@
 @import '~antd/es/style/themes/default.less';
+
 @pro-header-hover-bg: rgba(0, 0, 0, 0.025);
 
-.umi-plugin-layout-container > * {
-  background-color: @popover-bg;
-  border-radius: 4px;
-  box-shadow: @shadow-1-down;
-}
-
 @media screen and (max-width: @screen-xs) {
+  // 在小屏幕的时候可以有更好的体验
   .umi-plugin-layout-container {
     width: 100% !important;
   }
@@ -26,12 +22,14 @@
 }
 
 .umi-plugin-layout-right {
+  display: flex;
   float: right;
   height: 100%;
   margin-left: auto;
   overflow: hidden;
   .umi-plugin-layout-action {
-    display: inline-block;
+    display: flex;
+    align-items: center;
     height: 100%;
     padding: 0 12px;
     cursor: pointer;
@@ -47,19 +45,15 @@
       background: @pro-header-hover-bg;
     }
   }
+
   .umi-plugin-layout-search {
     padding: 0 12px;
     &:hover {
       background: transparent;
     }
   }
-  .umi-plugin-layout-account {
-    .umi-plugin-layout-avatar {
-      margin: ~'calc((@{layout-header-height} - 24px) / 2)' 0;
-      margin-right: 8px;
-      color: @primary-color;
-      vertical-align: top;
-      background: rgba(255, 255, 255, 0.85);
-    }
-  }
+}
+
+.umi-plugin-layout-name {
+  margin-left: 8px;
 }

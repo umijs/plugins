@@ -1,119 +1,212 @@
 /* eslint-disable quotes */
-import { existsSync } from 'fs';
+import { readFileSync } from 'fs';
 import { join } from 'path';
 // eslint-disable-next-line import/no-unresolved
-import { IApi, IRoute } from 'umi';
+import { IApi, utils } from 'umi';
 import {
   defaultHistoryType,
   defaultMasterRootId,
-  testPathWithPrefix,
-  toArray,
-} from '../common';
-import { MasterOptions } from '../types';
+  qiankunStateForSlaveModelNamespace,
+} from '../constants';
+import modifyRoutes from './modifyRoutes';
+import { hasExportWithName } from './utils';
 
-export default function(api: IApi, options: MasterOptions) {
-  api.addRuntimePlugin(() => require.resolve('./runtimePlugin'));
+const { getFile, winPath } = utils;
 
-  api.modifyDefaultConfig(config => ({
+export function isMasterEnable(api: IApi) {
+  return (
+    !!api.userConfig?.qiankun?.master ||
+    !!process.env.INITIAL_QIANKUN_MASTER_OPTIONS
+  );
+}
+
+export default function (api: IApi) {
+  api.describe({
+    enableBy: () => isMasterEnable(api),
+  });
+
+  api.addRuntimePlugin(() => '@@/plugin-qiankun/masterRuntimePlugin');
+
+  api.modifyDefaultConfig((config) => ({
     ...config,
     mountElementId: defaultMasterRootId,
     disableGlobalVariables: true,
+    qiankun: {
+      ...config.qiankun,
+      master: {
+        ...JSON.parse(process.env.INITIAL_QIANKUN_MASTER_OPTIONS || '{}'),
+        ...(config.qiankun || {}).master,
+      },
+    },
   }));
 
-  // apps 可能在构建期为空
-  const { apps = [] } = options || {};
-  if (apps.length) {
-    // 获取一组路由中以 basePath 为前缀的路由
-    const findRouteWithPrefix = (
-      routes: IRoute[],
-      basePath: string,
-    ): IRoute | null => {
-      // eslint-disable-next-line no-restricted-syntax
-      for (const route of routes) {
-        if (route.path && testPathWithPrefix(basePath, route.path))
-          return route;
+  modifyRoutes(api);
 
-        if (route.routes && route.routes.length) {
-          return findRouteWithPrefix(route.routes, basePath);
-        }
-      }
+  const appFile = getFile({
+    base: api.paths.absSrcPath!,
+    fileNameWithoutExt: 'app',
+    type: 'javascript',
+  });
+  if (appFile) {
+    const exportName = 'useQiankunStateForSlave';
+    const hasExport = hasExportWithName({
+      name: exportName,
+      filePath: appFile.path,
+    });
 
-      return null;
-    };
-
-    const modifyAppRoutes = () => {
-      api.modifyRoutes(routes => {
-        const {
-          config: { history },
-        } = api;
-
-        const masterHistoryType = history?.type || defaultHistoryType;
-        const newRoutes = routes.map(route => {
-          if (route.path === '/' && route.routes && route.routes.length) {
-            apps.forEach(
-              ({ history: slaveHistory = masterHistoryType, base }) => {
-                // 当子应用的 history mode 跟主应用一致时，为避免出现 404 手动为主应用创建一个 path 为 子应用 rule 的空 div 路由组件
-                if (slaveHistory === masterHistoryType) {
-                  const baseConfig = toArray(base);
-
-                  baseConfig.forEach(basePath => {
-                    const routeWithPrefix = findRouteWithPrefix(
-                      routes,
-                      basePath,
-                    );
-
-                    // 应用没有自己配置过 basePath 相关路由，则自动加入 mock 的路由
-                    if (!routeWithPrefix) {
-                      route.routes!.unshift({
-                        path: basePath,
-                        exact: false,
-                        component: `() => {
-                        if (process.env.NODE_ENV === 'development') {
-                          console.log('${basePath} 404 mock rendered');
-                        }
-
-                        return require('react').createElement('div');
-                      }`,
-                      });
-                    } else {
-                      // 若用户已配置过跟应用 base 重名的路由，则强制将该路由 exact 设置为 false，目的是兼容之前遗留的错误用法的场景
-                      routeWithPrefix.exact = false;
-                    }
-                  });
-                }
-              },
-            );
-          }
-
-          return route;
-        });
-
-        return newRoutes;
+    if (hasExport) {
+      api.addRuntimePluginKey(() => exportName);
+      api.register({
+        key: 'addExtraModels',
+        fn: () => [
+          {
+            absPath: winPath(appFile.path),
+            namespace: qiankunStateForSlaveModelNamespace,
+            exportName,
+          },
+        ],
       });
-    };
-
-    modifyAppRoutes();
+    }
   }
-
-  const rootExportsJsFile = join(api.paths.absSrcPath!, 'rootExports.js');
-  const rootExportsTsFile = join(api.paths.absSrcPath!, 'rootExports.ts');
-  const rootExportsJsFileExisted = existsSync(rootExportsJsFile);
-  const rootExportsFileExisted =
-    rootExportsJsFileExisted || existsSync(rootExportsTsFile);
-
-  api.addTmpGenerateWatcherPaths(() =>
-    rootExportsJsFileExisted ? rootExportsJsFile : rootExportsTsFile,
-  );
 
   api.onGenerateFiles(() => {
     const {
       config: { history },
     } = api;
-    const masterHistoryType = history?.type || defaultHistoryType;
-    const rootExports = `
-window.g_rootExports = ${
-      rootExportsFileExisted ? `require('@/rootExports')` : `{}`
+    const { master: options } = api.config?.qiankun || {};
+    const masterHistoryType = (history && history?.type) || defaultHistoryType;
+    const base = api.config.base || '/';
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/masterOptions.js',
+      content: `
+      let options = ${JSON.stringify({
+        masterHistoryType,
+        base,
+        ...options,
+      })};
+      export const getMasterOptions = () => options;
+      export const setMasterOptions = (newOpts) => options = ({ ...options, ...newOpts });
+      `,
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/MicroApp.tsx',
+      content: readFileSync(join(__dirname, 'MicroApp.tsx.tpl'), 'utf-8'),
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/MicroAppWithMemoHistory.tsx',
+      content: readFileSync(
+        join(__dirname, 'MicroAppWithMemoHistory.tsx.tpl'),
+        'utf-8',
+      ),
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/masterRuntimePlugin.ts',
+      content: readFileSync(
+        join(__dirname, 'masterRuntimePlugin.ts.tpl'),
+        'utf-8',
+      ),
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/common.ts',
+      content: readFileSync(join(__dirname, '../../src/common.ts'), 'utf-8'),
+    });
+    api.writeTmpFile({
+      path: 'plugin-qiankun/constants.ts',
+      content: readFileSync(join(__dirname, '../../src/constants.ts'), 'utf-8'),
+    });
+    api.writeTmpFile({
+      path: 'plugin-qiankun/types.ts',
+      content: readFileSync(join(__dirname, '../../src/types.ts'), 'utf-8'),
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/MicroAppLoader.tsx',
+      // 开启了 antd 插件的时候，使用 antd 的 loader 组件，否则提示用户必须设置一个自定义的 loader 组件
+      content: api.hasPlugins(['@umijs/plugin-antd'])
+        ? readFileSync(join(__dirname, 'AntdLoader.tsx.tpl'), 'utf-8')
+        : `export default function Loader() { console.warn(\`[@umijs/plugin-qiankun]: Seems like you'r not using @umijs/plugin-antd, you need to provide a customer loader or set autoSetLoading false to shut down this warning!\`); return null; }`,
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/getMicroAppRouteComponent.ts',
+      content: utils.Mustache.render(
+        readFileSync(
+          join(__dirname, 'getMicroAppRouteComponent.ts.tpl'),
+          'utf-8',
+        ),
+        { runtimeHistory: api.config.runtimeHistory },
+      ),
+    });
+  });
+
+  api.addUmiExports(() => {
+    const pinnedExport = 'MicroApp';
+    const exports: any[] = [
+      {
+        specifiers: [pinnedExport],
+        source: winPath('../plugin-qiankun/MicroApp'),
+      },
+    ];
+
+    const { exportComponentAlias } = (api.config?.qiankun || {}).master!;
+    // 存在别名导出时再导出一份别名
+    if (exportComponentAlias && exportComponentAlias !== pinnedExport) {
+      exports.push({
+        specifiers: [{ local: pinnedExport, exported: exportComponentAlias }],
+        source: winPath('../plugin-qiankun/MicroApp'),
+      });
+    }
+
+    return exports;
+  });
+
+  api.addUmiExports(() => {
+    return {
+      specifiers: ['getMasterOptions'],
+      source: winPath('../plugin-qiankun/masterOptions.js'),
     };
+  });
+
+  api.addUmiExports(() => {
+    return {
+      specifiers: ['MicroAppWithMemoHistory'],
+      source: winPath('../plugin-qiankun/MicroAppWithMemoHistory'),
+    };
+  });
+
+  api.addUmiExports(() => {
+    return {
+      specifiers: ['getMicroAppRouteComponent'],
+      source: winPath('../plugin-qiankun/getMicroAppRouteComponent'),
+    };
+  });
+
+  useCompatibleMode(api);
+}
+
+function useCompatibleMode(api: IApi) {
+  const rootExportsJsFile = getFile({
+    base: api.paths.absSrcPath!,
+    type: 'javascript',
+    fileNameWithoutExt: 'rootExports',
+  });
+
+  if (rootExportsJsFile) {
+    api.addTmpGenerateWatcherPaths(() => rootExportsJsFile.path);
+  }
+
+  api.onGenerateFiles(() => {
+    const rootExports = `
+    if (typeof window !== 'undefined') {
+      window.g_rootExports = ${
+        rootExportsJsFile ? `require('@/rootExports')` : `{}`
+      };
+    }
     `.trim();
 
     api.writeTmpFile({
@@ -121,14 +214,7 @@ window.g_rootExports = ${
       content: rootExports,
     });
 
-    api.writeTmpFile({
-      path: 'plugin-qiankun/subAppsConfig.json',
-      content: JSON.stringify({
-        masterHistoryType,
-        ...options,
-      }),
-    });
-
+    // TODO 兼容以前版本的 defer 配置，后续需要移除
     api.writeTmpFile({
       path: 'plugin-qiankun/qiankunDefer.js',
       content: `
@@ -143,10 +229,18 @@ window.g_rootExports = ${
     });
   });
 
+  api.addDepInfo(() => {
+    return {
+      name: 'qiankun',
+      range: require('../../package.json').dependencies.qiankun,
+    };
+  });
+
+  // TODO 兼容以前版本的 defer 配置，后续需要移除
   api.addUmiExports(() => [
     {
       specifiers: ['qiankunStart'],
-      source: '../plugin-qiankun/qiankunDefer',
+      source: winPath('../plugin-qiankun/qiankunDefer'),
     },
   ]);
 }

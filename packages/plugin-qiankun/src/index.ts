@@ -1,16 +1,16 @@
-import assert from 'assert';
 import { IApi } from 'umi';
-import master from './master';
-import slave from './slave';
 
-export default function(api: IApi) {
+export { isMasterEnable } from './master';
+export { isSlaveEnable } from './slave';
+
+export default function (api: IApi) {
   api.addRuntimePluginKey(() => 'qiankun');
 
   api.describe({
     key: 'qiankun',
     config: {
       schema(joi) {
-        return joi.object({
+        return joi.object().keys({
           slave: joi.object(),
           master: joi.object(),
         });
@@ -18,13 +18,8 @@ export default function(api: IApi) {
     },
   });
 
-  const { master: masterOpts, slave: slaveOpts } = api.userConfig.qiankun || {};
-  assert(!(masterOpts && slaveOpts), '请勿同时配置 master 和 slave 配置项。');
-
-  if (slaveOpts) {
-    slave(api, slaveOpts);
-  }
-  if (masterOpts) {
-    master(api, masterOpts);
-  }
+  api.registerPlugins([
+    require.resolve('./master'),
+    require.resolve('./slave'),
+  ]);
 }

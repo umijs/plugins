@@ -14,11 +14,11 @@ jest.mock(
   { virtual: true },
 );
 
-jest.mock('antd', () => {
+jest.mock('@umijs/plugin-request/lib/ui', () => {
   // mock antd throw error for test
   return {
     message: {
-      error: msg => {
+      error: (msg) => {
         throw new Error(msg);
       },
     },
@@ -36,7 +36,7 @@ describe('request error message', () => {
     server.close();
   });
 
-  const prefix = api => `${server.url}${api}`;
+  const prefix = (api) => `${server.url}${api}`;
 
   test('http failed without data', async () => {
     server.get('/test/httpfailed', (req, res) => {

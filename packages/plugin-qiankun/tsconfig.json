@@ -2,6 +2,8 @@
   "compilerOptions": {
     "target": "esnext",
     "moduleResolution": "node",
+    "declaration": true,
+    "jsx": "react",
     "rootDir": "./src",
     "downlevelIteration": true,
     "strict": true,
@@ -17,6 +19,8 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "typeRoots": ["./typings"],
+    "skipLibCheck": true
   }
 }

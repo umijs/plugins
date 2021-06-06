@@ -10,7 +10,7 @@ import moment from 'moment';
 import 'moment/locale/{{.}}';
 {{/MomentLocales}}
 {{/MomentLocales.length}}
-import { RawIntlProvider, getLocale, setIntl, getIntl, localeInfo } from './localeExports';
+import { RawIntlProvider, getLocale, getDirection , setIntl, getIntl, localeInfo } from './localeExports';
 
 // @ts-ignore
 export const event = new EventEmitter();
@@ -27,6 +27,13 @@ export function _onCreate() {
   setIntl(locale);
 }
 
+const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' &&
+  typeof window.document !== 'undefined' &&
+  typeof window.document.createElement !== 'undefined'
+    ? React.useLayoutEffect
+    : React.useEffect
+
 export const _LocaleContainer = (props:any) => {
   const [locale, setLocale] = React.useState(() => getLocale());
   const [intl, setContainerIntl] = React.useState(() => getIntl(locale, true));
@@ -41,7 +48,7 @@ export const _LocaleContainer = (props:any) => {
     setContainerIntl(getIntl(locale));
   };
 
-  React.useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     event.on(LANG_CHANGE_EVENT, handleLangChange);
     {{#Title}}
     // avoid reset route title
@@ -60,12 +67,15 @@ export const _LocaleContainer = (props:any) => {
     ...require('{{{.}}}').default,
     {{/DefaultAntdLocales}}
   }
+  const direcition = getDirection();
+
   return (
-    <ConfigProvider locale={localeInfo[locale]?.antd || defaultAntdLocale}>
+    <ConfigProvider  direction={direcition} locale={localeInfo[locale]?.antd || defaultAntdLocale}>
       <RawIntlProvider value={intl}>{props.children}</RawIntlProvider>
     </ConfigProvider>
   )
   {{/Antd}}
-
+  {{^Antd}}
   return <RawIntlProvider value={intl}>{props.children}</RawIntlProvider>;
+  {{/Antd}}
 };

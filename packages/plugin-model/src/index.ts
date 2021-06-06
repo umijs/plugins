@@ -45,10 +45,7 @@ export default (api: IApi) => {
         initialValue: [],
       });
 
-      const tmpFiles = getTmpFile(files, additionalModels, [
-        getModelsPath(),
-        paths.absPagesPath!,
-      ]);
+      const tmpFiles = getTmpFile(files, additionalModels, paths.absSrcPath!);
 
       // provider.tsx
       api.writeTmpFile({
@@ -68,6 +65,28 @@ export default (api: IApi) => {
         content: utils.Mustache.render(
           readFileSync(join(__dirname, 'runtime.tsx.tpl'), 'utf-8'),
           {},
+        ),
+      });
+
+      api.writeTmpFile({
+        path: 'plugin-model/helpers/constant.tsx',
+        content: readFileSync(
+          join(__dirname, './helpers/constant.tsx.tpl'),
+          'utf-8',
+        ),
+      });
+      api.writeTmpFile({
+        path: 'plugin-model/helpers/dispatcher.tsx',
+        content: readFileSync(
+          join(__dirname, './helpers/dispatcher.tsx.tpl'),
+          'utf-8',
+        ),
+      });
+      api.writeTmpFile({
+        path: 'plugin-model/helpers/executor.tsx',
+        content: readFileSync(
+          join(__dirname, './helpers/executor.tsx.tpl'),
+          'utf-8',
         ),
       });
     } catch (e) {

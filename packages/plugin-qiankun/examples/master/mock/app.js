@@ -3,23 +3,23 @@ export default {
     {
       name: 'app1',
       entry: 'http://localhost:8001/app1',
-      base: '/app1',
-      mountElementId: 'root-subapp-container',
+      to: '/app1',
+      props: {
+        testProp1: 'test1',
+      },
     },
     {
       name: 'app2',
       entry: 'http://localhost:8002/app2',
-      base: '/app2',
-      mountElementId: 'root-subapp-container',
+      to: '/app2',
       props: {
-        testProp: 'test',
+        testProp2: 'test2',
       },
     },
     {
       name: 'app3',
       entry: 'http://localhost:8003/app3',
-      base: '/app3/:abc',
-      mountElementId: 'root-subapp-container',
+      to: '/app3',
     },
   ],
 };

@@ -23,12 +23,12 @@ export default (api: IApi) => {
 
   // @ts-ignore
   api.addDevScripts(() => {
-    return (api.config.devExternals || []).map(key => {
+    return (api.config.devExternals || []).map((key) => {
       return EXTERNALS_MAP[key].getContent();
     });
   });
 
-  api.modifyBundleConfig(memo => {
+  api.modifyBundleConfig((memo) => {
     memo.externals = (api.config.devExternals || []).reduce((memo, key) => {
       memo[key] = EXTERNALS_MAP[key].external;
       return memo;

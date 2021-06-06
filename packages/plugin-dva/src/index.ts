@@ -17,9 +17,13 @@ export default (api: IApi) => {
     return join(api.paths.absSrcPath!, getModelDir());
   }
 
-  function hasDvaDependency() {
+  function getDvaDependency() {
     const { dependencies, devDependencies } = api.pkg;
-    return dependencies?.dva || devDependencies?.dva;
+    return (
+      dependencies?.dva ||
+      devDependencies?.dva ||
+      require('../package').dependencies.dva
+    );
   }
 
   // 配置
@@ -28,10 +32,16 @@ export default (api: IApi) => {
     config: {
       schema(joi) {
         return joi.object({
-          immer: joi.boolean(),
-          hmr: joi.boolean(),
-          skipModelValidate: joi.boolean(),
+          disableModelsReExport: joi.boolean(),
+          lazyLoad: joi
+            .boolean()
+            .description(
+              'lazy load dva model avoiding the import modules from umi undefined',
+            ),
           extraModels: joi.array().items(joi.string()),
+          hmr: joi.boolean(),
+          immer: joi.alternatives(joi.boolean(), joi.object()),
+          skipModelValidate: joi.boolean(),
         });
       },
     },
@@ -46,15 +56,18 @@ export default (api: IApi) => {
     return lodash.uniq([
       ...getModels({
         base: srcModelsPath,
+        cwd: api.cwd,
         ...baseOpts,
       }),
       ...getModels({
         base: api.paths.absPagesPath!,
+        cwd: api.cwd,
         pattern: `**/${getModelDir()}/**/*.{ts,tsx,js,jsx}`,
         ...baseOpts,
       }),
       ...getModels({
         base: api.paths.absPagesPath!,
+        cwd: api.cwd,
         pattern: `**/model.{ts,tsx,js,jsx}`,
         ...baseOpts,
       }),
@@ -66,6 +79,13 @@ export default (api: IApi) => {
   // 初始检测一遍
   api.onStart(() => {
     hasModels = getAllModels().length > 0;
+  });
+
+  api.addDepInfo(() => {
+    return {
+      name: 'dva',
+      range: getDvaDependency(),
+    };
   });
 
   // 生成临时文件
@@ -87,17 +107,30 @@ export default (api: IApi) => {
         content: Mustache.render(dvaTpl, {
           ExtendDvaConfig: '',
           EnhanceApp: '',
-          RegisterPlugins: [
-            api.config.dva?.immer &&
-              `app.use(require('${winPath(require.resolve('dva-immer'))}')());`,
-          ]
-            .filter(Boolean)
-            .join('\n'),
+          dvaImmer: api.config.dva?.immer,
+          dvaImmerPath: winPath(require.resolve('dva-immer')),
+          dvaImmerES5:
+            lodash.isPlainObject(api.config.dva?.immer) &&
+            api.config.dva?.immer.enableES5,
+          dvaImmerAllPlugins:
+            lodash.isPlainObject(api.config.dva?.immer) &&
+            api.config.dva?.immer.enableAllPlugins,
+          LazyLoad: api.config.dva?.lazyLoad,
+          RegisterModelImports: models
+            .map((path, index) => {
+              const modelName = `Model${lodash.upperFirst(
+                lodash.camelCase(basename(path, extname(path))),
+              )}${index}`;
+              return api.config.dva?.lazyLoad
+                ? `const ${modelName} = (await import('${path}')).default;`
+                : `import ${modelName} from '${path}';`;
+            })
+            .join('\r\n'),
           RegisterModels: models
-            .map(path => {
+            .map((path, index) => {
               // prettier-ignore
               return `
-app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}').default) });
+app.model({ namespace: '${basename(path, extname(path))}', ...Model${lodash.upperFirst(lodash.camelCase(basename(path, extname(path))))}${index} });
           `.trim();
             })
             .join('\r\n'),
@@ -105,6 +138,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
           dvaLoadingPkgPath: winPath(
             require.resolve('dva-loading/dist/index.esm.js'),
           ),
+          SSR: !!api.config?.ssr,
         }),
       });
 
@@ -112,7 +146,9 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
       const runtimeTpl = readFileSync(join(__dirname, 'runtime.tpl'), 'utf-8');
       api.writeTmpFile({
         path: 'plugin-dva/runtime.tsx',
-        content: Mustache.render(runtimeTpl, {}),
+        content: Mustache.render(runtimeTpl, {
+          SSR: !!api.config?.ssr,
+        }),
       });
 
       // exports.ts
@@ -129,7 +165,6 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
         ? ['connect', 'useDispatch', 'useStore', 'useSelector', 'shallowEqual']
         : ['connect'];
 
-      logger.debug(`dva lib path: ${dvaLibPath}`);
       logger.debug(`dva version: ${dvaVersion}`);
       logger.debug(`exported methods:`);
       logger.debug(exportMethods);
@@ -137,7 +172,6 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
       api.writeTmpFile({
         path: 'plugin-dva/exports.ts',
         content: Mustache.render(exportsTpl, {
-          dvaLibPath,
           exportMethods: exportMethods.join(', '),
         }),
       });
@@ -148,14 +182,16 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
       api.writeTmpFile({
         path: 'plugin-dva/connect.ts',
         content: Mustache.render(connectTpl, {
-          dvaHeadExport: models
-            .map(path => {
-              // prettier-ignore
-              return `export * from '${winPath(dirname(path) + "/" + basename(path, extname(path)))}';`;
-            })
-            .join('\r\n'),
+          dvaHeadExport: api.config.dva?.disableModelsReExport
+            ? ``
+            : models
+                .map((path) => {
+                  // prettier-ignore
+                  return `export * from '${winPath(dirname(path) + "/" + basename(path, extname(path)))}';`;
+                })
+                .join('\r\n'),
           dvaLoadingModels: models
-            .map(path => {
+            .map((path) => {
               // prettier-ignore
               return `    ${basename(path, extname(path))
                 } ?: boolean;`;
@@ -178,7 +214,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
   ]);
 
   // Babel Plugin for HMR
-  api.modifyBabelOpts(babelOpts => {
+  api.modifyBabelOpts((babelOpts) => {
     const hmr = api.config.dva?.hmr;
     if (hmr) {
       const hmrOpts = lodash.isPlainObject(hmr) ? hmr : {};
@@ -220,7 +256,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...(require('${path}'
         console.log();
         console.log(utils.chalk.bold('  Models in your project:'));
         console.log();
-        models.forEach(model => {
+        models.forEach((model) => {
           console.log(`    - ${relative(api.cwd, model)}`);
         });
         console.log();

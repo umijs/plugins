@@ -1,6 +1,6 @@
-const react = require('react');
+import React from 'react';
 // @ts-ignore
-import allIcons from '@@/plugin-layout/icons';
+import allIcons from './icons';
 
 export interface MenuDataItem {
   children?: MenuDataItem[];
@@ -25,13 +25,17 @@ function formatter(data: MenuDataItem[]): MenuDataItem[] {
     return data;
   }
   (data || []).forEach((item = { path: '/' }) => {
-    if (item.icon && typeof item.icon === "string") {
-      const { icon } = item;
+    // 兼容旧的写法 menu:{icon:""}
+    const icon = item.icon ? item.icon : item.menu ? item.menu.icon : '';
+    if (icon && typeof icon === "string") {
       const v4IconName = toHump(icon.replace(icon[0], icon[0].toUpperCase()));
       const NewIcon = allIcons[icon] || allIcons[`${v4IconName}Outlined`];
       if (NewIcon) {
         try {
-          item.icon = react.createElement(NewIcon);
+          if (item.icon)
+            item.icon = React.createElement(NewIcon);
+          if (item.menu)
+            item.menu.icon = React.createElement(NewIcon);
         } catch (error) {
           console.log(error);
         }
