@@ -146,7 +146,7 @@ export default function (api: IApi) {
     try {
       pluginArgs.appId = appId;
     } catch {
-      console.error(\`plugin-qiankun: Cannot find pluginArgs object in current scope, please check if the umijs version is greater than xxx\`);
+      console.error(\`[@umijs/plugin-qiankun]: Cannot find pluginArgs object in current scope, plugin-qiankun will use an insecure way to handle the clientRenderOpts, see https://github.com/umijs/plugins/pull/629 for more information. \`);
     }
       `,
   );

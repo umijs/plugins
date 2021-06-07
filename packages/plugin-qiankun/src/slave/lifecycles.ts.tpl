@@ -24,9 +24,10 @@ let hasMountedAtLeastOnce = false;
 
 export default () => defer.promise;
 
+const unsafe_clientRenderOptsStack: any[] = []; // 对于尚未更新到这次提交(https://github.com/umijs/umi/pull/6702)的umijs版本的适配，以后应该删掉 
 const clientRenderOptsMap: any = {};
-export function getClientRenderOpts(appId: number) {
-  return { ...clientRenderOptsMap[appId] };
+export function getClientRenderOpts(appId?: number) {
+  return typeof appId === 'number' ? { ...clientRenderOptsMap[appId] } : unsafe_clientRenderOptsStack.pop();
 }
 
 function normalizeHistory(
@@ -112,6 +113,7 @@ export function genMount(mountElementId: string, appId: number) {
         },
       };
 
+      unsafe_clientRenderOptsStack.push(clientRenderOpts);
       clientRenderOptsMap[appId] = clientRenderOpts;
     }
 
