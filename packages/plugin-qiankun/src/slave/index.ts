@@ -142,7 +142,7 @@ export default function (api: IApi) {
   api.addEntryCodeAhead(
     () =>
       `
-    const appId = window.appId = 'appId' in window? window.appId + 1 : 0;
+    const appId = window.appId = 'appId' in window ? window.appId + 1 : 0;
     try {
       pluginArgs.appId = appId;
     } catch {
