@@ -1,5 +1,5 @@
 import React from 'react';
-import qiankunRender, { clientRenderOptsStack } from './lifecycles';
+import qiankunRender, { getClientRenderOpts } from './lifecycles';
 
 export function rootContainer(container: HTMLElement) {
   const value =
@@ -13,9 +13,9 @@ export const render = (oldRender: any) => {
   return qiankunRender().then(oldRender);
 };
 
-export function modifyClientRenderOpts(memo: any) {
-  // 每次应用 render 的时候会调 modifyClientRenderOpts，这时尝试从队列中取 render 的配置
-  const clientRenderOpts = clientRenderOptsStack.shift();
+export function modifyClientRenderOpts(memo: any, args: any) {
+  // 每次应用 render 的时候会调 modifyClientRenderOpts，这时根据当前的appId获取 render 的配置
+  const clientRenderOpts = getClientRenderOpts(args.appId);
   if (clientRenderOpts) {
     const history = clientRenderOpts.getHistory();
     delete clientRenderOpts.getHistory;

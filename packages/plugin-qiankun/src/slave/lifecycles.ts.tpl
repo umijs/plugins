@@ -23,7 +23,11 @@ let render = noop;
 let hasMountedAtLeastOnce = false;
 
 export default () => defer.promise;
-export const clientRenderOptsStack: any[] = [];
+
+const clientRenderOptsMap: any = {};
+export function getClientRenderOpts(appId: number) {
+  return { ...clientRenderOptsMap[appId] };
+}
 
 function normalizeHistory(
   history?: 'string' | Record<string, any>,
@@ -64,7 +68,7 @@ export function genBootstrap(oldRender: typeof noop) {
   };
 }
 
-export function genMount(mountElementId: string) {
+export function genMount(mountElementId: string, appId: number) {
   return async (props?: any) => {
     // props 有值时说明应用是通过 lifecycle 被主应用唤醒的，而不是独立运行时自己 mount
     if (typeof props !== 'undefined') {
@@ -108,7 +112,7 @@ export function genMount(mountElementId: string) {
         },
       };
 
-      clientRenderOptsStack.push(clientRenderOpts);
+      clientRenderOptsMap[appId] = clientRenderOpts;
     }
 
     // 第一次 mount defer 被 resolve 后umi 会自动触发 render，非第一次 mount 则需手动触发
