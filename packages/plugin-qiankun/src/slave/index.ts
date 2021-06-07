@@ -144,9 +144,9 @@ export default function (api: IApi) {
       `
     const appId = window.proxy.appId = 'appId' in window.proxy ? window.proxy.appId + 1 : 0;
     try {
-      pluginArgs.appId = appId
+      pluginArgs.appId = appId;
     } catch {
-      console.error(\`plugin-qiankun: Cannot find pluginArgs object in current scope, please check if the umijs version is greater than xxx\`)
+      console.error(\`plugin-qiankun: Cannot find pluginArgs object in current scope, please check if the umijs version is greater than xxx\`);
     }
       `,
   );
