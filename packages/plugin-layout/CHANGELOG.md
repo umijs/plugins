@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.0...@umijs/plugin-layout@0.17.1) (2021-06-07)
+
+### Bug Fixes
+
+- **layout:** useAccess was not found ([#627](https://github.com/umijs/plugins/issues/627)) ([28afcbd](https://github.com/umijs/plugins/commit/28afcbd024b261d962157c5e0b8d26baac5c4c34)), closes [#628](https://github.com/umijs/plugins/issues/628)
+
 # [0.17.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.16.0...@umijs/plugin-layout@0.17.0) (2021-06-03)
 
 ### Features
