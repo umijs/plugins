@@ -139,7 +139,7 @@ export function genUpdate() {
   };
 }
 
-export function genUnmount(mountElementId: string) {
+export function genUnmount(mountElementId: string, appId: number) {
   return async (props: any) => {
     const container = props?.container
       ? props.container.querySelector(`#${mountElementId}`)
@@ -150,5 +150,7 @@ export function genUnmount(mountElementId: string) {
 
     const slaveRuntime = await getSlaveRuntime();
     if (slaveRuntime.unmount) await slaveRuntime.unmount(props);
+
+    delete clientRenderOptsMap[appId];
   };
 }
