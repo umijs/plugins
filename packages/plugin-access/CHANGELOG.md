@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.2](https://github.com/umijs/plugins/compare/@umijs/plugin-access@2.4.1...@umijs/plugin-access@2.4.2) (2021-06-07)
+
+### Bug Fixes
+
+- **layout:** useAccess was not found ([#627](https://github.com/umijs/plugins/issues/627)) ([28afcbd](https://github.com/umijs/plugins/commit/28afcbd024b261d962157c5e0b8d26baac5c4c34)), closes [#628](https://github.com/umijs/plugins/issues/628)
+
+## [2.4.1](https://github.com/umijs/plugins/compare/@umijs/plugin-access@2.4.0...@umijs/plugin-access@2.4.1) (2021-06-03)
+
+**Note:** Version bump only for package @umijs/plugin-access
+
 # [2.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-access@2.3.3...@umijs/plugin-access@2.4.0) (2021-05-31)
 
 ### Features

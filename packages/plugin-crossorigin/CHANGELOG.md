@@ -1,18 +1,16 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [1.2.1](https://github.com/umijs/plugins/compare/@umijs/plugin-crossorigin@1.2.0...@umijs/plugin-crossorigin@1.2.1) (2021-06-03)
+
+**Note:** Version bump only for package @umijs/plugin-crossorigin
 
 # [1.2.0](https://github.com/umijs/plugins/compare/@umijs/plugin-crossorigin@1.1.1...@umijs/plugin-crossorigin@1.2.0) (2020-10-26)
 
-
 ### Features
 
-* support include args ([#416](https://github.com/umijs/plugins/issues/416)) ([ff8cd78](https://github.com/umijs/plugins/commit/ff8cd7866da0b1ecf46b54e5afb738c9fd3fe767))
-
-
-
-
+- support include args ([#416](https://github.com/umijs/plugins/issues/416)) ([ff8cd78](https://github.com/umijs/plugins/commit/ff8cd7866da0b1ecf46b54e5afb738c9fd3fe767))
 
 ## [1.1.1](https://github.com/umijs/plugins/compare/@umijs/plugin-crossorigin@1.1.0...@umijs/plugin-crossorigin@1.1.1) (2020-07-20)
 

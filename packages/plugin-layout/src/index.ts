@@ -1,9 +1,12 @@
 import { IApi, utils } from 'umi';
 import { join } from 'path';
 import * as allIcons from '@ant-design/icons';
-import getLayoutContent from './utils/getLayoutContent';
+import getLayoutContent, {
+  genRenderRightContent,
+} from './utils/getLayoutContent';
+import copySrcFiles from './utils/copySrcFiles';
 import { LayoutConfig } from './types';
-import { readFileSync, copyFileSync, statSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 
 const DIR_NAME = 'plugin-layout';
 
@@ -98,27 +101,18 @@ export default (api: IApi) => {
       },
     ];
   });
-
+  const accessPath = join(api.paths.absTmpPath!, 'plugin-access', 'access.tsx');
   let generatedOnce = false;
-  api.onGenerateFiles(() => {
-    if (generatedOnce) return;
-    generatedOnce = true;
-    const cwd = join(__dirname, '../src');
-    const files = utils.glob.sync('**/*', {
-      cwd,
-    });
-    const base = join(api.paths.absTmpPath!, 'plugin-layout', 'layout');
-    utils.mkdirp.sync(base);
-    files.forEach((file) => {
-      if (['index.ts', 'runtime.tsx.tpl'].includes(file)) return;
-      const source = join(cwd, file);
-      const target = join(base, file);
-      if (statSync(source).isDirectory()) {
-        utils.mkdirp.sync(target);
-      } else {
-        copyFileSync(source, target);
-      }
-    });
+  api.onGenerateFiles({
+    fn() {
+      if (generatedOnce) return;
+      generatedOnce = true;
+      const cwd = join(__dirname, '../src');
+      const config = { hasAccess: existsSync(accessPath) };
+      copySrcFiles({ cwd, absTmpPath: api.paths.absTmpPath!, config });
+    },
+    // 在其他文件生成之后，再执行
+    stage: 99,
   });
 
   api.modifyDefaultConfig((config) => {
@@ -170,11 +164,20 @@ export default (api: IApi) => {
     });
 
     api.writeTmpFile({
+      path: 'plugin-layout/renderRightContent.tsx',
+      content: genRenderRightContent({
+        locale: api.hasPlugins(['@umijs/plugin-locale']),
+        initialState: api.hasPlugins(['@umijs/plugin-initial-state']),
+      }),
+    });
+
+    api.writeTmpFile({
       path: join(DIR_NAME, 'Layout.tsx'),
       content: getLayoutContent(
         layoutOpts,
         currentLayoutComponentPath,
         api.hasPlugins(['@umijs/plugin-locale']),
+        existsSync(accessPath),
       ),
     });
 

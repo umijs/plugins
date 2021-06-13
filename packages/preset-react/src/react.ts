@@ -25,7 +25,11 @@ export default (api: IApi) => {
       }
     } catch (e) {}
 
-    if (isReact17() && tsconfigContent && !tsconfigContent?.includes('react-jsx')) {
+    if (
+      isReact17() &&
+      tsconfigContent &&
+      !tsconfigContent?.includes('react-jsx')
+    ) {
       api.logger.warn(
         '[WARN] update `jsx: "react"` into `jsx: "react-jsx"` to suport the new JSX transform in React 17 in tsconfig.json',
       );
@@ -33,7 +37,7 @@ export default (api: IApi) => {
   });
 
   // support react 17
-  api.modifyBabelPresetOpts(opts => {
+  api.modifyBabelPresetOpts((opts) => {
     return {
       ...opts,
       reactRequire: !isReact17(),

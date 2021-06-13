@@ -34,7 +34,7 @@ describe('normal request', () => {
     server.close();
   });
 
-  const prefix = api => `${server.url}${api}`;
+  const prefix = (api) => `${server.url}${api}`;
 
   test('success', async () => {
     const rawData = {

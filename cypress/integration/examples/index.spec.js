@@ -3,7 +3,7 @@
 describe('examples', () => {
   it('home', () => {
     cy.visit('http://localhost:8000/');
-    cy.get('#root > div').should('have.text', 'Home');
+    cy.get('#root .ant-pro-basicLayout-content').should('have.text', 'Home');
   });
 
   it('plugin-model', () => {

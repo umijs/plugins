@@ -4,7 +4,7 @@ import proChainWebpack from './chainWebpack';
 export default (api: IApi) => {
   const { REACT_APP_ENV } = process.env;
   // support dev tools
-  api.modifyDefaultConfig(config => {
+  api.modifyDefaultConfig((config) => {
     const { define } = config;
 
     config.define = {

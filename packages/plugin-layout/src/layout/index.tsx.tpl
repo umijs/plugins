@@ -1,52 +1,18 @@
 import React, { useState, useEffect } from 'react';
 // @ts-ignore
-import { Link, useModel, history, traverseModifyRoutes, useAccess } from 'umi';
+import { Link, useModel, history{{#hasAccess}}, traverseModifyRoutes, useAccess {{/hasAccess}} } from 'umi';
 import ProLayout, { BasicLayoutProps } from '@ant-design/pro-layout';
 import './style.less';
-import renderRightContent from './renderRightContent';
+// @ts-ignore
+import renderRightContent from '@@/plugin-layout/renderRightContent';
 import { WithExceptionOpChildren } from '../component/Exception';
 import { getMatchMenu, MenuDataItem, transformRoute } from '@umijs/route-utils';
 // @ts-ignore
 import logo from '../component/logo';
-
-const getLayoutRender = (currentPathConfig: {
-  layout:
-    | {
-        hideMenu: boolean;
-        hideNav: boolean;
-        hideFooter: boolean;
-      }
-    | false;
-  hideFooter: boolean;
-}) => {
-  const layoutRender: any = {};
-
-  if (currentPathConfig?.hideFooter) {
-    layoutRender.footerRender = false;
-  }
-
-  if (currentPathConfig?.layout == false) {
-    layoutRender.pure = true;
-    return layoutRender;
-  }
-
-  if (currentPathConfig?.layout?.hideMenu) {
-    layoutRender.menuRender = false;
-  }
-
-  if (currentPathConfig?.layout?.hideFooter) {
-    layoutRender.footerRender = false;
-  }
-
-  if (currentPathConfig?.layout?.hideNav) {
-    layoutRender.headerRender = false;
-  }
-
-  return layoutRender;
-};
+import getLayoutRenderConfig from './getLayoutRenderConfig';
 
 const BasicLayout = (props: any) => {
-  const { children, userConfig, location, route, ...restProps } = props;
+  const { children, userConfig = {}, location, route, ...restProps } = props;
   const initialInfo = (useModel && useModel('@@initialState')) || {
     initialState: undefined,
     loading: false,
@@ -67,7 +33,7 @@ const BasicLayout = (props: any) => {
     // 动态路由匹配
     const currentPathConfig = getMatchMenu(location.pathname, menuData).pop();
     setCurrentPathConfig(currentPathConfig || {});
-  }, [location.pathname, props?.route?.routes]);
+  }, [location?.pathname, props?.route?.routes]);
 
   // layout 是否渲染相关
   const layoutRestProps: BasicLayoutProps & {
@@ -82,17 +48,16 @@ const BasicLayout = (props: any) => {
     itemRender: (route) => <Link to={route.path}>{route.breadcrumbName}</Link>,
     ...userConfig,
     ...restProps,
-    ...getLayoutRender(currentPathConfig as any),
+    ...getLayoutRenderConfig(currentPathConfig as any),
   };
-
+{{#hasAccess}}
   const access = useAccess?.();
-
+{{/hasAccess}}
   return (
     <ProLayout
       route={route}
       location={location}
-      title={userConfig.name || userConfig.title}
-      className="umi-plugin-layout-main"
+      title={userConfig?.name || userConfig?.title}
       navTheme="dark"
       siderWidth={256}
       onMenuHeaderClick={(e) => {
@@ -100,14 +65,14 @@ const BasicLayout = (props: any) => {
         e.preventDefault();
         history.push('/');
       }}
-      menu={{ locale: userConfig.locale }}
+      menu={ { locale: userConfig.locale } }
       // 支持了一个 patchMenus，其实应该用 menuDataRender
       menuDataRender={
         userConfig.patchMenus
-          ? (menuData) => userConfig.patchMenus(menuData, initialInfo)
+          ? (menuData) => userConfig?.patchMenus(menuData, initialInfo)
           : undefined
       }
-      formatMessage={userConfig.formatMessage}
+      formatMessage={userConfig?.formatMessage}
       logo={logo}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (menuItemProps.isUrl || menuItemProps.children) {
@@ -125,17 +90,19 @@ const BasicLayout = (props: any) => {
       disableContentMargin
       fixSiderbar
       fixedHeader
+{{#hasAccess}}
       postMenuData={
         traverseModifyRoutes
           ? (menuData) => traverseModifyRoutes?.(menuData, access)
           : undefined
       }
+{{/hasAccess}}
       {...layoutRestProps}
       rightContentRender={
         // === false 应该关闭这个功能
         layoutRestProps?.rightContentRender !== false &&
         ((layoutProps) => {
-          const dom = renderRightContent(
+          const dom = renderRightContent?.(
             userConfig,
             loading,
             initialState,

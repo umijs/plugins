@@ -1,113 +1,72 @@
 # Change Log
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [2.25.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.24.1...@umijs/plugin-qiankun@2.25.0) (2021-06-03)
+
+### Features
+
+- **layout:** renderRightContent support locale ([#624](https://github.com/umijs/plugins/issues/624)) ([6d3fc2d](https://github.com/umijs/plugins/commit/6d3fc2df3f75b3e700b78a9e267099c7f70be47b))
 
 ## [2.24.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.24.0...@umijs/plugin-qiankun@2.24.1) (2021-03-19)
 
-
 ### Bug Fixes
 
-* 修复 prefetch true 行为 ([#564](https://github.com/umijs/plugins/issues/564)) ([efa1472](https://github.com/umijs/plugins/commit/efa1472d754af2b1cfed895b70606747d32b94f2))
-* 修复运行时路由不支持嵌套根路由的问题 ([#565](https://github.com/umijs/plugins/issues/565)) ([5388f04](https://github.com/umijs/plugins/commit/5388f040c036537167b60adb6f1355acb56795a4))
-
-
-
-
+- 修复 prefetch true 行为 ([#564](https://github.com/umijs/plugins/issues/564)) ([efa1472](https://github.com/umijs/plugins/commit/efa1472d754af2b1cfed895b70606747d32b94f2))
+- 修复运行时路由不支持嵌套根路由的问题 ([#565](https://github.com/umijs/plugins/issues/565)) ([5388f04](https://github.com/umijs/plugins/commit/5388f040c036537167b60adb6f1355acb56795a4))
 
 # [2.24.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.23.0...@umijs/plugin-qiankun@2.24.0) (2021-03-19)
 
-
 ### Bug Fixes
 
-* **qiankun:** runtime routes not loaded correctly ([#541](https://github.com/umijs/plugins/issues/541)) ([ea086ee](https://github.com/umijs/plugins/commit/ea086eef269d277d49d261e49aa865a2bd30744a))
-
+- **qiankun:** runtime routes not loaded correctly ([#541](https://github.com/umijs/plugins/issues/541)) ([ea086ee](https://github.com/umijs/plugins/commit/ea086eef269d277d49d261e49aa865a2bd30744a))
 
 ### Features
 
-* 增加 credentials 参数，自动携带跨域 cookie ([#560](https://github.com/umijs/plugins/issues/560)) ([f494a22](https://github.com/umijs/plugins/commit/f494a222a9e33b766f896a46833f72eb113e3044))
-
-
-
-
+- 增加 credentials 参数，自动携带跨域 cookie ([#560](https://github.com/umijs/plugins/issues/560)) ([f494a22](https://github.com/umijs/plugins/commit/f494a222a9e33b766f896a46833f72eb113e3044))
 
 # [2.23.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.22.1...@umijs/plugin-qiankun@2.23.0) (2021-03-11)
 
-
 ### Features
 
-* 支持微应用配置嵌套的子路由 ([#552](https://github.com/umijs/plugins/issues/552)) ([7a7f77b](https://github.com/umijs/plugins/commit/7a7f77b43658d23723794931d9cf6fe6bce23a8f))
-
-
-
-
+- 支持微应用配置嵌套的子路由 ([#552](https://github.com/umijs/plugins/issues/552)) ([7a7f77b](https://github.com/umijs/plugins/commit/7a7f77b43658d23723794931d9cf6fe6bce23a8f))
 
 ## [2.22.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.22.0...@umijs/plugin-qiankun@2.22.1) (2021-03-04)
 
-
 ### Bug Fixes
 
-* make getSlaveRuntime function asynchronous ([#548](https://github.com/umijs/plugins/issues/548)) ([6cee8e6](https://github.com/umijs/plugins/commit/6cee8e6c44e5f291941bf643c1cd69c27aae739f))
-* **qiankun:** lodash bundled all ([#534](https://github.com/umijs/plugins/issues/534)) ([ebb7a68](https://github.com/umijs/plugins/commit/ebb7a68fdc72d1d27ae26eb75ccb12fb4439daa0))
-
-
-
-
+- make getSlaveRuntime function asynchronous ([#548](https://github.com/umijs/plugins/issues/548)) ([6cee8e6](https://github.com/umijs/plugins/commit/6cee8e6c44e5f291941bf643c1cd69c27aae739f))
+- **qiankun:** lodash bundled all ([#534](https://github.com/umijs/plugins/issues/534)) ([ebb7a68](https://github.com/umijs/plugins/commit/ebb7a68fdc72d1d27ae26eb75ccb12fb4439daa0))
 
 # [2.22.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.21.2...@umijs/plugin-qiankun@2.22.0) (2021-02-09)
 
-
 ### Features
 
-* 增加 devSourceMap 配置用于关闭开发阶段 sourcemap 插件 ([#536](https://github.com/umijs/plugins/issues/536)) ([1441b19](https://github.com/umijs/plugins/commit/1441b1997ffbf66b3d7d9c172348583783d5f4df))
-
-
-
-
+- 增加 devSourceMap 配置用于关闭开发阶段 sourcemap 插件 ([#536](https://github.com/umijs/plugins/issues/536)) ([1441b19](https://github.com/umijs/plugins/commit/1441b1997ffbf66b3d7d9c172348583783d5f4df))
 
 ## [2.21.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.21.1...@umijs/plugin-qiankun@2.21.2) (2021-01-21)
 
-
 ### Bug Fixes
 
-* 移除 webpack 构建时无效引用 warning ([#518](https://github.com/umijs/plugins/issues/518)) ([329d3f1](https://github.com/umijs/plugins/commit/329d3f1df651fdaff3b90b4653213846141f5a2a))
-
-
-
-
+- 移除 webpack 构建时无效引用 warning ([#518](https://github.com/umijs/plugins/issues/518)) ([329d3f1](https://github.com/umijs/plugins/commit/329d3f1df651fdaff3b90b4653213846141f5a2a))
 
 ## [2.21.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.21.0...@umijs/plugin-qiankun@2.21.1) (2021-01-21)
 
-
 ### Bug Fixes
 
-* 修复启动阶段的 warning ([#517](https://github.com/umijs/plugins/issues/517)) ([97f3ee4](https://github.com/umijs/plugins/commit/97f3ee47d33df73f45d58d0b384942960a261f2c))
-
-
-
-
+- 修复启动阶段的 warning ([#517](https://github.com/umijs/plugins/issues/517)) ([97f3ee4](https://github.com/umijs/plugins/commit/97f3ee47d33df73f45d58d0b384942960a261f2c))
 
 # [2.21.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.20.0...@umijs/plugin-qiankun@2.21.0) (2021-01-19)
 
-
 ### Features
 
-* **qiankun:** 移除主应用对 mountElementId 的变更 ([#515](https://github.com/umijs/plugins/issues/515)) ([d5e140c](https://github.com/umijs/plugins/commit/d5e140c754ac92f0a6ed2ae24d5fe08aaafedffc))
-
-
-
-
+- **qiankun:** 移除主应用对 mountElementId 的变更 ([#515](https://github.com/umijs/plugins/issues/515)) ([d5e140c](https://github.com/umijs/plugins/commit/d5e140c754ac92f0a6ed2ae24d5fe08aaafedffc))
 
 # [2.20.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.19.0...@umijs/plugin-qiankun@2.20.0) (2021-01-14)
 
-
 ### Features
 
-* **qiankun:** 移除子应用对 mountElementId 的变更 ([#481](https://github.com/umijs/plugins/issues/481)) ([f37d07b](https://github.com/umijs/plugins/commit/f37d07b53b50ec57c8300964aff1bcfb0d563284))
-
-
-
-
+- **qiankun:** 移除子应用对 mountElementId 的变更 ([#481](https://github.com/umijs/plugins/issues/481)) ([f37d07b](https://github.com/umijs/plugins/commit/f37d07b53b50ec57c8300964aff1bcfb0d563284))
 
 # [2.19.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.18.3...@umijs/plugin-qiankun@2.19.0) (2021-01-12)
 
