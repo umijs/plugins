@@ -17,7 +17,7 @@ import {
 import { ApplyPluginsType, history, plugin } from 'umi';
 // decoupling with antd UI library, you can using `alias` modify the ui methods
 // @ts-ignore
-import { message, notification } from '@umijs/plugin-request/lib/ui';
+import { message, notification } from './ui';
 import useUmiRequest, { UseRequestProvider } from '@ahooksjs/use-request';
 import {
   BaseOptions,
