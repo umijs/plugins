@@ -52,7 +52,7 @@ export const localeInfo: {[key: string]: any} = {
   {{#LocaleList}}
   '{{name}}': {
     messages: {
-      {{#paths}}...lang_{{lang}}{{country}}{{index}}{{/paths}}
+      {{#paths}}...lang_{{lang}}{{country}}{{index}},{{/paths}}
     },
     locale: '{{locale}}',
     {{#Antd}}antd: {
