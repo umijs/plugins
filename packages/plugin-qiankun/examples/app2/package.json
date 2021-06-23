@@ -1,5 +1,5 @@
 {
-  "name": "app2",
+  "name": "@umijs/app2",
   "scripts": {
     "start": "umi dev",
     "build": "COMPRESS=none umi build",

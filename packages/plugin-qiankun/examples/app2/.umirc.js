@@ -1,15 +1,15 @@
 import { name } from './package.json';
 
-const libraryName = `${name.charAt(0).toUpperCase() + name.slice(1)}`;
+const appName = `${name.slice(name.indexOf('/') + 1)}`;
 
 export default {
-  base: name,
+  base: appName,
   publicPath: '/app2/',
   outputPath: './dist/app2',
   mountElementId: 'app2',
   qiankun: {
     // 修改umd library name 示例
-    slave: { libraryName },
+    slave: { libraryName: appName },
   },
   plugins: [
     require.resolve('../../../plugin-dva/lib'),
