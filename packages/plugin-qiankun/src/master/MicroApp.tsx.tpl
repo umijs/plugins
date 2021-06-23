@@ -92,7 +92,6 @@ export function MicroApp(componentProps: Props) {
     microAppRef.current = loadMicroApp(
       {
         name,
-        libraryName,
         entry,
         container: containerRef.current!,
         props: { ...propsFromConfig, ...stateForSlave, ...propsFromParams, setLoading },
