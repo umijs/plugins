@@ -165,7 +165,7 @@ export default (api: IApi) => {
       'utf-8',
     );
     const localeDirName = api.config.singular ? 'locale' : 'locales';
-    const localeDirPath = join(api.paths!.absSrcPath, localeDirName);
+    const localeDirPath = join(api.paths!.absSrcPath!, localeDirName);
     api.writeTmpFile({
       path: 'plugin-locale/localeExports.ts',
       content: Mustache.render(localeExportsTpl, {
@@ -179,6 +179,10 @@ export default (api: IApi) => {
           antdLocale: locale.antdLocale.map((antdLocale, index) => ({
             locale: antdLocale,
             index: index,
+          })),
+          paths: locale.paths.map((path, index) => ({
+            path,
+            index,
           })),
         })),
         Antd: !!antd,

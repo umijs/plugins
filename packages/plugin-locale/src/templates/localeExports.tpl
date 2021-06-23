@@ -43,13 +43,16 @@ const useLocalStorage = {{{UseLocalStorage}}};
 {{#antdLocale}}
 import {{lang}}{{country}}{{index}} from '{{{locale}}}';
 {{/antdLocale}}
+{{#paths}}
+import lang_{{lang}}{{country}}{{index}} from "{{{path}}}";
+{{/paths}}
 {{/LocaleList}}
 
 export const localeInfo: {[key: string]: any} = {
   {{#LocaleList}}
   '{{name}}': {
     messages: {
-      {{#paths}}...((locale) => locale.__esModule ? locale.default : locale)(require('{{{.}}}')),{{/paths}}
+      {{#paths}}...lang_{{lang}}{{country}}{{index}},{{/paths}}
     },
     locale: '{{locale}}',
     {{#Antd}}antd: {
