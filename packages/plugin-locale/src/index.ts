@@ -165,27 +165,32 @@ export default (api: IApi) => {
       'utf-8',
     );
     const localeDirName = api.config.singular ? 'locale' : 'locales';
-    const localeDirPath = join(api.paths!.absSrcPath, localeDirName);
+    const localeDirPath = join(api.paths!.absSrcPath!, localeDirName);
+    const content = {
+      BaseSeparator: baseSeparator,
+      BaseNavigator: baseNavigator,
+      UseLocalStorage: !!useLocalStorage,
+      LocaleDir: localeDirName,
+      ExistLocaleDir: existsSync(localeDirPath),
+      LocaleList: localeList.map((locale) => ({
+        ...locale,
+        antdLocale: locale.antdLocale.map((antdLocale, index) => ({
+          locale: antdLocale,
+          index: index,
+        })),
+        paths: locale.paths.map((path, index) => ({
+          path,
+          index,
+        })),
+      })),
+      Antd: !!antd,
+      DefaultLocale: JSON.stringify(defaultLocale),
+      warningPkgPath: winPath(require.resolve('warning')),
+      reactIntlPkgPath,
+    };
     api.writeTmpFile({
       path: 'plugin-locale/localeExports.ts',
-      content: Mustache.render(localeExportsTpl, {
-        BaseSeparator: baseSeparator,
-        BaseNavigator: baseNavigator,
-        UseLocalStorage: !!useLocalStorage,
-        LocaleDir: localeDirName,
-        ExistLocaleDir: existsSync(localeDirPath),
-        LocaleList: localeList.map((locale) => ({
-          ...locale,
-          antdLocale: locale.antdLocale.map((antdLocale, index) => ({
-            locale: antdLocale,
-            index: index,
-          })),
-        })),
-        Antd: !!antd,
-        DefaultLocale: JSON.stringify(defaultLocale),
-        warningPkgPath: winPath(require.resolve('warning')),
-        reactIntlPkgPath,
-      }),
+      content: Mustache.render(localeExportsTpl, content),
     });
     // runtime.tsx
     const runtimeTpl = readFileSync(
