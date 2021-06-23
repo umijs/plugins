@@ -76,7 +76,7 @@ export function MicroApp(componentProps: Props) {
 
   // 约定使用 src/app.ts/useQiankunStateForSlave 中的数据作为主应用透传给微应用的 props，优先级高于 propsFromConfig
   const stateForSlave = (useModel || noop)(qiankunStateForSlaveModelNamespace);
-  const { entry, libraryName = '', props: propsFromConfig = {} } = appConfig;
+  const { entry, props: propsFromConfig = {} } = appConfig;
 
   const containerRef = useRef<HTMLDivElement>();
   const microAppRef = useRef<MicroAppType>();
@@ -118,7 +118,7 @@ export function MicroApp(componentProps: Props) {
     }
 
     return () => unmountMicroApp(microAppRef.current);
-  }, [name, libraryName]);
+  }, [name]);
 
   useEffect(() => {
     const microApp = microAppRef.current;
