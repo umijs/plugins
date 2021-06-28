@@ -12,7 +12,7 @@ export function getMicroAppRouteComponent(opts: {
 }) {
   const { base, masterHistoryType, appName, routeProps } = opts;
   const RouteComponent = ({ match }: any) => {
-    const { url } = match;
+    const { url, path } = match;
 
     // 默认取静态配置的 base
     let umiConfigBase = base === '/' ? '' : base;
