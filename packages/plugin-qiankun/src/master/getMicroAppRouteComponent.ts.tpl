@@ -23,8 +23,16 @@ export function getMicroAppRouteComponent(opts: {
     umiConfigBase = basename === '/' ? '' : basename;
     {{/runtimeHistory}}
 
-    const runtimeMatchedBase =
+    let runtimeMatchedBase =
       umiConfigBase + (url.endsWith('/') ? url.substr(0, url.length - 1) : url);
+
+    {{#dynamicRoot}}
+    // @see https://github.com/umijs/umi/blob/master/packages/preset-built-in/src/plugins/commands/htmlUtils.ts#L102
+    console.info('[plugin-qiankun] routerBase >', window.routerBase);
+    runtimeMatchedBase = window.routerBase || `location.pathname.split('/').slice(0, -${
+      path!.split('/').length - 1
+    }).concat('').join('/')`;
+    {{/dynamicRoot}}
 
     const componentProps = {
       name: appName,
