@@ -139,9 +139,10 @@ export default function (api: IApi) {
           join(__dirname, 'getMicroAppRouteComponent.ts.tpl'),
           'utf-8',
         ),
-        { 
+        {
           runtimeHistory: api.config.runtimeHistory,
-          dynamicRoot: api.config.exportStatic?.dynamicRoot,
+          dynamicRoot:
+            api.config.exportStatic && api.config.exportStatic.dynamicRoot,
         },
       ),
     });
