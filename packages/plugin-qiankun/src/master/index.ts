@@ -141,7 +141,7 @@ export default function (api: IApi) {
         ),
         { 
           runtimeHistory: api.config.runtimeHistory,
-          dynamicRoot: api.config.exportStatic && api.config.exportStatic?.dynamicRoot,
+          dynamicRoot: api.config.exportStatic?.dynamicRoot,
         },
       ),
     });
