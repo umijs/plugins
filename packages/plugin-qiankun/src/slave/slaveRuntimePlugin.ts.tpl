@@ -1,11 +1,11 @@
 import React from 'react';
 import qiankunRender, { clientRenderOptsStack } from './lifecycles';
+import { Context } from '@@/plugin-qiankun/qiankunContext';
 
 export function rootContainer(container: HTMLElement) {
   const value =
     typeof window !== 'undefined' ? (window as any).g_rootExports : {};
   // eslint-disable-next-line global-require
-  const { Context } = require('@@/plugin-qiankun/qiankunContext');
   return React.createElement(Context.Provider, { value }, container);
 }
 
