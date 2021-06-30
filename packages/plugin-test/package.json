@@ -28,6 +28,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@umijs/test": "^3.0.7"
+    "@umijs/test": "~3.4.25"
   }
 }
