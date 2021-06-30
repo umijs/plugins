@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.12.2...@umijs/plugin-locale@0.13.0) (2021-06-23)
+
+### Features
+
+- **plugin-locale:** fix mfsu mode locale ([#640](https://github.com/umijs/plugins/issues/640)) ([ce576ad](https://github.com/umijs/plugins/commit/ce576ad7b523fdbe34ea676cffc24a4a29e3a50d))
+
 ## [0.12.2](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.12.1...@umijs/plugin-locale@0.12.2) (2021-06-03)
 
 **Note:** Version bump only for package @umijs/plugin-locale

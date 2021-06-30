@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/umijs/plugins/compare/@umijs/plugin-test@1.0.0...@umijs/plugin-test@1.0.1) (2021-06-30)
+
+### Bug Fixes
+
+- umi-test version match ([#646](https://github.com/umijs/plugins/issues/646)) ([529f5ac](https://github.com/umijs/plugins/commit/529f5ac3278c99e73e18964ef406c4671ca4e0bc))
+
 # 1.0.0 (2020-03-12)
 
 ### Features
