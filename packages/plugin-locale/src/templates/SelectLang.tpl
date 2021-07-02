@@ -76,6 +76,12 @@ const defaultLangUConfigMap = {
     icon: '🇧🇬',
     title: 'език'
   },
+  'bg-BG': {
+    lang: 'bn-BD',
+    label: 'বাংলা',
+    icon: '🇧🇩',
+    title: 'ভাষা'
+  },
   'ca-ES': {
     lang: 'ca-ES',
     label: 'Catalá',
