@@ -66,6 +66,9 @@ export async function render(oldRender: typeof noop) {
     const { prefetch, ...importEntryOpts } = options;
     if (prefetch === 'all') {
       prefetchApps(loadableApps, importEntryOpts);
+    } else if (Array.isArray(prefetch)) {
+      const specialPrefetchApps = loadableApps.filter(app => prefetch.indexOf(app.name) !== -1);
+      prefetchApps(specialPrefetchApps, importEntryOpts);
     }
   }
 
