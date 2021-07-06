@@ -1,6 +1,18 @@
 # Change Log
 
-All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# [2.26.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.25.2...@umijs/plugin-qiankun@2.26.0) (2021-07-06)
+
+
+### Features
+
+* **qiankun:** 支持手动指定预加载的应用 ([#649](https://github.com/umijs/plugins/issues/649)) ([b74db01](https://github.com/umijs/plugins/commit/b74db017887cd7848bb6b0b05b44344f424d48ff))
+
+
+
+
 
 ## [2.25.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.25.1...@umijs/plugin-qiankun@2.25.2) (2021-06-30)
 
