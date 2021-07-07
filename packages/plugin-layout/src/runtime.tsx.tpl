@@ -25,6 +25,10 @@ function formatter(data: MenuDataItem[]): MenuDataItem[] {
     return data;
   }
   (data || []).forEach((item = { path: '/' }) => {
+    // Copy item.name from item.menu.name
+    if (!item.name && item.menu?.name) {
+      item.name = item.menu.name;
+    }
     // 兼容旧的写法 menu:{icon:""}
     const icon = item.icon ? item.icon : item.menu ? item.menu.icon : '';
     if (icon && typeof icon === "string") {
