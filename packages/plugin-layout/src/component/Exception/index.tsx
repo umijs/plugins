@@ -47,7 +47,7 @@ const WithExceptionOpChildren: React.FC<{
   /**
    * 这里是没有权限的意思
    */
-  if (currentPathConfig.unAccessible || currentPathConfig.unaccessible) {
+  if (currentPathConfig?.unAccessible || currentPathConfig?.unaccessible) {
     return props.unAccessible || <Exception403 />;
   }
   return children;
