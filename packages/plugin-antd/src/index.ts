@@ -33,12 +33,13 @@ export default (api: IApi) => {
       { libraryName: 'antd-mobile', libraryDirectory: 'es', style: true },
     ];
 
-    if (enablePC)
+    if (enablePC) {
       imports.push({
         libraryName: 'antd',
         libraryDirectory: 'es',
         style: true,
       });
+    }
 
     return {
       ...opts,
