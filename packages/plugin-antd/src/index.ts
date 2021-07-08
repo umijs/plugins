@@ -6,6 +6,7 @@ import { ConfigProviderProps } from 'antd/es/config-provider';
 const { Mustache } = utils;
 
 interface IAntdOpts {
+  mobileOnly?: boolean;
   dark?: boolean;
   compact?: boolean;
   config?: ConfigProviderProps;
@@ -16,6 +17,7 @@ export default (api: IApi) => {
     config: {
       schema(joi) {
         return joi.object({
+          mobileOnly: joi.boolean(),
           dark: joi.boolean(),
           compact: joi.boolean(),
           config: joi.object(),
@@ -24,57 +26,77 @@ export default (api: IApi) => {
     },
   });
 
+  const enablePC = !api.config.antd?.mobileOnly;
+
   api.modifyBabelPresetOpts((opts) => {
+    const imports = [
+      { libraryName: 'antd-mobile', libraryDirectory: 'es', style: true },
+    ];
+
+    if (enablePC)
+      imports.push({
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: true,
+      });
+
     return {
       ...opts,
-      import: (opts.import || []).concat([
-        { libraryName: 'antd', libraryDirectory: 'es', style: true },
-        { libraryName: 'antd-mobile', libraryDirectory: 'es', style: true },
-      ]),
-    };
-  });
-
-  api.addDepInfo(() => {
-    function getAntdDependency() {
-      const { dependencies, devDependencies } = api.pkg;
-      return (
-        dependencies?.antd ||
-        devDependencies?.antd ||
-        require('../package').dependencies.antd
-      );
-    }
-
-    return {
-      name: 'antd',
-      range: getAntdDependency(),
+      import: (opts.import || []).concat(imports),
     };
   });
 
   const opts: IAntdOpts = api.userConfig.antd;
 
-  if (opts?.dark || opts?.compact) {
-    // support dark mode, user use antd 4 by default
-    const { getThemeVariables } = require('antd/dist/theme');
-    api.modifyDefaultConfig((config) => {
-      config.theme = {
-        ...getThemeVariables(opts),
-        ...config.theme,
+  if (enablePC) {
+    api.addDepInfo(() => {
+      function getAntdDependency() {
+        const { dependencies, devDependencies } = api.pkg;
+        return (
+          dependencies?.antd ||
+          devDependencies?.antd ||
+          require('../package').dependencies.antd
+        );
+      }
+
+      return {
+        name: 'antd',
+        range: getAntdDependency(),
       };
-      return config;
     });
+
+    if (opts?.dark || opts?.compact) {
+      // support dark mode, user use antd 4 by default
+      const { getThemeVariables } = require('antd/dist/theme');
+      api.modifyDefaultConfig((config) => {
+        config.theme = {
+          ...getThemeVariables(opts),
+          ...config.theme,
+        };
+        return config;
+      });
+    }
   }
 
-  api.addProjectFirstLibraries(() => [
-    {
-      name: 'antd',
-      path: dirname(require.resolve('antd/package.json')),
-    },
-    {
-      name: 'antd-mobile',
-      path: dirname(require.resolve('antd-mobile/package.json')),
-    },
-  ]);
-  if (opts?.config) {
+  api.addProjectFirstLibraries(() => {
+    const projFirstLibraries = [
+      {
+        name: 'antd-mobile',
+        path: dirname(require.resolve('antd-mobile/package.json')),
+      },
+    ];
+
+    if (enablePC) {
+      projFirstLibraries.push({
+        name: 'antd',
+        path: dirname(require.resolve('antd/package.json')),
+      });
+    }
+
+    return projFirstLibraries;
+  });
+
+  if (enablePC && opts?.config) {
     api.onGenerateFiles({
       fn() {
         // runtime.tsx
