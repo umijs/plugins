@@ -28,7 +28,7 @@ export function getMicroAppRouteComponent(opts: {
 
     {{#dynamicRoot}}
     // @see https://github.com/umijs/umi/blob/master/packages/preset-built-in/src/plugins/commands/htmlUtils.ts#L102
-    runtimeMatchedBase = window.routerBase || location.pathname.split('/').slice(0, -(path!.split('/').length - 1)).concat('').join('/');
+    runtimeMatchedBase = window.routerBase || location.pathname.split('/').slice(0, -(path.split('/').length - 1)).concat('').join('/');
     {{/dynamicRoot}}
 
     const componentProps = {
