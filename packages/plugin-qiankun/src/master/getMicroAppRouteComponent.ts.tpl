@@ -28,7 +28,6 @@ export function getMicroAppRouteComponent(opts: {
 
     {{#dynamicRoot}}
     // @see https://github.com/umijs/umi/blob/master/packages/preset-built-in/src/plugins/commands/htmlUtils.ts#L102
-    console.info('[plugin-qiankun] routerBase >', window.routerBase, path);
     runtimeMatchedBase = window.routerBase || location.pathname.split('/').slice(0, -(path!.split('/').length - 1)).concat('').join('/');
     {{/dynamicRoot}}
 
