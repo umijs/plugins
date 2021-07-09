@@ -1,6 +1,6 @@
 import { IApi } from 'umi';
 import { join, dirname } from 'path';
-import { readFileSync } from 'fs';
+import { existsSync, mkdirSync, readFileSync } from 'fs';
 
 export interface RequestOptions {
   dataField?: string;
@@ -54,8 +54,18 @@ export default function (api: IApi) {
     },
   });
 
-  const source = join(__dirname, '..', 'src', 'request.ts');
-  const requestTemplate = readFileSync(source, 'utf-8');
+  const requestTemplate = readFileSync(
+    join(__dirname, '..', 'src', 'request.ts'),
+    'utf-8',
+  );
+  const uiIndexTemplate = readFileSync(
+    join(__dirname, '../src', './ui', 'index.ts'),
+    'utf-8',
+  );
+  const uiNoopTemplate = readFileSync(
+    join(__dirname, '../src', './ui', 'noop.ts'),
+    'utf-8',
+  );
   const namespace = 'plugin-request';
 
   api.chainWebpack((webpackConfig) => {
@@ -95,6 +105,16 @@ import { ApplyPluginsType } from 'umi';
 import { history, plugin } from '../core/umiExports';
             `,
           ),
+      });
+      const uiTmpDir = `${api.paths.absTmpPath}/${namespace}/ui`;
+      !existsSync(uiTmpDir) && mkdirSync(uiTmpDir);
+      api.writeTmpFile({
+        path: `${namespace}/ui/index.ts`,
+        content: uiIndexTemplate,
+      });
+      api.writeTmpFile({
+        path: `${namespace}/ui/noop.ts`,
+        content: uiNoopTemplate,
       });
     } catch (e) {
       api.logger.error(e);
