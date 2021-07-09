@@ -13,7 +13,19 @@ export default function (api: IApi) {
   const umiTmpDir = api.paths.absTmpPath;
   const srcDir = api.paths.absSrcPath;
   const accessFilePath = api.utils.winPath(join(srcDir!, 'access'));
-
+  api.describe({
+    key: 'access',
+    config: {
+      schema(joi) {
+        return joi.object({
+          strictMode: joi.boolean(),
+        });
+      },
+      onChange: api.ConfigChangeType.regenerateTmpFiles,
+    },
+    enableBy: api.EnableBy.config,
+  });
+  const { strictMode = false } = api.userConfig?.access || {};
   api.onGenerateFiles(() => {
     // 判断 access 工厂函数存在并且 default 暴露了一个函数
     if (checkIfHasDefaultExporting(accessFilePath)) {
@@ -44,7 +56,7 @@ export default function (api: IApi) {
       // 生成 Provider
       api.writeTmpFile({
         path: `${ACCESS_DIR}/runtimeUtil.ts`,
-        content: getRuntimeUtil(),
+        content: getRuntimeUtil(strictMode),
       });
     }
   });
