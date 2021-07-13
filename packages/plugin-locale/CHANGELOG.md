@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.13.0...@umijs/plugin-locale@0.13.1) (2021-07-13)
+
+### Bug Fixes
+
+- **locale:** fix antdLocale is null,mfsu will error ([#654](https://github.com/umijs/plugins/issues/654)) ([1ff017e](https://github.com/umijs/plugins/commit/1ff017ec8da09199ebd22b46ffb02821a1449f28))
+
 # [0.13.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.12.2...@umijs/plugin-locale@0.13.0) (2021-06-23)
 
 ### Features
