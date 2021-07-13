@@ -39,7 +39,7 @@ export default () => {
     } catch (e) {
       setState((s) => ({ ...s, error: e, loading: false }));
     }
-    await sleep()
+    await sleep(10)
   }, []);
 
   const setInitialState = useCallback(async (initialState: InitialStateType | InitialStateTypeFn) => {
@@ -49,7 +49,7 @@ export default () => {
       }
       return { ...s, initialState, loading: false };
     });
-    await sleep()
+    await sleep(10)
   }, []);
 
   useEffect(() => {
