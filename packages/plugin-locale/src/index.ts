@@ -146,10 +146,16 @@ export default (api: IApi) => {
       );
     }
 
+    const NormalizeAntdLocalesName = function () {
+      // @ts-ignore
+      return this.replace(/\//g, '_');
+    };
+
     api.writeTmpFile({
       content: Mustache.render(localeTpl, {
         MomentLocales,
         DefaultMomentLocale,
+        NormalizeAntdLocalesName,
         DefaultAntdLocales,
         Antd: !!antd,
         Title: title && api.config.title,
