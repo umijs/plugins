@@ -6,6 +6,7 @@ import 'intl/locale-data/jsonp/zh-Hans-CN';
 import 'intl/locale-data/jsonp/en-US';
 import 'intl/locale-data/jsonp/zh-Hant-TW';
 import 'intl/locale-data/jsonp/sk';
+import { packageNormalize } from '.';
 
 const setupTests = () => {
   // https://formatjs.io/guides/runtime-environments/#server
@@ -251,4 +252,16 @@ test('base-separator', async () => {
     '21. marec 2020',
   );
   expect(getByTestId('display')?.textContent).toEqual('sk Traveler');
+});
+
+test('package normalize', () => {
+  expect(packageNormalize('@ant-design/pro-table')).toEqual(
+    '_ant_design_pro_table',
+  );
+  expect(packageNormalize('@alipay/tech-ui/es/locale/zh-CN')).toEqual(
+    '_alipay_tech_ui_es_locale_zh_CN',
+  );
+  expect(packageNormalize('@alipay/tech-ui/es/locale/zh-CN.js')).toEqual(
+    '_alipay_tech_ui_es_locale_zh_CN_js',
+  );
 });
