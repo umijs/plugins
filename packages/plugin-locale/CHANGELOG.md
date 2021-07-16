@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.14.0...@umijs/plugin-locale@0.14.1) (2021-07-16)
+
+### Bug Fixes
+
+- **plugin-locale:** fix normalize package ([#660](https://github.com/umijs/plugins/issues/660)) ([b6f97de](https://github.com/umijs/plugins/commit/b6f97de2efed343877d34731c234b1da1581e01c))
+
 # [0.14.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.13.1...@umijs/plugin-locale@0.14.0) (2021-07-16)
 
 ### Bug Fixes
