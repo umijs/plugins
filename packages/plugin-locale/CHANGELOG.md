@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.13.1...@umijs/plugin-locale@0.14.0) (2021-07-16)
+
+### Bug Fixes
+
+- default antd locale use esm ([#657](https://github.com/umijs/plugins/issues/657)) ([dcef5f3](https://github.com/umijs/plugins/commit/dcef5f3ecf104f3534bfc9ba1174c5e708d47783))
+
+### Features
+
+- **plugin-locale:** Added bn_BD Bangla Language ([#647](https://github.com/umijs/plugins/issues/647)) ([dd27d1d](https://github.com/umijs/plugins/commit/dd27d1d615ad449d8e3202c9afe054fca3b99968))
+
 ## [0.13.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.13.0...@umijs/plugin-locale@0.13.1) (2021-07-13)
 
 ### Bug Fixes
