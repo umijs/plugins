@@ -30,6 +30,9 @@ try {
   );
 }
 
+export const packageNormalize = (packageName: string) =>
+  packageName.replace(/[\@\/\-\.]/g, '_');
+
 export default (api: IApi) => {
   const {
     paths,
@@ -145,10 +148,9 @@ export default (api: IApi) => {
         }),
       );
     }
-
     const NormalizeAntdLocalesName = function () {
       // @ts-ignore
-      return this.replace(/\//g, '_');
+      return packageNormalize(this);
     };
 
     api.writeTmpFile({
