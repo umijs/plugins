@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.1...@umijs/plugin-layout@0.17.2) (2021-07-20)
+
+### Bug Fixes
+
+- **layout:** if currentPathConfig is null, render loading ([#661](https://github.com/umijs/plugins/issues/661)) ([4408266](https://github.com/umijs/plugins/commit/440826637c9fccd69dc9dca46ad97d6e79b1b573))
+
 ## [0.17.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.0...@umijs/plugin-layout@0.17.1) (2021-06-07)
 
 ### Bug Fixes
