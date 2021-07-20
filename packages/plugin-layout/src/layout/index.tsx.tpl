@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 // @ts-ignore
 import { Link, useModel, history{{#hasAccess}}, traverseModifyRoutes, useAccess {{/hasAccess}} } from 'umi';
-import ProLayout, { BasicLayoutProps } from '@ant-design/pro-layout';
+import ProLayout, {
+  BasicLayoutProps,
+  PageLoading,
+} from "@ant-design/pro-layout";
 import './style.less';
 // @ts-ignore
 import renderRightContent from '@@/plugin-layout/renderRightContent';
@@ -21,7 +24,7 @@ const BasicLayout = (props: any) => {
 
   // plugin-initial-state 未开启
   const { initialState, loading, setInitialState } = initialInfo;
-  const [currentPathConfig, setCurrentPathConfig] = useState<MenuDataItem>({});
+  const [currentPathConfig, setCurrentPathConfig] = useState<MenuDataItem>();
 
   useEffect(() => {
     const { menuData } = transformRoute(
@@ -48,11 +51,13 @@ const BasicLayout = (props: any) => {
     itemRender: (route) => <Link to={route.path}>{route.breadcrumbName}</Link>,
     ...userConfig,
     ...restProps,
-    ...getLayoutRenderConfig(currentPathConfig as any),
+    ...getLayoutRenderConfig(currentPathConfig as any ||{}),
   };
 {{#hasAccess}}
   const access = useAccess?.();
 {{/hasAccess}}
+
+  if (!currentPathConfig) return <PageLoading />;
   return (
     <ProLayout
       route={route}
