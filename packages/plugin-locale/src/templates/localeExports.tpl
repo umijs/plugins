@@ -87,13 +87,19 @@ export const addLocale = (
     ? Object.assign({}, localeInfo[name].messages, messages)
     : messages;
 
+
   const { momentLocale, antd } = extraLocales || {};
+  const locale = name.split('{{BaseSeparator}}')?.join('-')
   localeInfo[name] = {
     messages: mergeMessages,
-    locale: name.split('{{BaseSeparator}}')?.join('-'),
+    locale,
     momentLocale: momentLocale,
     {{#Antd}}antd,{{/Antd}}
   };
+   // 如果这是的 name 和当前的locale 相同需要重新设置一下，不然更新不了
+  if (locale === getLocale()) {
+    event.emit(LANG_CHANGE_EVENT, locale);
+  }
 };
 
 /**
