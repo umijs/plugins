@@ -184,7 +184,8 @@ const getRequestMethod = () => {
             break;
           case ErrorShowType.NOTIFICATION:
             notification.open({
-              message: errorMessage,
+              description: errorMessage,
+              message: errorCode,
             });
             break;
           case ErrorShowType.REDIRECT:
