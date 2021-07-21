@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useState } from 'react';
 {{#Antd}}
 import { Menu, Dropdown } from 'antd';
 import { ClickParam } from 'antd/{{{antdFiles}}}/menu';
@@ -388,9 +388,13 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
   reload,
   ...restProps
 } = props;
-  const selectedLang = getLocale();
+  const [selectedLang, setSelectedLang] = useState(() => getLocale());
 
-  const changeLang = ({ key }: ClickParam): void => setLocale(key, reload);
+  const changeLang = ({ key }: ClickParam): void => {
+    setLocale(key, reload);
+    setSelectedLang(getLocale())
+  };
+
 
   const defaultLangUConfig = getAllLocales().map(
     (key) =>
