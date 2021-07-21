@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.6.0...@umijs/plugin-request@2.7.0) (2021-07-21)
+
+### Features
+
+- **request:** notification support description ([3115bd0](https://github.com/umijs/plugins/commit/3115bd0f14d57e3091e3ffe9f84332d65d655e67))
+
 # [2.6.0](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.5.2...@umijs/plugin-request@2.6.0) (2021-06-03)
 
 ### Features

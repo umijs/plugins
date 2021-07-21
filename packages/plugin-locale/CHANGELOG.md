@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.2](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.14.1...@umijs/plugin-locale@0.14.2) (2021-07-21)
+
+### Bug Fixes
+
+- **locale:** changeLang will trigger rerender ([#662](https://github.com/umijs/plugins/issues/662)) ([dfc1501](https://github.com/umijs/plugins/commit/dfc150126b5dce6c7ef865d52b4bc9385a0f04c6))
+
 ## [0.14.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.14.0...@umijs/plugin-locale@0.14.1) (2021-07-16)
 
 ### Bug Fixes
