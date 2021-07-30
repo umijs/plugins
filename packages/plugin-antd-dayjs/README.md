@@ -2,7 +2,7 @@
 
 用于在 umi 中代替 antd-dayjs-webpack-plugin.
 
-> @umijs/plugin-antd.
+> @umijs/plugin-antd-dayjs
 
 See our website [@umijs/plugin-antd-dayjs](https://umijs.org/plugins/plugin-antd-dayjs) for more information.
 

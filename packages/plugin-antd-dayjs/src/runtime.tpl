@@ -2,7 +2,7 @@ import dayjs from '{{{dayjsPath}}}';
 import antdPlugin from 'antd-dayjs-webpack-plugin/src/antd-plugin';
 
 {{#plugins}}
-import {{.}} from 'dayjs/plugin/{{.}}';
+import {{.}} from '{{{dayjsPath}}}/plugin/{{.}}';
 {{/plugins}}
 
 {{#plugins}}

@@ -7,7 +7,7 @@ export default defineConfig({
   ],
   plugins: [
     require.resolve('../packages/plugin-esbuild/lib'),
-    require.resolve('../packages/plugin-antd-dayjs'),
+    require.resolve('../packages/plugin-antd-dayjs/lib'),
   ],
   routes: [
     {
