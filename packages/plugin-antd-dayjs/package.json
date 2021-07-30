@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-antd-dayjs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "@umijs/plugin-antd-dayjs",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -22,8 +22,8 @@
   "bugs": "http://github.com/umijs/plugins/issues",
   "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-antd-dayjs#readme",
   "peerDependencies": {
-    "umi": "3.x",
-    "dayjs": "*"
+    "dayjs": "*",
+    "umi": "3.x"
   },
   "publishConfig": {
     "access": "public"
