@@ -65,7 +65,7 @@ export default (api: IApi) => {
         });
       },
     },
-    enableBy: () => !!api.userConfig.antdDayjs,
+    enableBy: () => !!api.config.antdDayjs,
   });
 
   api.chainWebpack({
