@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs from '{{{dayjsPath}}}';
 import antdPlugin from 'antd-dayjs-webpack-plugin/src/antd-plugin';
 
 {{#plugins}}

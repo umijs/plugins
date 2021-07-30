@@ -76,10 +76,6 @@ export default (api: IApi) => {
           'moment',
           dirname(require.resolve('dayjs/package.json')),
         );
-        memo.resolve.alias.set(
-          'dayjs',
-          dirname(require.resolve('dayjs/package.json')),
-        );
       }
       return memo;
     },
@@ -97,6 +93,7 @@ export default (api: IApi) => {
         path: 'plugin-antd-dayjs/runtime.tsx',
         content: Mustache.render(runtimeTpl, {
           plugins,
+          dayjsPath: dirname(require.resolve('dayjs/package.json')),
         }),
       });
     },
