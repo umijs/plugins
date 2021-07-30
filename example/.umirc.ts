@@ -5,7 +5,10 @@ export default defineConfig({
     require.resolve('../packages/preset-react/lib'),
     // require.resolve('../packages/plugin-esbuild'),
   ],
-  plugins: [require.resolve('../packages/plugin-esbuild/lib')],
+  plugins: [
+    require.resolve('../packages/plugin-esbuild/lib'),
+    require.resolve('../packages/plugin-antd-dayjs'),
+  ],
   routes: [
     {
       name: 'model 测试',
