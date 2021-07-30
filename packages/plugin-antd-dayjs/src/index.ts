@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { IApi, utils } from 'umi';
-import { join } from 'path';
+import { join, dirname } from 'path';
 const { Mustache } = utils;
 
 const presets = {
@@ -72,7 +72,14 @@ export default (api: IApi) => {
     fn: (memo) => {
       const { replaceMoment } = getConfig(api);
       if (replaceMoment) {
-        memo.resolve.alias.set('moment', 'dayjs');
+        memo.resolve.alias.set(
+          'moment',
+          dirname(require.resolve('dayjs/package.json')),
+        );
+        memo.resolve.alias.set(
+          'dayjs',
+          dirname(require.resolve('dayjs/package.json')),
+        );
       }
       return memo;
     },
