@@ -18,7 +18,7 @@ workflows:
   run:
     jobs:
       - cypress/run:
-          executor: cypress/base-14
+          executor: cypress/base-12-18-3
           yarn: true
           no-workspace: true
           cache-key: yarn-packages-{{ arch }}-{{ checksum "yarn.lock" }}
