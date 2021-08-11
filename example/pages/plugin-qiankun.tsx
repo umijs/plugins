@@ -14,7 +14,7 @@ export default () => {
       <button onClick={() => setVisible(true)}>
         load a MicroApp without ErrorBoundary
       </button>
-      <MicroApp name="app1" />
+      <MicroApp name="taobao" />
       <MicroApp name="app2" errorBoundary={<CustomErrorBoundary />} />
       {visible && <MicroApp name="app3" errorBoundary={false} />}
     </>

@@ -66,7 +66,12 @@ export default defineConfig({
   },
   qiankun: {
     master: {
-      apps: [],
+      apps: [
+        {
+          name: 'taobao',
+          entry: 'https://taobao.com',
+        },
+      ],
     },
   },
 });

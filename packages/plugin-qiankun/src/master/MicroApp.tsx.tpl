@@ -137,6 +137,15 @@ export function App(componentProps: Props) {
       });
     }
 
+    Object.entries(microAppRef.current).forEach(([k, v]) => {
+      if (v.catch && typeof v.catch === 'function') {
+        v.catch((e) => {
+          setLoading(() => {
+            throw new Error(`[@umijs/plugin-qiankun]: ${k} failed, ${e}`);
+          });
+        });
+      }
+    });
     return () => unmountMicroApp(microAppRef.current);
   }, [name]);
 
