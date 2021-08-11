@@ -1,12 +1,24 @@
+// @ts-nocheck
 // @ts-ignore
 import { getMasterOptions } from '@@/plugin-qiankun/masterOptions';
 // @ts-ignore
 import MicroAppLoader from '@@/plugin-qiankun/MicroAppLoader';
-import { BrowserHistoryBuildOptions, HashHistoryBuildOptions, MemoryHistoryBuildOptions } from 'history-with-query';
+// @ts-ignore
+import { ErrorBoundary } from '@@/plugin-qiankun/ErrorBoundary';
+import {
+  BrowserHistoryBuildOptions,
+  HashHistoryBuildOptions,
+  MemoryHistoryBuildOptions,
+} from 'history-with-query';
 import concat from 'lodash/concat';
 import mergeWith from 'lodash/mergeWith';
 import noop from 'lodash/noop';
-import { FrameworkConfiguration, loadMicroApp, MicroApp as MicroAppType, prefetchApps } from 'qiankun';
+import {
+  FrameworkConfiguration,
+  loadMicroApp,
+  MicroApp as MicroAppType,
+  prefetchApps,
+} from 'qiankun';
 import React, { useEffect, useRef, useState } from 'react';
 // @ts-ignore
 import { History, useModel } from 'umi';
@@ -15,26 +27,33 @@ import { MasterOptions } from './types';
 const qiankunStateForSlaveModelNamespace = '@@qiankunStateForSlave';
 
 type HashHistory = {
-  type?: 'hash',
+  type?: 'hash';
 } & HashHistoryBuildOptions;
 
 type BrowserHistory = {
-  type?: 'browser',
+  type?: 'browser';
 } & BrowserHistoryBuildOptions;
 
 type MemoryHistory = {
-  type?: 'memory',
+  type?: 'memory';
 } & MemoryHistoryBuildOptions;
 
 export type Props = {
   name: string;
   settings?: FrameworkConfiguration;
   base?: string;
-  history?: 'hash' | 'browser' | 'memory' | HashHistory | BrowserHistory | MemoryHistory;
+  history?:
+    | 'hash'
+    | 'browser'
+    | 'memory'
+    | HashHistory
+    | BrowserHistory
+    | MemoryHistory;
   getMatchedBase?: () => string;
   loader?: (loading: boolean) => React.ReactNode;
   onHistoryInit?: (history: History) => void;
   autoSetLoading?: boolean;
+  errorBoundary?: boolean | React.ReactNode;
   // 仅开启 loader 时需要
   wrapperClassName?: string;
   className?: string;
@@ -48,7 +67,7 @@ function unmountMicroApp(microApp?: MicroAppType) {
 
 let noneMounted = true;
 
-export function MicroApp(componentProps: Props) {
+export function App(componentProps: Props) {
   const {
     masterHistoryType,
     apps = [],
@@ -94,14 +113,16 @@ export function MicroApp(componentProps: Props) {
         name,
         entry,
         container: containerRef.current!,
-        props: { ...propsFromConfig, ...stateForSlave, ...propsFromParams, setLoading },
+        props: {
+          ...propsFromConfig,
+          ...stateForSlave,
+          ...propsFromParams,
+          setLoading,
+        },
       },
       configuration,
-      mergeWith(
-        {},
-        globalLifeCycles,
-        lifeCycles,
-        (v1, v2) => concat(v1 ?? [], v2 ?? []),
+      mergeWith({}, globalLifeCycles, lifeCycles, (v1, v2) =>
+        concat(v1 ?? [], v2 ?? []),
       ),
     );
 
@@ -109,7 +130,7 @@ export function MicroApp(componentProps: Props) {
     if (prefetch && prefetch !== 'all' && noneMounted) {
       microAppRef.current?.mountPromise.then(() => {
         if (noneMounted) {
-          const otherNotMountedApps = apps.filter(app => app.name !== name);
+          const otherNotMountedApps = apps.filter((app) => app.name !== name);
           prefetchApps(otherNotMountedApps, configuration);
           noneMounted = false;
         }
@@ -128,16 +149,27 @@ export function MicroApp(componentProps: Props) {
       } else {
         // 确保 microApp.update 调用是跟组件状态变更顺序一致的，且后一个微应用更新必须等待前一个更新完成
         updatingPromise.current = updatingPromise.current.then(() => {
-          const canUpdate = (microApp?: MicroAppType) => microApp?.update && microApp.getStatus() === 'MOUNTED';
+          const canUpdate = (microApp?: MicroAppType) =>
+            microApp?.update && microApp.getStatus() === 'MOUNTED';
           if (canUpdate(microApp)) {
-            const props = { ...propsFromConfig, ...stateForSlave, ...propsFromParams, setLoading };
+            const props = {
+              ...propsFromConfig,
+              ...stateForSlave,
+              ...propsFromParams,
+              setLoading,
+            };
 
             if (process.env.NODE_ENV === 'development') {
               if (Date.now() - updatingTimestamp.current < 200) {
-                console.warn(`[@umijs/plugin-qiankun] It seems like microApp ${name} is updating too many times in a short time(200ms), you may need to do some optimization to avoid the unnecessary re-rendering.`);
+                console.warn(
+                  `[@umijs/plugin-qiankun] It seems like microApp ${name} is updating too many times in a short time(200ms), you may need to do some optimization to avoid the unnecessary re-rendering.`,
+                );
               }
 
-              console.info(`[@umijs/plugin-qiankun] MicroApp ${name} is updating with props: `, props);
+              console.info(
+                `[@umijs/plugin-qiankun] MicroApp ${name} is updating with props: `,
+                props,
+              );
               updatingTimestamp.current = Date.now();
             }
 
@@ -155,14 +187,28 @@ export function MicroApp(componentProps: Props) {
   }, Object.values({ ...stateForSlave, ...propsFromParams }));
 
   // 未配置自定义 loader 且开启了 autoSetLoading 场景下，使用插件默认的 loader，否则使用自定义 loader
-  const microAppLoader = loader || (propsFromParams.autoSetLoading ? (loading) => <MicroAppLoader loading={loading}/> : null);
+  const microAppLoader =
+    loader ||
+    (propsFromParams.autoSetLoading
+      ? (loading) => <MicroAppLoader loading={loading} />
+      : null);
 
-  return (
-    Boolean(microAppLoader)
-      ? <div style={{ position: 'relative' }} className={wrapperClassName}>
-          { microAppLoader(loading) }
-          <div ref={containerRef} className={className}/>
-        </div>
-      : <div ref={containerRef} className={className}/>
+  return Boolean(microAppLoader) ? (
+    <div style={{ position: 'relative' }} className={wrapperClassName}>
+      {microAppLoader(loading)}
+      <div ref={containerRef} className={className} />
+    </div>
+  ) : (
+    <div ref={containerRef} className={className} />
   );
 }
+
+export const MicroApp = (componentProps: Props) => {
+  return componentProps.errorBoundary !== false ? (
+    <ErrorBoundary content={componentProps.errorBoundary}>
+      <App {...componentProps} />
+    </ErrorBoundary>
+  ) : (
+    <App {...componentProps} />
+  );
+};

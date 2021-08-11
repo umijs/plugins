@@ -7,6 +7,7 @@ export default defineConfig({
   ],
   plugins: [
     require.resolve('../packages/plugin-esbuild/lib'),
+    require.resolve('../packages/plugin-qiankun/lib'),
     require.resolve('../packages/plugin-antd-dayjs/lib'),
   ],
   routes: [
@@ -15,6 +16,12 @@ export default defineConfig({
       path: '/plugin-model',
       component: './plugin-model',
       icon: 'smile',
+    },
+    {
+      name: 'qiankun 测试',
+      path: '/plugin-qiankun',
+      component: './plugin-qiankun',
+      icon: 'setting',
     },
     {
       name: 'initial-state 测试',
@@ -56,5 +63,10 @@ export default defineConfig({
   locale: {},
   layout: {
     name: 'UMI 3',
+  },
+  qiankun: {
+    master: {
+      apps: [],
+    },
   },
 });

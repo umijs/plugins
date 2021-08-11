@@ -129,7 +129,14 @@ export default function (api: IApi) {
       // 开启了 antd 插件的时候，使用 antd 的 loader 组件，否则提示用户必须设置一个自定义的 loader 组件
       content: api.hasPlugins(['@umijs/plugin-antd'])
         ? readFileSync(join(__dirname, 'AntdLoader.tsx.tpl'), 'utf-8')
-        : `export default function Loader() { console.warn(\`[@umijs/plugin-qiankun]: Seems like you'r not using @umijs/plugin-antd, you need to provide a customer loader or set autoSetLoading false to shut down this warning!\`); return null; }`,
+        : `export default function Loader() { console.warn(\`[@umijs/plugin-qiankun]: Seems like you'r not using @umijs/plugin-antd, you need to provide a custom loader or set autoSetLoading false to shut down this warning!\`); return null; }`,
+    });
+    api.writeTmpFile({
+      path: 'plugin-qiankun/ErrorBoundary.tsx',
+      // 开启了 antd 插件的时候，使用 antd 的 ErrorBoundary，否则提示用户必须设置一个自定义的 ErrorBoundary 组件
+      content: api.hasPlugins(['@umijs/plugin-antd'])
+        ? readFileSync(join(__dirname, 'AntdErrorBoundary.tsx.tpl'), 'utf-8')
+        : readFileSync(join(__dirname, 'ErrorBoundary.tsx.tpl'), 'utf-8'),
     });
 
     api.writeTmpFile({
