@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.28.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.27.0...@umijs/plugin-qiankun@2.28.0) (2021-08-12)
+
+### Features
+
+- qiankun errorBoundary ([#675](https://github.com/umijs/plugins/issues/675)) ([a0fde5b](https://github.com/umijs/plugins/commit/a0fde5bb41e3fadde6c8e3ec83f71697e82d73b1))
+
 # [2.27.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.26.0...@umijs/plugin-qiankun@2.27.0) (2021-07-21)
 
 ### Features
