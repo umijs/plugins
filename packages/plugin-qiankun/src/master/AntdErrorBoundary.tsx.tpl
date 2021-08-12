@@ -27,7 +27,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
     return hasError
       ? this.props.content || (
           <Result
-            status="500"
+            status="error"
             title="load web page failed"
             subTitle="please refresh the page and try again"
             extra={
