@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.29.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.28.0...@umijs/plugin-qiankun@2.29.0) (2021-08-17)
+
+### Features
+
+- add errorBoundary and microApp forwardRef ([#678](https://github.com/umijs/plugins/issues/678)) ([0cfa952](https://github.com/umijs/plugins/commit/0cfa95259fc51d28125b4b7fc2d8466403e7e156))
+
 # [2.28.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.27.0...@umijs/plugin-qiankun@2.28.0) (2021-08-12)
 
 ### Features
