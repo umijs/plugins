@@ -120,6 +120,8 @@ export const MicroApp = forwardRef(
     const { entry, props: propsFromConfig = {} } = appConfig || {};
 
     useEffect(() => {
+      setError(null);
+      setLoading(true);
       const configuration = {
         ...globalSettings,
         ...settingsFromProps,
@@ -226,7 +228,7 @@ export const MicroApp = forwardRef(
     return Boolean(microAppLoader) || Boolean(microAppErrorBoundary) ? (
       <div style={{ position: 'relative' }} className={wrapperClassName}>
         {Boolean(microAppLoader) && microAppLoader(loading)}
-        {Boolean(microAppErrorBoundary) && microAppErrorBoundary(error)}
+        {Boolean(microAppErrorBoundary) && Boolean(error) && microAppErrorBoundary(error)}
         <div ref={containerRef} className={className} />
       </div>
     ) : (
