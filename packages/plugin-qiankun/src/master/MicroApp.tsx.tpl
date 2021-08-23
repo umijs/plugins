@@ -160,6 +160,7 @@ export const MicroApp = forwardRef(
           const promise = microAppRef.current?.[key];
           promise.catch((e) => {
             setError(e);
+            setLoading(false);
           });
         },
       );
