@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.30.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.29.1...@umijs/plugin-qiankun@2.30.0) (2021-08-23)
+
+### Bug Fixes
+
+- stop loading when error occure ([#688](https://github.com/umijs/plugins/issues/688)) ([aea2c5e](https://github.com/umijs/plugins/commit/aea2c5ea5e76aba49fdb84475d13983a238c18d0))
+
+### Features
+
+- error boundary support locale ([#687](https://github.com/umijs/plugins/issues/687)) ([0485217](https://github.com/umijs/plugins/commit/0485217f2388cdd3c6e096ed4d1468e1d3880d6c))
+
 ## [2.29.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.29.0...@umijs/plugin-qiankun@2.29.1) (2021-08-19)
 
 **Note:** Version bump only for package @umijs/plugin-qiankun
