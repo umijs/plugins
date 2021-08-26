@@ -86,7 +86,7 @@ export function patchRoutes(opts: { routes: IRouteProps[] }) {
       const rootRoute = routes.find(route => route.path === '/');
       if (rootRoute) {
         // 如果根路由是叶子节点，则直接返回其父节点
-        if (!rootRoute.routes?.length) {
+        if (!rootRoute.routes) {
           return routes;
         }
 
