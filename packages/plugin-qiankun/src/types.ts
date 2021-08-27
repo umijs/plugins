@@ -39,6 +39,8 @@ export type SlaveOptions = {
   keepOriginalRoutes?: boolean | string;
   shouldNotModifyRuntimePublicPath?: boolean;
   shouldNotModifyDefaultBase?: boolean;
+  // library name 是否增加 -[name] 应对多 chunk 场景
+  shouldNotAddLibraryChunkName?: boolean;
 };
 
 declare module '@umijs/types' {
