@@ -4,7 +4,9 @@ import { getLocale } from 'umi';
 
 const defaultLocale = 'en-US';
 
-export const ErrorBoundary = () => {
+export const ErrorBoundary = ({ error }: { error: any }) => {
+  console.error(error);
+
   const currentLocale = getLocale ? getLocale() : defaultLocale;
 
   return (
