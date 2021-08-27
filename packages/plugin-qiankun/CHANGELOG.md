@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.31.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.30.1...@umijs/plugin-qiankun@2.31.0) (2021-08-27)
+
+### Bug Fixes
+
+- **qiankun:** 允许 qiankun pacthRoute 时 routes 为空数组 ([#689](https://github.com/umijs/plugins/issues/689)) ([97ee607](https://github.com/umijs/plugins/commit/97ee607c29b40c072c0659ff93344189e4587a41))
+
+### Features
+
+- **qiankun:** slave 新增 shouldNotAddLibraryChunkName 配置 ([#692](https://github.com/umijs/plugins/issues/692)) ([3f64a2d](https://github.com/umijs/plugins/commit/3f64a2dc8e32578e7d7a3d8a8fc56e6d21338966))
+
 ## [2.30.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.30.0...@umijs/plugin-qiankun@2.30.1) (2021-08-23)
 
 **Note:** Version bump only for package @umijs/plugin-qiankun
