@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.31.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.31.0...@umijs/plugin-qiankun@2.31.1) (2021-08-31)
+
+### Bug Fixes
+
+- log error in boundary component ([#693](https://github.com/umijs/plugins/issues/693)) ([0359a3f](https://github.com/umijs/plugins/commit/0359a3f2a950aa3d2fcd351830b3a26871a88dd6))
+
 # [2.31.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.30.1...@umijs/plugin-qiankun@2.31.0) (2021-08-27)
 
 ### Bug Fixes
