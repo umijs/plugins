@@ -3,7 +3,7 @@
  * @since 2019-10-22
  */
 import 'jest';
-import { testPathWithPrefix, insertMicroAppRoute } from './common';
+import { testPathWithPrefix } from './common';
 
 describe('testPathPrefix', () => {
   test('testPathPrefix', () => {
@@ -110,121 +110,5 @@ describe('testPathPrefix', () => {
     ).toBeFalsy();
     expect(testPathWithPrefix('#/js/:abc?', '#/js')).toBeTruthy();
     expect(testPathWithPrefix('#/js/*', '#/js/245')).toBeTruthy();
-  });
-});
-
-describe('modifyRoutes', () => {
-  beforeAll(() => {
-    process.env.NODE_ENV = 'development';
-  });
-
-  test('should work with insert', () => {
-    const mockRoutes = [{ path: '/a' }, { path: '/a/b', insert: '/a' }];
-    insertMicroAppRoute({ routes: mockRoutes });
-    expect(mockRoutes).toEqual([
-      { path: '/a', exact: false, routes: [{ insert: '/a', path: '/a/b' }] },
-    ]);
-  });
-
-  test('should work with nested insert', () => {
-    const mockRoutes = [
-      { path: '/a' },
-      { path: '/a/d/b', insert: '/a/d' },
-      { path: '/a/d/b/c', insert: '/a/d/b' },
-      { path: '/a/d', insert: '/a' },
-      {
-        path: '/e',
-        exact: false,
-        routes: [{ path: '/e/f' }, { path: '/e/g' }],
-      },
-      { path: '/e/f/h', insert: '/e/f' },
-    ];
-    insertMicroAppRoute({ routes: mockRoutes });
-    console.log(JSON.stringify(mockRoutes));
-    expect(mockRoutes).toEqual([
-      {
-        path: '/a',
-        routes: [
-          {
-            path: '/a/d',
-            insert: '/a',
-            routes: [
-              {
-                path: '/a/d/b',
-                insert: '/a/d',
-                routes: [{ path: '/a/d/b/c', insert: '/a/d/b' }],
-                exact: false,
-              },
-            ],
-            exact: false,
-          },
-        ],
-        exact: false,
-      },
-      {
-        path: '/e',
-        exact: false,
-        routes: [
-          {
-            path: '/e/f',
-            routes: [{ path: '/e/f/h', insert: '/e/f' }],
-            exact: false,
-          },
-          { path: '/e/g' },
-        ],
-      },
-    ]);
-  });
-
-  test('should detect invalid children path', () => {
-    const mockRoutes = [{ path: '/a', insert: '/b' }, { path: '/b' }];
-
-    const fn = jest.fn();
-
-    try {
-      insertMicroAppRoute({ routes: mockRoutes });
-    } catch (e) {
-      fn();
-      expect(e.message).toEqual(
-        '[insert-routes]: path "/a" need to starts with "/b"',
-      );
-    }
-
-    expect(fn).toBeCalled();
-  });
-
-  test('should detect loop', () => {
-    const mockRoutes = [
-      { path: '/a/b', insert: '/a/b' },
-      { path: '/a/b', insert: '/a/b' },
-    ];
-
-    const fn = jest.fn();
-
-    try {
-      insertMicroAppRoute({ routes: mockRoutes });
-    } catch (e) {
-      fn();
-      expect(e.message).toEqual(
-        '[insert-routes]: circular route insert detected',
-      );
-    }
-
-    expect(fn).toBeCalled();
-  });
-
-  test('insert route should exist', () => {
-    const mockRoutes = [{ path: '/a' }, { path: '/abc/b', insert: '/abc' }];
-    const fn = jest.fn();
-
-    try {
-      insertMicroAppRoute({ routes: mockRoutes });
-    } catch (e) {
-      fn();
-      expect(e.message).toEqual(
-        '[insert-routes]: insert route not found for "/abc"',
-      );
-    }
-    expect(fn).toBeCalled();
   });
 });

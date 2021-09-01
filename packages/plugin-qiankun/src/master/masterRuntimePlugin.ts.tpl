@@ -7,7 +7,7 @@ import { prefetchApps, registerMicroApps, start } from 'qiankun';
 // @ts-ignore
 import { ApplyPluginsType, getMicroAppRouteComponent, plugin } from 'umi';
 
-import { defaultMountContainerId, noop, patchMicroAppRoute, testPathWithPrefix, toArray, insertMicroAppRoute } from './common';
+import { defaultMountContainerId, noop, patchMicroAppRoute, testPathWithPrefix, toArray } from './common';
 import { defaultHistoryType } from './constants';
 import { getMasterOptions, setMasterOptions } from './masterOptions';
 // @ts-ignore
@@ -28,7 +28,7 @@ async function getMasterRuntime() {
 }
 
 // modify route with "microApp" attribute to use real component
-function patchMicroAppRouteComponent({ routes }) {
+function patchMicroAppRouteComponent(routes: IRouteProps[]) {
   const getRootRoutes = (routes: IRouteProps[]) => {
     const rootRoute = routes.find(route => route.path === '/');
     if (rootRoute) {
@@ -43,12 +43,41 @@ function patchMicroAppRouteComponent({ routes }) {
     return routes;
   };
 
+  const recursiveSearch = (
+    routes: IRouteProps[],
+    path: string,
+  ): IRouteProps | null => {
+    for (let i = 0; i < routes.length; i++) {
+      if (routes[i].path === path) {
+        return routes[i];
+      }
+      if (routes[i].routes && routes[i].routes?.length) {
+        const found = recursiveSearch(routes[i].routes || [], path);
+        if (found) {
+          return found;
+        }
+      }
+    }
+    return null;
+  };
+
   const rootRoutes = getRootRoutes(routes);
   if (rootRoutes) {
     const { routeBindingAlias, base, masterHistoryType } = getMasterOptions() as MasterOptions;
     microAppRuntimeRoutes.reverse().forEach(microAppRoute => {
       patchMicroAppRoute(microAppRoute, getMicroAppRouteComponent, { base, masterHistoryType, routeBindingAlias });
-      rootRoutes.unshift(microAppRoute);
+      if (microAppRoute.insert) {
+        const found = recursiveSearch(routes, microAppRoute.insert);
+        if (found) {
+          found.exact = false;
+          found.routes = found.routes || [];
+          found.routes.push(microAppRoute);
+        } else {
+          throw new Error(`[plugin-qiankun]: path "${microAppRoute.insert}" not found`)
+        }
+      } else {
+        rootRoutes.unshift(microAppRoute);
+      }
     });
   }
 }
@@ -106,11 +135,10 @@ export async function render(oldRender: typeof noop) {
   }
 }
 
-export function patchRoutes(opts: { routes: IRouteProps[] }) {
+export function patchRoutes({ routes }: { routes: IRouteProps[] }) {
   if (microAppRuntimeRoutes) {
-    patchMicroAppRouteComponent(opts)
+    patchMicroAppRouteComponent(routes)
   }
-  insertMicroAppRoute(opts);
 }
 
 async function useLegacyRegisterMode(
