@@ -176,6 +176,23 @@ describe('modifyRoutes', () => {
     ]);
   });
 
+  test('should detect invalid children path', () => {
+    const mockRoutes = [{ path: '/a', insert: '/b' }, { path: '/b' }];
+
+    const fn = jest.fn();
+
+    try {
+      insertMicroAppRoute({ routes: mockRoutes });
+    } catch (e) {
+      fn();
+      expect(e.message).toEqual(
+        '[insert-routes]: path "/a" need to starts with "/b"',
+      );
+    }
+
+    expect(fn).toBeCalled();
+  });
+
   test('should detect loop', () => {
     const mockRoutes = [
       { path: '/a/b', insert: '/a/b' },
