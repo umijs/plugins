@@ -11,15 +11,6 @@ export const defaultMountContainerId = 'root-subapp';
 export const noop = () => {};
 // @formatter:on
 
-// throw in dev env, log on prod
-function logError(error: Error) {
-  if (process.env.NODE_ENV === 'development') {
-    throw error;
-  } else {
-    console.error(error);
-  }
-}
-
 export function toArray<T>(source: T | T[]): T[] {
   return Array.isArray(source) ? source : [source];
 }
