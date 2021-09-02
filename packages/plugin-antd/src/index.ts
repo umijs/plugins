@@ -8,29 +8,37 @@ const { Mustache } = utils;
 interface IAntdOpts {
   dark?: boolean;
   compact?: boolean;
+  mobile?: boolean;
   config?: ConfigProviderProps;
 }
 
 export default (api: IApi) => {
+  const opts: IAntdOpts = api.userConfig.antd;
+  const mobile = opts?.mobile !== false;
   api.describe({
     config: {
       schema(joi) {
         return joi.object({
           dark: joi.boolean(),
           compact: joi.boolean(),
+          mobile: joi.boolean(),
           config: joi.object(),
         });
       },
     },
   });
-
   api.modifyBabelPresetOpts((opts) => {
+    const imps = [{ libraryName: 'antd', libraryDirectory: 'es', style: true }];
+    if (mobile) {
+      imps.push({
+        libraryName: 'antd-mobile',
+        libraryDirectory: 'es',
+        style: true,
+      });
+    }
     return {
       ...opts,
-      import: (opts.import || []).concat([
-        { libraryName: 'antd', libraryDirectory: 'es', style: true },
-        { libraryName: 'antd-mobile', libraryDirectory: 'es', style: true },
-      ]),
+      import: (opts.import || []).concat(imps),
     };
   });
 
@@ -50,8 +58,6 @@ export default (api: IApi) => {
     };
   });
 
-  const opts: IAntdOpts = api.userConfig.antd;
-
   if (opts?.dark || opts?.compact) {
     // support dark mode, user use antd 4 by default
     const { getThemeVariables } = require('antd/dist/theme');
@@ -64,16 +70,21 @@ export default (api: IApi) => {
     });
   }
 
-  api.addProjectFirstLibraries(() => [
-    {
-      name: 'antd',
-      path: dirname(require.resolve('antd/package.json')),
-    },
-    {
-      name: 'antd-mobile',
-      path: dirname(require.resolve('antd-mobile/package.json')),
-    },
-  ]);
+  api.addProjectFirstLibraries(() => {
+    const imps = [
+      {
+        name: 'antd',
+        path: dirname(require.resolve('antd/package.json')),
+      },
+    ];
+    if (mobile) {
+      imps.push({
+        name: 'antd-mobile',
+        path: dirname(require.resolve('antd-mobile/package.json')),
+      });
+    }
+    return imps;
+  });
   if (opts?.config) {
     api.onGenerateFiles({
       fn() {
