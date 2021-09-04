@@ -4,6 +4,7 @@
  */
 
 import { ReactComponentElement } from 'react';
+import pathToRegexp from 'path-to-regexp';
 
 export const defaultMountContainerId = 'root-subapp';
 
@@ -27,7 +28,6 @@ function testPathWithStaticPrefix(pathPrefix: string, realPath: string) {
 
 function testPathWithDynamicRoute(dynamicRoute: string, realPath: string) {
   // FIXME 这个是旧的使用方式才会调到的 api，先临时这么苟一下消除报错，引导用户去迁移吧
-  const pathToRegexp = require('path-to-regexp');
   return pathToRegexp(dynamicRoute, { strict: true, end: false }).test(
     realPath,
   );
