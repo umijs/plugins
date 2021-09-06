@@ -23,6 +23,7 @@ export type MicroAppRoute = {
 } & Record<string, any>;
 
 export type MasterOptions = {
+  enable?: boolean;
   apps: App[];
   routes?: MicroAppRoute[];
   lifeCycles?: FrameworkLifeCycles<object>;
@@ -35,6 +36,7 @@ export type MasterOptions = {
 } & FrameworkConfiguration;
 
 export type SlaveOptions = {
+  enable?: boolean;
   devSourceMap?: boolean;
   keepOriginalRoutes?: boolean | string;
   shouldNotModifyRuntimePublicPath?: boolean;
