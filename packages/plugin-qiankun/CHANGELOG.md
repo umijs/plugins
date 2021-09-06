@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.32.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.32.1...@umijs/plugin-qiankun@2.32.2) (2021-09-06)
+
+### Bug Fixes
+
+- **qiankun:** 修复空值问题 ([#704](https://github.com/umijs/plugins/issues/704)) ([48ad20d](https://github.com/umijs/plugins/commit/48ad20dee6c698ab6f4363b6f6ffbb5d7ab3e9e2))
+
 ## [2.32.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.32.0...@umijs/plugin-qiankun@2.32.1) (2021-09-06)
 
 **Note:** Version bump only for package @umijs/plugin-qiankun
