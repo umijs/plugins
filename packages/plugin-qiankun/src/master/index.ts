@@ -16,7 +16,7 @@ const { getFile, winPath } = utils;
 export function isMasterEnable(api: IApi) {
   const masterCfg = api.userConfig?.qiankun?.master;
   if (masterCfg) {
-    return masterCfg?.enable === false ? false : !!masterCfg;
+    return masterCfg?.enable !== false;
   }
 
   return !!process.env.INITIAL_QIANKUN_MASTER_OPTIONS;
