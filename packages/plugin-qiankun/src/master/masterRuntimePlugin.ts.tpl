@@ -61,7 +61,7 @@ export async function render(oldRender: typeof noop) {
   const runtimeOptions = await getMasterRuntime();
   let masterOptions: MasterOptions = { ...getMasterOptions(), ...runtimeOptions };
 
-  const credentialsApps = masterOptions.apps.filter(app => app.credentials);
+  const credentialsApps = masterOptions.apps?.filter(app => app.credentials);
   if (credentialsApps.length) {
     const defaultFetch = masterOptions.fetch || window.fetch;
     const fetchWithCredentials = (url: string, init?: RequestInit) => {
@@ -84,7 +84,7 @@ export async function render(oldRender: typeof noop) {
   // 更新 master options
   setMasterOptions(masterOptions);
 
-  const { apps, routes, ...options } = masterOptions;
+  const { apps = [], routes, ...options } = masterOptions;
   microAppRuntimeRoutes = routes;
 
   // 主应用相关的配置注册完毕后即可开启渲染
