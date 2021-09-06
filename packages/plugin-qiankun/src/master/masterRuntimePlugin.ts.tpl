@@ -7,12 +7,14 @@ import { prefetchApps, registerMicroApps, start } from 'qiankun';
 // @ts-ignore
 import { ApplyPluginsType, getMicroAppRouteComponent, plugin } from 'umi';
 
-import { defaultMountContainerId, noop, patchMicroAppRoute, testPathWithPrefix, toArray } from './common';
+import { defaultMountContainerId, noop, patchMicroAppRoute, testPathWithPrefix, toArray, insertRoute } from './common';
 import { defaultHistoryType } from './constants';
 import { getMasterOptions, setMasterOptions } from './masterOptions';
 // @ts-ignore
 import { deferred } from './qiankunDefer.js';
 import { App, HistoryType, MasterOptions, MicroAppRoute } from './types';
+
+let microAppRuntimeRoutes: MicroAppRoute[];
 
 async function getMasterRuntime() {
   const config = await plugin.applyPlugins({
@@ -25,7 +27,35 @@ async function getMasterRuntime() {
   return master || config;
 }
 
-let microAppRuntimeRoutes: MicroAppRoute[];
+// modify route with "microApp" attribute to use real component
+function patchMicroAppRouteComponent(routes: IRouteProps[]) {
+  const getRootRoutes = (routes: IRouteProps[]) => {
+    const rootRoute = routes.find(route => route.path === '/');
+    if (rootRoute) {
+      // 如果根路由是叶子节点，则直接返回其父节点
+      if (!rootRoute.routes) {
+        return routes;
+      }
+
+      return getRootRoutes(rootRoute.routes);
+    }
+
+    return routes;
+  };
+
+  const rootRoutes = getRootRoutes(routes);
+  if (rootRoutes) {
+    const { routeBindingAlias, base, masterHistoryType } = getMasterOptions() as MasterOptions;
+    microAppRuntimeRoutes.reverse().forEach(microAppRoute => {
+      patchMicroAppRoute(microAppRoute, getMicroAppRouteComponent, { base, masterHistoryType, routeBindingAlias });
+      if (microAppRoute.insert) {
+        insertRoute(routes, microAppRoute);
+      } else {
+        rootRoutes.unshift(microAppRoute);
+      }
+    });
+  }
+}
 
 export async function render(oldRender: typeof noop) {
   const runtimeOptions = await getMasterRuntime();
@@ -80,31 +110,9 @@ export async function render(oldRender: typeof noop) {
   }
 }
 
-export function patchRoutes(opts: { routes: IRouteProps[] }) {
+export function patchRoutes({ routes }: { routes: IRouteProps[] }) {
   if (microAppRuntimeRoutes) {
-    const getRootRoutes = (routes: IRouteProps[]) => {
-      const rootRoute = routes.find(route => route.path === '/');
-      if (rootRoute) {
-        // 如果根路由是叶子节点，则直接返回其父节点
-        if (!rootRoute.routes) {
-          return routes;
-        }
-
-        return getRootRoutes(rootRoute.routes);
-      }
-
-      return routes;
-    };
-
-    const { routes } = opts;
-    const rootRoutes = getRootRoutes(routes);
-    if (rootRoutes) {
-      const { routeBindingAlias, base, masterHistoryType } = getMasterOptions() as MasterOptions;
-      microAppRuntimeRoutes.reverse().forEach(microAppRoute => {
-        patchMicroAppRoute(microAppRoute, getMicroAppRouteComponent, { base, masterHistoryType, routeBindingAlias });
-        rootRoutes.unshift(microAppRoute);
-      });
-    }
+    patchMicroAppRouteComponent(routes)
   }
 }
 
