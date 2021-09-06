@@ -9,11 +9,17 @@ import { qiankunStateFromMasterModelNamespace } from '../constants';
 import { readFileSync } from 'fs';
 
 export function isSlaveEnable(api: IApi) {
-  return (
-    !!api.userConfig?.qiankun?.slave ||
-    isEqual(api.userConfig?.qiankun, {}) ||
-    !!process.env.INITIAL_QIANKUN_SLAVE_OPTIONS
-  );
+  const slaveCfg = api.userConfig?.qiankun?.slave;
+  if (slaveCfg) {
+    return slaveCfg.enable !== false;
+  }
+
+  // 兼容早期配置， qiankun 配一个空，相当于开启 slave
+  if (isEqual(api.userConfig?.qiankun, {})) {
+    return true;
+  }
+
+  return !!process.env.INITIAL_QIANKUN_SLAVE_OPTIONS;
 }
 
 export default function (api: IApi) {

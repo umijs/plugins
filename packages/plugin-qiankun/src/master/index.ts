@@ -14,10 +14,12 @@ import { hasExportWithName } from './utils';
 const { getFile, winPath } = utils;
 
 export function isMasterEnable(api: IApi) {
-  return (
-    !!api.userConfig?.qiankun?.master ||
-    !!process.env.INITIAL_QIANKUN_MASTER_OPTIONS
-  );
+  const masterCfg = api.userConfig?.qiankun?.master;
+  if (masterCfg) {
+    return masterCfg.enable !== false;
+  }
+
+  return !!process.env.INITIAL_QIANKUN_MASTER_OPTIONS;
 }
 
 export default function (api: IApi) {
