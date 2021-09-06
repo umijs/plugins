@@ -11,9 +11,7 @@ import { readFileSync } from 'fs';
 export function isSlaveEnable(api: IApi) {
   const slaveCfg = api.userConfig?.qiankun?.slave;
   if (slaveCfg) {
-    if (slaveCfg) {
-      return slaveCfg?.enable === false ? false : !!slaveCfg;
-    }
+    return slaveCfg?.enable === false ? false : !!slaveCfg;
   }
 
   // 兼容早期配置， qiankun 配一个空，相当于开启 slave
