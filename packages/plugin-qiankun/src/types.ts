@@ -24,7 +24,7 @@ export type MicroAppRoute = {
 
 export type MasterOptions = {
   enable?: boolean;
-  apps: App[];
+  apps?: App[];
   routes?: MicroAppRoute[];
   lifeCycles?: FrameworkLifeCycles<object>;
   masterHistoryType?: HistoryType;
