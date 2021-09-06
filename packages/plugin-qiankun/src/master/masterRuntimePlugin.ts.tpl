@@ -61,7 +61,8 @@ export async function render(oldRender: typeof noop) {
   const runtimeOptions = await getMasterRuntime();
   let masterOptions: MasterOptions = { ...getMasterOptions(), ...runtimeOptions };
 
-  const credentialsApps = masterOptions.apps?.filter(app => app.credentials);
+  const masterApps = masterOptions.apps || [];
+  const credentialsApps = masterApps.filter(app => app.credentials);
   if (credentialsApps.length) {
     const defaultFetch = masterOptions.fetch || window.fetch;
     const fetchWithCredentials = (url: string, init?: RequestInit) => {
