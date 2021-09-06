@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.32.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.32.0...@umijs/plugin-qiankun@2.32.1) (2021-09-06)
+
+**Note:** Version bump only for package @umijs/plugin-qiankun
+
 # [2.32.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.31.1...@umijs/plugin-qiankun@2.32.0) (2021-09-06)
 
 ### Features
