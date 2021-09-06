@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.32.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.31.1...@umijs/plugin-qiankun@2.32.0) (2021-09-06)
+
+### Features
+
+- **qiankun:** qiankun config 支持 enable 配置 ([#702](https://github.com/umijs/plugins/issues/702)) ([70feb32](https://github.com/umijs/plugins/commit/70feb32fa0e85e43dbef9b2af20333820d2a07bd))
+- **qiankun:** support insert route ([#698](https://github.com/umijs/plugins/issues/698)) ([228618c](https://github.com/umijs/plugins/commit/228618c4497a89a24eb6fad139ac4a4315fe663d))
+
 ## [2.31.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.31.0...@umijs/plugin-qiankun@2.31.1) (2021-08-31)
 
 ### Bug Fixes
