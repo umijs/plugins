@@ -3,7 +3,7 @@
  * @since 2019-10-22
  */
 import 'jest';
-import { testPathWithPrefix } from './common';
+import { testPathWithPrefix, insertRoute } from './common';
 
 describe('testPathPrefix', () => {
   test('testPathPrefix', () => {
@@ -110,5 +110,76 @@ describe('testPathPrefix', () => {
     ).toBeFalsy();
     expect(testPathWithPrefix('#/js/:abc?', '#/js')).toBeTruthy();
     expect(testPathWithPrefix('#/js/*', '#/js/245')).toBeTruthy();
+  });
+});
+
+describe('test insert route', () => {
+  test('insert', () => {
+    const mockRoutes = [{ path: '/a' }];
+    insertRoute(mockRoutes, { path: '/a/b', insert: '/a' });
+    expect(mockRoutes).toEqual([
+      { path: '/a', exact: false, routes: [{ insert: '/a', path: '/a/b' }] },
+    ]);
+  });
+  test('insert with children routes', () => {
+    const mockRoutes = [{ path: '/a' }];
+    insertRoute(mockRoutes, {
+      path: '/a/b',
+      insert: '/a',
+      routes: [{ path: '/a/b/c' }],
+    });
+    expect(mockRoutes).toEqual([
+      {
+        path: '/a',
+        exact: false,
+        routes: [{ insert: '/a', path: '/a/b', routes: [{ path: '/a/b/c' }] }],
+      },
+    ]);
+  });
+  test('insert into children routes', () => {
+    const mockRoutes = [{ path: '/a', routes: [{ path: '/a/b' }] }];
+    insertRoute(mockRoutes, { path: '/a/b/c', insert: '/a/b' });
+    expect(mockRoutes).toEqual([
+      {
+        path: '/a',
+        routes: [
+          {
+            path: '/a/b',
+            exact: false,
+            routes: [{ path: '/a/b/c', insert: '/a/b' }],
+          },
+        ],
+      },
+    ]);
+  });
+
+  test('insert node does not exist', () => {
+    const mockRoutes = [{ path: '/a' }];
+    const mockInsert = { path: '/a/b', insert: '/b' };
+    const errorFn = jest.fn();
+    try {
+      insertRoute(mockRoutes, mockInsert);
+    } catch (e) {
+      errorFn();
+      expect(e.message).toEqual(
+        `[plugin-qiankun]: path "${mockInsert.insert}" not found`,
+      );
+    }
+    expect(errorFn).toBeCalled();
+  });
+
+  test('insert path does not follow hierarchy', () => {
+    const mockRoutes = [{ path: '/a' }];
+    const mockInsert = { path: '/b', insert: '/a' };
+    const errorFn = jest.fn();
+    try {
+      insertRoute(mockRoutes, mockInsert);
+    } catch (e) {
+      errorFn();
+      expect(e.message).toEqual(
+        `[plugin-qiankun]: path "${mockInsert.path}" need to starts with "${mockRoutes[0].path}"`,
+      );
+    }
+    expect(errorFn).toBeCalled();
   });
 });

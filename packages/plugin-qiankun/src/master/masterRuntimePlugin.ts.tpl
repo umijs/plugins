@@ -7,7 +7,7 @@ import { prefetchApps, registerMicroApps, start } from 'qiankun';
 // @ts-ignore
 import { ApplyPluginsType, getMicroAppRouteComponent, plugin } from 'umi';
 
-import { defaultMountContainerId, noop, patchMicroAppRoute, testPathWithPrefix, toArray } from './common';
+import { defaultMountContainerId, noop, patchMicroAppRoute, testPathWithPrefix, toArray, insertRoute } from './common';
 import { defaultHistoryType } from './constants';
 import { getMasterOptions, setMasterOptions } from './masterOptions';
 // @ts-ignore
@@ -43,38 +43,13 @@ function patchMicroAppRouteComponent(routes: IRouteProps[]) {
     return routes;
   };
 
-  const recursiveSearch = (
-    routes: IRouteProps[],
-    path: string,
-  ): IRouteProps | null => {
-    for (let i = 0; i < routes.length; i++) {
-      if (routes[i].path === path) {
-        return routes[i];
-      }
-      if (routes[i].routes && routes[i].routes?.length) {
-        const found = recursiveSearch(routes[i].routes || [], path);
-        if (found) {
-          return found;
-        }
-      }
-    }
-    return null;
-  };
-
   const rootRoutes = getRootRoutes(routes);
   if (rootRoutes) {
     const { routeBindingAlias, base, masterHistoryType } = getMasterOptions() as MasterOptions;
     microAppRuntimeRoutes.reverse().forEach(microAppRoute => {
       patchMicroAppRoute(microAppRoute, getMicroAppRouteComponent, { base, masterHistoryType, routeBindingAlias });
       if (microAppRoute.insert) {
-        const found = recursiveSearch(routes, microAppRoute.insert);
-        if (found) {
-          found.exact = false;
-          found.routes = found.routes || [];
-          found.routes.push(microAppRoute);
-        } else {
-          throw new Error(`[plugin-qiankun]: path "${microAppRoute.insert}" not found`)
-        }
+        insertRoute(routes, microAppRoute);
       } else {
         rootRoutes.unshift(microAppRoute);
       }
