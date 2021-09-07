@@ -70,21 +70,6 @@ export default (api: IApi) => {
     });
   }
 
-  api.addProjectFirstLibraries(() => {
-    const imps = [
-      {
-        name: 'antd',
-        path: dirname(require.resolve('antd/package.json')),
-      },
-    ];
-    if (mobile) {
-      imps.push({
-        name: 'antd-mobile',
-        path: dirname(require.resolve('antd-mobile/package.json')),
-      });
-    }
-    return imps;
-  });
   if (opts?.config) {
     api.onGenerateFiles({
       fn() {
