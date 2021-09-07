@@ -54,7 +54,14 @@ function patchMicroAppRouteComponent(routes: IRouteProps[]) {
     const { routeBindingAlias, base, masterHistoryType } = getMasterOptions() as MasterOptions;
     const microAppAttachedRoutes = microAppRuntimeRoutes.filter(r => !r.insert);
     microAppAttachedRoutes.reverse().forEach(microAppRoute => {
-      patchMicroAppRoute(microAppRoute, getMicroAppRouteComponent, { base, masterHistoryType, routeBindingAlias });
+      const patchRoute = (route: IRouteProps) => {
+        patchMicroAppRoute(route, getMicroAppRouteComponent, { base, masterHistoryType, routeBindingAlias });
+        if (route.routes?.length) {
+          route.routes.forEach(patchRoute);
+        }
+      };
+
+      patchRoute(microAppRoute);
       rootRoutes.unshift(microAppRoute);
     });
   }
