@@ -7,7 +7,7 @@ import { prefetchApps, registerMicroApps, start } from 'qiankun';
 // @ts-ignore
 import { ApplyPluginsType, getMicroAppRouteComponent, plugin } from 'umi';
 
-import { defaultMountContainerId, noop, patchMicroAppRoute, testPathWithPrefix, toArray, insertRoute } from './common';
+import { defaultMountContainerId, insertRoute, noop, patchMicroAppRoute, testPathWithPrefix, toArray } from './common';
 import { defaultHistoryType } from './constants';
 import { getMasterOptions, setMasterOptions } from './masterOptions';
 // @ts-ignore
@@ -29,6 +29,12 @@ async function getMasterRuntime() {
 
 // modify route with "microApp" attribute to use real component
 function patchMicroAppRouteComponent(routes: IRouteProps[]) {
+  const insertRoutes = microAppRuntimeRoutes.filter(r => r.insert);
+  // 先处理 insert 配置
+  insertRoutes.forEach(route => {
+    insertRoute(routes, route);
+  });
+
   const getRootRoutes = (routes: IRouteProps[]) => {
     const rootRoute = routes.find(route => route.path === '/');
     if (rootRoute) {
@@ -46,13 +52,10 @@ function patchMicroAppRouteComponent(routes: IRouteProps[]) {
   const rootRoutes = getRootRoutes(routes);
   if (rootRoutes) {
     const { routeBindingAlias, base, masterHistoryType } = getMasterOptions() as MasterOptions;
-    microAppRuntimeRoutes.reverse().forEach(microAppRoute => {
+    const microAppAttachedRoutes = microAppRuntimeRoutes.filter(r => !r.insert);
+    microAppAttachedRoutes.reverse().forEach(microAppRoute => {
       patchMicroAppRoute(microAppRoute, getMicroAppRouteComponent, { base, masterHistoryType, routeBindingAlias });
-      if (microAppRoute.insert) {
-        insertRoute(routes, microAppRoute);
-      } else {
-        rootRoutes.unshift(microAppRoute);
-      }
+      rootRoutes.unshift(microAppRoute);
     });
   }
 }
@@ -100,6 +103,8 @@ export async function render(oldRender: typeof noop) {
     } else if (Array.isArray(prefetch)) {
       const specialPrefetchApps = loadableApps.filter(app => prefetch.indexOf(app.name) !== -1);
       prefetchApps(specialPrefetchApps, importEntryOpts);
+    } else {
+      prefetchApps(loadableApps, importEntryOpts);
     }
   }
 
@@ -113,7 +118,7 @@ export async function render(oldRender: typeof noop) {
 
 export function patchRoutes({ routes }: { routes: IRouteProps[] }) {
   if (microAppRuntimeRoutes) {
-    patchMicroAppRouteComponent(routes)
+    patchMicroAppRouteComponent(routes);
   }
 }
 
