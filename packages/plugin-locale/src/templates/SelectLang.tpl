@@ -42,6 +42,7 @@ interface SelectLangProps {
   onItemClick?: (params: ClickParam) => void;
   className?: string;
   reload?: boolean;
+  customIcon?: JSX.Element;
 }
 
 const transformArrayToObject = (allLangUIConfig:LocalData[])=>{
@@ -286,6 +287,12 @@ const defaultLangUConfigMap = {
     icon: '🇳🇱',
     title: 'Taal'
   },
+  'pl-PL': {
+    lang: 'pl-PL',
+    label: 'Polski',
+    icon: '🇵🇱',
+    title: 'Język'
+  },
   'pt-BR': {
     lang: 'pt-BR',
     label: 'Português',
@@ -384,6 +391,7 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
   globalIconClassName,
   postLocalesData,
   onItemClick,
+  customIcon,
   style,
   reload,
   ...restProps
@@ -444,7 +452,9 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
     <HeaderDropdown overlay={langMenu} placement="bottomRight" {...restProps}>
       <span className={globalIconClassName} style={inlineStyle}>
         <i className="anticon" title={allLangUIConfig[selectedLang]?.title}>
-          <svg
+          { customIcon ?
+            customIcon : (
+            <svg
             viewBox="0 0 24 24"
             focusable="false"
             width="1em"
@@ -458,6 +468,7 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
               className="css-c4d79v"
             />
           </svg>
+          )}
         </i>
       </span>
     </HeaderDropdown>
