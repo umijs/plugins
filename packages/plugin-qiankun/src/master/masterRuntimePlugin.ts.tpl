@@ -110,8 +110,6 @@ export async function render(oldRender: typeof noop) {
     } else if (Array.isArray(prefetch)) {
       const specialPrefetchApps = loadableApps.filter(app => prefetch.indexOf(app.name) !== -1);
       prefetchApps(specialPrefetchApps, importEntryOpts);
-    } else {
-      prefetchApps(loadableApps, importEntryOpts);
     }
   }
 
