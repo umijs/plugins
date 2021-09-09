@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.33.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.33.0...@umijs/plugin-qiankun@2.33.1) (2021-09-09)
+
+### Bug Fixes
+
+- **qiankun:** 修复 prefetch 的问题 ([#710](https://github.com/umijs/plugins/issues/710)) ([00a6be4](https://github.com/umijs/plugins/commit/00a6be44b92c34ea044d9f0bf8d08d3aafed6da8))
+
 # [2.33.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.32.2...@umijs/plugin-qiankun@2.33.0) (2021-09-07)
 
 ### Features
