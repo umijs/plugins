@@ -228,6 +228,7 @@ const getRequestMethod = () => {
       error.name = 'BizError';
       error.data = resData;
       error.info = errorInfo;
+      error.response = res;
       throw error;
     }
   });
