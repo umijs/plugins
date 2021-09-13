@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.7.0...@umijs/plugin-request@2.8.0) (2021-09-13)
+
+### Features
+
+- BizError 返回 response ([#711](https://github.com/umijs/plugins/issues/711)) ([f15b4c8](https://github.com/umijs/plugins/commit/f15b4c89a3c709c375bcfa906a21ffcd4e715111))
+
 # [2.7.0](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.6.0...@umijs/plugin-request@2.7.0) (2021-07-21)
 
 ### Features
