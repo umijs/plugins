@@ -123,6 +123,7 @@ export const MicroApp = forwardRef(
       setError(null);
       setLoading(true);
       const configuration = {
+        globalContext: window,
         ...globalSettings,
         ...settingsFromProps,
       };
