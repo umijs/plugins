@@ -1,12 +1,12 @@
 import address from 'address';
 import assert from 'assert';
-import { isString, isEqual } from 'lodash';
+import { readFileSync } from 'fs';
+import { isEqual, isString } from 'lodash';
 import { join } from 'path';
 import { IApi } from 'umi';
+import { qiankunStateFromMasterModelNamespace } from '../constants';
 import { SlaveOptions } from '../types';
 import { addSpecifyPrefixedRoute } from './addSpecifyPrefixedRoute';
-import { qiankunStateFromMasterModelNamespace } from '../constants';
-import { readFileSync } from 'fs';
 
 export function isSlaveEnable(api: IApi) {
   const slaveCfg = api.userConfig?.qiankun?.slave;
@@ -116,17 +116,18 @@ export default function (api: IApi) {
     return $;
   });
 
-  const port = process.env.PORT;
-  // source-map 跨域设置
-  if (process.env.NODE_ENV === 'development' && port) {
-    const localHostname = process.env.USE_REMOTE_IP
-      ? address.ip()
-      : process.env.HOST || 'localhost';
+  api.chainWebpack((memo, { webpack }) => {
+    const port = process.env.PORT;
+    // source-map 跨域设置
+    if (api.env === 'development' && port) {
+      const localHostname = process.env.USE_REMOTE_IP
+        ? address.ip()
+        : process.env.HOST || 'localhost';
 
-    const protocol = process.env.HTTPS ? 'https' : 'http';
-    // 变更 webpack-dev-server websocket 默认监听地址
-    process.env.SOCKET_SERVER = `${protocol}://${localHostname}:${port}/`;
-    api.chainWebpack((memo, { webpack }) => {
+      const protocol = process.env.HTTPS ? 'https' : 'http';
+      // 变更 webpack-dev-server websocket 默认监听地址
+      process.env.SOCKET_SERVER = `${protocol}://${localHostname}:${port}/`;
+
       // 开启了 devSourceMap 配置，默认为 true
       if (api.config.qiankun && api.config.qiankun.slave!.devSourceMap) {
         // 禁用 devtool，启用 SourceMapDevToolPlugin
@@ -140,9 +141,10 @@ export default function (api: IApi) {
           },
         ]);
       }
-      return memo;
-    });
-  }
+    }
+
+    return memo;
+  });
 
   api.addEntryImports(() => {
     return {
