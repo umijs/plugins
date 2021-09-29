@@ -55,7 +55,7 @@ import SwaggerUI from "swagger-ui-react";
 import "swagger-ui-react/swagger-ui.css";
 
 const App = () => {
-  const [value, setValue] = useState("openapi");
+  const [value, setValue] = useState(arrayConfig[0].projectName || "openapi");
   return (
     <div
       style={{
