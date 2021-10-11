@@ -150,7 +150,7 @@ export const MicroApp = forwardRef(
         microAppRef.current?.mountPromise.then(() => {
           if (noneMounted) {
             if (Array.isArray(prefetch)) {
-              const specialPrefetchApps = apps.filter(app => prefetch.indexOf(app.name) !== -1);
+              const specialPrefetchApps = apps.filter(app => app.name !== name && prefetch.indexOf(app.name) !== -1);
               prefetchApps(specialPrefetchApps, configuration);
             }
             else {
