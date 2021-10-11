@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.34.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.33.1...@umijs/plugin-qiankun@2.34.0) (2021-10-11)
+
+### Features
+
+- **qiankun:** 支持嵌套场景 ([#714](https://github.com/umijs/plugins/issues/714)) ([ccfc854](https://github.com/umijs/plugins/commit/ccfc854edc4b3bed872fda60f681bab66940543b))
+
 ## [2.33.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.33.0...@umijs/plugin-qiankun@2.33.1) (2021-09-09)
 
 ### Bug Fixes
