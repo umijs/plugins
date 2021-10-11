@@ -149,8 +149,14 @@ export const MicroApp = forwardRef(
       if (prefetch && prefetch !== 'all' && noneMounted) {
         microAppRef.current?.mountPromise.then(() => {
           if (noneMounted) {
-            const otherNotMountedApps = apps.filter((app) => app.name !== name);
-            prefetchApps(otherNotMountedApps, configuration);
+            if (Array.isArray(prefetch)) {
+              const specialPrefetchApps = apps.filter(app => prefetch.indexOf(app.name) !== -1);
+              prefetchApps(specialPrefetchApps, configuration);
+            }
+            else {
+              const otherNotMountedApps = apps.filter((app) => app.name !== name);
+              prefetchApps(otherNotMountedApps, configuration);
+            }
             noneMounted = false;
           }
         });
