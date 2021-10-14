@@ -222,7 +222,7 @@ const getRequestMethod = () => {
     const { getResponse } = options;
     const resData = getResponse ? res.data : res;
     const errorInfo = errorAdaptor(resData, ctx);
-    if (errorInfo.success === false) {
+    if (errorInfo?.success === false) {
       // 抛出错误到 errorHandler 中处理
       const error: RequestError = new Error(errorInfo.errorMessage);
       error.name = 'BizError';
