@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.34.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.34.0...@umijs/plugin-qiankun@2.34.1) (2021-10-15)
+
+### Bug Fixes
+
+- **qiankun:** 修复 prefetch 对数组配置支持不完善的问题 ([#723](https://github.com/umijs/plugins/issues/723)) ([c6abd56](https://github.com/umijs/plugins/commit/c6abd56f10551fb463ce451ac13b1795a64442e6))
+
 # [2.34.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.33.1...@umijs/plugin-qiankun@2.34.0) (2021-10-11)
 
 ### Features
