@@ -306,7 +306,7 @@ const defaultLangUConfigMap = {
   },
   'ru-RU': {
     lang: 'ru-RU',
-    label: 'русский',
+    label: 'Русский',
     icon: '🇷🇺',
     title: 'язык'
   },
