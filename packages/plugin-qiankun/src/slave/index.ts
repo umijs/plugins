@@ -69,6 +69,15 @@ export default function (api: IApi) {
     return modifiedDefaultConfig;
   });
 
+  api.modifyConfig((config) => {
+    // mfsu 场景默认给子应用增加 mfName 配置，从而避免冲突
+    if (config.mfsu && !config.mfsu.mfName) {
+      config.mfsu.mfName = `mf_${api.pkg.name}`;
+    }
+
+    return config;
+  });
+
   api.modifyPublicPathStr((publicPathStr) => {
     const { runtimePublicPath } = api.config;
     const { shouldNotModifyRuntimePublicPath } = (api.config.qiankun || {})
