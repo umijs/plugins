@@ -63,6 +63,7 @@ export default (api: IApi) => {
     const { getThemeVariables } = require('antd/dist/theme');
     api.modifyDefaultConfig((config) => {
       config.theme = {
+        'root-entry-name': 'default',
         ...getThemeVariables(opts),
         ...config.theme,
       };
