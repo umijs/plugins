@@ -28,6 +28,6 @@
     "access": "public"
   },
   "dependencies": {
-    "esbuild-loader": "~2.9.2"
+    "esbuild-loader": "~2.16.0"
   }
 }
