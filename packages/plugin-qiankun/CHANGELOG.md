@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.35.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.34.1...@umijs/plugin-qiankun@2.35.0) (2021-10-26)
+
+### Features
+
+- 支持 mfsu 开启场景 ([#699](https://github.com/umijs/plugins/issues/699)) ([43f6485](https://github.com/umijs/plugins/commit/43f648519dc3bd67f0898e35da5d570f3d3cdbde))
+
 ## [2.34.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.34.0...@umijs/plugin-qiankun@2.34.1) (2021-10-15)
 
 ### Bug Fixes

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.14.2...@umijs/plugin-locale@0.15.0) (2021-10-26)
+
+### Features
+
+- No verification of lang-key ([#715](https://github.com/umijs/plugins/issues/715)) ([67d8eca](https://github.com/umijs/plugins/commit/67d8eca99e62b587bdb6e27e90905bbc64a8123a))
+
 ## [0.14.2](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.14.1...@umijs/plugin-locale@0.14.2) (2021-07-21)
 
 ### Bug Fixes
