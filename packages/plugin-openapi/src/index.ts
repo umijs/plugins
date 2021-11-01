@@ -47,6 +47,7 @@ export default (api: IApi) => {
   api.onGenerateFiles(() => {
     const openAPIConfig = api.config.openAPI;
     const arrayConfig = api.utils.lodash.flatten([openAPIConfig]);
+    const config = arrayConfig?.[0]?.projectName;
     api.writeTmpFile({
       path: join('plugin-openapi', 'openapi.tsx'),
       content: `
@@ -55,7 +56,7 @@ import SwaggerUI from "swagger-ui-react";
 import "swagger-ui-react/swagger-ui.css";
 
 const App = () => {
-  const [value, setValue] = useState(arrayConfig[0]?.projectName || "openapi");
+  const [value, setValue] = useState("${config}" || "openapi");
   return (
     <div
       style={{
