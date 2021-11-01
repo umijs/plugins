@@ -1,31 +1,15 @@
 // @ts-ignore
+// @ts-ignore
+import { ErrorBoundary } from '@@/plugin-qiankun/ErrorBoundary';
 import { getMasterOptions } from '@@/plugin-qiankun/masterOptions';
 // @ts-ignore
 import MicroAppLoader from '@@/plugin-qiankun/MicroAppLoader';
-// @ts-ignore
-import { ErrorBoundary } from '@@/plugin-qiankun/ErrorBoundary';
-import {
-  BrowserHistoryBuildOptions,
-  HashHistoryBuildOptions,
-  MemoryHistoryBuildOptions,
-} from 'history-with-query';
+import { BrowserHistoryBuildOptions, HashHistoryBuildOptions, MemoryHistoryBuildOptions } from 'history-with-query';
 import concat from 'lodash/concat';
 import mergeWith from 'lodash/mergeWith';
 import noop from 'lodash/noop';
-import {
-  FrameworkConfiguration,
-  loadMicroApp,
-  MicroApp as MicroAppType,
-  prefetchApps,
-} from 'qiankun';
-import React, {
-  forwardRef,
-  useEffect,
-  useRef,
-  useState,
-  Ref,
-  useImperativeHandle,
-} from 'react';
+import { FrameworkConfiguration, loadMicroApp, MicroApp as MicroAppType, prefetchApps } from 'qiankun';
+import React, { forwardRef, Ref, useEffect, useImperativeHandle, useRef, useState } from 'react';
 // @ts-ignore
 import { History, useModel } from 'umi';
 import { MasterOptions } from './types';
@@ -97,6 +81,24 @@ export const MicroApp = forwardRef(
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<any>(null);
+    // 未配置自定义 errorBoundary 且开启了 autoCaptureError 场景下，使用插件默认的 errorBoundary，否则使用自定义 errorBoundary
+    const microAppErrorBoundary =
+      errorBoundary ||
+      (propsFromParams.autoCaptureError ? (e) => <ErrorBoundary error={e} /> : null);
+
+    // 配置了 errorBoundary 才改 error 状态，否则直接往上抛异常
+    const setComponentError = (error: any) => {
+      if (microAppErrorBoundary) {
+        setError(error);
+        // error log 出来，不要吞
+        if (error) {
+          console.error(error);
+        }
+      } else if (error) {
+        throw error;
+      }
+    };
+
     const containerRef = useRef<HTMLDivElement>();
     const microAppRef = useRef<MicroAppType>();
     const updatingPromise = useRef<Promise<any>>();
@@ -105,13 +107,16 @@ export const MicroApp = forwardRef(
     useImperativeHandle(componentRef, () => microAppRef.current);
 
     const appConfig = apps.find((app: any) => app.name === name);
-    if (!appConfig) {
-      setError(
-        new Error(
-          `[@umijs/plugin-qiankun]: Can not find the configuration of ${name} app!`,
-        ),
-      );
-    }
+    useEffect(() => {
+      if (!appConfig) {
+        setComponentError(
+          new Error(
+            `[@umijs/plugin-qiankun]: Can not find the configuration of ${name} app!`,
+          ),
+        );
+      }
+      return noop;
+    }, []);
 
     // 约定使用 src/app.ts/useQiankunStateForSlave 中的数据作为主应用透传给微应用的 props，优先级高于 propsFromConfig
     const stateForSlave = (useModel || noop)(
@@ -120,7 +125,7 @@ export const MicroApp = forwardRef(
     const { entry, props: propsFromConfig = {} } = appConfig || {};
 
     useEffect(() => {
-      setError(null);
+      setComponentError(null);
       setLoading(true);
       const configuration = {
         globalContext: window,
@@ -167,7 +172,7 @@ export const MicroApp = forwardRef(
         (key) => {
           const promise = microAppRef.current?.[key];
           promise.catch((e) => {
-            setError(e);
+            setComponentError(e);
             setLoading(false);
           });
         },
@@ -219,7 +224,7 @@ export const MicroApp = forwardRef(
         }
       }
 
-      return () => {};
+      return noop;
     }, Object.values({ ...stateForSlave, ...propsFromParams }));
 
     // 未配置自定义 loader 且开启了 autoSetLoading 场景下，使用插件默认的 loader，否则使用自定义 loader
@@ -228,11 +233,6 @@ export const MicroApp = forwardRef(
       (propsFromParams.autoSetLoading
         ? (loading) => <MicroAppLoader loading={loading} />
         : null);
-
-    // 未配置自定义 errorBoundary 且开启了 autoCaptureError 场景下，使用插件默认的 errorBoundary，否则使用自定义 errorBoundary
-    const microAppErrorBoundary =
-      errorBoundary ||
-      (propsFromParams.autoCaptureError ? (e) => <ErrorBoundary error={e} /> : null);
 
     return Boolean(microAppLoader) || Boolean(microAppErrorBoundary) ? (
       <div style={{ position: 'relative' }} className={wrapperClassName}>
