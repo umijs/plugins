@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.35.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.35.0...@umijs/plugin-qiankun@2.35.1) (2021-11-01)
+
+### Bug Fixes
+
+- **qiankun:** 修复初始化时 error 状态变更触发了 loop rendering 的问题 ([#735](https://github.com/umijs/plugins/issues/735)) ([bbec8b7](https://github.com/umijs/plugins/commit/bbec8b7b8864b416643b1a5ef00fca18c25182a1))
+
 # [2.35.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.34.1...@umijs/plugin-qiankun@2.35.0) (2021-10-26)
 
 ### Features

@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.2](https://github.com/umijs/plugins/compare/@umijs/plugin-openapi@1.3.1...@umijs/plugin-openapi@1.3.2) (2021-11-01)
+
+**Note:** Version bump only for package @umijs/plugin-openapi
+
 ## [1.3.1](https://github.com/umijs/plugins/compare/@umijs/plugin-openapi@1.3.0...@umijs/plugin-openapi@1.3.1) (2021-10-26)
 
 **Note:** Version bump only for package @umijs/plugin-openapi
