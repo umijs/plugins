@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.35.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.35.1...@umijs/plugin-qiankun@2.35.2) (2021-11-04)
+
+### Bug Fixes
+
+- **qiankun:** 默认 mfName 值替换掉报名里的特殊字符 ([#737](https://github.com/umijs/plugins/issues/737)) ([b291dab](https://github.com/umijs/plugins/commit/b291dabbc48585232e404d815bf68ca7ae4d708a))
+
 ## [2.35.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.35.0...@umijs/plugin-qiankun@2.35.1) (2021-11-01)
 
 ### Bug Fixes
