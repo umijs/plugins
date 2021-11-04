@@ -73,7 +73,9 @@ export default function (api: IApi) {
     // mfsu 场景默认给子应用增加 mfName 配置，从而避免冲突
     if (config.mfsu && !config.mfsu.mfName) {
       // 替换掉包名里的特殊字符
-      config.mfsu.mfName = `mf_${api.pkg.name}`.replace(/\W/g, '_');
+      config.mfsu.mfName = `mf_${api.pkg.name
+        ?.replace(/^@/, '')
+        .replace(/\W/g, '_')}`;
     }
 
     return config;
