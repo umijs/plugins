@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.3](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.2...@umijs/plugin-layout@0.17.3) (2021-11-12)
+
+### Bug Fixes
+
+- **layout:** fix login render twice error ([#740](https://github.com/umijs/plugins/issues/740)) ([6c9bd9d](https://github.com/umijs/plugins/commit/6c9bd9d2a829f5a86b6fc9d710da7cb5195a3aa3))
+
 ## [0.17.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.1...@umijs/plugin-layout@0.17.2) (2021-07-20)
 
 ### Bug Fixes
