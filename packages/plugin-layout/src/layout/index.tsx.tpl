@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState,useMemo } from 'react';
 // @ts-ignore
 import { Link, useModel, history{{#hasAccess}}, traverseModifyRoutes, useAccess {{/hasAccess}} } from 'umi';
 import ProLayout, {
@@ -24,9 +24,8 @@ const BasicLayout = (props: any) => {
 
   // plugin-initial-state 未开启
   const { initialState, loading, setInitialState } = initialInfo;
-  const [currentPathConfig, setCurrentPathConfig] = useState<MenuDataItem>();
 
-  useEffect(() => {
+  const currentPathConfig = useMemo(() => {
     const { menuData } = transformRoute(
       props?.route?.routes || [],
       undefined,
@@ -35,8 +34,8 @@ const BasicLayout = (props: any) => {
     );
     // 动态路由匹配
     const currentPathConfig = getMatchMenu(location.pathname, menuData).pop();
-    setCurrentPathConfig(currentPathConfig || {});
-  }, [location?.pathname, props?.route?.routes]);
+   return currentPathConfig
+  },[location?.pathname, props?.route?.routes]);
 
   // layout 是否渲染相关
   const layoutRestProps: BasicLayoutProps & {
@@ -53,11 +52,16 @@ const BasicLayout = (props: any) => {
     ...restProps,
     ...getLayoutRenderConfig(currentPathConfig as any ||{}),
   };
+
 {{#hasAccess}}
   const access = useAccess?.();
 {{/hasAccess}}
 
-  if (!currentPathConfig) return <PageLoading />;
+ 
+  if (!currentPathConfig) {
+     return <PageLoading />
+  }
+
   return (
     <ProLayout
       route={route}
