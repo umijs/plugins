@@ -24,9 +24,8 @@ const BasicLayout = (props: any) => {
 
   // plugin-initial-state 未开启
   const { initialState, loading, setInitialState } = initialInfo;
-  const [currentPathConfig, setCurrentPathConfig] = useState<MenuDataItem>();
 
-  useEffect(() => {
+  const currentPathConfig = useMemo(() => {
     const { menuData } = transformRoute(
       props?.route?.routes || [],
       undefined,
@@ -35,8 +34,8 @@ const BasicLayout = (props: any) => {
     );
     // 动态路由匹配
     const currentPathConfig = getMatchMenu(location.pathname, menuData).pop();
-    setCurrentPathConfig(currentPathConfig || {});
-  }, [location?.pathname, props?.route?.routes]);
+   return currentPathConfig
+  },[location?.pathname, props?.route?.routes]);
 
   // layout 是否渲染相关
   const layoutRestProps: BasicLayoutProps & {
@@ -59,7 +58,7 @@ const BasicLayout = (props: any) => {
 {{/hasAccess}}
 
  
-  if (!currentPathConfig || (currentPathConfig.path && currentPathConfig.path !== location.pathname)) {
+  if (!currentPathConfig) {
      return <PageLoading />
   }
 
