@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useMemo } from 'react';
+import React, { useState,useMemo } from 'react';
 // @ts-ignore
 import { Link, useModel, history{{#hasAccess}}, traverseModifyRoutes, useAccess {{/hasAccess}} } from 'umi';
 import ProLayout, {
