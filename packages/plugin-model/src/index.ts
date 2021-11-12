@@ -7,10 +7,7 @@ import { readFileSync } from 'fs';
 const { lodash } = utils;
 
 export default (api: IApi) => {
-  const {
-    paths,
-    utils: { winPath },
-  } = api;
+  const { paths } = api;
 
   function getModelDir() {
     return api.config.singular ? 'model' : 'models';
