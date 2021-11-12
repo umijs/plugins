@@ -53,13 +53,13 @@ const BasicLayout = (props: any) => {
     ...restProps,
     ...getLayoutRenderConfig(currentPathConfig as any ||{}),
   };
-  
+
 {{#hasAccess}}
   const access = useAccess?.();
 {{/hasAccess}}
 
  
-  if (!currentPathConfig || currentPathConfig.path!==location.pathname ) {
+  if (!currentPathConfig || (currentPathConfig.path && currentPathConfig.path !== location.pathname)) {
      return <PageLoading />
   }
 
