@@ -42,7 +42,7 @@ interface SelectLangProps {
   onItemClick?: (params: ClickParam) => void;
   className?: string;
   reload?: boolean;
-  customIcon?: JSX.Element;
+  icon?: React.ReactNode;
 }
 
 const transformArrayToObject = (allLangUIConfig:LocalData[])=>{
@@ -391,7 +391,7 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
   globalIconClassName,
   postLocalesData,
   onItemClick,
-  customIcon,
+  icon,
   style,
   reload,
   ...restProps
@@ -452,8 +452,8 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
     <HeaderDropdown overlay={langMenu} placement="bottomRight" {...restProps}>
       <span className={globalIconClassName} style={inlineStyle}>
         <i className="anticon" title={allLangUIConfig[selectedLang]?.title}>
-          { customIcon ?
-            customIcon : (
+          { icon ?
+            icon : (
             <svg
             viewBox="0 0 24 24"
             focusable="false"
