@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.4](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.3...@umijs/plugin-layout@0.17.4) (2021-11-13)
+
+### Bug Fixes
+
+- **layout:** up deps to 2.0 ([#742](https://github.com/umijs/plugins/issues/742)) ([d6ee483](https://github.com/umijs/plugins/commit/d6ee483045f7920813875cf385853aaca5544c23))
+
 ## [0.17.3](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.2...@umijs/plugin-layout@0.17.3) (2021-11-12)
 
 ### Bug Fixes
