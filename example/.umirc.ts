@@ -64,6 +64,9 @@ export default defineConfig({
   layout: {
     name: 'UMI 3',
   },
+  antd: {
+    config: {},
+  },
   qiankun: {
     master: {
       apps: [
