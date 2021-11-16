@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.1](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.12.0...@umijs/plugin-antd@0.12.1) (2021-11-16)
+
+### Bug Fixes
+
+- **antd:** add missing configprovider prefixCls ([#746](https://github.com/umijs/plugins/issues/746)) ([c955a13](https://github.com/umijs/plugins/commit/c955a1361780cb57d5e3800863dc4aa5c7711683))
+
 # [0.12.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.11.0...@umijs/plugin-antd@0.12.0) (2021-11-12)
 
 ### Bug Fixes

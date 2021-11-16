@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.4...@umijs/plugin-layout@0.18.0) (2021-11-16)
+
+### Features
+
+- props with childrenRender ([#745](https://github.com/umijs/plugins/issues/745)) ([4dea6e4](https://github.com/umijs/plugins/commit/4dea6e4111cf8783175324a6f2b9229fdcd0d64d))
+
 ## [0.17.4](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.3...@umijs/plugin-layout@0.17.4) (2021-11-13)
 
 ### Bug Fixes
