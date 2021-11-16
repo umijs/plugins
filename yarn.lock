@@ -3826,16 +3826,15 @@
     through2 "^3.0.1"
     vinyl "^2.2.0"
 
-"@umijs/openapi@^1.1.6":
-  version "1.1.19"
-  resolved "https://registry.yarnpkg.com/@umijs/openapi/-/openapi-1.1.19.tgz#a40c9978d5a3b11139771320a34c7baa99a722e1"
-  integrity sha512-zXDrdaS//N4PAwrSHDP4D5s0n75dQQOzLYuAJXg9UAUScIuUwHorkzWZ0PpAfpXb+CBSG7gOjDHotncmpAC4Cw==
+"@umijs/openapi@^1.2.0":
+  version "1.3.6"
+  resolved "https://registry.npmmirror.com/@umijs/openapi/download/@umijs/openapi-1.3.6.tgz?cache=0&sync_timestamp=1636949302168&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40umijs%2Fopenapi%2Fdownload%2F%40umijs%2Fopenapi-1.3.6.tgz#78af4d4ee4b05ed401832e7731e518d54551ca61"
+  integrity sha512-JPhJc9n1i0B4KqgCK6/tgvaGh+Zk5hvwV3NakRAGE7R4emfewAa+phVArSVbEPOjYt4Jzz7Wpzt6J31Q+Kttsg==
   dependencies:
     "@umijs/fabric" "^2.5.6"
     dayjs "^1.10.3"
     eslint "^7.18.0"
     glob "^7.1.6"
-    lodash "^4.17.20"
     memoizee "^0.4.15"
     mock.js "^0.2.0"
     mockjs "^1.1.0"
@@ -3906,10 +3905,20 @@
     "@umijs/runtime" "3.5.13"
     react-router-config "5.1.1"
 
-"@umijs/route-utils@^1.0.35", "@umijs/route-utils@^1.0.7":
+"@umijs/route-utils@^1.0.35":
   version "1.0.37"
   resolved "https://registry.yarnpkg.com/@umijs/route-utils/-/route-utils-1.0.37.tgz#1ceb516980d4754ce2d5959878fe72259091a990"
   integrity sha512-RQYMYd0w3mKWlCvhUqYN2/dcCD8LxQWsr46DXpaLtqe2Y/8662qXA3E6moaFpyfokKJK6UHt2VxNGhkKPNJIgQ==
+  dependencies:
+    "@qixian.cs/path-to-regexp" "^6.1.0"
+    fast-deep-equal "^3.1.3"
+    lodash.isequal "^4.5.0"
+    memoize-one "^5.1.1"
+
+"@umijs/route-utils@^2.0.0":
+  version "2.0.4"
+  resolved "https://registry.npmmirror.com/@umijs/route-utils/download/@umijs/route-utils-2.0.4.tgz?cache=0&sync_timestamp=1637048932696&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40umijs%2Froute-utils%2Fdownload%2F%40umijs%2Froute-utils-2.0.4.tgz#951bf55c826d670c3acfff0566ceac63b7b74fea"
+  integrity sha512-YWxGHZhIMLrsiydu8P/v2SNuuqRfRbLaZ5mc1K9snTf6yQ+TEGFrpU8uLxp2iRBijMBD0CFyrWNuhlB/bvluUQ==
   dependencies:
     "@qixian.cs/path-to-regexp" "^6.1.0"
     fast-deep-equal "^3.1.3"
@@ -11635,7 +11644,7 @@ lodash.zip@^4.2.0:
   resolved "https://registry.yarnpkg.com/lodash.zip/-/lodash.zip-4.2.0.tgz#ec6662e4896408ed4ab6c542a3990b72cc080020"
   integrity sha1-7GZi5IlkCO1KtsVCo5kLcswIACA=
 
-lodash@4.17.21, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.4, lodash@^4.2.1, lodash@^4.7.0:
+lodash@4.17.21, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.21, lodash@^4.17.4, lodash@^4.2.1, lodash@^4.7.0:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
