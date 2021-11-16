@@ -2,6 +2,7 @@ import { dirname, join } from 'path';
 import { readFileSync } from 'fs';
 import { IApi, utils } from 'umi';
 import { ConfigProviderProps } from 'antd/es/config-provider';
+import semver from 'semver';
 
 const { Mustache } = utils;
 
@@ -71,6 +72,14 @@ export default (api: IApi) => {
     });
   }
 
+  api.modifyDefaultConfig((config) => {
+    config.theme = {
+      'root-entry-name': 'default',
+      ...config.theme,
+    };
+    return config;
+  });
+
   api.addProjectFirstLibraries(() => {
     const imps = [
       {
@@ -94,10 +103,20 @@ export default (api: IApi) => {
           join(__dirname, 'runtime.tpl'),
           'utf-8',
         );
+
+        // 获取 antd 的版本号来判断应该是用什么api
+        let version = '4.0.0';
+        try {
+          version = require(require.resolve('antd/package.json')).version;
+        } catch (error) {}
+
         api.writeTmpFile({
           path: 'plugin-antd/runtime.tsx',
           content: Mustache.render(runtimeTpl, {
             config: JSON.stringify(opts?.config),
+            // @ts-ignore
+            newAntd: semver.lt('4.13.0', version) || version === '4.13.0',
+            oldAntd: semver.gt('4.13.0', version),
           }),
         });
       },
