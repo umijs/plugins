@@ -16,6 +16,10 @@ export function rootContainer(container) {
     message.config({
       prefixCls: `${finalConfig.prefixCls}-message`,
     });
+
+    ConfigProvider.config({
+      prefixCls: finalConfig.prefixCls,
+    });
   }
   return React.createElement(ConfigProvider, finalConfig, container);
 }
