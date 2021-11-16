@@ -135,7 +135,7 @@ const BasicLayout = (props: any) => {
         currentPathConfig={currentPathConfig}
       >
         {userConfig.childrenRender
-          ? userConfig.childrenRender(children)
+          ? userConfig.childrenRender(children, props)
           : children}
       </WithExceptionOpChildren>
     </ProLayout>

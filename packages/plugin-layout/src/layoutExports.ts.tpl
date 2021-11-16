@@ -4,7 +4,7 @@ import { Models } from '@@/plugin-model/useModel';
 export type RunTimeLayoutConfig = (
   initData: Models<'@@initialState'>,
 ) => BasicLayoutProps & {
-  childrenRender?: (dom: JSX.Element) => React.ReactNode,
+  childrenRender?: (dom: JSX.Element, props: BasicLayoutProps) => React.ReactNode,
   unAccessible?: JSX.Element,
   noFound?: JSX.Element,
 };
