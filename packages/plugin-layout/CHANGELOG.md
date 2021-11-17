@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.18.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.18.0...@umijs/plugin-layout@0.18.1) (2021-11-17)
+
+### Bug Fixes
+
+- **layout:** remove currentPathConfig loading ([#748](https://github.com/umijs/plugins/issues/748)) ([71d9c16](https://github.com/umijs/plugins/commit/71d9c16c8793f92fe06b719c2d81b12f89c5d65a))
+
 # [0.18.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.4...@umijs/plugin-layout@0.18.0) (2021-11-16)
 
 ### Features
