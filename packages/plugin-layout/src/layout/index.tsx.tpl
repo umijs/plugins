@@ -3,7 +3,6 @@ import React, { useState,useMemo } from 'react';
 import { Link, useModel, history{{#hasAccess}}, traverseModifyRoutes, useAccess {{/hasAccess}} } from 'umi';
 import ProLayout, {
   BasicLayoutProps,
-  PageLoading,
 } from "@ant-design/pro-layout";
 import './style.less';
 // @ts-ignore
@@ -34,7 +33,7 @@ const BasicLayout = (props: any) => {
     );
     // 动态路由匹配
     const currentPathConfig = getMatchMenu(location.pathname, menuData).pop();
-   return currentPathConfig
+   return currentPathConfig || {};
   },[location?.pathname, props?.route?.routes]);
 
   // layout 是否渲染相关
@@ -56,11 +55,6 @@ const BasicLayout = (props: any) => {
 {{#hasAccess}}
   const access = useAccess?.();
 {{/hasAccess}}
-
- 
-  if (!currentPathConfig) {
-     return <PageLoading />
-  }
 
   return (
     <ProLayout
