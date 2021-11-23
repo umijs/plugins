@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.12.1...@umijs/plugin-antd@0.13.0) (2021-11-23)
+
+### Features
+
+- **and:** add config antd disableBabelPluginImport:false ([#752](https://github.com/umijs/plugins/issues/752)) ([9d4190b](https://github.com/umijs/plugins/commit/9d4190bd9b39f6e933f61025c0d1a98786b881d5))
+
 ## [0.12.1](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.12.0...@umijs/plugin-antd@0.12.1) (2021-11-16)
 
 ### Bug Fixes
