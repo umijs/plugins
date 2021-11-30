@@ -23,6 +23,9 @@ export function getMicroAppRouteComponent(opts: {
     umiConfigBase = basename === '/' ? '' : basename;
     {{/runtimeHistory}}
 
+    // 去除 base 末尾的 '/'
+    umiConfigBase =  (umiConfigBase.endsWith('/') ? umiConfigBase.substr(0, umiConfigBase.length - 1) : umiConfigBase)
+    
     let runtimeMatchedBase =
       umiConfigBase + (url.endsWith('/') ? url.substr(0, url.length - 1) : url);
 
