@@ -1,31 +1,47 @@
 // @ts-ignore
 // @ts-ignore
-import { ErrorBoundary } from '@@/plugin-qiankun/ErrorBoundary';
-import { getMasterOptions } from '@@/plugin-qiankun/masterOptions';
+import { ErrorBoundary } from "@@/plugin-qiankun/ErrorBoundary";
+import { getMasterOptions } from "@@/plugin-qiankun/masterOptions";
 // @ts-ignore
-import MicroAppLoader from '@@/plugin-qiankun/MicroAppLoader';
-import { BrowserHistoryBuildOptions, HashHistoryBuildOptions, MemoryHistoryBuildOptions } from 'history-with-query';
-import concat from 'lodash/concat';
-import mergeWith from 'lodash/mergeWith';
-import noop from 'lodash/noop';
-import { FrameworkConfiguration, loadMicroApp, MicroApp as MicroAppType, prefetchApps } from 'qiankun';
-import React, { forwardRef, Ref, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import MicroAppLoader from "@@/plugin-qiankun/MicroAppLoader";
+import {
+  BrowserHistoryBuildOptions,
+  HashHistoryBuildOptions,
+  MemoryHistoryBuildOptions,
+} from "history-with-query";
+import concat from "lodash/concat";
+import mergeWith from "lodash/mergeWith";
+import noop from "lodash/noop";
+import {
+  FrameworkConfiguration,
+  loadMicroApp,
+  MicroApp as MicroAppType,
+  prefetchApps,
+} from "qiankun";
+import React, {
+  forwardRef,
+  Ref,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 // @ts-ignore
-import { History, useModel } from 'umi';
-import { MasterOptions } from './types';
+import { History, useModel } from "umi";
+import { MasterOptions } from "./types";
 
-const qiankunStateForSlaveModelNamespace = '@@qiankunStateForSlave';
+const qiankunStateForSlaveModelNamespace = "@@qiankunStateForSlave";
 
 type HashHistory = {
-  type?: 'hash';
+  type?: "hash";
 } & HashHistoryBuildOptions;
 
 type BrowserHistory = {
-  type?: 'browser';
+  type?: "browser";
 } & BrowserHistoryBuildOptions;
 
 type MemoryHistory = {
-  type?: 'memory';
+  type?: "memory";
 } & MemoryHistoryBuildOptions;
 
 export type Props = {
@@ -33,9 +49,9 @@ export type Props = {
   settings?: FrameworkConfiguration;
   base?: string;
   history?:
-    | 'hash'
-    | 'browser'
-    | 'memory'
+    | "hash"
+    | "browser"
+    | "memory"
     | HashHistory
     | BrowserHistory
     | MemoryHistory;
@@ -84,7 +100,9 @@ export const MicroApp = forwardRef(
     // 未配置自定义 errorBoundary 且开启了 autoCaptureError 场景下，使用插件默认的 errorBoundary，否则使用自定义 errorBoundary
     const microAppErrorBoundary =
       errorBoundary ||
-      (propsFromParams.autoCaptureError ? (e) => <ErrorBoundary error={e} /> : null);
+      (propsFromParams.autoCaptureError
+        ? (e) => <ErrorBoundary error={e} />
+        : null);
 
     // 配置了 errorBoundary 才改 error 状态，否则直接往上抛异常
     const setComponentError = (error: any) => {
@@ -111,8 +129,8 @@ export const MicroApp = forwardRef(
       if (!appConfig) {
         setComponentError(
           new Error(
-            `[@umijs/plugin-qiankun]: Can not find the configuration of ${name} app!`,
-          ),
+            `[@umijs/plugin-qiankun]: Can not find the configuration of ${name} app!`
+          )
         );
       }
       return noop;
@@ -120,7 +138,7 @@ export const MicroApp = forwardRef(
 
     // 约定使用 src/app.ts/useQiankunStateForSlave 中的数据作为主应用透传给微应用的 props，优先级高于 propsFromConfig
     const stateForSlave = (useModel || noop)(
-      qiankunStateForSlaveModelNamespace,
+      qiankunStateForSlaveModelNamespace
     );
     const { entry, props: propsFromConfig = {} } = appConfig || {};
 
@@ -146,21 +164,23 @@ export const MicroApp = forwardRef(
         },
         configuration,
         mergeWith({}, globalLifeCycles, lifeCycles, (v1, v2) =>
-          concat(v1 ?? [], v2 ?? []),
-        ),
+          concat(v1 ?? [], v2 ?? [])
+        )
       );
 
       // 当配置了 prefetch true 时，在第一个应用 mount 完成之后，再去预加载其他应用
-      if (prefetch && prefetch !== 'all' && noneMounted) {
+      if (prefetch && prefetch !== "all" && noneMounted) {
         microAppRef.current?.mountPromise.then(() => {
           if (noneMounted) {
             if (Array.isArray(prefetch)) {
               const specialPrefetchApps = apps.filter(
-                (app) => app.name !== name && prefetch.indexOf(app.name) !== -1,
+                (app) => app.name !== name && prefetch.indexOf(app.name) !== -1
               );
               prefetchApps(specialPrefetchApps, configuration);
             } else {
-              const otherNotMountedApps = apps.filter((app) => app.name !== name);
+              const otherNotMountedApps = apps.filter(
+                (app) => app.name !== name
+              );
               prefetchApps(otherNotMountedApps, configuration);
             }
             noneMounted = false;
@@ -168,14 +188,14 @@ export const MicroApp = forwardRef(
         });
       }
 
-      (['loadPromise', 'bootstrapPromise', 'mountPromise'] as const).forEach(
+      (["loadPromise", "bootstrapPromise", "mountPromise"] as const).forEach(
         (key) => {
           const promise = microAppRef.current?.[key];
           promise.catch((e) => {
             setComponentError(e);
             setLoading(false);
           });
-        },
+        }
       );
 
       return () => unmountMicroApp(microAppRef.current);
@@ -191,7 +211,7 @@ export const MicroApp = forwardRef(
           // 确保 microApp.update 调用是跟组件状态变更顺序一致的，且后一个微应用更新必须等待前一个更新完成
           updatingPromise.current = updatingPromise.current.then(() => {
             const canUpdate = (microApp?: MicroAppType) =>
-              microApp?.update && microApp.getStatus() === 'MOUNTED';
+              microApp?.update && microApp.getStatus() === "MOUNTED";
             if (canUpdate(microApp)) {
               const props = {
                 ...propsFromConfig,
@@ -200,16 +220,16 @@ export const MicroApp = forwardRef(
                 setLoading,
               };
 
-              if (process.env.NODE_ENV === 'development') {
+              if (process.env.NODE_ENV === "development") {
                 if (Date.now() - updatingTimestamp.current < 200) {
                   console.warn(
-                    `[@umijs/plugin-qiankun] It seems like microApp ${name} is updating too many times in a short time(200ms), you may need to do some optimization to avoid the unnecessary re-rendering.`,
+                    `[@umijs/plugin-qiankun] It seems like microApp ${name} is updating too many times in a short time(200ms), you may need to do some optimization to avoid the unnecessary re-rendering.`
                   );
                 }
 
                 console.info(
                   `[@umijs/plugin-qiankun] MicroApp ${name} is updating with props: `,
-                  props,
+                  props
                 );
                 updatingTimestamp.current = Date.now();
               }
@@ -235,13 +255,21 @@ export const MicroApp = forwardRef(
         : null);
 
     return Boolean(microAppLoader) || Boolean(microAppErrorBoundary) ? (
-      <div style={{ position: 'relative', minHeigth: 100 }} className={`${wrapperClassName} qiankun-micro-app`}>
+      <div
+        style={{ position: "relative" }}
+        className={`${wrapperClassName} qiankun-micro-app`}
+      >
         {Boolean(microAppLoader) && microAppLoader(loading)}
-        {Boolean(microAppErrorBoundary) && Boolean(error) && microAppErrorBoundary(error)}
-        <div ref={containerRef} className={`${className} qiankun-micro-app-container`} />
+        {Boolean(microAppErrorBoundary) &&
+          Boolean(error) &&
+          microAppErrorBoundary(error)}
+        <div
+          ref={containerRef}
+          className={`${className} qiankun-micro-app-container`}
+        />
       </div>
     ) : (
       <div ref={containerRef} className={className} />
     );
-  },
+  }
 );

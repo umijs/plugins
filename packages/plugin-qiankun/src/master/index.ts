@@ -136,9 +136,14 @@ export default function (api: IApi) {
     api.writeTmpFile({
       path: 'plugin-qiankun/ErrorBoundary.tsx',
       // 开启了 antd 插件的时候，使用 antd 的 ErrorBoundary，否则提示用户必须设置一个自定义的 ErrorBoundary 组件
-      content: api.hasPlugins(['@umijs/plugin-antd'])
-        ? readFileSync(join(__dirname, 'AntdErrorBoundary.tsx.tpl'), 'utf-8')
-        : readFileSync(join(__dirname, 'ErrorBoundary.tsx.tpl'), 'utf-8'),
+      content: utils.Mustache.render(
+        api.hasPlugins(['@umijs/plugin-antd'])
+          ? readFileSync(join(__dirname, 'AntdErrorBoundary.tsx.tpl'), 'utf-8')
+          : readFileSync(join(__dirname, 'ErrorBoundary.tsx.tpl'), 'utf-8'),
+        {
+          enableLocale: api.hasPlugins(['@umijs/plugin-locale']),
+        },
+      ),
     });
 
     api.writeTmpFile({
