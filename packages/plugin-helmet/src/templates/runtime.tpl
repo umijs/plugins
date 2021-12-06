@@ -12,6 +12,7 @@ if (process.env.__IS_SERVER) {
       const meta = helmet.meta.toString();
       const link = helmet.link.toString();
       const style = helmet.style.toString();
+      const script = helmet.script.toString();
       const $ = cheerio.load(html, {
         decodeEntities: false,
       });
@@ -26,6 +27,9 @@ if (process.env.__IS_SERVER) {
       }
       if(style) {
         $('head').append(style);
+      }
+      if(script) {
+        $('head').append(script);
       }
       if (Object.keys(htmlAttributes)) {
         Object.keys(htmlAttributes).forEach(attrKey => {
