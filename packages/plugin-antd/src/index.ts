@@ -9,14 +9,12 @@ const { Mustache } = utils;
 interface IAntdOpts {
   dark?: boolean;
   compact?: boolean;
-  mobile?: boolean;
   disableBabelPluginImport?: boolean;
   config?: ConfigProviderProps;
 }
 
 export default (api: IApi) => {
   const opts: IAntdOpts = api.userConfig.antd;
-  const mobile = opts?.mobile !== false;
   const useBabelPluginImport = opts?.disableBabelPluginImport !== true;
   api.describe({
     config: {
@@ -24,7 +22,6 @@ export default (api: IApi) => {
         return joi.object({
           dark: joi.boolean(),
           compact: joi.boolean(),
-          mobile: joi.boolean(),
           disableBabelPluginImport: joi.boolean(),
           config: joi.object(),
         });
@@ -36,13 +33,6 @@ export default (api: IApi) => {
     if (useBabelPluginImport) {
       imps.push({
         libraryName: 'antd',
-        libraryDirectory: 'es',
-        style: true,
-      })
-    }
-    if (mobile) {
-      imps.push({
-        libraryName: 'antd-mobile',
         libraryDirectory: 'es',
         style: true,
       });
@@ -96,12 +86,6 @@ export default (api: IApi) => {
       imps.push({
         name: 'antd',
         path: dirname(require.resolve('antd/package.json')),
-      })
-    }
-    if (mobile) {
-      imps.push({
-        name: 'antd-mobile',
-        path: dirname(require.resolve('antd-mobile/package.json')),
       });
     }
     return imps;

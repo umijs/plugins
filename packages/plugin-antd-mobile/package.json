@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-antd-mobile",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "@umijs/plugin-antd-mobile",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -28,7 +28,8 @@
     "access": "public"
   },
   "dependencies": {
-    "antd-mobile": "next",
+    "antd-mobile": "^5.0.0-rc.0",
+    "antd-mobile-v2": "^2.3.4",
     "semver": "^7.3.5"
   }
 }
