@@ -12,7 +12,7 @@ export interface Action<T = any> {
 }
 
 export type Reducer<S = any, A extends Action = AnyAction> = (
-  state: S | undefined,
+  state: S,
   action: A
 ) => S;
 

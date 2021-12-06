@@ -2,6 +2,133 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.35.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.35.1...@umijs/plugin-qiankun@2.35.2) (2021-11-04)
+
+### Bug Fixes
+
+- **qiankun:** 默认 mfName 值替换掉报名里的特殊字符 ([#737](https://github.com/umijs/plugins/issues/737)) ([b291dab](https://github.com/umijs/plugins/commit/b291dabbc48585232e404d815bf68ca7ae4d708a))
+
+## [2.35.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.35.0...@umijs/plugin-qiankun@2.35.1) (2021-11-01)
+
+### Bug Fixes
+
+- **qiankun:** 修复初始化时 error 状态变更触发了 loop rendering 的问题 ([#735](https://github.com/umijs/plugins/issues/735)) ([bbec8b7](https://github.com/umijs/plugins/commit/bbec8b7b8864b416643b1a5ef00fca18c25182a1))
+
+# [2.35.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.34.1...@umijs/plugin-qiankun@2.35.0) (2021-10-26)
+
+### Features
+
+- 支持 mfsu 开启场景 ([#699](https://github.com/umijs/plugins/issues/699)) ([43f6485](https://github.com/umijs/plugins/commit/43f648519dc3bd67f0898e35da5d570f3d3cdbde))
+
+## [2.34.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.34.0...@umijs/plugin-qiankun@2.34.1) (2021-10-15)
+
+### Bug Fixes
+
+- **qiankun:** 修复 prefetch 对数组配置支持不完善的问题 ([#723](https://github.com/umijs/plugins/issues/723)) ([c6abd56](https://github.com/umijs/plugins/commit/c6abd56f10551fb463ce451ac13b1795a64442e6))
+
+# [2.34.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.33.1...@umijs/plugin-qiankun@2.34.0) (2021-10-11)
+
+### Features
+
+- **qiankun:** 支持嵌套场景 ([#714](https://github.com/umijs/plugins/issues/714)) ([ccfc854](https://github.com/umijs/plugins/commit/ccfc854edc4b3bed872fda60f681bab66940543b))
+
+## [2.33.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.33.0...@umijs/plugin-qiankun@2.33.1) (2021-09-09)
+
+### Bug Fixes
+
+- **qiankun:** 修复 prefetch 的问题 ([#710](https://github.com/umijs/plugins/issues/710)) ([00a6be4](https://github.com/umijs/plugins/commit/00a6be44b92c34ea044d9f0bf8d08d3aafed6da8))
+
+# [2.33.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.32.2...@umijs/plugin-qiankun@2.33.0) (2021-09-07)
+
+### Features
+
+- 支持运行时配置嵌套的路由关联微应用 ([#706](https://github.com/umijs/plugins/issues/706)) ([1e9e5db](https://github.com/umijs/plugins/commit/1e9e5db02c6a5d2aacf375e928941fa4694458ca))
+
+## [2.32.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.32.1...@umijs/plugin-qiankun@2.32.2) (2021-09-06)
+
+### Bug Fixes
+
+- **qiankun:** 修复空值问题 ([#704](https://github.com/umijs/plugins/issues/704)) ([48ad20d](https://github.com/umijs/plugins/commit/48ad20dee6c698ab6f4363b6f6ffbb5d7ab3e9e2))
+
+## [2.32.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.32.0...@umijs/plugin-qiankun@2.32.1) (2021-09-06)
+
+**Note:** Version bump only for package @umijs/plugin-qiankun
+
+# [2.32.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.31.1...@umijs/plugin-qiankun@2.32.0) (2021-09-06)
+
+### Features
+
+- **qiankun:** qiankun config 支持 enable 配置 ([#702](https://github.com/umijs/plugins/issues/702)) ([70feb32](https://github.com/umijs/plugins/commit/70feb32fa0e85e43dbef9b2af20333820d2a07bd))
+- **qiankun:** support insert route ([#698](https://github.com/umijs/plugins/issues/698)) ([228618c](https://github.com/umijs/plugins/commit/228618c4497a89a24eb6fad139ac4a4315fe663d))
+
+## [2.31.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.31.0...@umijs/plugin-qiankun@2.31.1) (2021-08-31)
+
+### Bug Fixes
+
+- log error in boundary component ([#693](https://github.com/umijs/plugins/issues/693)) ([0359a3f](https://github.com/umijs/plugins/commit/0359a3f2a950aa3d2fcd351830b3a26871a88dd6))
+
+# [2.31.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.30.1...@umijs/plugin-qiankun@2.31.0) (2021-08-27)
+
+### Bug Fixes
+
+- **qiankun:** 允许 qiankun pacthRoute 时 routes 为空数组 ([#689](https://github.com/umijs/plugins/issues/689)) ([97ee607](https://github.com/umijs/plugins/commit/97ee607c29b40c072c0659ff93344189e4587a41))
+
+### Features
+
+- **qiankun:** slave 新增 shouldNotAddLibraryChunkName 配置 ([#692](https://github.com/umijs/plugins/issues/692)) ([3f64a2d](https://github.com/umijs/plugins/commit/3f64a2dc8e32578e7d7a3d8a8fc56e6d21338966))
+
+## [2.30.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.30.0...@umijs/plugin-qiankun@2.30.1) (2021-08-23)
+
+**Note:** Version bump only for package @umijs/plugin-qiankun
+
+# [2.30.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.29.1...@umijs/plugin-qiankun@2.30.0) (2021-08-23)
+
+### Bug Fixes
+
+- stop loading when error occure ([#688](https://github.com/umijs/plugins/issues/688)) ([aea2c5e](https://github.com/umijs/plugins/commit/aea2c5ea5e76aba49fdb84475d13983a238c18d0))
+
+### Features
+
+- error boundary support locale ([#687](https://github.com/umijs/plugins/issues/687)) ([0485217](https://github.com/umijs/plugins/commit/0485217f2388cdd3c6e096ed4d1468e1d3880d6c))
+
+## [2.29.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.29.0...@umijs/plugin-qiankun@2.29.1) (2021-08-19)
+
+**Note:** Version bump only for package @umijs/plugin-qiankun
+
+# [2.29.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.28.0...@umijs/plugin-qiankun@2.29.0) (2021-08-17)
+
+### Features
+
+- add errorBoundary and microApp forwardRef ([#678](https://github.com/umijs/plugins/issues/678)) ([0cfa952](https://github.com/umijs/plugins/commit/0cfa95259fc51d28125b4b7fc2d8466403e7e156))
+
+# [2.28.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.27.0...@umijs/plugin-qiankun@2.28.0) (2021-08-12)
+
+### Features
+
+- qiankun errorBoundary ([#675](https://github.com/umijs/plugins/issues/675)) ([a0fde5b](https://github.com/umijs/plugins/commit/a0fde5bb41e3fadde6c8e3ec83f71697e82d73b1))
+
+# [2.27.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.26.0...@umijs/plugin-qiankun@2.27.0) (2021-07-21)
+
+### Features
+
+- **qiankun:** 修改 dynamicRoot 时路由模式加载微应用时 base 传值 ([#642](https://github.com/umijs/plugins/issues/642)) ([2467b89](https://github.com/umijs/plugins/commit/2467b8939d58d6f4d12ef1391bd29eac172067df))
+
+# [2.26.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.25.2...@umijs/plugin-qiankun@2.26.0) (2021-07-06)
+
+### Features
+
+- **qiankun:** 支持手动指定预加载的应用 ([#649](https://github.com/umijs/plugins/issues/649)) ([b74db01](https://github.com/umijs/plugins/commit/b74db017887cd7848bb6b0b05b44344f424d48ff))
+
+## [2.25.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.25.1...@umijs/plugin-qiankun@2.25.2) (2021-06-30)
+
+### Bug Fixes
+
+- qiankun slave runtime should use esm format ([#645](https://github.com/umijs/plugins/issues/645)) ([5816848](https://github.com/umijs/plugins/commit/5816848b8b404e967bc9b392a73403cf1e2893d8))
+
+## [2.25.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.25.0...@umijs/plugin-qiankun@2.25.1) (2021-06-23)
+
+**Note:** Version bump only for package @umijs/plugin-qiankun
+
 # [2.25.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.24.1...@umijs/plugin-qiankun@2.25.0) (2021-06-03)
 
 ### Features

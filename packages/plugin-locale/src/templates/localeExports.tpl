@@ -43,13 +43,16 @@ const useLocalStorage = {{{UseLocalStorage}}};
 {{#antdLocale}}
 import {{lang}}{{country}}{{index}} from '{{{locale}}}';
 {{/antdLocale}}
+{{#paths}}
+import lang_{{lang}}{{country}}{{index}} from "{{{path}}}";
+{{/paths}}
 {{/LocaleList}}
 
 export const localeInfo: {[key: string]: any} = {
   {{#LocaleList}}
   '{{name}}': {
     messages: {
-      {{#paths}}...((locale) => locale.__esModule ? locale.default : locale)(require('{{{.}}}')),{{/paths}}
+      {{#paths}}...lang_{{lang}}{{country}}{{index}},{{/paths}}
     },
     locale: '{{locale}}',
     {{#Antd}}antd: {
@@ -84,13 +87,19 @@ export const addLocale = (
     ? Object.assign({}, localeInfo[name].messages, messages)
     : messages;
 
+
   const { momentLocale, antd } = extraLocales || {};
+  const locale = name.split('{{BaseSeparator}}')?.join('-')
   localeInfo[name] = {
     messages: mergeMessages,
-    locale: name.split('{{BaseSeparator}}')?.join('-'),
+    locale,
     momentLocale: momentLocale,
     {{#Antd}}antd,{{/Antd}}
   };
+   // 如果这是的 name 和当前的locale 相同需要重新设置一下，不然更新不了
+  if (locale === getLocale()) {
+    event.emit(LANG_CHANGE_EVENT, locale);
+  }
 };
 
 /**
@@ -185,8 +194,6 @@ export const getDirection = () => {
  * @returns string
  */
 export const setLocale = (lang: string, realReload: boolean = true) => {
-  const localeExp = new RegExp(`^([a-z]{2}){{BaseSeparator}}?([A-Z]{2})?$`);
-
   const runtimeLocale = plugin.applyPlugins({
     key: 'locale',
     type: ApplyPluginsType.modify,
@@ -194,10 +201,6 @@ export const setLocale = (lang: string, realReload: boolean = true) => {
   });
 
   const updater = () => {
-    if (lang !== undefined && !localeExp.test(lang)) {
-      // for reset when lang === undefined
-      throw new Error('setLocale lang format error');
-    }
     if (getLocale() !== lang) {
       if (typeof window.localStorage !== 'undefined' && useLocalStorage) {
         window.localStorage.setItem('umi_locale', lang || '');

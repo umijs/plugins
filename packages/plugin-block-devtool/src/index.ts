@@ -5,7 +5,7 @@ import { join, dirname } from 'path';
 import { readdirSync, copyFileSync, existsSync, mkdirSync, readdir } from 'fs';
 import upperCamelCase from 'uppercamelcase';
 import rimraf from 'rimraf';
-import fs from '../../plugin-access/tests/__mocks__/fs';
+
 interface SubBlock {
   name: string;
   path: string;
@@ -108,23 +108,38 @@ export default (props) => {
     // 这个环境变量是为了截图的时候可以动态设置 layout
     // 所以会优先从 环境变量里面取
     const path = process.env.BLOCK_DEV_PATH || options.path || '/';
-
+    const componentPath = process.argv.slice(2)[1];
+    let routers = [];
+    // 如果传入了 layout 只展示当前的
+    if (componentPath) {
+      routers.push({
+        ...options.menu,
+        path,
+        component: join('../', process.argv.slice(2)[1], './src/index'),
+        exact: false,
+      });
+      // 否则展示所有的
+    } else {
+      const components = readdirSync(cwd).filter((componentsPath) => {
+        if (existsSync(join(componentsPath, 'package.json'))) {
+          return true;
+        }
+        return false;
+      });
+      routers = components.map((pagePath) => {
+        return {
+          ...options.menu,
+          path: pagePath.toLocaleLowerCase(),
+          name: pagePath.toLocaleLowerCase(),
+          component: join('../', pagePath, './src/index'),
+          exact: false,
+        };
+      });
+    }
     return {
       ...memo,
-      routes: [
-        {
-          path: '/',
-          component: '../.umi/block-devtool/layout',
-          routes: [
-            {
-              ...options.menu,
-              path,
-              component: join('../', process.argv.slice(2)[1], './src/index'),
-              exact: false,
-            },
-          ],
-        },
-      ],
+      layout: {},
+      routes: routers,
     };
   });
 

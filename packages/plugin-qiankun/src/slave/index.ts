@@ -1,19 +1,25 @@
 import address from 'address';
 import assert from 'assert';
-import { isString, isEqual } from 'lodash';
+import { readFileSync } from 'fs';
+import { isEqual, isString } from 'lodash';
 import { join } from 'path';
 import { IApi } from 'umi';
+import { qiankunStateFromMasterModelNamespace } from '../constants';
 import { SlaveOptions } from '../types';
 import { addSpecifyPrefixedRoute } from './addSpecifyPrefixedRoute';
-import { qiankunStateFromMasterModelNamespace } from '../constants';
-import { readFileSync } from 'fs';
 
 export function isSlaveEnable(api: IApi) {
-  return (
-    !!api.userConfig?.qiankun?.slave ||
-    isEqual(api.userConfig?.qiankun, {}) ||
-    !!process.env.INITIAL_QIANKUN_SLAVE_OPTIONS
-  );
+  const slaveCfg = api.userConfig?.qiankun?.slave;
+  if (slaveCfg) {
+    return slaveCfg.enable !== false;
+  }
+
+  // 兼容早期配置， qiankun 配一个空，相当于开启 slave
+  if (isEqual(api.userConfig?.qiankun, {})) {
+    return true;
+  }
+
+  return !!process.env.INITIAL_QIANKUN_SLAVE_OPTIONS;
 }
 
 export default function (api: IApi) {
@@ -63,6 +69,18 @@ export default function (api: IApi) {
     return modifiedDefaultConfig;
   });
 
+  api.modifyConfig((config) => {
+    // mfsu 场景默认给子应用增加 mfName 配置，从而避免冲突
+    if (config.mfsu && !config.mfsu.mfName) {
+      // 替换掉包名里的特殊字符
+      config.mfsu.mfName = `mf_${api.pkg.name
+        ?.replace(/^@/, '')
+        .replace(/\W/g, '_')}`;
+    }
+
+    return config;
+  });
+
   api.modifyPublicPathStr((publicPathStr) => {
     const { runtimePublicPath } = api.config;
     const { shouldNotModifyRuntimePublicPath } = (api.config.qiankun || {})
@@ -80,7 +98,14 @@ export default function (api: IApi) {
   api.chainWebpack((config, { webpack }) => {
     assert(api.pkg.name, 'You should have name in package.json');
 
-    config.output.libraryTarget('umd').library(`${api.pkg.name}-[name]`);
+    const { shouldNotAddLibraryChunkName } = (api.config.qiankun || {}).slave!;
+
+    config.output
+      .libraryTarget('umd')
+      .library(
+        shouldNotAddLibraryChunkName ? api.pkg.name : `${api.pkg.name}-[name]`,
+      );
+
     const usingWebpack5 = webpack.version?.startsWith('5');
     // webpack5 移除了 jsonpFunction 配置，且不再需要配置 jsonpFunction，see https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-unique-naming
     if (!usingWebpack5) {
@@ -103,17 +128,18 @@ export default function (api: IApi) {
     return $;
   });
 
-  const port = process.env.PORT;
-  // source-map 跨域设置
-  if (process.env.NODE_ENV === 'development' && port) {
-    const localHostname = process.env.USE_REMOTE_IP
-      ? address.ip()
-      : process.env.HOST || 'localhost';
+  api.chainWebpack((memo, { webpack }) => {
+    const port = process.env.PORT;
+    // source-map 跨域设置
+    if (api.env === 'development' && port) {
+      const localHostname = process.env.USE_REMOTE_IP
+        ? address.ip()
+        : process.env.HOST || 'localhost';
 
-    const protocol = process.env.HTTPS ? 'https' : 'http';
-    // 变更 webpack-dev-server websocket 默认监听地址
-    process.env.SOCKET_SERVER = `${protocol}://${localHostname}:${port}/`;
-    api.chainWebpack((memo, { webpack }) => {
+      const protocol = process.env.HTTPS ? 'https' : 'http';
+      // 变更 webpack-dev-server websocket 默认监听地址
+      process.env.SOCKET_SERVER = `${protocol}://${localHostname}:${port}/`;
+
       // 开启了 devSourceMap 配置，默认为 true
       if (api.config.qiankun && api.config.qiankun.slave!.devSourceMap) {
         // 禁用 devtool，启用 SourceMapDevToolPlugin
@@ -127,9 +153,10 @@ export default function (api: IApi) {
           },
         ]);
       }
-      return memo;
-    });
-  }
+    }
+
+    return memo;
+  });
 
   api.addEntryImports(() => {
     return {

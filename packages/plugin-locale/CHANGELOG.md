@@ -2,6 +2,50 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.15.0...@umijs/plugin-locale@0.15.1) (2021-11-12)
+
+**Note:** Version bump only for package @umijs/plugin-locale
+
+# [0.15.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.14.2...@umijs/plugin-locale@0.15.0) (2021-10-26)
+
+### Features
+
+- No verification of lang-key ([#715](https://github.com/umijs/plugins/issues/715)) ([67d8eca](https://github.com/umijs/plugins/commit/67d8eca99e62b587bdb6e27e90905bbc64a8123a))
+
+## [0.14.2](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.14.1...@umijs/plugin-locale@0.14.2) (2021-07-21)
+
+### Bug Fixes
+
+- **locale:** changeLang will trigger rerender ([#662](https://github.com/umijs/plugins/issues/662)) ([dfc1501](https://github.com/umijs/plugins/commit/dfc150126b5dce6c7ef865d52b4bc9385a0f04c6))
+
+## [0.14.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.14.0...@umijs/plugin-locale@0.14.1) (2021-07-16)
+
+### Bug Fixes
+
+- **plugin-locale:** fix normalize package ([#660](https://github.com/umijs/plugins/issues/660)) ([b6f97de](https://github.com/umijs/plugins/commit/b6f97de2efed343877d34731c234b1da1581e01c))
+
+# [0.14.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.13.1...@umijs/plugin-locale@0.14.0) (2021-07-16)
+
+### Bug Fixes
+
+- default antd locale use esm ([#657](https://github.com/umijs/plugins/issues/657)) ([dcef5f3](https://github.com/umijs/plugins/commit/dcef5f3ecf104f3534bfc9ba1174c5e708d47783))
+
+### Features
+
+- **plugin-locale:** Added bn_BD Bangla Language ([#647](https://github.com/umijs/plugins/issues/647)) ([dd27d1d](https://github.com/umijs/plugins/commit/dd27d1d615ad449d8e3202c9afe054fca3b99968))
+
+## [0.13.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.13.0...@umijs/plugin-locale@0.13.1) (2021-07-13)
+
+### Bug Fixes
+
+- **locale:** fix antdLocale is null,mfsu will error ([#654](https://github.com/umijs/plugins/issues/654)) ([1ff017e](https://github.com/umijs/plugins/commit/1ff017ec8da09199ebd22b46ffb02821a1449f28))
+
+# [0.13.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.12.2...@umijs/plugin-locale@0.13.0) (2021-06-23)
+
+### Features
+
+- **plugin-locale:** fix mfsu mode locale ([#640](https://github.com/umijs/plugins/issues/640)) ([ce576ad](https://github.com/umijs/plugins/commit/ce576ad7b523fdbe34ea676cffc24a4a29e3a50d))
+
 ## [0.12.2](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.12.1...@umijs/plugin-locale@0.12.2) (2021-06-03)
 
 **Note:** Version bump only for package @umijs/plugin-locale

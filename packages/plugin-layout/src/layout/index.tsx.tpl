@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState,useMemo } from 'react';
 // @ts-ignore
 import { Link, useModel, history{{#hasAccess}}, traverseModifyRoutes, useAccess {{/hasAccess}} } from 'umi';
-import ProLayout, { BasicLayoutProps } from '@ant-design/pro-layout';
+import ProLayout, {
+  BasicLayoutProps,
+} from "@ant-design/pro-layout";
 import './style.less';
 // @ts-ignore
 import renderRightContent from '@@/plugin-layout/renderRightContent';
@@ -21,9 +23,8 @@ const BasicLayout = (props: any) => {
 
   // plugin-initial-state 未开启
   const { initialState, loading, setInitialState } = initialInfo;
-  const [currentPathConfig, setCurrentPathConfig] = useState<MenuDataItem>({});
 
-  useEffect(() => {
+  const currentPathConfig = useMemo(() => {
     const { menuData } = transformRoute(
       props?.route?.routes || [],
       undefined,
@@ -32,8 +33,8 @@ const BasicLayout = (props: any) => {
     );
     // 动态路由匹配
     const currentPathConfig = getMatchMenu(location.pathname, menuData).pop();
-    setCurrentPathConfig(currentPathConfig || {});
-  }, [location?.pathname, props?.route?.routes]);
+   return currentPathConfig || {};
+  },[location?.pathname, props?.route?.routes]);
 
   // layout 是否渲染相关
   const layoutRestProps: BasicLayoutProps & {
@@ -48,11 +49,13 @@ const BasicLayout = (props: any) => {
     itemRender: (route) => <Link to={route.path}>{route.breadcrumbName}</Link>,
     ...userConfig,
     ...restProps,
-    ...getLayoutRenderConfig(currentPathConfig as any),
+    ...getLayoutRenderConfig(currentPathConfig as any ||{}),
   };
+
 {{#hasAccess}}
   const access = useAccess?.();
 {{/hasAccess}}
+
   return (
     <ProLayout
       route={route}
@@ -75,7 +78,7 @@ const BasicLayout = (props: any) => {
       formatMessage={userConfig?.formatMessage}
       logo={logo}
       menuItemRender={(menuItemProps, defaultDom) => {
-        if (menuItemProps.isUrl || menuItemProps.children) {
+        if (menuItemProps.isUrl) {
           return defaultDom;
         }
         if (menuItemProps.path && location.pathname !== menuItemProps.path) {
@@ -126,7 +129,7 @@ const BasicLayout = (props: any) => {
         currentPathConfig={currentPathConfig}
       >
         {userConfig.childrenRender
-          ? userConfig.childrenRender(children)
+          ? userConfig.childrenRender(children, props)
           : children}
       </WithExceptionOpChildren>
     </ProLayout>
