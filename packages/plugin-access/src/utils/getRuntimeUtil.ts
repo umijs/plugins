@@ -1,5 +1,5 @@
 // This file is for runtime, not the compile time.
-export default () =>
+export default (strictMode: boolean = false) =>
   `import { IRoute } from 'umi';
 
 type Routes = IRoute[];
@@ -24,6 +24,10 @@ export function traverseModifyRoutes(routes: Routes, access: any): Routes {
       typeof currentRoute.unaccessible === 'boolean'
         ? !currentRoute.unaccessible
         : true;
+        
+    if(currentRoute && ${strictMode}){
+      currentRoute.unaccessible = true;
+    }
 
     // 判断路由是否有权限的具体代码
     if (currentRoute && currentRoute.access) {
@@ -43,6 +47,9 @@ export function traverseModifyRoutes(routes: Routes, access: any): Routes {
         currentRouteAccessible = accessProp;
       }
       currentRoute.unaccessible = !currentRouteAccessible;
+      if(typeof accessProp === 'undefined'){
+        currentRoute.unaccessible = true;
+      }
     }
 
     // 筛选子路由

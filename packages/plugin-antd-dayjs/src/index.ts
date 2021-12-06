@@ -38,8 +38,11 @@ const presets = {
 };
 
 const getConfig = (api: IApi) => {
-  let { preset = 'antd', plugins, replaceMoment } =
-    api.userConfig.antdDayjs || {};
+  let {
+    preset = 'antd',
+    plugins,
+    replaceMoment,
+  } = api.userConfig.antdDayjs || {};
 
   if (preset && presets[preset]) {
     plugins = presets[preset].plugins;

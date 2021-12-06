@@ -8,6 +8,13 @@ let mockApi: IApi;
 describe('PluginAccess', () => {
   beforeEach(() => {
     mockApi = {
+      describe: () => {},
+      ConfigChangeType: {
+        regenerateTmpFiles: 'regenerateTmpFiles',
+      },
+      EnableBy: {
+        config: 'config',
+      },
       paths: {
         absTmpPath: '/workspace/project/src/page/.umi',
         absSrcPath: '/workspace/project/src',
