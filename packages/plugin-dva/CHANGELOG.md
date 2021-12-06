@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.12.1...@umijs/plugin-dva@0.13.0) (2021-06-03)
+
+### Features
+
+- **layout:** renderRightContent support locale ([#624](https://github.com/umijs/plugins/issues/624)) ([6d3fc2d](https://github.com/umijs/plugins/commit/6d3fc2df3f75b3e700b78a9e267099c7f70be47b))
+
+## [0.12.1](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.12.0...@umijs/plugin-dva@0.12.1) (2021-05-08)
+
+### Bug Fixes
+
+- **ssr:** dva app ins conflict ([#603](https://github.com/umijs/plugins/issues/603)) ([c927a16](https://github.com/umijs/plugins/commit/c927a16c4f7106b1050c9f3d2f08384c2cc07bc7))
+
+# [0.12.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.11.1...@umijs/plugin-dva@0.12.0) (2021-04-20)
+
+### Features
+
+- plugin dva support config immer.enableAllPlugins ([#585](https://github.com/umijs/plugins/issues/585)) ([2fe25d5](https://github.com/umijs/plugins/commit/2fe25d50581d869ed694fb886ea5649fd860dc90))
+
+## [0.11.1](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.11.0...@umijs/plugin-dva@0.11.1) (2021-04-09)
+
+### Bug Fixes
+
+- **dva:** dva model import undefined when from umi ([#523](https://github.com/umijs/plugins/issues/523)) ([1d8fb78](https://github.com/umijs/plugins/commit/1d8fb78e6ccda237307867bb0954fb840c95f930))
+
+# [0.11.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.10.0...@umijs/plugin-dva@0.11.0) (2021-03-26)
+
+### Features
+
+- improve dva log ([#562](https://github.com/umijs/plugins/issues/562)) ([4d84817](https://github.com/umijs/plugins/commit/4d84817a041fd259afb6a8c7f6abfac16e7925e5))
+
+# [0.10.0](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.9.1...@umijs/plugin-dva@0.10.0) (2021-01-13)
+
+### Features
+
+- plugin dva support config immer.enableES5 ([#505](https://github.com/umijs/plugins/issues/505)) ([969d9d8](https://github.com/umijs/plugins/commit/969d9d8b3ba4f0e9cdfc9c6854adfed0458fcb6d))
+
 ## [0.9.1](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.9.0...@umijs/plugin-dva@0.9.1) (2020-09-24)
 
 **Note:** Version bump only for package @umijs/plugin-dva

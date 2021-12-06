@@ -2,6 +2,155 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.30](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.29...@umijs/preset-react@1.8.30) (2021-11-23)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.29](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.28...@umijs/preset-react@1.8.29) (2021-11-17)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.28](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.27...@umijs/preset-react@1.8.28) (2021-11-16)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.27](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.26...@umijs/preset-react@1.8.27) (2021-11-13)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.26](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.25...@umijs/preset-react@1.8.26) (2021-11-12)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.25](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.24...@umijs/preset-react@1.8.25) (2021-10-26)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.24](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.23...@umijs/preset-react@1.8.24) (2021-09-13)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.23](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.22...@umijs/preset-react@1.8.23) (2021-09-06)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.22](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.21...@umijs/preset-react@1.8.22) (2021-07-29)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.21](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.20...@umijs/preset-react@1.8.21) (2021-07-21)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.20](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.19...@umijs/preset-react@1.8.20) (2021-07-20)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.19](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.18...@umijs/preset-react@1.8.19) (2021-07-16)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.18](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.17...@umijs/preset-react@1.8.18) (2021-07-16)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.17](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.16...@umijs/preset-react@1.8.17) (2021-07-13)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.16](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.15...@umijs/preset-react@1.8.16) (2021-07-13)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.15](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.14...@umijs/preset-react@1.8.15) (2021-07-13)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.14](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.13...@umijs/preset-react@1.8.14) (2021-06-30)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.13](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.12...@umijs/preset-react@1.8.13) (2021-06-23)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.12](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.11...@umijs/preset-react@1.8.12) (2021-06-07)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.11](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.10...@umijs/preset-react@1.8.11) (2021-06-03)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.10](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.9...@umijs/preset-react@1.8.10) (2021-06-01)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.9](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.8...@umijs/preset-react@1.8.9) (2021-05-31)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.8](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.7...@umijs/preset-react@1.8.8) (2021-05-20)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.7](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.6...@umijs/preset-react@1.8.7) (2021-05-08)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.6](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.5...@umijs/preset-react@1.8.6) (2021-04-20)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.5](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.4...@umijs/preset-react@1.8.5) (2021-04-20)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.4](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.3...@umijs/preset-react@1.8.4) (2021-04-09)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.3](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.2...@umijs/preset-react@1.8.3) (2021-03-26)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.2](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.1...@umijs/preset-react@1.8.2) (2021-03-19)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.8.1](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.0...@umijs/preset-react@1.8.1) (2021-03-15)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+# [1.8.0](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.7.13...@umijs/preset-react@1.8.0) (2021-03-04)
+
+### Features
+
+- **lodash:** on demand loaded ([#535](https://github.com/umijs/plugins/issues/535)) ([0dd2998](https://github.com/umijs/plugins/commit/0dd29985bf4a9669ea43606c876c8dec3f35178a))
+
+### Reverts
+
+- Revert "feat(lodash): on demand loaded (#535)" (#539) ([d931276](https://github.com/umijs/plugins/commit/d93127667e2c696b410312f59f883f4e887eb6ff)), closes [#535](https://github.com/umijs/plugins/issues/535) [#539](https://github.com/umijs/plugins/issues/539)
+
+## [1.7.13](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.7.12...@umijs/preset-react@1.7.13) (2021-01-19)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.7.12](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.7.11...@umijs/preset-react@1.7.12) (2021-01-13)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.7.11](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.7.10...@umijs/preset-react@1.7.11) (2021-01-13)
+
+**Note:** Version bump only for package @umijs/preset-react
+
+## [1.7.10](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.7.9...@umijs/preset-react@1.7.10) (2021-01-11)
+
+### Bug Fixes
+
+- remove babel-plugin-react-require when using automatic runtime ([#497](https://github.com/umijs/plugins/issues/497)) ([5d9ba02](https://github.com/umijs/plugins/commit/5d9ba02aab752a12c7505eb60f65843f3d6df84c))
+- 修复在 React 17 下当不使用 ts 的情况下，启动项目仍然会提示更新 tsconfig.json 中 jsx 字段的问题 ([#482](https://github.com/umijs/plugins/issues/482)) ([84f9a91](https://github.com/umijs/plugins/commit/84f9a919efb9b28e854912429039b8d1e1a5be7a))
+
 ## [1.7.9](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.7.8...@umijs/preset-react@1.7.9) (2020-12-24)
 
 **Note:** Version bump only for package @umijs/preset-react

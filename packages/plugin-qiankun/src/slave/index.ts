@@ -1,25 +1,28 @@
 import address from 'address';
 import assert from 'assert';
-import { isString, isEqual } from 'lodash';
+import { readFileSync } from 'fs';
+import { isEqual, isString } from 'lodash';
 import { join } from 'path';
 import { IApi } from 'umi';
+import { qiankunStateFromMasterModelNamespace } from '../constants';
 import { SlaveOptions } from '../types';
 import { addSpecifyPrefixedRoute } from './addSpecifyPrefixedRoute';
-import {
-  defaultSlaveRootId,
-  qiankunStateFromMasterModelNamespace,
-} from '../constants';
-import { readFileSync } from 'fs';
 
 export function isSlaveEnable(api: IApi) {
-  return (
-    !!api.userConfig?.qiankun?.slave ||
-    isEqual(api.userConfig?.qiankun, {}) ||
-    !!process.env.INITIAL_QIANKUN_SLAVE_OPTIONS
-  );
+  const slaveCfg = api.userConfig?.qiankun?.slave;
+  if (slaveCfg) {
+    return slaveCfg.enable !== false;
+  }
+
+  // 兼容早期配置， qiankun 配一个空，相当于开启 slave
+  if (isEqual(api.userConfig?.qiankun, {})) {
+    return true;
+  }
+
+  return !!process.env.INITIAL_QIANKUN_SLAVE_OPTIONS;
 }
 
-export default function(api: IApi) {
+export default function (api: IApi) {
   api.describe({
     enableBy: () => isSlaveEnable(api),
   });
@@ -37,8 +40,9 @@ export default function(api: IApi) {
   });
 
   // eslint-disable-next-line import/no-dynamic-require, global-require
-  api.modifyDefaultConfig(memo => {
+  api.modifyDefaultConfig((memo) => {
     const initialSlaveOptions: SlaveOptions = {
+      devSourceMap: true,
       ...JSON.parse(process.env.INITIAL_QIANKUN_SLAVE_OPTIONS || '{}'),
       ...(memo.qiankun || {}).slave,
     };
@@ -46,7 +50,6 @@ export default function(api: IApi) {
     const modifiedDefaultConfig = {
       ...memo,
       disableGlobalVariables: true,
-      mountElementId: defaultSlaveRootId,
       // 默认开启 runtimePublicPath，避免出现 dynamic import 场景子应用资源地址出问题
       runtimePublicPath: true,
       runtimeHistory: {},
@@ -66,15 +69,27 @@ export default function(api: IApi) {
     return modifiedDefaultConfig;
   });
 
-  api.modifyPublicPathStr(publicPathStr => {
+  api.modifyConfig((config) => {
+    // mfsu 场景默认给子应用增加 mfName 配置，从而避免冲突
+    if (config.mfsu && !config.mfsu.mfName) {
+      // 替换掉包名里的特殊字符
+      config.mfsu.mfName = `mf_${api.pkg.name
+        ?.replace(/^@/, '')
+        .replace(/\W/g, '_')}`;
+    }
+
+    return config;
+  });
+
+  api.modifyPublicPathStr((publicPathStr) => {
     const { runtimePublicPath } = api.config;
-    const { shouldNotModifyRuntimePublicPath } = (
-      api.config.qiankun || {}
-    ).slave!;
+    const { shouldNotModifyRuntimePublicPath } = (api.config.qiankun || {})
+      .slave!;
 
     if (runtimePublicPath === true && !shouldNotModifyRuntimePublicPath) {
-      return `window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || "${api.config
-        .publicPath || '/'}"`;
+      return `window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || "${
+        api.config.publicPath || '/'
+      }"`;
     }
 
     return publicPathStr;
@@ -83,7 +98,14 @@ export default function(api: IApi) {
   api.chainWebpack((config, { webpack }) => {
     assert(api.pkg.name, 'You should have name in package.json');
 
-    config.output.libraryTarget('umd').library(`${api.pkg.name}-[name]`);
+    const { shouldNotAddLibraryChunkName } = (api.config.qiankun || {}).slave!;
+
+    config.output
+      .libraryTarget('umd')
+      .library(
+        shouldNotAddLibraryChunkName ? api.pkg.name : `${api.pkg.name}-[name]`,
+      );
+
     const usingWebpack5 = webpack.version?.startsWith('5');
     // webpack5 移除了 jsonpFunction 配置，且不再需要配置 jsonpFunction，see https://webpack.js.org/blog/2020-10-10-webpack-5-release/#automatic-unique-naming
     if (!usingWebpack5) {
@@ -94,8 +116,8 @@ export default function(api: IApi) {
   });
 
   // umi bundle 添加 entry 标记
-  api.modifyHTML($ => {
-    $('script').each((_, el) => {
+  api.modifyHTML(($) => {
+    $('script').each((_: any, el: any) => {
       const scriptEl = $(el);
       const umiEntryJs = /\/?umi(\.\w+)?\.js$/g;
       if (umiEntryJs.test(scriptEl.attr('src') ?? '')) {
@@ -106,30 +128,35 @@ export default function(api: IApi) {
     return $;
   });
 
-  const port = process.env.PORT;
-  // source-map 跨域设置
-  if (process.env.NODE_ENV === 'development' && port) {
-    const localHostname = process.env.USE_REMOTE_IP
-      ? address.ip()
-      : process.env.HOST || 'localhost';
+  api.chainWebpack((memo, { webpack }) => {
+    const port = process.env.PORT;
+    // source-map 跨域设置
+    if (api.env === 'development' && port) {
+      const localHostname = process.env.USE_REMOTE_IP
+        ? address.ip()
+        : process.env.HOST || 'localhost';
 
-    const protocol = process.env.HTTPS ? 'https' : 'http';
-    // 变更 webpack-dev-server websocket 默认监听地址
-    process.env.SOCKET_SERVER = `${protocol}://${localHostname}:${port}/`;
-    api.chainWebpack((memo, { webpack }) => {
-      // 禁用 devtool，启用 SourceMapDevToolPlugin
-      memo.devtool(false);
-      memo.plugin('source-map').use(webpack.SourceMapDevToolPlugin, [
-        {
-          // @ts-ignore
-          namespace: api.pkg.name,
-          append: `\n//# sourceMappingURL=${protocol}://${localHostname}:${port}/[url]`,
-          filename: '[file].map',
-        },
-      ]);
-      return memo;
-    });
-  }
+      const protocol = process.env.HTTPS ? 'https' : 'http';
+      // 变更 webpack-dev-server websocket 默认监听地址
+      process.env.SOCKET_SERVER = `${protocol}://${localHostname}:${port}/`;
+
+      // 开启了 devSourceMap 配置，默认为 true
+      if (api.config.qiankun && api.config.qiankun.slave!.devSourceMap) {
+        // 禁用 devtool，启用 SourceMapDevToolPlugin
+        memo.devtool(false);
+        memo.plugin('source-map').use(webpack.SourceMapDevToolPlugin, [
+          {
+            // @ts-ignore
+            namespace: api.pkg.name,
+            append: `\n//# sourceMappingURL=${protocol}://${localHostname}:${port}/[url]`,
+            filename: '[file].map',
+          },
+        ]);
+      }
+    }
+
+    return memo;
+  });
 
   api.addEntryImports(() => {
     return {
@@ -203,7 +230,7 @@ function useLegacyMode(api: IApi) {
       export function useRootExports() {
         if (process.env.NODE_ENV === 'development') {
           console.error(
-            '[@umijs/plugin-qiankun] Deprecated: useRootExports 通信方式不再推荐，建议您升级到新的应用通信模式，以获得更好的开发体验。详见 https://umijs.org/plugins/plugin-qiankun#%E7%88%B6%E5%AD%90%E5%BA%94%E7%94%A8%E9%80%9A%E8%AE%AF',
+            '[@umijs/plugin-qiankun] Deprecated: useRootExports 通信方式不再推荐，并将在后续版本中移除，请尽快升级到新的应用通信模式，以获得更好的开发体验。详见 https://umijs.org/plugins/plugin-qiankun#%E7%88%B6%E5%AD%90%E5%BA%94%E7%94%A8%E9%80%9A%E8%AE%AF',
           );
         }
         return useContext(Context);
@@ -222,7 +249,7 @@ function useLegacyMode(api: IApi) {
     },
   ]);
 
-  api.modifyRoutes(routes => {
+  api.modifyRoutes((routes) => {
     // 开启keepOriginalRoutes配置
     if (keepOriginalRoutes === true || isString(keepOriginalRoutes)) {
       return addSpecifyPrefixedRoute(routes, keepOriginalRoutes, api.pkg.name);

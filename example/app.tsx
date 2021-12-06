@@ -54,7 +54,7 @@ export const layout = {
     }
     return menus;
   },
-  childrenRender: children => {
+  childrenRender: (children) => {
     return (
       <>
         {children}

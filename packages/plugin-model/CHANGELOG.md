@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.2](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.6.1...@umijs/plugin-model@2.6.2) (2021-11-12)
+
+### Bug Fixes
+
+- **layout:** fix login render twice error ([#740](https://github.com/umijs/plugins/issues/740)) ([6c9bd9d](https://github.com/umijs/plugins/commit/6c9bd9d2a829f5a86b6fc9d710da7cb5195a3aa3))
+
+## [2.6.1](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.6.0...@umijs/plugin-model@2.6.1) (2021-06-03)
+
+**Note:** Version bump only for package @umijs/plugin-model
+
+# [2.6.0](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.7...@umijs/plugin-model@2.6.0) (2021-05-20)
+
+### Features
+
+- fix plugin-model runtime to adapt mfsu ([#615](https://github.com/umijs/plugins/issues/615)) ([48c69ff](https://github.com/umijs/plugins/commit/48c69ff2a296243045ea763aa857016da8e91379))
+
+## [2.5.7](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.6...@umijs/plugin-model@2.5.7) (2021-04-20)
+
+### Bug Fixes
+
+- ie11 useModel throw error on state changes ([#588](https://github.com/umijs/plugins/issues/588)) ([9100e4d](https://github.com/umijs/plugins/commit/9100e4d9364edaae17c0b12a6f69f8918dbbb639))
+
 ## [2.5.6](https://github.com/umijs/plugins/compare/@umijs/plugin-model@2.5.5...@umijs/plugin-model@2.5.6) (2020-10-27)
 
 ### Bug Fixes

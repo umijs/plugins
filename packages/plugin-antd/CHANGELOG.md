@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.12.1...@umijs/plugin-antd@0.13.0) (2021-11-23)
+
+### Features
+
+- **and:** add config antd disableBabelPluginImport:false ([#752](https://github.com/umijs/plugins/issues/752)) ([9d4190b](https://github.com/umijs/plugins/commit/9d4190bd9b39f6e933f61025c0d1a98786b881d5))
+
+## [0.12.1](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.12.0...@umijs/plugin-antd@0.12.1) (2021-11-16)
+
+### Bug Fixes
+
+- **antd:** add missing configprovider prefixCls ([#746](https://github.com/umijs/plugins/issues/746)) ([c955a13](https://github.com/umijs/plugins/commit/c955a1361780cb57d5e3800863dc4aa5c7711683))
+
+# [0.12.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.11.0...@umijs/plugin-antd@0.12.0) (2021-11-12)
+
+### Bug Fixes
+
+- **prefixCls:** Modal and notification had remove prefixCls config in antd@4 ([#712](https://github.com/umijs/plugins/issues/712)) ([afdb502](https://github.com/umijs/plugins/commit/afdb5021ecae4f894428be0c15c8bba5448700a2))
+
+### Features
+
+- support next antd version ([#727](https://github.com/umijs/plugins/issues/727)) ([25ba2ab](https://github.com/umijs/plugins/commit/25ba2abcc3dcc6eec9b36d14ebb6bd1564d155d1))
+
+# [0.11.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.10.0...@umijs/plugin-antd@0.11.0) (2021-09-06)
+
+### Features
+
+- add config antd mobile:false ([#697](https://github.com/umijs/plugins/issues/697)) ([ac29922](https://github.com/umijs/plugins/commit/ac29922ccc5b50e446cd862230d3f4a5b37cad1a))
+
+# [0.10.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.9.2...@umijs/plugin-antd@0.10.0) (2021-06-07)
+
+### Features
+
+- **antd:** prefixCls support notification ([#508](https://github.com/umijs/plugins/issues/508)) ([651c905](https://github.com/umijs/plugins/commit/651c9051e39e03d728adf463b63d859b8b0b8f6f))
+
+## [0.9.2](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.9.1...@umijs/plugin-antd@0.9.2) (2021-06-03)
+
+**Note:** Version bump only for package @umijs/plugin-antd
+
 ## [0.9.1](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.9.0...@umijs/plugin-antd@0.9.1) (2020-12-03)
 
 ### Bug Fixes

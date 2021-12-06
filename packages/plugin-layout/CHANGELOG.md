@@ -2,6 +2,77 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.18.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.18.0...@umijs/plugin-layout@0.18.1) (2021-11-17)
+
+### Bug Fixes
+
+- **layout:** remove currentPathConfig loading ([#748](https://github.com/umijs/plugins/issues/748)) ([71d9c16](https://github.com/umijs/plugins/commit/71d9c16c8793f92fe06b719c2d81b12f89c5d65a))
+
+# [0.18.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.4...@umijs/plugin-layout@0.18.0) (2021-11-16)
+
+### Features
+
+- props with childrenRender ([#745](https://github.com/umijs/plugins/issues/745)) ([4dea6e4](https://github.com/umijs/plugins/commit/4dea6e4111cf8783175324a6f2b9229fdcd0d64d))
+
+## [0.17.4](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.3...@umijs/plugin-layout@0.17.4) (2021-11-13)
+
+### Bug Fixes
+
+- **layout:** up deps to 2.0 ([#742](https://github.com/umijs/plugins/issues/742)) ([d6ee483](https://github.com/umijs/plugins/commit/d6ee483045f7920813875cf385853aaca5544c23))
+
+## [0.17.3](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.2...@umijs/plugin-layout@0.17.3) (2021-11-12)
+
+### Bug Fixes
+
+- **layout:** fix login render twice error ([#740](https://github.com/umijs/plugins/issues/740)) ([6c9bd9d](https://github.com/umijs/plugins/commit/6c9bd9d2a829f5a86b6fc9d710da7cb5195a3aa3))
+
+## [0.17.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.1...@umijs/plugin-layout@0.17.2) (2021-07-20)
+
+### Bug Fixes
+
+- **layout:** if currentPathConfig is null, render loading ([#661](https://github.com/umijs/plugins/issues/661)) ([4408266](https://github.com/umijs/plugins/commit/440826637c9fccd69dc9dca46ad97d6e79b1b573))
+
+## [0.17.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.0...@umijs/plugin-layout@0.17.1) (2021-06-07)
+
+### Bug Fixes
+
+- **layout:** useAccess was not found ([#627](https://github.com/umijs/plugins/issues/627)) ([28afcbd](https://github.com/umijs/plugins/commit/28afcbd024b261d962157c5e0b8d26baac5c4c34)), closes [#628](https://github.com/umijs/plugins/issues/628)
+
+# [0.17.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.16.0...@umijs/plugin-layout@0.17.0) (2021-06-03)
+
+### Features
+
+- **layout:** renderRightContent support locale ([#624](https://github.com/umijs/plugins/issues/624)) ([6d3fc2d](https://github.com/umijs/plugins/commit/6d3fc2df3f75b3e700b78a9e267099c7f70be47b))
+
+# [0.16.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.15.0...@umijs/plugin-layout@0.16.0) (2021-05-31)
+
+### Features
+
+- **plugin-access:** fix traverseModifyRoutes ([#617](https://github.com/umijs/plugins/issues/617)) ([38606e5](https://github.com/umijs/plugins/commit/38606e50ece6e88a714cf6683eb105ec284ecbf5))
+
+# [0.15.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.14.1...@umijs/plugin-layout@0.15.0) (2021-05-08)
+
+### Bug Fixes
+
+- **layout:** add React.FC to fix "React declared but never read" of "tsc --noEmit" ([#542](https://github.com/umijs/plugins/issues/542)) ([046125f](https://github.com/umijs/plugins/commit/046125f9f1cdeb44e3f9fb01bc0f65fd42404322))
+- **layout:** 修复 403 页面显示逻辑 ([#488](https://github.com/umijs/plugins/issues/488)) ([7ea8d7f](https://github.com/umijs/plugins/commit/7ea8d7f07c9702083877eebb1b70fc11ab31d9cb))
+
+### Features
+
+- **layout:** support layoutActionRef export ([#606](https://github.com/umijs/plugins/issues/606)) ([b82a43a](https://github.com/umijs/plugins/commit/b82a43a77be8302ff323a3e428e3f67e38378b9a))
+
+## [0.14.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.14.0...@umijs/plugin-layout@0.14.1) (2021-03-19)
+
+### Bug Fixes
+
+- menuItem should support target ([#558](https://github.com/umijs/plugins/issues/558)) ([ec0f461](https://github.com/umijs/plugins/commit/ec0f46134b7a9002fcdd565d81e6582a2e63a840))
+
+# [0.14.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.13.5...@umijs/plugin-layout@0.14.0) (2021-03-15)
+
+### Features
+
+- **openapi:** support openapi plugins ([#527](https://github.com/umijs/plugins/issues/527)) ([516a266](https://github.com/umijs/plugins/commit/516a266c00e283d0115ad8fc0bd2fd44d90b1a0f))
+
 ## [0.13.5](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.13.4...@umijs/plugin-layout@0.13.5) (2020-12-24)
 
 ### Bug Fixes

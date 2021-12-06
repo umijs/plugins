@@ -17,7 +17,8 @@ export function checkIfHasDefaultExporting(filepath: string): boolean {
   }
 
   const fileContent = fs.readFileSync(scriptPath, 'utf8');
-  const validationRegExp = /(export\s*default)|(exports\.default)|(module.exports[\s\S]*default)|(module.exports[\s\n]*=)/m;
+  const validationRegExp =
+    /(export\s*default)|(exports\.default)|(module.exports[\s\S]*default)|(module.exports[\s\n]*=)/m;
 
   return validationRegExp.test(fileContent);
 }

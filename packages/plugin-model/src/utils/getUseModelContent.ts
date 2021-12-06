@@ -3,14 +3,12 @@ import { utils } from 'umi';
 
 const { winPath } = utils;
 
-export default function() {
+export default function () {
   return `import { useState, useEffect, useContext, useRef } from 'react';
 // @ts-ignore
 import isEqual from '${winPath(require.resolve('fast-deep-equal'))}';
 // @ts-ignore
-import { UmiContext } from '${winPath(
-    join(__dirname, '..', 'helpers', 'constant'),
-  )}';
+import { UmiContext } from './helpers/constant';
 import { Model, models } from './Provider';
 
 export type Models<T extends keyof typeof models> = Model<T>[T]

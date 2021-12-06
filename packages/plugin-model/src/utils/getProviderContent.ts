@@ -3,7 +3,7 @@ import { utils } from 'umi';
 
 const { winPath } = utils;
 
-export default function(
+export default function (
   imports: string,
   userModels: string,
   extraImports: string,
@@ -18,15 +18,11 @@ export default ({ children }: { children: React.ReactNode }) => children
 ${extraImports}
 ${imports}
 // @ts-ignore
-import Dispatcher from '${winPath(
-    join(__dirname, '..', 'helpers', 'dispatcher'),
-  )}';
+import Dispatcher from './helpers/dispatcher';
 // @ts-ignore
-import Executor from '${winPath(join(__dirname, '..', 'helpers', 'executor'))}';
+import Executor from './helpers/executor';
 // @ts-ignore
-import { UmiContext } from '${winPath(
-    join(__dirname, '..', 'helpers', 'constant'),
-  )}';
+import { UmiContext } from './helpers/constant';
 
 export const models = { ${extraModels ? `${extraModels}, ` : ''}${userModels} };
 

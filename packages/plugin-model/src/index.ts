@@ -7,10 +7,7 @@ import { readFileSync } from 'fs';
 const { lodash } = utils;
 
 export default (api: IApi) => {
-  const {
-    paths,
-    utils: { winPath },
-  } = api;
+  const { paths } = api;
 
   function getModelDir() {
     return api.config.singular ? 'model' : 'models';
@@ -65,6 +62,28 @@ export default (api: IApi) => {
         content: utils.Mustache.render(
           readFileSync(join(__dirname, 'runtime.tsx.tpl'), 'utf-8'),
           {},
+        ),
+      });
+
+      api.writeTmpFile({
+        path: 'plugin-model/helpers/constant.tsx',
+        content: readFileSync(
+          join(__dirname, './helpers/constant.tsx.tpl'),
+          'utf-8',
+        ),
+      });
+      api.writeTmpFile({
+        path: 'plugin-model/helpers/dispatcher.tsx',
+        content: readFileSync(
+          join(__dirname, './helpers/dispatcher.tsx.tpl'),
+          'utf-8',
+        ),
+      });
+      api.writeTmpFile({
+        path: 'plugin-model/helpers/executor.tsx',
+        content: readFileSync(
+          join(__dirname, './helpers/executor.tsx.tpl'),
+          'utf-8',
         ),
       });
     } catch (e) {

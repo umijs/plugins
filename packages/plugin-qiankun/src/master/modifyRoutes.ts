@@ -1,10 +1,10 @@
 import { IApi, IRoute } from 'umi';
 import { patchMicroAppRoute, testPathWithPrefix, toArray } from '../common';
-import { App } from '../types';
 import { defaultHistoryType } from '../constants';
+import { App } from '../types';
 
 export default function modifyRoutes(api: IApi) {
-  api.modifyRoutes(routes => {
+  api.modifyRoutes((routes) => {
     const { history, base } = api.config;
     const { master: { routeBindingAlias = 'microApp', apps = [] } = {} } =
       api.config.qiankun || {};
@@ -40,8 +40,27 @@ function modifyRoutesWithAttachMode(
   const { routeBindingAlias = 'microApp', base = '/' } = opts;
   const patchRoutes = (routes: IRoute[]) => {
     if (routes.length) {
-      routes.forEach(route => {
-        patchMicroAppRoute(route, false, {
+      const getMicroAppRouteComponent = (opts: {
+        appName: string;
+        base: string;
+        masterHistoryType: string;
+        routeProps?: any;
+      }) => {
+        const { base, masterHistoryType, appName, routeProps } = opts;
+        const normalizeJsonStringInUmiRoute = (str: string) =>
+          str.replace(/"/g, "'");
+        const normalizedRouteProps = normalizeJsonStringInUmiRoute(
+          JSON.stringify(routeProps),
+        );
+
+        return `(() => {
+          const { getMicroAppRouteComponent } = umiExports;
+          return getMicroAppRouteComponent({ appName: '${appName}', base: '${base}', masterHistoryType: '${masterHistoryType}', routeProps: ${normalizedRouteProps} })
+        })()`;
+      };
+
+      routes.forEach((route) => {
+        patchMicroAppRoute(route, getMicroAppRouteComponent, {
           base,
           masterHistoryType,
           routeBindingAlias,
@@ -87,7 +106,7 @@ function useLegacyModifyRoutesWithRegistrableMode(
     return null;
   };
 
-  return routes.map(route => {
+  return routes.map((route) => {
     if (route.path === '/' && route.routes && route.routes.length) {
       apps.forEach(({ history: slaveHistory = masterHistoryType, base }) => {
         if (!base) {
@@ -98,7 +117,7 @@ function useLegacyModifyRoutesWithRegistrableMode(
         if (slaveHistory === masterHistoryType) {
           const baseConfig = toArray(base);
 
-          baseConfig.forEach(basePath => {
+          baseConfig.forEach((basePath) => {
             const routeWithPrefix = findRouteWithPrefix(routes, basePath);
 
             // 应用没有自己配置过 basePath 相关路由，则自动加入 mock 的路由

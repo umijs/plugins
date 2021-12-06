@@ -1,7 +1,10 @@
-export default function() {
+export default function () {
   return `\
 import React, { useContext } from 'react';
 import AccessContext, { AccessInstance as AccessInstanceType } from './context';
+import { traverseModifyRoutes } from './runtimeUtil';
+
+export { traverseModifyRoutes };
 
 export type AccessInstance = AccessInstanceType;
 

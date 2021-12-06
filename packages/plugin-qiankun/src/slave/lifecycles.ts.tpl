@@ -42,11 +42,12 @@ function normalizeHistory(
   return normalizedHistory;
 }
 
-function getSlaveRuntime() {
-  const config = plugin.applyPlugins({
+async function getSlaveRuntime() {
+  const config = await plugin.applyPlugins({
     key: 'qiankun',
     type: ApplyPluginsType.modify,
     initialValue: {},
+    async: true,
   });
   // 应用既是 master 又是 slave 的场景，运行时 slave 配置方式为 export const qiankun = { slave: {} }
   const { slave } = config;
@@ -55,7 +56,7 @@ function getSlaveRuntime() {
 
 export function genBootstrap(oldRender: typeof noop) {
   return async (props: any) => {
-    const slaveRuntime = getSlaveRuntime();
+    const slaveRuntime = await getSlaveRuntime();
     if (slaveRuntime.bootstrap) {
       await slaveRuntime.bootstrap(props);
     }
@@ -69,7 +70,7 @@ export function genMount(mountElementId: string) {
     if (typeof props !== 'undefined') {
       setModelState(props);
 
-      const slaveRuntime = getSlaveRuntime();
+      const slaveRuntime = await getSlaveRuntime();
       if (slaveRuntime.mount) {
         await slaveRuntime.mount(props);
       }
@@ -125,7 +126,7 @@ export function genUpdate() {
   return async (props: any) => {
     setModelState(props);
 
-    const slaveRuntime = getSlaveRuntime();
+    const slaveRuntime = await getSlaveRuntime();
     if (slaveRuntime.update) {
       await slaveRuntime.update(props);
     }
@@ -141,7 +142,7 @@ export function genUnmount(mountElementId: string) {
       ReactDOM.unmountComponentAtNode(container);
     }
 
-    const slaveRuntime = getSlaveRuntime();
+    const slaveRuntime = await getSlaveRuntime();
     if (slaveRuntime.unmount) await slaveRuntime.unmount(props);
   };
 }

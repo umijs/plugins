@@ -3,7 +3,8 @@
  * @since 2019-06-20
  */
 
-import * as pathToRegexp from 'path-to-regexp';
+import { ReactComponentElement } from 'react';
+import type { IRouteProps } from 'umi';
 
 export const defaultMountContainerId = 'root-subapp';
 
@@ -20,18 +21,17 @@ function testPathWithStaticPrefix(pathPrefix: string, realPath: string) {
     return realPath.startsWith(pathPrefix);
   }
 
-  const pathRegex = new RegExp(`^${pathPrefix}(\\/|\\?)+.*$`, 'g');
+  const pathRegex = new RegExp(`^${pathPrefix}([/?])+.*$`, 'g');
   const normalizedPath = `${realPath}/`;
   return pathRegex.test(normalizedPath);
 }
 
 function testPathWithDynamicRoute(dynamicRoute: string, realPath: string) {
-  return pathToRegexp
-    .default(dynamicRoute, {
-      strict: true,
-      end: false,
-    })
-    .test(realPath);
+  // FIXME 这个是旧的使用方式才会调到的 api，先临时这么苟一下消除报错，引导用户去迁移吧
+  const pathToRegexp = require('path-to-regexp');
+  return pathToRegexp(dynamicRoute, { strict: true, end: false }).test(
+    realPath,
+  );
 }
 
 export function testPathWithPrefix(pathPrefix: string, realPath: string) {
@@ -43,7 +43,12 @@ export function testPathWithPrefix(pathPrefix: string, realPath: string) {
 
 export function patchMicroAppRoute(
   route: any,
-  runtime = false,
+  getMicroAppRouteComponent: (opts: {
+    appName: string;
+    base: string;
+    masterHistoryType: string;
+    routeProps?: any;
+  }) => string | ReactComponentElement<any>,
   masterOptions: {
     base: string;
     masterHistoryType: string;
@@ -57,90 +62,70 @@ export function patchMicroAppRoute(
     route[`${routeBindingAlias}Props`] || route.microAppProps || {};
   if (microAppName) {
     if (route.routes?.length) {
-      throw new Error(
-        '[@umijs/plugin-qiankun]: You can not attach micro app to a route who has children!',
+      const childrenRouteHasComponent = route.routes.some(
+        (r: any) => r.component,
       );
+      if (childrenRouteHasComponent) {
+        throw new Error(
+          `[@umijs/plugin-qiankun]: You can not attach micro app ${microAppName} to route ${route.path} whose children has own component!`,
+        );
+      }
     }
 
     route.exact = false;
+
     const { settings = {}, ...componentProps } = microAppProps;
-    // 兼容以前的 settings 配置
-    const microAppSettings = route.settings || settings || {};
-
-    const normalizeJsonStringInUmiRoute = (str: string) =>
-      str.replace(/\"/g, "'");
-    const routeProps = runtime
-      ? {
-          settings: microAppSettings,
-          ...componentProps,
-        }
-      : normalizeJsonStringInUmiRoute(
-          JSON.stringify({
-            settings: microAppSettings,
-            ...componentProps,
-          }),
-        );
-
+    const routeProps = {
+      // 兼容以前的 settings 配置
+      settings: route.settings || settings || {},
+      ...componentProps,
+    };
     const opts = {
       appName: microAppName,
       base,
       masterHistoryType,
       routeProps,
     };
-    // 如果是运行时则返回真实的函数引用，编译时则返回字符串
-    route.component = runtime
-      ? getMicroAppRouteComponent(opts)
-      : getMicroAppRouteComponentStr(opts);
+    route.component = getMicroAppRouteComponent(opts);
   }
 }
 
-export function getMicroAppRouteComponent(opts: {
-  appName: string;
-  base: string;
-  masterHistoryType: string;
-  routeProps?: any;
-}) {
-  const { base, masterHistoryType, appName, routeProps } = opts;
-  const RouteComponent = ({ match }: any) => {
-    const {
-      MicroApp,
-      getCreateHistoryOptions,
-    } = require('@@/core/umiExports') as any;
-    const { url } = match;
-
-    // 默认取静态配置的 base
-    let umiConfigBase = base === '/' ? '' : base;
-    // 存在 getCreateHistoryOptions 说明当前应用开启了 runtimeHistory，此时取运行时的 history 配置的 basename
-    if (typeof getCreateHistoryOptions === 'function') {
-      const { basename = '/' } = getCreateHistoryOptions();
-      umiConfigBase = basename === '/' ? '' : basename;
+const recursiveSearch = (
+  routes: IRouteProps[],
+  path: string,
+): IRouteProps | null => {
+  for (let i = 0; i < routes.length; i++) {
+    if (routes[i].path === path) {
+      return routes[i];
     }
+    if (routes[i].routes && routes[i].routes?.length) {
+      const found = recursiveSearch(routes[i].routes || [], path);
+      if (found) {
+        return found;
+      }
+    }
+  }
+  return null;
+};
 
-    const runtimeMatchedBase =
-      umiConfigBase + (url.endsWith('/') ? url.substr(0, url.length - 1) : url);
-
-    const React = require('react');
-    const componentProps = {
-      name: appName,
-      base: runtimeMatchedBase,
-      history: masterHistoryType,
-      ...routeProps,
-    };
-    return React.createElement(MicroApp, componentProps);
-  };
-
-  return RouteComponent;
-}
-
-function getMicroAppRouteComponentStr(opts: {
-  appName: string;
-  base: string;
-  masterHistoryType: string;
-  routeProps?: any;
-}) {
-  const { base, masterHistoryType, appName, routeProps } = opts;
-  return `(() => {
-    const getMicroAppRouteComponent = require('@@/plugin-qiankun/common').getMicroAppRouteComponent;
-    return getMicroAppRouteComponent({ appName: '${appName}', base: '${base}', masterHistoryType: '${masterHistoryType}', routeProps: ${routeProps} })
-  })()`;
+export function insertRoute(routes: IRouteProps[], microAppRoute: IRouteProps) {
+  const found = recursiveSearch(routes, microAppRoute.insert);
+  if (found) {
+    if (
+      !microAppRoute.path ||
+      !found.path ||
+      !microAppRoute.path.startsWith(found.path)
+    ) {
+      throw new Error(
+        `[plugin-qiankun]: path "${microAppRoute.path}" need to starts with "${found.path}"`,
+      );
+    }
+    found.exact = false;
+    found.routes = found.routes || [];
+    found.routes.push(microAppRoute);
+  } else {
+    throw new Error(
+      `[plugin-qiankun]: path "${microAppRoute.insert}" not found`,
+    );
+  }
 }

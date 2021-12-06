@@ -1,6 +1,6 @@
 {
   "name": "@umijs/preset-umi2-compatible",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "@umijs/preset-umi2-compatible",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

@@ -33,9 +33,14 @@ export default (api: IApi) => {
       schema(joi) {
         return joi.object({
           disableModelsReExport: joi.boolean(),
+          lazyLoad: joi
+            .boolean()
+            .description(
+              'lazy load dva model avoiding the import modules from umi undefined',
+            ),
           extraModels: joi.array().items(joi.string()),
           hmr: joi.boolean(),
-          immer: joi.boolean(),
+          immer: joi.alternatives(joi.boolean(), joi.object()),
           skipModelValidate: joi.boolean(),
         });
       },
@@ -51,15 +56,18 @@ export default (api: IApi) => {
     return lodash.uniq([
       ...getModels({
         base: srcModelsPath,
+        cwd: api.cwd,
         ...baseOpts,
       }),
       ...getModels({
         base: api.paths.absPagesPath!,
+        cwd: api.cwd,
         pattern: `**/${getModelDir()}/**/*.{ts,tsx,js,jsx}`,
         ...baseOpts,
       }),
       ...getModels({
         base: api.paths.absPagesPath!,
+        cwd: api.cwd,
         pattern: `**/model.{ts,tsx,js,jsx}`,
         ...baseOpts,
       }),
@@ -99,17 +107,23 @@ export default (api: IApi) => {
         content: Mustache.render(dvaTpl, {
           ExtendDvaConfig: '',
           EnhanceApp: '',
-          RegisterPlugins: [
-            api.config.dva?.immer &&
-              `app.use(require('${winPath(require.resolve('dva-immer'))}')());`,
-          ]
-            .filter(Boolean)
-            .join('\n'),
+          dvaImmer: api.config.dva?.immer,
+          dvaImmerPath: winPath(require.resolve('dva-immer')),
+          dvaImmerES5:
+            lodash.isPlainObject(api.config.dva?.immer) &&
+            api.config.dva?.immer.enableES5,
+          dvaImmerAllPlugins:
+            lodash.isPlainObject(api.config.dva?.immer) &&
+            api.config.dva?.immer.enableAllPlugins,
+          LazyLoad: api.config.dva?.lazyLoad,
           RegisterModelImports: models
             .map((path, index) => {
-              return `import Model${lodash.upperFirst(
+              const modelName = `Model${lodash.upperFirst(
                 lodash.camelCase(basename(path, extname(path))),
-              )}${index} from '${path}';`;
+              )}${index}`;
+              return api.config.dva?.lazyLoad
+                ? `const ${modelName} = (await import('${path}')).default;`
+                : `import ${modelName} from '${path}';`;
             })
             .join('\r\n'),
           RegisterModels: models
@@ -124,6 +138,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...Model${lodash.uppe
           dvaLoadingPkgPath: winPath(
             require.resolve('dva-loading/dist/index.esm.js'),
           ),
+          SSR: !!api.config?.ssr,
         }),
       });
 
@@ -147,7 +162,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...Model${lodash.uppe
       );
       const dvaVersion = require(join(dvaLibPath, 'package.json')).version;
       const exportMethods = dvaVersion.startsWith('2.6')
-        ? ['connect', 'useDispatch', 'useStore', 'useSelector']
+        ? ['connect', 'useDispatch', 'useStore', 'useSelector', 'shallowEqual']
         : ['connect'];
 
       logger.debug(`dva version: ${dvaVersion}`);
@@ -170,13 +185,13 @@ app.model({ namespace: '${basename(path, extname(path))}', ...Model${lodash.uppe
           dvaHeadExport: api.config.dva?.disableModelsReExport
             ? ``
             : models
-                .map(path => {
+                .map((path) => {
                   // prettier-ignore
                   return `export * from '${winPath(dirname(path) + "/" + basename(path, extname(path)))}';`;
                 })
                 .join('\r\n'),
           dvaLoadingModels: models
-            .map(path => {
+            .map((path) => {
               // prettier-ignore
               return `    ${basename(path, extname(path))
                 } ?: boolean;`;
@@ -199,7 +214,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...Model${lodash.uppe
   ]);
 
   // Babel Plugin for HMR
-  api.modifyBabelOpts(babelOpts => {
+  api.modifyBabelOpts((babelOpts) => {
     const hmr = api.config.dva?.hmr;
     if (hmr) {
       const hmrOpts = lodash.isPlainObject(hmr) ? hmr : {};
@@ -241,7 +256,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...Model${lodash.uppe
         console.log();
         console.log(utils.chalk.bold('  Models in your project:'));
         console.log();
-        models.forEach(model => {
+        models.forEach((model) => {
           console.log(`    - ${relative(api.cwd, model)}`);
         });
         console.log();

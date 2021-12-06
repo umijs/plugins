@@ -21,7 +21,7 @@ export const addSpecifyPrefixedRoute = (
   keepOriginalRoutes: SlaveOptions['keepOriginalRoutes'],
   pkgName?: string,
 ) => {
-  const copyBase = originRoute.filter(_ => _.path === '/');
+  const copyBase = originRoute.filter((_) => _.path === '/');
   if (!copyBase[0]) {
     return originRoute;
   }

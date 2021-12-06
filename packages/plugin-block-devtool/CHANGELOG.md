@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/umijs/plugins/compare/@umijs/plugin-block-devtool@1.2.4...@umijs/plugin-block-devtool@1.3.0) (2021-07-13)
+
+### Features
+
+- **plugin-block-devtool:** support use all blocks ([#652](https://github.com/umijs/plugins/issues/652)) ([4cf6b85](https://github.com/umijs/plugins/commit/4cf6b851607683578ed31ba5d7549270d82b5b3e))
+
+## [1.2.4](https://github.com/umijs/plugins/compare/@umijs/plugin-block-devtool@1.2.3...@umijs/plugin-block-devtool@1.2.4) (2021-06-03)
+
+**Note:** Version bump only for package @umijs/plugin-block-devtool
+
 ## [1.2.3](https://github.com/umijs/plugins/compare/@umijs/plugin-block-devtool@1.2.2...@umijs/plugin-block-devtool@1.2.3) (2020-04-20)
 
 ### Bug Fixes

@@ -39,16 +39,25 @@ let g_intl: IntlShape;
 
 const useLocalStorage = {{{UseLocalStorage}}};
 
+{{#LocaleList}}
+{{#antdLocale}}
+import {{lang}}{{country}}{{index}} from '{{{locale}}}';
+{{/antdLocale}}
+{{#paths}}
+import lang_{{lang}}{{country}}{{index}} from "{{{path}}}";
+{{/paths}}
+{{/LocaleList}}
+
 export const localeInfo: {[key: string]: any} = {
   {{#LocaleList}}
   '{{name}}': {
     messages: {
-      {{#paths}}...((locale) => locale.__esModule ? locale.default : locale)(require('{{{.}}}')),{{/paths}}
+      {{#paths}}...lang_{{lang}}{{country}}{{index}},{{/paths}}
     },
     locale: '{{locale}}',
     {{#Antd}}antd: {
       {{#antdLocale}}
-      ...require('{{{.}}}').default,
+      ...{{lang}}{{country}}{{index}},
       {{/antdLocale}}
     },{{/Antd}}
     momentLocale: '{{momentLocale}}',
@@ -78,13 +87,19 @@ export const addLocale = (
     ? Object.assign({}, localeInfo[name].messages, messages)
     : messages;
 
+
   const { momentLocale, antd } = extraLocales || {};
+  const locale = name.split('{{BaseSeparator}}')?.join('-')
   localeInfo[name] = {
     messages: mergeMessages,
-    locale: name.split('{{BaseSeparator}}')?.join('-'),
+    locale,
     momentLocale: momentLocale,
     {{#Antd}}antd,{{/Antd}}
   };
+   // 如果这是的 name 和当前的locale 相同需要重新设置一下，不然更新不了
+  if (locale === getLocale()) {
+    event.emit(LANG_CHANGE_EVENT, locale);
+  }
 };
 
 /**
@@ -179,41 +194,41 @@ export const getDirection = () => {
  * @returns string
  */
 export const setLocale = (lang: string, realReload: boolean = true) => {
-  const localeExp = new RegExp(`^([a-z]{2}){{BaseSeparator}}?([A-Z]{2})?$`);
-
   const runtimeLocale = plugin.applyPlugins({
     key: 'locale',
     type: ApplyPluginsType.modify,
     initialValue: {},
   });
+
+  const updater = () => {
+    if (getLocale() !== lang) {
+      if (typeof window.localStorage !== 'undefined' && useLocalStorage) {
+        window.localStorage.setItem('umi_locale', lang || '');
+      }
+      setIntl(lang);
+      if (realReload) {
+        window.location.reload();
+      } else {
+        event.emit(LANG_CHANGE_EVENT, lang);
+        // chrome 不支持这个事件。所以人肉触发一下
+        if (window.dispatchEvent) {
+          const event = new Event('languagechange');
+          window.dispatchEvent(event);
+        }
+      }
+    }
+  }
+
   if (typeof runtimeLocale?.setLocale === 'function') {
     runtimeLocale.setLocale({
       lang,
       realReload,
-      updater: (updateLang = lang) => event.emit(LANG_CHANGE_EVENT, updateLang),
+      updater: updater,
     });
     return;
   }
-  if (lang !== undefined && !localeExp.test(lang)) {
-    // for reset when lang === undefined
-    throw new Error('setLocale lang format error');
-  }
-  if (getLocale() !== lang) {
-    if (typeof window.localStorage !== 'undefined' && useLocalStorage) {
-      window.localStorage.setItem('umi_locale', lang || '');
-    }
-    setIntl(lang);
-    if (realReload) {
-      window.location.reload();
-    } else {
-      event.emit(LANG_CHANGE_EVENT, lang);
-      // chrome 不支持这个事件。所以人肉触发一下
-      if (window.dispatchEvent) {
-        const event = new Event('languagechange');
-        window.dispatchEvent(event);
-      }
-    }
-  }
+
+  updater();
 };
 
 let firstWaring = true;

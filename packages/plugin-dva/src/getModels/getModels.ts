@@ -1,10 +1,11 @@
 import { utils } from 'umi';
 import { readFileSync } from 'fs';
-import { join } from 'path';
+import { join, relative } from 'path';
 import { isValidModel } from './isValidModel';
 
 export function getModels(opts: {
   base: string;
+  cwd: string;
   pattern?: string;
   skipModelValidate?: boolean;
   extraModels?: string[];
@@ -15,11 +16,11 @@ export function getModels(opts: {
         .sync(opts.pattern || '**/*.{ts,tsx,js,jsx}', {
           cwd: opts.base,
         })
-        .map(f => join(opts.base, f))
+        .map((f) => join(opts.base, f))
         .concat(opts.extraModels || [])
         .map(utils.winPath),
     )
-    .filter(f => {
+    .filter((f) => {
       if (/\.d.ts$/.test(f)) return false;
       if (/\.(test|e2e|spec).(j|t)sx?$/.test(f)) return false;
 
@@ -27,8 +28,16 @@ export function getModels(opts: {
       if (opts.skipModelValidate) return true;
 
       // TODO: fs cache for performance
-      return isValidModel({
-        content: readFileSync(f, 'utf-8'),
-      });
+      try {
+        return isValidModel({
+          content: readFileSync(f, 'utf-8'),
+        });
+      } catch (error) {
+        throw new Error(
+          `Dva model ${utils.winPath(
+            relative(opts.cwd, f),
+          )} parse failed, ${error}`,
+        );
+      }
     });
 }

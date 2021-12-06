@@ -3,31 +3,33 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 // eslint-disable-next-line import/no-unresolved
 import { IApi, utils } from 'umi';
-import modifyRoutes from './modifyRoutes';
-import { hasExportWithName } from './utils';
 import {
   defaultHistoryType,
   defaultMasterRootId,
   qiankunStateForSlaveModelNamespace,
 } from '../constants';
+import modifyRoutes from './modifyRoutes';
+import { hasExportWithName } from './utils';
 
 const { getFile, winPath } = utils;
 
 export function isMasterEnable(api: IApi) {
-  return (
-    !!api.userConfig?.qiankun?.master ||
-    !!process.env.INITIAL_QIANKUN_MASTER_OPTIONS
-  );
+  const masterCfg = api.userConfig?.qiankun?.master;
+  if (masterCfg) {
+    return masterCfg.enable !== false;
+  }
+
+  return !!process.env.INITIAL_QIANKUN_MASTER_OPTIONS;
 }
 
-export default function(api: IApi) {
+export default function (api: IApi) {
   api.describe({
     enableBy: () => isMasterEnable(api),
   });
 
   api.addRuntimePlugin(() => '@@/plugin-qiankun/masterRuntimePlugin');
 
-  api.modifyDefaultConfig(config => ({
+  api.modifyDefaultConfig((config) => ({
     ...config,
     mountElementId: defaultMasterRootId,
     disableGlobalVariables: true,
@@ -129,7 +131,29 @@ export default function(api: IApi) {
       // 开启了 antd 插件的时候，使用 antd 的 loader 组件，否则提示用户必须设置一个自定义的 loader 组件
       content: api.hasPlugins(['@umijs/plugin-antd'])
         ? readFileSync(join(__dirname, 'AntdLoader.tsx.tpl'), 'utf-8')
-        : `export default function Loader() { console.warn(\`[@umijs/plugin-qiankun]: Seems like you'r not using @umijs/plugin-antd, you need to provide a customer loader or set autoSetLoading false to shut down this warning!\`); return null; }`,
+        : `export default function Loader() { console.warn(\`[@umijs/plugin-qiankun]: Seems like you'r not using @umijs/plugin-antd, you need to provide a custom loader or set autoSetLoading false to shut down this warning!\`); return null; }`,
+    });
+    api.writeTmpFile({
+      path: 'plugin-qiankun/ErrorBoundary.tsx',
+      // 开启了 antd 插件的时候，使用 antd 的 ErrorBoundary，否则提示用户必须设置一个自定义的 ErrorBoundary 组件
+      content: api.hasPlugins(['@umijs/plugin-antd'])
+        ? readFileSync(join(__dirname, 'AntdErrorBoundary.tsx.tpl'), 'utf-8')
+        : readFileSync(join(__dirname, 'ErrorBoundary.tsx.tpl'), 'utf-8'),
+    });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/getMicroAppRouteComponent.ts',
+      content: utils.Mustache.render(
+        readFileSync(
+          join(__dirname, 'getMicroAppRouteComponent.ts.tpl'),
+          'utf-8',
+        ),
+        {
+          runtimeHistory: api.config.runtimeHistory,
+          dynamicRoot:
+            api.config.exportStatic && api.config.exportStatic.dynamicRoot,
+        },
+      ),
     });
   });
 
@@ -165,6 +189,13 @@ export default function(api: IApi) {
     return {
       specifiers: ['MicroAppWithMemoHistory'],
       source: winPath('../plugin-qiankun/MicroAppWithMemoHistory'),
+    };
+  });
+
+  api.addUmiExports(() => {
+    return {
+      specifiers: ['getMicroAppRouteComponent'],
+      source: winPath('../plugin-qiankun/getMicroAppRouteComponent'),
     };
   });
 

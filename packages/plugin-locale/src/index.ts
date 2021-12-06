@@ -30,6 +30,9 @@ try {
   );
 }
 
+export const packageNormalize = (packageName: string) =>
+  packageName.replace(/[\@\/\-\.]/g, '_');
+
 export default (api: IApi) => {
   const {
     paths,
@@ -78,7 +81,7 @@ export default (api: IApi) => {
     }));
   }
 
-  const addAntdLocales: IAddAntdLocales = async args =>
+  const addAntdLocales: IAddAntdLocales = async (args) =>
     await api.applyPlugins({
       key: 'addAntdLocales',
       type: api.ApplyPluginsType.add,
@@ -117,10 +120,10 @@ export default (api: IApi) => {
     const localeList = await getList();
     const momentLocales = localeList
       .map(({ momentLocale }) => momentLocale)
-      .filter(locale => locale);
+      .filter((locale) => locale);
     const antdLocales = localeList
       .map(({ antdLocale }) => antdLocale)
-      .filter(locale => locale);
+      .filter((locale) => locale);
 
     let MomentLocales = momentLocales;
     let DefaultMomentLocale = '';
@@ -145,11 +148,16 @@ export default (api: IApi) => {
         }),
       );
     }
+    const NormalizeAntdLocalesName = function () {
+      // @ts-ignore
+      return packageNormalize(this);
+    };
 
     api.writeTmpFile({
       content: Mustache.render(localeTpl, {
         MomentLocales,
         DefaultMomentLocale,
+        NormalizeAntdLocalesName,
         DefaultAntdLocales,
         Antd: !!antd,
         Title: title && api.config.title,
@@ -165,7 +173,7 @@ export default (api: IApi) => {
       'utf-8',
     );
     const localeDirName = api.config.singular ? 'locale' : 'locales';
-    const localeDirPath = join(api.paths!.absSrcPath, localeDirName);
+    const localeDirPath = join(api.paths!.absSrcPath!, localeDirName);
     api.writeTmpFile({
       path: 'plugin-locale/localeExports.ts',
       content: Mustache.render(localeExportsTpl, {
@@ -174,7 +182,17 @@ export default (api: IApi) => {
         UseLocalStorage: !!useLocalStorage,
         LocaleDir: localeDirName,
         ExistLocaleDir: existsSync(localeDirPath),
-        LocaleList: localeList,
+        LocaleList: localeList.map((locale) => ({
+          ...locale,
+          antdLocale: locale.antdLocale.map((antdLocale, index) => ({
+            locale: antdLocale,
+            index: index,
+          })),
+          paths: locale.paths.map((path, index) => ({
+            path,
+            index,
+          })),
+        })),
         Antd: !!antd,
         DefaultLocale: JSON.stringify(defaultLocale),
         warningPkgPath: winPath(require.resolve('warning')),
@@ -210,7 +228,6 @@ export default (api: IApi) => {
     });
   });
 
-  api.addRuntimePluginKey(() => 'locale');
   // Runtime Plugin
   api.addRuntimePlugin(() =>
     join(paths.absTmpPath!, 'plugin-locale/runtime.tsx'),

@@ -30,10 +30,9 @@ describe('PluginAccess', () => {
   it('should run correctly when access file is defined and default exporting a function', () => {
     mockApi.paths.absSrcPath = 'path/to';
     registerAccessPlugin(mockApi);
-    expect(mockApi.writeTmpFile).toHaveBeenCalledTimes(4);
+    expect(mockApi.writeTmpFile).toHaveBeenCalledTimes(5);
     expect(mockApi.addUmiExports).toHaveBeenCalledTimes(1);
     expect(mockApi.addTmpGenerateWatcherPaths).toHaveBeenCalledTimes(1);
-    expect(mockApi.utils.winPath).toHaveBeenCalledTimes(2);
   });
 
   it('should not writeTmpFile and not addRuntimePlugin if there is no access file', () => {

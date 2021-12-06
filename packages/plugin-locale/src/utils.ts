@@ -55,6 +55,21 @@ export interface IGetLocaleFileListResult {
   momentLocale: string;
 }
 
+/**
+ * 有些情况下可能项目包含的locale和antd的不匹配
+ * 这个方法用于检测
+ * @param localePath
+ * @returns
+ */
+const modulesHasLocale = (localePath: string) => {
+  try {
+    require.resolve(localePath);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
 export const getLocaleList = async (
   opts: IGetLocaleFileListOpts,
 ): Promise<IGetLocaleFileListResult[]> => {
@@ -73,16 +88,16 @@ export const getLocaleList = async (
     .sync('*.{ts,js,json}', {
       cwd: winPath(join(absSrcPath, localeFolder)),
     })
-    .map(name => winPath(join(absSrcPath, localeFolder, name)))
+    .map((name) => winPath(join(absSrcPath, localeFolder, name)))
     .concat(
       glob
         .sync(`**/${localeFolder}/*.{ts,js,json}`, {
           cwd: absPagesPath,
         })
-        .map(name => winPath(join(absPagesPath, name))),
+        .map((name) => winPath(join(absPagesPath, name))),
     )
-    .filter(p => localeFileMath.test(basename(p)) && existsSync(p))
-    .map(fullName => {
+    .filter((p) => localeFileMath.test(basename(p)) && existsSync(p))
+    .map((fullName) => {
       const fileName = basename(fullName);
       const fileInfo = localeFileMath
         .exec(fileName)
@@ -96,10 +111,13 @@ export const getLocaleList = async (
 
   const groups = lodash.groupBy(localeFiles, 'name');
 
-  const promises = Object.keys(groups).map(async name => {
+  const promises = Object.keys(groups).map(async (name) => {
     const [lang, country = ''] = name.split(separator);
     const { momentLocale } = getMomentLocale(lang, country);
-    const antdLocale = lodash.uniq(await addAntdLocales({ lang, country }));
+    const antdLocale = lodash
+      .uniq(await addAntdLocales({ lang, country }))
+      .filter((localePath) => modulesHasLocale(localePath));
+
     return {
       lang,
       name,
@@ -108,7 +126,7 @@ export const getLocaleList = async (
       locale: name.split(separator).join('-'),
       country,
       antdLocale,
-      paths: groups[name].map(item => winPath(item.path)),
+      paths: groups[name].map((item) => winPath(item.path)),
       momentLocale,
     };
   });
@@ -118,7 +136,7 @@ export const getLocaleList = async (
 export const exactLocalePaths = (
   data: IGetLocaleFileListResult[],
 ): string[] => {
-  return lodash.flatten(data.map(item => item.paths));
+  return lodash.flatten(data.map((item) => item.paths));
 };
 
 export function isNeedPolyfill(targets = {}) {
@@ -143,7 +161,7 @@ export function isNeedPolyfill(targets = {}) {
     ucandroid: Infinity,
   };
   return (
-    Object.keys(targets).find(key => {
+    Object.keys(targets).find((key) => {
       const lowKey = key.toLocaleLowerCase();
       return polyfillTargets[lowKey] && polyfillTargets[lowKey] >= targets[key];
     }) !== undefined
