@@ -7,5 +7,7 @@ export default {
     require.resolve('../../'),
     require.resolve('@umijs/plugin-initial-state'),
     require.resolve('@umijs/plugin-model'),
-  ]
+  ],
+  access: {
+  }
 }
