@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "antd-mobile": "next",
+    "antd-mobile-v2": "^2.3.4",
     "semver": "^7.3.5"
   }
 }
