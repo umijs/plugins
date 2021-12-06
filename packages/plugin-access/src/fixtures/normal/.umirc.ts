@@ -8,6 +8,5 @@ export default {
     require.resolve('@umijs/plugin-initial-state'),
     require.resolve('@umijs/plugin-model'),
   ],
-  access: {
-  }
+  access: {}
 }
