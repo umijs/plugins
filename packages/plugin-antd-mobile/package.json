@@ -28,7 +28,7 @@
     "access": "public"
   },
   "dependencies": {
-    "antd-mobile": "next",
+    "antd-mobile": "^5.0.0-rc.0",
     "antd-mobile-v2": "^2.3.4",
     "semver": "^7.3.5"
   }
