@@ -1,8 +1,8 @@
-import React, { useRef, useEffect, useCallback } from 'react';
-import { MicroApp, Props as MicroAppProps } from './MicroApp';
+import React, { useRef, useEffect, useCallback } from "react";
+import { MicroApp, Props as MicroAppProps } from "./MicroApp";
 
 export interface Props extends MicroAppProps {
-  history?: never
+  history?: never;
 }
 
 export function MicroAppWithMemoHistory(componentProps: Props) {
@@ -10,11 +10,11 @@ export function MicroAppWithMemoHistory(componentProps: Props) {
   const history = useRef();
   // url 的变更不会透传给下游，组件内自己会处理掉，所以这里直接用 ref 来存
   const historyOpts = useRef({
-    type: 'memory',
+    type: "memory",
     initialEntries: [url],
     initialIndex: 1,
   });
-  const historyInitHandler = useCallback(h => history.current = h, []);
+  const historyInitHandler = useCallback((h) => (history.current = h), []);
 
   useEffect(() => {
     // push history for slave app when url property changed
@@ -36,5 +36,5 @@ export function MicroAppWithMemoHistory(componentProps: Props) {
       history={historyOpts.current}
       onHistoryInit={historyInitHandler}
     />
-  )
+  );
 }
