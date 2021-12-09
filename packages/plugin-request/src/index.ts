@@ -59,11 +59,11 @@ export default function (api: IApi) {
     'utf-8',
   );
   const uiIndexTemplate = readFileSync(
-    join(__dirname, '../src', './ui', 'index.ts'),
+    join(__dirname, '..', 'src', './ui', 'index.ts'),
     'utf-8',
   );
   const uiNoopTemplate = readFileSync(
-    join(__dirname, '../src', './ui', 'noop.ts'),
+    join(__dirname, '..', 'src', './ui', 'noop.ts'),
     'utf-8',
   );
   const namespace = 'plugin-request';
@@ -106,14 +106,14 @@ import { history, plugin } from '../core/umiExports';
             `,
           ),
       });
-      const uiTmpDir = `${api.paths.absTmpPath}/${namespace}/ui`;
-      !existsSync(uiTmpDir) && mkdirSync(uiTmpDir);
+      const uiTmpDir = join(api.paths.absTmpPath!, namespace, 'ui');
+      !existsSync(uiTmpDir) && mkdirSync(uiTmpDir, { recursive: true });
       api.writeTmpFile({
-        path: `${namespace}/ui/index.ts`,
+        path: join(namespace, 'ui', 'index.ts'),
         content: uiIndexTemplate,
       });
       api.writeTmpFile({
-        path: `${namespace}/ui/noop.ts`,
+        path: join(namespace, 'ui', 'noop.ts'),
         content: uiNoopTemplate,
       });
     } catch (e) {

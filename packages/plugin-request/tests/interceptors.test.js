@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 import createTestServer from './createTestServer';
-import { request } from '../src/request';
+import { request } from '../lib/request';
 
 jest.mock('umi', () => require('./mocks/umi'));
 jest.mock('@umijs/plugin-request/lib/ui', () => require('./mocks/antd'));
