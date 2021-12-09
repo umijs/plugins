@@ -40,28 +40,6 @@ describe('plugin-request', () => {
       }),
     );
 
-    expect(writeTmpFile).toHaveBeenCalledWith({
-      path: join('plugin-request', 'request.ts'),
-      content: expect.stringContaining(
-        'type ResultWithData<T = any> = {  [key: string]: any };',
-      ),
-    });
-
-    expect(writeTmpFile).toHaveBeenCalledWith({
-      path: join('plugin-request', 'request.ts'),
-      content: expect.stringContaining('BaseOptions<R, P>'),
-    });
-
-    expect(writeTmpFile).toHaveBeenCalledWith({
-      path: join('plugin-request', 'request.ts'),
-      content: expect.stringContaining('BaseResult<R, P>'),
-    });
-
-    expect(writeTmpFile).toHaveBeenCalledWith({
-      path: join('plugin-request', 'request.ts'),
-      content: expect.stringContaining('result => result'),
-    });
-
     expect(writeTmpFile).toHaveBeenNthCalledWith(1, {
       path: join('plugin-request', 'request.ts'),
       content: expect.stringContaining(
@@ -91,28 +69,6 @@ import { history, plugin } from '../core/umiExports';
       }),
     );
     expect(writeTmpFile).toHaveBeenCalled();
-
-    expect(writeTmpFile).toHaveBeenCalledWith({
-      path: join('plugin-request', 'request.ts'),
-      content: expect.stringContaining(
-        'type ResultWithData<T = any> = {  [key: string]: any };',
-      ),
-    });
-
-    expect(writeTmpFile).toHaveBeenCalledWith({
-      path: join('plugin-request', 'request.ts'),
-      content: expect.stringContaining('BaseOptions<R, P>'),
-    });
-
-    expect(writeTmpFile).toHaveBeenCalledWith({
-      path: join('plugin-request', 'request.ts'),
-      content: expect.stringContaining('BaseResult<R, P>'),
-    });
-
-    expect(writeTmpFile).toHaveBeenCalledWith({
-      path: join('plugin-request', 'request.ts'),
-      content: expect.stringContaining('result => result'),
-    });
 
     expect(writeTmpFile).toHaveBeenNthCalledWith(1, {
       path: join('plugin-request', 'request.ts'),
