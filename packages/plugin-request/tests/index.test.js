@@ -59,11 +59,6 @@ import { history, plugin } from '../core/umiExports';
       path: 'plugin-request/ui/noop.ts',
       content: expect.stringContaining('const noop = () => {};'),
     });
-
-    // expect(writeTmpFile).toHaveBeenLastCalledWith({
-    //   path: 'plugin-request/request.ts',
-    //   content: expect.stringContaining('/winpathtest'),
-    // });
   });
 
   test('dataField format', () => {
