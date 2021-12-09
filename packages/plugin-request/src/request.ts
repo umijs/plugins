@@ -184,7 +184,8 @@ const getRequestMethod = () => {
             break;
           case ErrorShowType.NOTIFICATION:
             notification.open({
-              message: errorMessage,
+              description: errorMessage,
+              message: errorCode,
             });
             break;
           case ErrorShowType.REDIRECT:
@@ -227,6 +228,7 @@ const getRequestMethod = () => {
       error.name = 'BizError';
       error.data = resData;
       error.info = errorInfo;
+      error.response = res;
       throw error;
     }
   });

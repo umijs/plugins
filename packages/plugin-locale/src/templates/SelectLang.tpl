@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useState } from 'react';
 {{#Antd}}
 import { Menu, Dropdown } from 'antd';
 import { ClickParam } from 'antd/{{{antdFiles}}}/menu';
@@ -42,6 +42,7 @@ interface SelectLangProps {
   onItemClick?: (params: ClickParam) => void;
   className?: string;
   reload?: boolean;
+  icon?: React.ReactNode;
 }
 
 const transformArrayToObject = (allLangUIConfig:LocalData[])=>{
@@ -75,6 +76,12 @@ const defaultLangUConfigMap = {
     label: 'Български език',
     icon: '🇧🇬',
     title: 'език'
+  },
+  'bn-BD': {
+    lang: 'bn-BD',
+    label: 'বাংলা',
+    icon: '🇧🇩',
+    title: 'ভাষা'
   },
   'ca-ES': {
     lang: 'ca-ES',
@@ -280,6 +287,12 @@ const defaultLangUConfigMap = {
     icon: '🇳🇱',
     title: 'Taal'
   },
+  'pl-PL': {
+    lang: 'pl-PL',
+    label: 'Polski',
+    icon: '🇵🇱',
+    title: 'Język'
+  },
   'pt-BR': {
     lang: 'pt-BR',
     label: 'Português',
@@ -300,7 +313,7 @@ const defaultLangUConfigMap = {
   },
   'ru-RU': {
     lang: 'ru-RU',
-    label: 'русский',
+    label: 'Русский',
     icon: '🇷🇺',
     title: 'язык'
   },
@@ -378,13 +391,18 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
   globalIconClassName,
   postLocalesData,
   onItemClick,
+  icon,
   style,
   reload,
   ...restProps
 } = props;
-  const selectedLang = getLocale();
+  const [selectedLang, setSelectedLang] = useState(() => getLocale());
 
-  const changeLang = ({ key }: ClickParam): void => setLocale(key, reload);
+  const changeLang = ({ key }: ClickParam): void => {
+    setLocale(key, reload);
+    setSelectedLang(getLocale())
+  };
+
 
   const defaultLangUConfig = getAllLocales().map(
     (key) =>
@@ -434,7 +452,9 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
     <HeaderDropdown overlay={langMenu} placement="bottomRight" {...restProps}>
       <span className={globalIconClassName} style={inlineStyle}>
         <i className="anticon" title={allLangUIConfig[selectedLang]?.title}>
-          <svg
+          { icon ?
+            icon : (
+            <svg
             viewBox="0 0 24 24"
             focusable="false"
             width="1em"
@@ -448,6 +468,7 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
               className="css-c4d79v"
             />
           </svg>
+          )}
         </i>
       </span>
     </HeaderDropdown>

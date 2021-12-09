@@ -23,7 +23,8 @@ export type MicroAppRoute = {
 } & Record<string, any>;
 
 export type MasterOptions = {
-  apps: App[];
+  enable?: boolean;
+  apps?: App[];
   routes?: MicroAppRoute[];
   lifeCycles?: FrameworkLifeCycles<object>;
   masterHistoryType?: HistoryType;
@@ -35,10 +36,13 @@ export type MasterOptions = {
 } & FrameworkConfiguration;
 
 export type SlaveOptions = {
+  enable?: boolean;
   devSourceMap?: boolean;
   keepOriginalRoutes?: boolean | string;
   shouldNotModifyRuntimePublicPath?: boolean;
   shouldNotModifyDefaultBase?: boolean;
+  // library name 是否增加 -[name] 应对多 chunk 场景
+  shouldNotAddLibraryChunkName?: boolean;
 };
 
 declare module '@umijs/types' {

@@ -4,6 +4,7 @@
  */
 
 import { ReactComponentElement } from 'react';
+import type { IRouteProps } from 'umi';
 
 export const defaultMountContainerId = 'root-subapp';
 
@@ -86,5 +87,45 @@ export function patchMicroAppRoute(
       routeProps,
     };
     route.component = getMicroAppRouteComponent(opts);
+  }
+}
+
+const recursiveSearch = (
+  routes: IRouteProps[],
+  path: string,
+): IRouteProps | null => {
+  for (let i = 0; i < routes.length; i++) {
+    if (routes[i].path === path) {
+      return routes[i];
+    }
+    if (routes[i].routes && routes[i].routes?.length) {
+      const found = recursiveSearch(routes[i].routes || [], path);
+      if (found) {
+        return found;
+      }
+    }
+  }
+  return null;
+};
+
+export function insertRoute(routes: IRouteProps[], microAppRoute: IRouteProps) {
+  const found = recursiveSearch(routes, microAppRoute.insert);
+  if (found) {
+    if (
+      !microAppRoute.path ||
+      !found.path ||
+      !microAppRoute.path.startsWith(found.path)
+    ) {
+      throw new Error(
+        `[plugin-qiankun]: path "${microAppRoute.path}" need to starts with "${found.path}"`,
+      );
+    }
+    found.exact = false;
+    found.routes = found.routes || [];
+    found.routes.push(microAppRoute);
+  } else {
+    throw new Error(
+      `[plugin-qiankun]: path "${microAppRoute.insert}" not found`,
+    );
   }
 }

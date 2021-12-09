@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.18.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.18.0...@umijs/plugin-layout@0.18.1) (2021-11-17)
+
+### Bug Fixes
+
+- **layout:** remove currentPathConfig loading ([#748](https://github.com/umijs/plugins/issues/748)) ([71d9c16](https://github.com/umijs/plugins/commit/71d9c16c8793f92fe06b719c2d81b12f89c5d65a))
+
+# [0.18.0](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.4...@umijs/plugin-layout@0.18.0) (2021-11-16)
+
+### Features
+
+- props with childrenRender ([#745](https://github.com/umijs/plugins/issues/745)) ([4dea6e4](https://github.com/umijs/plugins/commit/4dea6e4111cf8783175324a6f2b9229fdcd0d64d))
+
+## [0.17.4](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.3...@umijs/plugin-layout@0.17.4) (2021-11-13)
+
+### Bug Fixes
+
+- **layout:** up deps to 2.0 ([#742](https://github.com/umijs/plugins/issues/742)) ([d6ee483](https://github.com/umijs/plugins/commit/d6ee483045f7920813875cf385853aaca5544c23))
+
+## [0.17.3](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.2...@umijs/plugin-layout@0.17.3) (2021-11-12)
+
+### Bug Fixes
+
+- **layout:** fix login render twice error ([#740](https://github.com/umijs/plugins/issues/740)) ([6c9bd9d](https://github.com/umijs/plugins/commit/6c9bd9d2a829f5a86b6fc9d710da7cb5195a3aa3))
+
+## [0.17.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.1...@umijs/plugin-layout@0.17.2) (2021-07-20)
+
+### Bug Fixes
+
+- **layout:** if currentPathConfig is null, render loading ([#661](https://github.com/umijs/plugins/issues/661)) ([4408266](https://github.com/umijs/plugins/commit/440826637c9fccd69dc9dca46ad97d6e79b1b573))
+
 ## [0.17.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.17.0...@umijs/plugin-layout@0.17.1) (2021-06-07)
 
 ### Bug Fixes

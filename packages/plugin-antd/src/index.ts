@@ -2,35 +2,44 @@ import { dirname, join } from 'path';
 import { readFileSync } from 'fs';
 import { IApi, utils } from 'umi';
 import { ConfigProviderProps } from 'antd/es/config-provider';
+import semver from 'semver';
 
 const { Mustache } = utils;
 
 interface IAntdOpts {
   dark?: boolean;
   compact?: boolean;
+  disableBabelPluginImport?: boolean;
   config?: ConfigProviderProps;
 }
 
 export default (api: IApi) => {
+  const opts: IAntdOpts = api.userConfig.antd;
+  const useBabelPluginImport = opts?.disableBabelPluginImport !== true;
   api.describe({
     config: {
       schema(joi) {
         return joi.object({
           dark: joi.boolean(),
           compact: joi.boolean(),
+          disableBabelPluginImport: joi.boolean(),
           config: joi.object(),
         });
       },
     },
   });
-
   api.modifyBabelPresetOpts((opts) => {
+    const imps = [];
+    if (useBabelPluginImport) {
+      imps.push({
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: true,
+      });
+    }
     return {
       ...opts,
-      import: (opts.import || []).concat([
-        { libraryName: 'antd', libraryDirectory: 'es', style: true },
-        { libraryName: 'antd-mobile', libraryDirectory: 'es', style: true },
-      ]),
+      import: (opts.import || []).concat(imps),
     };
   });
 
@@ -50,13 +59,12 @@ export default (api: IApi) => {
     };
   });
 
-  const opts: IAntdOpts = api.userConfig.antd;
-
   if (opts?.dark || opts?.compact) {
     // support dark mode, user use antd 4 by default
     const { getThemeVariables } = require('antd/dist/theme');
     api.modifyDefaultConfig((config) => {
       config.theme = {
+        'root-entry-name': 'default',
         ...getThemeVariables(opts),
         ...config.theme,
       };
@@ -64,16 +72,24 @@ export default (api: IApi) => {
     });
   }
 
-  api.addProjectFirstLibraries(() => [
-    {
-      name: 'antd',
-      path: dirname(require.resolve('antd/package.json')),
-    },
-    {
-      name: 'antd-mobile',
-      path: dirname(require.resolve('antd-mobile/package.json')),
-    },
-  ]);
+  api.modifyDefaultConfig((config) => {
+    config.theme = {
+      'root-entry-name': 'default',
+      ...config.theme,
+    };
+    return config;
+  });
+
+  api.addProjectFirstLibraries(() => {
+    const imps = [];
+    if (useBabelPluginImport) {
+      imps.push({
+        name: 'antd',
+        path: dirname(require.resolve('antd/package.json')),
+      });
+    }
+    return imps;
+  });
   if (opts?.config) {
     api.onGenerateFiles({
       fn() {
@@ -82,10 +98,20 @@ export default (api: IApi) => {
           join(__dirname, 'runtime.tpl'),
           'utf-8',
         );
+
+        // 获取 antd 的版本号来判断应该是用什么api
+        let version = '4.0.0';
+        try {
+          version = require(require.resolve('antd/package.json')).version;
+        } catch (error) {}
+
         api.writeTmpFile({
           path: 'plugin-antd/runtime.tsx',
           content: Mustache.render(runtimeTpl, {
             config: JSON.stringify(opts?.config),
+            // @ts-ignore
+            newAntd: semver.lt('4.13.0', version) || version === '4.13.0',
+            oldAntd: semver.gt('4.13.0', version),
           }),
         });
       },

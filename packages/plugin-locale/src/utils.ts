@@ -55,6 +55,21 @@ export interface IGetLocaleFileListResult {
   momentLocale: string;
 }
 
+/**
+ * 有些情况下可能项目包含的locale和antd的不匹配
+ * 这个方法用于检测
+ * @param localePath
+ * @returns
+ */
+const modulesHasLocale = (localePath: string) => {
+  try {
+    require.resolve(localePath);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
 export const getLocaleList = async (
   opts: IGetLocaleFileListOpts,
 ): Promise<IGetLocaleFileListResult[]> => {
@@ -99,7 +114,10 @@ export const getLocaleList = async (
   const promises = Object.keys(groups).map(async (name) => {
     const [lang, country = ''] = name.split(separator);
     const { momentLocale } = getMomentLocale(lang, country);
-    const antdLocale = lodash.uniq(await addAntdLocales({ lang, country }));
+    const antdLocale = lodash
+      .uniq(await addAntdLocales({ lang, country }))
+      .filter((localePath) => modulesHasLocale(localePath));
+
     return {
       lang,
       name,

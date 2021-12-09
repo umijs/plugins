@@ -7,7 +7,7 @@ export default (api: IApi) => {
         source: require.resolve(
           '../../../src/plugins/router/historyAdapater.ts',
         ),
-        exportAll: true,
+        specifiers: ['push', 'replace', 'go', 'goBack', 'goForward'],
       },
     ];
   });

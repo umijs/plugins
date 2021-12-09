@@ -5,6 +5,7 @@ export default () => {
       require.resolve('@umijs/plugin-access'),
       require.resolve('@umijs/plugin-analytics'),
       require.resolve('@umijs/plugin-antd'),
+      require.resolve('@umijs/plugin-antd-mobile'),
       require.resolve('@umijs/plugin-crossorigin'),
       require.resolve('@umijs/plugin-dva'),
       require.resolve('@umijs/plugin-initial-state'),
@@ -14,6 +15,7 @@ export default () => {
       require.resolve('@umijs/plugin-request'),
       require.resolve('@umijs/plugin-test'),
       require.resolve('@umijs/plugin-helmet'),
+      require.resolve('./defaultConfig'),
     ],
   };
 };

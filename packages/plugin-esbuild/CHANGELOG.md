@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/umijs/plugins/compare/@umijs/plugin-esbuild@1.4.0...@umijs/plugin-esbuild@1.4.1) (2021-10-26)
+
+### Reverts
+
+- Revert "feat(esbuild): upgrade esbuild-loader to 2.16 (#731)" (#732) ([4b2b1d6](https://github.com/umijs/plugins/commit/4b2b1d6e0996c90658249854331b0b6d9df4a65b)), closes [#731](https://github.com/umijs/plugins/issues/731) [#732](https://github.com/umijs/plugins/issues/732)
+
+# [1.4.0](https://github.com/umijs/plugins/compare/@umijs/plugin-esbuild@1.3.1...@umijs/plugin-esbuild@1.4.0) (2021-10-26)
+
+### Features
+
+- **esbuild:** upgrade esbuild-loader to 2.16 ([#731](https://github.com/umijs/plugins/issues/731)) ([9815c25](https://github.com/umijs/plugins/commit/9815c257418f7246d6c9dd659a5bae3b4a4251f0))
+
 ## [1.3.1](https://github.com/umijs/plugins/compare/@umijs/plugin-esbuild@1.3.0...@umijs/plugin-esbuild@1.3.1) (2021-04-20)
 
 ### Bug Fixes
