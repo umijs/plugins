@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 import { join } from 'path';
-import pluginFunc from '../src/index';
+import pluginFunc from '../lib/index';
 
 describe('plugin-request', () => {
   const getMockAPI = (writeTmpFile = () => {}, config) => {

@@ -55,15 +55,15 @@ export default function (api: IApi) {
   });
 
   const requestTemplate = readFileSync(
-    winPath(join(__dirname, '../src/request.tpl')),
+    winPath(join(__dirname, '../src/request.ts')),
     'utf-8',
   );
   const uiIndexTemplate = readFileSync(
-    winPath(join(__dirname, '../src/ui/index.tpl')),
+    winPath(join(__dirname, '../src/ui/index.ts')),
     'utf-8',
   );
   const uiNoopTemplate = readFileSync(
-    winPath(join(__dirname, '../src/ui/noop.tpl')),
+    winPath(join(__dirname, '../src/ui/noop.ts')),
     'utf-8',
   );
   const namespace = 'plugin-request';
@@ -73,8 +73,8 @@ export default function (api: IApi) {
     webpackConfig.resolve.alias.set(
       '@umijs/plugin-request/lib/ui',
       api.config.antd === false
-        ? join(api.paths.absTmpPath!, namespace, 'ui/noop')
-        : join(api.paths.absTmpPath!, namespace, 'ui/index'),
+        ? require.resolve('./ui/noop')
+        : require.resolve('./ui/index'),
     );
 
     return webpackConfig;
