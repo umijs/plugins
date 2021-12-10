@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 import { join } from 'path';
-import pluginFunc from '../lib/index';
+import pluginFunc from '../src/index';
 
 describe('plugin-request', () => {
   const getMockAPI = (writeTmpFile = () => {}, config) => {
@@ -41,7 +41,7 @@ describe('plugin-request', () => {
     );
 
     expect(writeTmpFile).toHaveBeenNthCalledWith(1, {
-      path: join('plugin-request', 'request.ts'),
+      path: join('plugin-request', 'request.tpl'),
       content: expect.stringContaining(
         `
 import { ApplyPluginsType } from 'umi';
@@ -51,12 +51,12 @@ import { history, plugin } from '../core/umiExports';
     }); // 对于主文件，只检查一次，如果最后一个 replace 成功则认为全都成功
 
     expect(writeTmpFile).toHaveBeenNthCalledWith(2, {
-      path: join('plugin-request', 'ui', 'index.ts'),
+      path: join('plugin-request', 'ui', 'index.tpl'),
       content: expect.stringContaining('export { message, notification };'),
     });
 
     expect(writeTmpFile).toHaveBeenNthCalledWith(3, {
-      path: join('plugin-request', 'ui', 'noop.ts'),
+      path: join('plugin-request', 'ui', 'noop.tpl'),
       content: expect.stringContaining('const noop = () => {};'),
     });
   });
@@ -71,7 +71,7 @@ import { history, plugin } from '../core/umiExports';
     expect(writeTmpFile).toHaveBeenCalled();
 
     expect(writeTmpFile).toHaveBeenNthCalledWith(1, {
-      path: join('plugin-request', 'request.ts'),
+      path: join('plugin-request', 'request.tpl'),
       content: expect.stringContaining(
         `
 import { ApplyPluginsType } from 'umi';
@@ -81,12 +81,12 @@ import { history, plugin } from '../core/umiExports';
     }); // 对于主文件，只检查一次，如果最后一个 replace 成功则认为全都成功
 
     expect(writeTmpFile).toHaveBeenNthCalledWith(2, {
-      path: join('plugin-request', 'ui', 'index.ts'),
+      path: join('plugin-request', 'ui', 'index.tpl'),
       content: expect.stringContaining('export { message, notification };'),
     });
 
     expect(writeTmpFile).toHaveBeenNthCalledWith(3, {
-      path: join('plugin-request', 'ui', 'noop.ts'),
+      path: join('plugin-request', 'ui', 'noop.tpl'),
       content: expect.stringContaining('const noop = () => {};'),
     });
 
