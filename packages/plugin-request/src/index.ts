@@ -55,15 +55,15 @@ export default function (api: IApi) {
   });
 
   const requestTemplate = readFileSync(
-    join(__dirname, '..', 'src', 'request.ts'),
+    winPath(join(__dirname, '../src/request.ts')),
     'utf-8',
   );
   const uiIndexTemplate = readFileSync(
-    join(__dirname, '..', 'src', './ui', 'index.ts'),
+    winPath(join(__dirname, '../src/ui/index.ts')),
     'utf-8',
   );
   const uiNoopTemplate = readFileSync(
-    join(__dirname, '..', 'src', './ui', 'noop.ts'),
+    winPath(join(__dirname, '../src/ui/noop.ts')),
     'utf-8',
   );
   const namespace = 'plugin-request';
@@ -91,7 +91,7 @@ export default function (api: IApi) {
         formatResultStr = `formatResult: result => result?.${dataField}`;
       }
       api.writeTmpFile({
-        path: join(namespace, 'request.ts'),
+        path: winPath(join(namespace, 'request.ts')),
         content: requestTemplate
           .replace(/\/\*FRS\*\/(.+)\/\*FRE\*\//, formatResultStr)
           .replace(/\['data'\]/g, dataField ? `['${dataField}']` : '')
@@ -109,11 +109,11 @@ import { history, plugin } from '../core/umiExports';
       const uiTmpDir = join(api.paths.absTmpPath!, namespace, 'ui');
       !existsSync(uiTmpDir) && mkdirSync(uiTmpDir, { recursive: true });
       api.writeTmpFile({
-        path: join(namespace, 'ui', 'index.ts'),
+        path: winPath(join(namespace, 'ui/index.ts')),
         content: uiIndexTemplate,
       });
       api.writeTmpFile({
-        path: join(namespace, 'ui', 'noop.ts'),
+        path: winPath(join(namespace, 'ui/noop.ts')),
         content: uiNoopTemplate,
       });
     } catch (e) {

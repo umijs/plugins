@@ -21,8 +21,8 @@ describe('plugin-request', () => {
       },
       describe: () => {},
       utils: {
-        winPath() {
-          return '/winpathtest';
+        winPath(path) {
+          return path;
         },
       },
       chainWebpack() {},
