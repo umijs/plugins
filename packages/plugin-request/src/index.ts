@@ -91,7 +91,7 @@ export default function (api: IApi) {
         formatResultStr = `formatResult: result => result?.${dataField}`;
       }
       api.writeTmpFile({
-        path: `${namespace}/request.ts`,
+        path: join(namespace, 'request.ts'),
         content: requestTemplate
           .replace(/\/\*FRS\*\/(.+)\/\*FRE\*\//, formatResultStr)
           .replace(/\['data'\]/g, dataField ? `['${dataField}']` : '')
