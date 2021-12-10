@@ -17,7 +17,7 @@ describe('plugin-request', () => {
         },
       },
       paths: {
-        absTmpPath: join(__dirname, './.umi-test'),
+        absTmpPath: join(__dirname, '.umi-test'),
       },
       describe: () => {},
       utils: {
