@@ -73,8 +73,8 @@ export default function (api: IApi) {
     webpackConfig.resolve.alias.set(
       '@umijs/plugin-request/lib/ui',
       api.config.antd === false
-        ? require.resolve('./ui/noop')
-        : require.resolve('./ui/index'),
+        ? winPath(join(api.paths.absTmpPath!, namespace, './ui/noop'))
+        : winPath(join(api.paths.absTmpPath!, namespace, './ui/index')),
     );
 
     return webpackConfig;
