@@ -1,0 +1,40 @@
+{
+  "name": "@umijs/plugin-electron",
+  "version": "0.1.0-0",
+  "description": "@umijs/plugin-electron",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/umijs/plugins"
+  },
+  "keywords": [
+    "umi"
+  ],
+  "authors": [
+    "chencheng <sorrycc@gmail.com> (https://github.com/sorrycc)"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/umijs/plugins/issues",
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-dva#readme",
+  "peerDependencies": {
+    "umi": "3.x"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "father-build" : "1.20.5-5",
+    "electron" : "^14",
+    "electron-builder": "22.10.5",
+    "babel-plugin-import-to-window-require" : "*",
+    "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/rimraf": "^3.0.2"
+  }
+}
