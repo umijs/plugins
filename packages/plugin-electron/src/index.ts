@@ -8,7 +8,6 @@ import { packageAnalyze } from './features/package-analyze';
 import { buildElectron } from './buildElectron';
 import { existsSync } from 'fs';
 import { TMP_DIR } from './constants';
-import rimraf from 'rimraf';
 
 export default (api: IApi) => {
   // 配置
