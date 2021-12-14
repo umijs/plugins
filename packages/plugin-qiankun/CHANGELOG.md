@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.35.4](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.35.3...@umijs/plugin-qiankun@2.35.4) (2021-12-14)
+
+### Bug Fixes
+
+- **qiankun:** loading 结束后需要隐藏 loading 容器 ([#765](https://github.com/umijs/plugins/issues/765)) ([76932de](https://github.com/umijs/plugins/commit/76932de41b0da9088aff6cccc8618593768aa05b))
+- **qiankun:** 修复 loading class 为 undefined 的问题 ([#766](https://github.com/umijs/plugins/issues/766)) ([3093b0a](https://github.com/umijs/plugins/commit/3093b0a32b09b75629fa93ab14aedb30acf0b4aa))
+
 ## [2.35.3](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.35.2...@umijs/plugin-qiankun@2.35.3) (2021-12-14)
 
 ### Bug Fixes
