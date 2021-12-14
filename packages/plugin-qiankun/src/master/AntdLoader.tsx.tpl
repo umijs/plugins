@@ -3,6 +3,9 @@ import React from "react";
 
 export default function AntdLoader(props: { loading: boolean }) {
   const { loading } = props;
+  if(!loading){
+    return null;
+  }
   return (
     <div
       style={{
