@@ -1,6 +1,7 @@
 /**
  * @jest-environment node
  */
+import { join } from 'path';
 import pluginFunc from '../src/index';
 
 describe('plugin-request', () => {
@@ -16,12 +17,12 @@ describe('plugin-request', () => {
         },
       },
       paths: {
-        absTmpPath: '/test/page/.umi',
+        absTmpPath: join(__dirname, '.umi-test'),
       },
       describe: () => {},
       utils: {
-        winPath() {
-          return '/winpathtest';
+        winPath(path) {
+          return path;
         },
       },
       chainWebpack() {},
@@ -39,24 +40,24 @@ describe('plugin-request', () => {
       }),
     );
 
-    expect(writeTmpFile).toHaveBeenLastCalledWith({
-      path: 'plugin-request/request.ts',
-      content: expect.stringContaining('result => result?.result'),
+    expect(writeTmpFile).toHaveBeenNthCalledWith(1, {
+      path: join('plugin-request', 'request.ts'),
+      content: expect.stringContaining(
+        `
+import { ApplyPluginsType } from 'umi';
+import { history, plugin } from '../core/umiExports';      
+`.trim(),
+      ),
+    }); // 对于主文件，只检查一次，如果最后一个 replace 成功则认为全都成功
+
+    expect(writeTmpFile).toHaveBeenNthCalledWith(2, {
+      path: join('plugin-request', 'ui', 'index.ts'),
+      content: expect.stringContaining('export { message, notification };'),
     });
 
-    expect(writeTmpFile).toHaveBeenLastCalledWith({
-      path: 'plugin-request/request.ts',
-      content: expect.stringContaining("['result']"),
-    });
-
-    expect(writeTmpFile).toHaveBeenLastCalledWith({
-      path: 'plugin-request/request.ts',
-      content: expect.stringContaining('result?: T;'),
-    });
-
-    expect(writeTmpFile).toHaveBeenLastCalledWith({
-      path: 'plugin-request/request.ts',
-      content: expect.stringContaining('/winpathtest'),
+    expect(writeTmpFile).toHaveBeenNthCalledWith(3, {
+      path: join('plugin-request', 'ui', 'noop.ts'),
+      content: expect.stringContaining('const noop = () => {};'),
     });
   });
 
@@ -69,26 +70,24 @@ describe('plugin-request', () => {
     );
     expect(writeTmpFile).toHaveBeenCalled();
 
-    expect(writeTmpFile).toHaveBeenLastCalledWith({
-      path: 'plugin-request/request.ts',
+    expect(writeTmpFile).toHaveBeenNthCalledWith(1, {
+      path: join('plugin-request', 'request.ts'),
       content: expect.stringContaining(
-        'type ResultWithData<T = any> = {  [key: string]: any };',
+        `
+import { ApplyPluginsType } from 'umi';
+import { history, plugin } from '../core/umiExports';      
+`.trim(),
       ),
+    }); // 对于主文件，只检查一次，如果最后一个 replace 成功则认为全都成功
+
+    expect(writeTmpFile).toHaveBeenNthCalledWith(2, {
+      path: join('plugin-request', 'ui', 'index.ts'),
+      content: expect.stringContaining('export { message, notification };'),
     });
 
-    expect(writeTmpFile).toHaveBeenLastCalledWith({
-      path: 'plugin-request/request.ts',
-      content: expect.stringContaining('BaseOptions<R, P>'),
-    });
-
-    expect(writeTmpFile).toHaveBeenLastCalledWith({
-      path: 'plugin-request/request.ts',
-      content: expect.stringContaining('BaseResult<R, P>'),
-    });
-
-    expect(writeTmpFile).toHaveBeenLastCalledWith({
-      path: 'plugin-request/request.ts',
-      content: expect.stringContaining('result => result'),
+    expect(writeTmpFile).toHaveBeenNthCalledWith(3, {
+      path: join('plugin-request', 'ui', 'noop.ts'),
+      content: expect.stringContaining('const noop = () => {};'),
     });
 
     try {

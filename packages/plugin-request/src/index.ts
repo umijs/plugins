@@ -1,6 +1,6 @@
 import { IApi } from 'umi';
 import { join, dirname } from 'path';
-import { readFileSync } from 'fs';
+import { existsSync, mkdirSync, readFileSync } from 'fs';
 
 export interface RequestOptions {
   dataField?: string;
@@ -54,8 +54,18 @@ export default function (api: IApi) {
     },
   });
 
-  const source = join(__dirname, '..', 'src', 'request.ts');
-  const requestTemplate = readFileSync(source, 'utf-8');
+  const requestTemplate = readFileSync(
+    winPath(join(__dirname, '../src/request.ts')),
+    'utf-8',
+  );
+  const uiIndexTemplate = readFileSync(
+    winPath(join(__dirname, '../src/ui/index.ts')),
+    'utf-8',
+  );
+  const uiNoopTemplate = readFileSync(
+    winPath(join(__dirname, '../src/ui/noop.ts')),
+    'utf-8',
+  );
   const namespace = 'plugin-request';
 
   api.chainWebpack((webpackConfig) => {
@@ -63,8 +73,8 @@ export default function (api: IApi) {
     webpackConfig.resolve.alias.set(
       '@umijs/plugin-request/lib/ui',
       api.config.antd === false
-        ? require.resolve('./ui/noop')
-        : require.resolve('./ui/index'),
+        ? winPath(join(api.paths.absTmpPath!, namespace, './ui/noop'))
+        : winPath(join(api.paths.absTmpPath!, namespace, './ui/index')),
     );
 
     return webpackConfig;
@@ -81,7 +91,7 @@ export default function (api: IApi) {
         formatResultStr = `formatResult: result => result?.${dataField}`;
       }
       api.writeTmpFile({
-        path: `${namespace}/request.ts`,
+        path: winPath(join(namespace, 'request.ts')),
         content: requestTemplate
           .replace(/\/\*FRS\*\/(.+)\/\*FRE\*\//, formatResultStr)
           .replace(/\['data'\]/g, dataField ? `['${dataField}']` : '')
@@ -95,6 +105,16 @@ import { ApplyPluginsType } from 'umi';
 import { history, plugin } from '../core/umiExports';
             `,
           ),
+      });
+      const uiTmpDir = join(api.paths.absTmpPath!, namespace, 'ui');
+      !existsSync(uiTmpDir) && mkdirSync(uiTmpDir, { recursive: true });
+      api.writeTmpFile({
+        path: winPath(join(namespace, 'ui/index.ts')),
+        content: uiIndexTemplate,
+      });
+      api.writeTmpFile({
+        path: winPath(join(namespace, 'ui/noop.ts')),
+        content: uiNoopTemplate,
       });
     } catch (e) {
       api.logger.error(e);

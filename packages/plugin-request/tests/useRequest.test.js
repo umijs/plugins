@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 import { renderHook } from '@testing-library/react-hooks';
-import { request, useRequest } from '../src/request';
+import { request, useRequest } from '../lib/request';
 import createTestServer from './createTestServer';
 
 jest.mock('umi', () => require('./mocks/umi'));
