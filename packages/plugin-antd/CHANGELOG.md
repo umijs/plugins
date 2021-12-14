@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.13.0...@umijs/plugin-antd@0.15.0) (2021-12-14)
+
+### Features
+
+- remove mobile from plugin-antd & update preset-react ([#760](https://github.com/umijs/plugins/issues/760)) ([1a312a4](https://github.com/umijs/plugins/commit/1a312a4ef8dcbc7b9853a276761d7b2a0cfb6e3b))
+
 # [0.13.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.12.1...@umijs/plugin-antd@0.13.0) (2021-11-23)
 
 ### Features

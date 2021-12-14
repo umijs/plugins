@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.35.3](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.35.2...@umijs/plugin-qiankun@2.35.3) (2021-12-14)
+
+### Bug Fixes
+
+- **qiankun:** add default classname and new laoding style ([#758](https://github.com/umijs/plugins/issues/758)) ([9a7f434](https://github.com/umijs/plugins/commit/9a7f4342e2d5694bcf7e8cad5b539cd91ad15d11))
+- Minimize the use of the lodash module ([#643](https://github.com/umijs/plugins/issues/643)) ([928b447](https://github.com/umijs/plugins/commit/928b447581ee6e40fd433c9ba1016ef3c68b363e))
+
 ## [2.35.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.35.1...@umijs/plugin-qiankun@2.35.2) (2021-11-04)
 
 ### Bug Fixes

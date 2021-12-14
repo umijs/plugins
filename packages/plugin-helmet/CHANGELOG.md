@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.4](https://github.com/umijs/plugins/compare/@umijs/plugin-helmet@1.1.3...@umijs/plugin-helmet@1.1.4) (2021-12-14)
+
+### Bug Fixes
+
+- **helmet:** add script tag ([#756](https://github.com/umijs/plugins/issues/756)) ([b237d6e](https://github.com/umijs/plugins/commit/b237d6efb64adcaac8998a6cd0b3a2726c599533))
+
 ## [1.1.3](https://github.com/umijs/plugins/compare/@umijs/plugin-helmet@1.1.2...@umijs/plugin-helmet@1.1.3) (2021-04-20)
 
 ### Bug Fixes

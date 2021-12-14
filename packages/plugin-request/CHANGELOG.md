@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.1](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.8.0...@umijs/plugin-request@2.8.1) (2021-12-14)
+
+### Bug Fixes
+
+- **plugin-request:** 兼容性修改以支持 mfsu ([#635](https://github.com/umijs/plugins/issues/635)) ([3c8285c](https://github.com/umijs/plugins/commit/3c8285c9a8ffdba1e56e17fbba2dd609583bfb55))
+
 # [2.8.0](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.7.0...@umijs/plugin-request@2.8.0) (2021-09-13)
 
 ### Features

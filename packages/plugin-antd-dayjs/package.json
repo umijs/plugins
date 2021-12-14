@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-antd-dayjs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "@umijs/plugin-antd-dayjs",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
