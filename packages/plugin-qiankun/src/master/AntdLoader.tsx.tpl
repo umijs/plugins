@@ -3,6 +3,9 @@ import React from "react";
 
 export default function AntdLoader(props: { loading: boolean }) {
   const { loading } = props;
+  if(!loading){
+    return null;
+  }
   return (
     <div
       style={{
@@ -13,7 +16,6 @@ export default function AntdLoader(props: { loading: boolean }) {
         alignItems: "center",
         justifyContent: "center",
         maxHeight: "60vh",
-        display: loading ? '' : 'none',
       }}
     >
       <Spin spinning={loading} size="large" />
