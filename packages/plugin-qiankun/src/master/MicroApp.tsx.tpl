@@ -257,7 +257,7 @@ export const MicroApp = forwardRef(
     return Boolean(microAppLoader) || Boolean(microAppErrorBoundary) ? (
       <div
         style={{ position: "relative" }}
-        className={`${wrapperClassName} qiankun-micro-app`}
+        className={`${wrapperClassName || ''} qiankun-micro-app`}
       >
         {Boolean(microAppLoader) && microAppLoader(loading)}
         {Boolean(microAppErrorBoundary) &&
@@ -265,7 +265,7 @@ export const MicroApp = forwardRef(
           microAppErrorBoundary(error)}
         <div
           ref={containerRef}
-          className={`${className} qiankun-micro-app-container`}
+          className={`${className || ''} qiankun-micro-app-container`}
         />
       </div>
     ) : (
