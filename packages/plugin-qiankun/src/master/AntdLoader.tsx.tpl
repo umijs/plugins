@@ -13,6 +13,7 @@ export default function AntdLoader(props: { loading: boolean }) {
         alignItems: "center",
         justifyContent: "center",
         maxHeight: "60vh",
+        display: loading ? '' : 'none',
       }}
     >
       <Spin spinning={loading} size="large" />
