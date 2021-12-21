@@ -1,5 +1,6 @@
 import { IApi } from 'umi';
 import { join } from 'path';
+import * as ora from 'ora';
 import { FatherBuildCli, WatchReturnType } from './fatherCli';
 import { ElectronProcessManager } from './electronManager';
 import { check } from './check';
@@ -32,13 +33,18 @@ export default (api: IApi) => {
   let electronManager: ElectronProcessManager | undefined;
   let fatherBuildWatcher: WatchReturnType | undefined;
 
-  // 启动编译脚本
-  api.onStart(() => {
-    if (!(api.env === 'development')) return;
+  let isFirstDevDone: boolean = true;
+
+  api.onDevCompileDone(() => {
+    if (!isFirstDevDone) {
+      return;
+    }
+    const spinner = ora('staring electron...').start();
     const { src = 'src/main' } = api.config.electron;
+    spinner.text = 'checking package.json...';
     check();
+    spinner.text = 'building version.json...';
     buildVersion();
-    log.success('build version.json');
     electronManager = new ElectronProcessManager();
     fatherBuildCli = new FatherBuildCli({
       src,
@@ -49,8 +55,10 @@ export default (api: IApi) => {
         electronManager?.start();
       },
     });
+    spinner.text = 'generate entry file of development mode...';
     generateEntryFile(getEntry('development'));
-    log.success('build entry.js');
+    spinner.stop();
+    isFirstDevDone = false;
   });
 
   api.onExit(() => {

@@ -21,8 +21,6 @@ export const buildElectron = (customBuilderConfig?: Configuration) => {
   build({
     targets: createTargets(targets),
     config: lodash.merge(
-      customBuilderConfig || {},
-      builderConfig as unknown as Configuration,
       {
         electronVersion: '14.0.0',
         directories: { output: 'dist' },
@@ -36,6 +34,8 @@ export const buildElectron = (customBuilderConfig?: Configuration) => {
           artifactName: `\${productName}-setup-\${version}.\${ext}`,
         },
       } as Configuration,
+      builderConfig as unknown as Configuration,
+      customBuilderConfig || {},
     ),
   })
     .then((res) => {
