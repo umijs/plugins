@@ -70,7 +70,7 @@ export const generateEntryFile = (fileContent: string): void => {
   writeFileSync(join(outputPath, 'entry.js'), fileContent);
 };
 
-export const generateMd5 = (files: string[]): void => {
+export const generateMd5 = (files: string[]): string[] => {
   if (process.platform === 'darwin') {
     const { stdout } = spawnSync('md5', files, { encoding: 'utf-8' });
     const md5Filenames: string[] = [];
@@ -92,11 +92,7 @@ export const generateMd5 = (files: string[]): void => {
           log.error((err as Error).stack || (err as Error).message);
         }
       });
-    log.success(
-      `build ${chalk.greenBright('md5')} success:${EOL}${md5Filenames.join(
-        EOL,
-      )}`,
-    );
+    return md5Filenames;
   }
   if (process.platform === 'win32') {
     const md5Filenames: string[] = [];
@@ -109,12 +105,9 @@ export const generateMd5 = (files: string[]): void => {
       fs.writeFileSync(md5Filename, md5.trim());
       md5Filenames.push(md5Filename);
     });
-    log.success(
-      `build ${chalk.greenBright('md5')} success:${EOL}${md5Filenames.join(
-        EOL,
-      )}`,
-    );
+    return md5Filenames;
   }
+  return [];
 };
 
 type GenEntryFunction = (mode: 'development' | 'production') => string;

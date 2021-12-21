@@ -18,7 +18,7 @@ export const buildElectron = (customBuilderConfig?: Configuration) => {
       ? [Platform.MAC, Platform.WINDOWS]
       : [Platform.WINDOWS];
 
-  build({
+  return build({
     targets: createTargets(targets),
     config: lodash.merge(
       {
@@ -37,14 +37,5 @@ export const buildElectron = (customBuilderConfig?: Configuration) => {
       builderConfig as unknown as Configuration,
       customBuilderConfig || {},
     ),
-  })
-    .then((res) => {
-      generateMd5(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      process.send?.('exit');
-    });
+  });
 };

@@ -1,10 +1,15 @@
 import { IApi } from 'umi';
 import { join } from 'path';
-import * as ora from 'ora';
-import { FatherBuildCli, WatchReturnType } from './fatherCli';
+import ora from 'ora';
+import { FatherBuildCli, WatchReturnType } from './fatherBuild';
 import { ElectronProcessManager } from './electronManager';
 import { check } from './check';
-import { buildVersion, generateEntryFile, getEntry, log } from './utils';
+import {
+  buildVersion,
+  generateEntryFile,
+  generateMd5,
+  getEntry,
+} from './utils';
 import { packageAnalyze } from './features/package-analyze';
 import { buildElectron } from './buildElectron';
 import { existsSync } from 'fs';
@@ -35,29 +40,35 @@ export default (api: IApi) => {
 
   let isFirstDevDone: boolean = true;
 
-  api.onDevCompileDone(() => {
+  api.onDevCompileDone(async () => {
     if (!isFirstDevDone) {
       return;
     }
-    const spinner = ora('staring electron...').start();
+    const spinner = ora({
+      prefixText: '[umi electron]',
+      text: 'staring dev...\n',
+    }).start();
     const { src = 'src/main' } = api.config.electron;
-    spinner.text = 'checking package.json...';
+    spinner.text = 'checking package.json...\n';
     check();
-    spinner.text = 'building version.json...';
+    spinner.text = 'building version.json...\n';
     buildVersion();
     electronManager = new ElectronProcessManager();
     fatherBuildCli = new FatherBuildCli({
       src,
       configPath: join(__dirname, './config/father.js'),
     });
-    fatherBuildWatcher = fatherBuildCli.watch({
-      onBuild: () => {
+    fatherBuildWatcher = await fatherBuildCli.watch({
+      onBuildComplete: () => {
+        spinner.succeed('done~');
         electronManager?.start();
       },
+      beforeBuild: () => {
+        spinner.start('compiling...');
+      },
     });
-    spinner.text = 'generate entry file of development mode...';
+    spinner.text = 'generate entry file of development mode...\n';
     generateEntryFile(getEntry('development'));
-    spinner.stop();
     isFirstDevDone = false;
   });
 
@@ -69,8 +80,14 @@ export default (api: IApi) => {
     if (err) {
       return;
     }
+
+    const spinner = ora({
+      prefixText: '[umi electron]',
+      text: 'staring build...\n',
+    }).start();
+
     check();
-    log.info('start build application');
+    spinner.text = 'start build application';
     // 支持 (pwd)/electron-builder.config.js 和 config.electron.builder
     let fileConfig = {};
     const customConfigFilePath = join(
@@ -81,22 +98,29 @@ export default (api: IApi) => {
       fileConfig =
         require(join(process.cwd(), 'electron-builder.config.js')) || {};
     }
+    spinner.text = 'build main process code';
     await fatherBuildCli?.build();
-    log.success('build main process code');
+    spinner.text = 'build entry.js';
     generateEntryFile(getEntry('production'));
-    log.success('build entry.js');
+    spinner.text = 'build version.json';
     buildVersion();
-    log.success('build version.json');
+    spinner.text = 'package analyze';
     packageAnalyze({
       throwWhileUnusedDependencies:
         api.config.electron.throwWhileUnusedDependencies,
     });
-    log.success('package analyze');
-    log.info('build electron application');
-    buildElectron({
+    spinner.succeed(
+      'Preparations have been completed, ready to start electron-builder',
+    );
+    const result = await buildElectron({
       ...fileConfig,
       ...(api.config.electron.builder || {}),
     });
+    spinner.text = 'generating md5';
+    spinner.start();
+    const filenames = generateMd5(result);
+    console.log('\n' + filenames.join('\n'));
+    spinner.succeed('done');
   });
 
   api.modifyConfig({
@@ -107,7 +131,7 @@ export default (api: IApi) => {
         history: {
           type: 'hash',
         },
-        publicPath: './',
+        publicPath: '../',
       };
     },
     stage: Infinity,
