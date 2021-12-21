@@ -46,7 +46,7 @@ export default (api: IApi) => {
     }
     const spinner = ora({
       prefixText: '[umi electron]',
-      text: 'staring dev...\n',
+      text: 'starting dev...\n',
     }).start();
     const { src = 'src/main' } = api.config.electron;
     spinner.text = 'checking package.json...\n';
@@ -83,7 +83,7 @@ export default (api: IApi) => {
 
     const spinner = ora({
       prefixText: '[umi electron]',
-      text: 'staring build...\n',
+      text: 'starting build...\n',
     }).start();
 
     check();
