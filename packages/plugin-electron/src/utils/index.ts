@@ -70,6 +70,14 @@ export const generateEntryFile = (fileContent: string): void => {
   writeFileSync(join(outputPath, 'entry.js'), fileContent);
 };
 
+export const generateEnvJson = () => {
+  const outputPath = join(process.cwd(), TMP_DIR);
+  if (!existsSync(outputPath)) {
+    mkdirSync(outputPath, { recursive: true });
+  }
+  writeFileSync(join(outputPath, 'env.json'), JSON.stringify(process.env));
+};
+
 export const generateMd5 = (files: string[]): string[] => {
   if (process.platform === 'darwin') {
     const { stdout } = spawnSync('md5', files, { encoding: 'utf-8' });

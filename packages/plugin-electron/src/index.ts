@@ -7,6 +7,7 @@ import { check } from './check';
 import {
   buildVersion,
   generateEntryFile,
+  generateEnvJson,
   generateMd5,
   getEntry,
 } from './utils';
@@ -51,8 +52,10 @@ export default (api: IApi) => {
     const { src = 'src/main' } = api.config.electron;
     spinner.text = 'checking package.json...\n';
     check();
-    spinner.text = 'building version.json...\n';
+    spinner.text = 'generate version.json...\n';
     buildVersion();
+    spinner.text = 'generate env.json...\n';
+    generateEnvJson();
     electronManager = new ElectronProcessManager();
     fatherBuildCli = new FatherBuildCli({
       src,
@@ -104,6 +107,8 @@ export default (api: IApi) => {
     generateEntryFile(getEntry('production'));
     spinner.text = 'build version.json';
     buildVersion();
+    spinner.text = 'generate env.json\n';
+    generateEnvJson();
     spinner.text = 'package analyze';
     packageAnalyze({
       throwWhileUnusedDependencies:
@@ -131,7 +136,7 @@ export default (api: IApi) => {
         history: {
           type: 'hash',
         },
-        publicPath: '../',
+        publicPath: './',
       };
     },
     stage: Infinity,
