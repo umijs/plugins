@@ -35,10 +35,12 @@ const checkAntdMobile = (api: IApi) => {
 export default (api: IApi) => {
   const [isAntdMobile5, hasDeps] = checkAntdMobile(api);
   api.describe({
-    key: 'hd',
+    key: 'antdMobile',
     config: {
       schema(Joi) {
-        return Joi.object({});
+        return Joi.object({
+          hd: Joi.boolean(),
+        });
       },
     },
   });
@@ -90,7 +92,7 @@ export default (api: IApi) => {
                 })
               : require.resolve('antd-mobile/package.json'),
           ),
-          isAntdMobile5 && api.config.hd ? '2x' : '',
+          isAntdMobile5 && api.config?.antdMobile?.hd ? '2x' : '',
         ),
       ),
     );
