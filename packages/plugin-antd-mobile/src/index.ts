@@ -90,7 +90,7 @@ export default (api: IApi) => {
                 })
               : require.resolve('antd-mobile/package.json'),
           ),
-          isAntdMobile5 && api.userConfig.hd ? '2x' : '',
+          isAntdMobile5 && api.config.hd ? '2x' : '',
         ),
       ),
     );
