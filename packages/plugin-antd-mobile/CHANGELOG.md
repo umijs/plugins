@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/umijs/plugins/compare/@umijs/plugin-antd-mobile@1.1.0...@umijs/plugin-antd-mobile@1.2.0) (2021-12-31)
+
+### Features
+
+- describe antd-mobile config ([#780](https://github.com/umijs/plugins/issues/780)) ([c6f2b95](https://github.com/umijs/plugins/commit/c6f2b95cce9ede23df7af435e8aae49d5ce3de19))
+- use config ([f933b5e](https://github.com/umijs/plugins/commit/f933b5ed4a7564f0768dc87c9c10f42f5ec6a316))
+
 # 1.1.0 (2021-12-14)
 
 ### Features

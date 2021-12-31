@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.18.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.18.1...@umijs/plugin-layout@0.18.2) (2021-12-31)
+
+### Bug Fixes
+
+- update theme style ([316374a](https://github.com/umijs/plugins/commit/316374a98469fcadd7488af0248c137683e68ddb))
+
 ## [0.18.1](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.18.0...@umijs/plugin-layout@0.18.1) (2021-11-17)
 
 ### Bug Fixes
