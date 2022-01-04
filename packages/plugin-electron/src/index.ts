@@ -35,8 +35,6 @@ export default (api: IApi) => {
     enableBy: () => !!api.userConfig.electron,
   });
 
-  let fatherBuildCli: FatherBuildCli | undefined;
-  let electronManager: ElectronProcessManager | undefined;
   let fatherBuildWatcher: WatchReturnType | undefined;
 
   let isFirstDevDone: boolean = true;
@@ -56,8 +54,8 @@ export default (api: IApi) => {
     buildVersion();
     spinner.text = 'generate env.json...\n';
     generateEnvJson();
-    electronManager = new ElectronProcessManager();
-    fatherBuildCli = new FatherBuildCli({
+    const electronManager = new ElectronProcessManager();
+    const fatherBuildCli = new FatherBuildCli({
       src,
       configPath: join(__dirname, './config/father.js'),
     });
@@ -83,6 +81,12 @@ export default (api: IApi) => {
     if (err) {
       return;
     }
+
+    const { src = 'src/main' } = api.config.electron;
+    const fatherBuildCli = new FatherBuildCli({
+      src,
+      configPath: join(__dirname, './config/father.js'),
+    });
 
     const spinner = ora({
       prefixText: '[umi electron]',

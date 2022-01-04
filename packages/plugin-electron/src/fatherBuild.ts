@@ -29,13 +29,12 @@ class FatherBuildCli {
     };
   }
   private getBuildArgs = () => {
-    const a = {
+    return {
       ...fatherBuildArgs,
       silent: true,
       src: this.opts.src,
       output: this.opts.output,
     };
-    return a;
   };
   watch = async (opts: WatchOpts): Promise<{ exit: () => void }> => {
     const dispose = await build({
@@ -51,12 +50,16 @@ class FatherBuildCli {
       },
     };
   };
-  build() {
-    return build({
-      cwd: process.cwd(),
-      buildArgs: this.getBuildArgs(),
-    });
-  }
+  build = async () => {
+    try {
+      await build({
+        cwd: process.cwd(),
+        buildArgs: this.getBuildArgs(),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   static getUserConfig(): string | undefined {
     const userConfigPath = path.resolve(process.cwd(), '.fatherrc.js');
     if (existsSync(userConfigPath)) {
