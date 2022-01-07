@@ -29,9 +29,14 @@ async function getMasterRuntime() {
 
 // modify route with "microApp" attribute to use real component
 function patchMicroAppRouteComponent(routes: IRouteProps[]) {
+  const { routeBindingAlias, base, masterHistoryType } = getMasterOptions() as MasterOptions;
+
   const insertRoutes = microAppRuntimeRoutes.filter(r => r.insert);
   // 先处理 insert 配置
   insertRoutes.forEach(route => {
+    // 转化insert配置变更成 micro组件
+    patchMicroAppRoute(route, getMicroAppRouteComponent, { base, masterHistoryType, routeBindingAlias });
+    // 将转换后的micro组件，插入对应路由
     insertRoute(routes, route);
   });
 
@@ -51,7 +56,6 @@ function patchMicroAppRouteComponent(routes: IRouteProps[]) {
 
   const rootRoutes = getRootRoutes(routes);
   if (rootRoutes) {
-    const { routeBindingAlias, base, masterHistoryType } = getMasterOptions() as MasterOptions;
     const microAppAttachedRoutes = microAppRuntimeRoutes.filter(r => !r.insert);
     microAppAttachedRoutes.reverse().forEach(microAppRoute => {
       const patchRoute = (route: IRouteProps) => {
