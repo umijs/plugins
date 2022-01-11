@@ -37,6 +37,7 @@ export default (api: IApi) => {
           compact: joi.boolean(),
           disableBabelPluginImport: joi.boolean(),
           config: joi.object(),
+          import: joi.array()
         });
       },
     },
