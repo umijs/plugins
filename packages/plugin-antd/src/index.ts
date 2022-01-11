@@ -10,7 +10,7 @@ const { Mustache } = utils;
 interface ImportConfig {
   libraryName?: string
   libraryDirectory?: string
-  style?: string | boolean | (name: string, file: Object) => string | boolean
+  style?: string | boolean | ((name: string, file: Object) => string | boolean)
   camel2DashComponentName?: boolean
   styleLibraryDirectory?: string
   customName?: (name: string, file: Object) => string
