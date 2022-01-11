@@ -6,11 +6,24 @@ import semver from 'semver';
 
 const { Mustache } = utils;
 
+// allow config for babel-plugin-import
+interface ImportConfig {
+  libraryName?: string
+  libraryDirectory?: string
+  style?: string | boolean | (name: string, file: Object) => string | boolean
+  camel2DashComponentName?: boolean
+  styleLibraryDirectory?: string
+  customName?: (name: string, file: Object) => string
+  customStyleName?: (name: string, file: Object) => string
+  transformToDefaultImport?: boolean
+}
+
 interface IAntdOpts {
   dark?: boolean;
   compact?: boolean;
   disableBabelPluginImport?: boolean;
   config?: ConfigProviderProps;
+  import?: ImportConfig[]
 }
 
 export default (api: IApi) => {
@@ -39,7 +52,7 @@ export default (api: IApi) => {
     }
     return {
       ...opts,
-      import: (opts.import || []).concat(imps),
+      import: (opts?.import || []).concat(imps),
     };
   });
 
