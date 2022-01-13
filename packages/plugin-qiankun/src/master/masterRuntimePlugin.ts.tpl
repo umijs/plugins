@@ -52,8 +52,7 @@ function patchMicroAppRouteComponent(routes: IRouteProps[]) {
   const rootRoutes = getRootRoutes(routes);
   if (rootRoutes) {
     const { routeBindingAlias, base, masterHistoryType } = getMasterOptions() as MasterOptions;
-    const microAppAttachedRoutes = microAppRuntimeRoutes.filter(r => !r.insert);
-    microAppAttachedRoutes.reverse().forEach(microAppRoute => {
+    microAppRuntimeRoutes.reverse().forEach(microAppRoute => {
       const patchRoute = (route: IRouteProps) => {
         patchMicroAppRoute(route, getMicroAppRouteComponent, { base, masterHistoryType, routeBindingAlias });
         if (route.routes?.length) {
@@ -62,7 +61,7 @@ function patchMicroAppRouteComponent(routes: IRouteProps[]) {
       };
 
       patchRoute(microAppRoute);
-      rootRoutes.unshift(microAppRoute);
+      !microAppRoute.insert && rootRoutes.unshift(microAppRoute);
     });
   }
 }
