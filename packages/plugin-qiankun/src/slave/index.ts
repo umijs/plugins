@@ -59,11 +59,16 @@ export default function (api: IApi) {
       },
     };
 
+    const options: SlaveOptions = api.userConfig?.qiankun?.slave!;
+    const { keepOriginalRoutes = false } = options || {};
+
     const shouldNotModifyDefaultBase =
       api.userConfig.qiankun?.slave?.shouldNotModifyDefaultBase ??
       initialSlaveOptions.shouldNotModifyDefaultBase;
     if (!shouldNotModifyDefaultBase) {
-      modifiedDefaultConfig.base = `/${api.pkg.name}`;
+      modifiedDefaultConfig.base = `/${
+        keepOriginalRoutes === true ? api.pkg.name : keepOriginalRoutes
+      }`;
     }
 
     return modifiedDefaultConfig;
