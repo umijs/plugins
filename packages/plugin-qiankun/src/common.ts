@@ -93,11 +93,11 @@ export function patchMicroAppRoute(
 const recursiveSearch = (
   routes: IRouteProps[],
   path: string,
-  fatherPath: string,
-): IRouteProps | null => {
+  parentPath: string,
+): [IRouteProps, IRouteProps[], number, string] | null => {
   for (let i = 0; i < routes.length; i++) {
     if (routes[i].path === path) {
-      return [ routes[i], routes, i, fatherPath ];
+      return [ routes[i], routes, i, parentPath ];
     }
     if (routes[i].routes && routes[i].routes?.length) {
       const found = recursiveSearch(routes[i].routes || [], path, routes[i].path);
@@ -115,14 +115,10 @@ export function insertRoute(routes: IRouteProps[], microAppRoute: IRouteProps) {
   : (
     microAppRoute.insertBefore
     ? 'insertBefore'
-    : (
-      microAppRoute.insertAfter
-      ? 'insertAfter'
-      : undefined
-    )
+    : undefined
   );
-  const taget = microAppRoute.insert || microAppRoute.insertBefore || microAppRoute.insertAfter;
-  const [ found, foundFatherRoutes, index, fatherPath ] = recursiveSearch(routes, taget, '/');
+  const target = microAppRoute.insert || microAppRoute.insertBefore;
+  const [ found, foundParentRoutes = [], index = 0, parentPath ] = recursiveSearch(routes, target, '/') || [];
   if (found) {
     switch (mod) {
       case 'insert':
@@ -143,25 +139,13 @@ export function insertRoute(routes: IRouteProps[], microAppRoute: IRouteProps) {
         if (
           !microAppRoute.path ||
           !found.path ||
-          !microAppRoute.path.startsWith(fatherPath)
+          !microAppRoute.path.startsWith(parentPath)
         ) {
           throw new Error(
-            `[plugin-qiankun]: path "${microAppRoute.path}" need to starts with "${fatherPath}"`,
+            `[plugin-qiankun]: path "${microAppRoute.path}" need to starts with "${parentPath}"`,
           );
         }
-        foundFatherRoutes.splice(index, 0, microAppRoute)
-        break;
-      case 'insertAfter':
-        if (
-          !microAppRoute.path ||
-          !found.path ||
-          !microAppRoute.path.startsWith(fatherPath)
-        ) {
-          throw new Error(
-            `[plugin-qiankun]: path "${microAppRoute.path}" need to starts with "${fatherPath}"`,
-          );
-        }
-        foundFatherRoutes.splice(index + 1, 0, microAppRoute)
+        foundParentRoutes.splice(index, 0, microAppRoute)
         break;
     }
   } else {
@@ -170,4 +154,3 @@ export function insertRoute(routes: IRouteProps[], microAppRoute: IRouteProps) {
     );
   }
 }
-
