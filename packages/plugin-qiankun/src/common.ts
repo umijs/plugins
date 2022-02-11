@@ -97,10 +97,14 @@ const recursiveSearch = (
 ): [IRouteProps, IRouteProps[], number, string] | null => {
   for (let i = 0; i < routes.length; i++) {
     if (routes[i].path === path) {
-      return [ routes[i], routes, i, parentPath ];
+      return [routes[i], routes, i, parentPath];
     }
     if (routes[i].routes && routes[i].routes?.length) {
-      const found = recursiveSearch(routes[i].routes || [], path, routes[i].path);
+      const found = recursiveSearch(
+        routes[i].routes || [],
+        path,
+        routes[i].path!,
+      );
       if (found) {
         return found;
       }
@@ -110,16 +114,19 @@ const recursiveSearch = (
 };
 
 export function insertRoute(routes: IRouteProps[], microAppRoute: IRouteProps) {
-  const mod = (microAppRoute.appendChildTo || microAppRoute.insert)
-  ? 'appendChildTo'
-  : (
-    microAppRoute.insertBefore
-    ? 'insertBefore'
-    : undefined
-  );
-  const target = microAppRoute.appendChildTo || microAppRoute.insert || microAppRoute.insertBefore;
-  const [ found, foundParentRoutes = [], index = 0, parentPath ] = recursiveSearch(routes, target, '/') || [];
-  if (found) {
+  const mod =
+    microAppRoute.appendChildTo || microAppRoute.insert
+      ? 'appendChildTo'
+      : microAppRoute.insertBefore
+      ? 'insertBefore'
+      : undefined;
+  const target =
+    microAppRoute.appendChildTo ||
+    microAppRoute.insert ||
+    microAppRoute.insertBefore;
+  const result = recursiveSearch(routes, target, '/');
+  if (result) {
+    const [found, foundParentRoutes = [], index = 0, parentPath] = result;
     switch (mod) {
       case 'appendChildTo':
         if (
@@ -133,7 +140,7 @@ export function insertRoute(routes: IRouteProps[], microAppRoute: IRouteProps) {
         }
         found.exact = false;
         found.routes = found.routes || [];
-        found.routes.push(microAppRoute)
+        found.routes.push(microAppRoute);
         break;
       case 'insertBefore':
         if (
@@ -145,12 +152,10 @@ export function insertRoute(routes: IRouteProps[], microAppRoute: IRouteProps) {
             `[plugin-qiankun]: path "${microAppRoute.path}" need to starts with "${parentPath}"`,
           );
         }
-        foundParentRoutes.splice(index, 0, microAppRoute)
+        foundParentRoutes.splice(index, 0, microAppRoute);
         break;
     }
   } else {
-    throw new Error(
-      `[plugin-qiankun]: path "${target}" not found`,
-    );
+    throw new Error(`[plugin-qiankun]: path "${target}" not found`);
   }
 }
