@@ -93,13 +93,14 @@ export function patchMicroAppRoute(
 const recursiveSearch = (
   routes: IRouteProps[],
   path: string,
-): IRouteProps | null => {
+  parentPath: string,
+): [IRouteProps, IRouteProps[], number, string] | null => {
   for (let i = 0; i < routes.length; i++) {
     if (routes[i].path === path) {
-      return routes[i];
+      return [ routes[i], routes, i, parentPath ];
     }
     if (routes[i].routes && routes[i].routes?.length) {
-      const found = recursiveSearch(routes[i].routes || [], path);
+      const found = recursiveSearch(routes[i].routes || [], path, routes[i].path);
       if (found) {
         return found;
       }
@@ -109,23 +110,47 @@ const recursiveSearch = (
 };
 
 export function insertRoute(routes: IRouteProps[], microAppRoute: IRouteProps) {
-  const found = recursiveSearch(routes, microAppRoute.insert);
+  const mod = (microAppRoute.appendChildTo || microAppRoute.insert)
+  ? 'appendChildTo'
+  : (
+    microAppRoute.insertBefore
+    ? 'insertBefore'
+    : undefined
+  );
+  const target = microAppRoute.appendChildTo || microAppRoute.insert || microAppRoute.insertBefore;
+  const [ found, foundParentRoutes = [], index = 0, parentPath ] = recursiveSearch(routes, target, '/') || [];
   if (found) {
-    if (
-      !microAppRoute.path ||
-      !found.path ||
-      !microAppRoute.path.startsWith(found.path)
-    ) {
-      throw new Error(
-        `[plugin-qiankun]: path "${microAppRoute.path}" need to starts with "${found.path}"`,
-      );
+    switch (mod) {
+      case 'appendChildTo':
+        if (
+          !microAppRoute.path ||
+          !found.path ||
+          !microAppRoute.path.startsWith(found.path)
+        ) {
+          throw new Error(
+            `[plugin-qiankun]: path "${microAppRoute.path}" need to starts with "${found.path}"`,
+          );
+        }
+        found.exact = false;
+        found.routes = found.routes || [];
+        found.routes.push(microAppRoute)
+        break;
+      case 'insertBefore':
+        if (
+          !microAppRoute.path ||
+          !found.path ||
+          !microAppRoute.path.startsWith(parentPath)
+        ) {
+          throw new Error(
+            `[plugin-qiankun]: path "${microAppRoute.path}" need to starts with "${parentPath}"`,
+          );
+        }
+        foundParentRoutes.splice(index, 0, microAppRoute)
+        break;
     }
-    found.exact = false;
-    found.routes = found.routes || [];
-    found.routes.push(microAppRoute);
   } else {
     throw new Error(
-      `[plugin-qiankun]: path "${microAppRoute.insert}" not found`,
+      `[plugin-qiankun]: path "${target}" not found`,
     );
   }
 }
