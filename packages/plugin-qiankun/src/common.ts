@@ -111,7 +111,7 @@ const recursiveSearch = (
 
 export function insertRoute(routes: IRouteProps[], microAppRoute: IRouteProps) {
   const mod = (microAppRoute.appendChildTo || microAppRoute.insert)
-  ? 'insert'
+  ? 'appendChildTo'
   : (
     microAppRoute.insertBefore
     ? 'insertBefore'
