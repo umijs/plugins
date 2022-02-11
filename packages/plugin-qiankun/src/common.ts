@@ -117,7 +117,7 @@ export function insertRoute(routes: IRouteProps[], microAppRoute: IRouteProps) {
     ? 'insertBefore'
     : undefined
   );
-  const target = microAppRoute.insert || microAppRoute.insertBefore || microAppRoute.appendChildTo;
+  const target = microAppRoute.appendChildTo || microAppRoute.insert || microAppRoute.insertBefore;
   const [ found, foundParentRoutes = [], index = 0, parentPath ] = recursiveSearch(routes, target, '/') || [];
   if (found) {
     switch (mod) {
