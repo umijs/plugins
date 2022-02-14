@@ -88,7 +88,7 @@ export default (api: IApi) => {
     });
 
     // 打包超过五分钟则提示
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       console.log();
       console.log(
         '[umi electron] 打包时间过长，请尝试添加以下镜像到 .npmrc 中：\n' +
@@ -138,11 +138,13 @@ export default (api: IApi) => {
       ...fileConfig,
       ...(api.config.electron.builder || {}),
     });
+
     spinner.text = 'generating md5';
     spinner.start();
     const filenames = generateMd5(result);
     console.log('\n' + filenames.join('\n'));
     spinner.succeed('done');
+    clearTimeout(timer);
   });
 
   api.modifyConfig({
