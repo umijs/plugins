@@ -4,6 +4,7 @@ import path, { join, resolve } from 'path';
 import { spawnSync } from 'child_process';
 import { EOL } from 'os';
 import { TMP_DIR } from '../constants';
+import { DependenciesJson } from '../types';
 
 type LogFunctionType = (...args: string[]) => string;
 
@@ -125,4 +126,38 @@ export const getEntry: GenEntryFunction = (mode) => {
   } else {
     return `module.exports = \`file://\${require('path').resolve(__dirname,'./renderer/index.html')}\``;
   }
+};
+
+export const regeneratePackageJson = () => {
+  const userDependencies: DependenciesJson = require(join(
+    process.cwd(),
+    `${TMP_DIR}/dependencies.json`,
+  ));
+  const originPkgJson = require(join(process.cwd(), './package.json'));
+  const { dependencies = {}, devDependencies = {} } = originPkgJson;
+
+  originPkgJson.main = './main/index.js';
+
+  const originDependencies = { ...devDependencies, ...dependencies };
+
+  // 删除原本的依赖，然后在原本的依赖中寻找使用的依赖的版本
+
+  originPkgJson.dependencies = {};
+  originPkgJson.devDependencies = {};
+
+  userDependencies.all.forEach((dep) => {
+    if (dep === 'electron') {
+      return;
+    }
+    originPkgJson.dependencies[dep] = originDependencies[dep] || '*';
+  });
+
+  originPkgJson.devDependencies['electron'] =
+    originDependencies['electron'] || '*';
+
+  fs.writeFileSync(
+    join(process.cwd(), './.electron/package.json'),
+    JSON.stringify(originPkgJson, undefined, 2),
+    'utf-8',
+  );
 };

@@ -1,25 +1,28 @@
 import electron from 'electron';
 import proc, { ChildProcess } from 'child_process';
-import { resolve } from 'path';
 import yParser from 'yargs-parser';
 import { log } from './utils';
 const args = yParser(process.argv.slice(2));
 
-const appPath = resolve(process.cwd());
-
 export class ElectronProcessManager {
   electronProcess: ChildProcess | undefined;
+  private cwd: string;
+  constructor(cwd: string | undefined = process.cwd()) {
+    this.cwd = cwd;
+  }
   start() {
     this.kill();
+    console.log(this.cwd);
     const childProc = proc.spawn(
       electron as unknown as string,
-      args.inspect ? [`--inspect=${args.inspect}`, appPath] : [appPath],
+      args.inspect ? [`--inspect=${args.inspect}`, this.cwd] : [this.cwd],
       {
         stdio: 'pipe',
         env: {
           ...process.env,
           FORCE_COLOR: '1',
         },
+        cwd: this.cwd,
       },
     );
 

@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add ora -S
+  /usr/local/bin/node /usr/local/bin/yarn add @babel/plugin-syntax-top-level-await
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/muyi/.cargo/bin
@@ -29,7 +29,7 @@ Trace:
 npm manifest: 
   {
     "name": "@umijs/plugin-electron",
-    "version": "0.1.0-0",
+    "version": "0.1.0-3",
     "description": "@umijs/plugin-electron",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
@@ -57,11 +57,12 @@ npm manifest:
       "access": "public"
     },
     "dependencies": {
-      "father-build" : "1.20.5-5",
+      "father-build" : "1.20.5-8",
       "electron" : "^14",
       "electron-builder": "22.10.5",
       "babel-plugin-import-to-window-require" : "*",
-      "rimraf": "^3.0.2"
+      "rimraf": "^3.0.2",
+      "ora" : "^5"
     },
     "devDependencies": {
       "@types/rimraf": "^3.0.2"
@@ -9836,10 +9837,10 @@ Lockfile:
     dependencies:
       reusify "^1.0.4"
   
-  father-build@1.20.5-5:
-    version "1.20.5-5"
-    resolved "https://registry.yarnpkg.com/father-build/-/father-build-1.20.5-5.tgz#0fe2961b2dc6a8eb00444a4790757c1c8b5fbe87"
-    integrity sha512-LTR0wkw9QhgHvWcPRI8XkzHiM10LLT8VWsxj/HmbsaynWruhmszFzLARFQuSgwJxUnH4sAiZem9DiuY6XJbg3g==
+  father-build@1.20.5-8:
+    version "1.20.5-8"
+    resolved "https://registry.yarnpkg.com/father-build/-/father-build-1.20.5-8.tgz#c1e3200ea7ca87754b09117a4d93759e844c6e30"
+    integrity sha512-aYPSEkh/TQRVJsxj9Q0ghltIUyUz7LYEwEIC6jtKzVmgyYcvT1l+mPSChTmXFFJSGhJsRCtvpZCx8COPF5R22w==
     dependencies:
       "@babel/core" "7.12.3"
       "@babel/plugin-proposal-class-properties" "7.12.1"
@@ -14747,7 +14748,7 @@ Lockfile:
       strip-ansi "^5.2.0"
       wcwidth "^1.0.1"
   
-  ora@^5.3.0:
+  ora@^5, ora@^5.3.0:
     version "5.4.1"
     resolved "https://registry.yarnpkg.com/ora/-/ora-5.4.1.tgz#1b2678426af4ac4a509008e5e4ac9e9959db9e18"
     integrity sha512-5b6Y85tPxZZ7QytO+BQzysW31HJku27cRIlkbAXaNx+BdcVi+LlRFmVXzeF6a7JCwJpyw5c4b+YSVImQIrBpuQ==

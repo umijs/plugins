@@ -3,15 +3,14 @@ import { join } from 'path';
 import ora from 'ora';
 import { FatherBuildCli, WatchReturnType } from './fatherBuild';
 import { ElectronProcessManager } from './electronManager';
-import { check } from './check';
 import {
   buildVersion,
   generateEntryFile,
   generateEnvJson,
   generateMd5,
   getEntry,
+  regeneratePackageJson,
 } from './utils';
-import { packageAnalyze } from './features/package-analyze';
 import { buildElectron } from './buildElectron';
 import { existsSync } from 'fs';
 import { TMP_DIR } from './constants';
@@ -25,12 +24,9 @@ export default (api: IApi) => {
         return joi.object({
           src: joi.string(),
           builder: joi.object(),
-          throwWhileUnusedDependencies: joi.boolean(),
         });
       },
-      default: {
-        throwWhileUnusedDependencies: true,
-      },
+      default: {},
     },
     enableBy: () => !!api.userConfig.electron,
   });
@@ -48,19 +44,22 @@ export default (api: IApi) => {
       text: 'starting dev...\n',
     }).start();
     const { src = 'src/main' } = api.config.electron;
-    spinner.text = 'checking package.json...\n';
-    check();
     spinner.text = 'generate version.json...\n';
     buildVersion();
+
     spinner.text = 'generate env.json...\n';
     generateEnvJson();
-    const electronManager = new ElectronProcessManager();
+    const electronManager = new ElectronProcessManager(
+      join(process.cwd(), './.electron'),
+    );
     const fatherBuildCli = new FatherBuildCli({
       src,
       configPath: join(__dirname, './config/father.js'),
     });
     fatherBuildWatcher = await fatherBuildCli.watch({
       onBuildComplete: () => {
+        spinner.text = 'generate package.json...\n';
+        regeneratePackageJson();
         spinner.succeed('done~');
         electronManager?.start();
       },
@@ -88,12 +87,22 @@ export default (api: IApi) => {
       configPath: join(__dirname, './config/father.js'),
     });
 
+    // 打包超过五分钟则提示
+    setTimeout(() => {
+      console.log();
+      console.log(
+        '[umi electron] 打包时间过长，请尝试添加以下镜像到 .npmrc 中：\n' +
+          'electron-mirror=https://registry.npmmirror.com/binary.html?path=electron/\n' +
+          'electron-builder-binaries-mirror=https://registry.npmmirror.com/binary.html?path=electron-builder-binaries/',
+      );
+      console.log();
+    }, 5 * 60 * 1000);
+
     const spinner = ora({
       prefixText: '[umi electron]',
       text: 'starting build...\n',
     }).start();
 
-    check();
     spinner.text = 'start build application';
     // 支持 (pwd)/electron-builder.config.js 和 config.electron.builder
     let fileConfig = {};
@@ -105,22 +114,26 @@ export default (api: IApi) => {
       fileConfig =
         require(join(process.cwd(), 'electron-builder.config.js')) || {};
     }
+
     spinner.text = 'build main process code';
     await fatherBuildCli?.build();
+
     spinner.text = 'build entry.js';
     generateEntryFile(getEntry('production'));
+
     spinner.text = 'build version.json';
     buildVersion();
+
     spinner.text = 'generate env.json\n';
     generateEnvJson();
-    spinner.text = 'package analyze';
-    packageAnalyze({
-      throwWhileUnusedDependencies:
-        api.config.electron.throwWhileUnusedDependencies,
-    });
+
+    spinner.text = 'regenerate package.json';
+    regeneratePackageJson();
+
     spinner.succeed(
       'Preparations have been completed, ready to start electron-builder',
     );
+
     const result = await buildElectron({
       ...fileConfig,
       ...(api.config.electron.builder || {}),
@@ -140,7 +153,7 @@ export default (api: IApi) => {
         history: {
           type: 'hash',
         },
-        publicPath: './',
+        publicPath: '../',
       };
     },
     stage: Infinity,

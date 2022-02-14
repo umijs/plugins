@@ -4,10 +4,10 @@ const { productName } = require(join(process.cwd(), 'package.json'));
 
 module.exports = {
   electronDownload: {
-    mirror: 'https://npm.taobao.org/mirrors/electron/',
+    mirror: 'https://registry.npmmirror.com/binary.html?path=electron/',
   },
   productName,
-  files: ['.electron/**'],
+  files: ['./**'],
   mac: {
     category: 'public.app-category.developer-tools',
     target: 'dmg',

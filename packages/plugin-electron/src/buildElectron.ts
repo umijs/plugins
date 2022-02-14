@@ -7,7 +7,6 @@ import {
 } from 'electron-builder';
 import lodash from 'lodash';
 import { join } from 'path';
-import { generateMd5 } from './utils';
 
 const builderConfig = require('./config/electron-builder.config');
 export const buildElectron = (customBuilderConfig?: Configuration) => {
@@ -23,7 +22,7 @@ export const buildElectron = (customBuilderConfig?: Configuration) => {
     config: lodash.merge(
       {
         electronVersion: '14.0.0',
-        directories: { output: 'dist' },
+        directories: { output: '../dist' },
       } as Configuration,
       {
         dmg: {
@@ -37,5 +36,6 @@ export const buildElectron = (customBuilderConfig?: Configuration) => {
       builderConfig as unknown as Configuration,
       customBuilderConfig || {},
     ),
+    projectDir: join(process.cwd(), './.electron'),
   });
 };
