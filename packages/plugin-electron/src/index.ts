@@ -24,11 +24,26 @@ export default (api: IApi) => {
         return joi.object({
           src: joi.string(),
           builder: joi.object(),
+          windowRequirePackages: joi.array(),
         });
       },
       default: {},
     },
     enableBy: () => !!api.userConfig.electron,
+  });
+
+  // 渲染添加 babel 插件
+
+  api.modifyBabelOpts((initialValue) => {
+    initialValue.plugins.push([
+      require.resolve('babel-plugin-import-to-window-require'),
+      {
+        packages: (api.config.electron?.windowRequirePackages || []).concat([
+          'electron',
+        ]),
+      },
+    ]);
+    return initialValue;
   });
 
   let fatherBuildWatcher: WatchReturnType | undefined;
