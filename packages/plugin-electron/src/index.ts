@@ -14,6 +14,7 @@ import {
 import { buildElectron } from './buildElectron';
 import { existsSync } from 'fs';
 import { TMP_DIR } from './constants';
+import { merge } from 'lodash';
 
 export default (api: IApi) => {
   // 配置
@@ -83,7 +84,7 @@ export default (api: IApi) => {
       },
     });
     spinner.text = 'generate entry file of development mode...\n';
-    generateEntryFile(getEntry('development'));
+    generateEntryFile(getEntry('development', !!api.config.mpa));
     isFirstDevDone = false;
   });
 
@@ -134,7 +135,7 @@ export default (api: IApi) => {
     await fatherBuildCli?.build();
 
     spinner.text = 'build entry.js';
-    generateEntryFile(getEntry('production'));
+    generateEntryFile(getEntry('production', !!api.config.mpa));
 
     spinner.text = 'build version.json';
     buildVersion();
@@ -149,10 +150,9 @@ export default (api: IApi) => {
       'Preparations have been completed, ready to start electron-builder',
     );
 
-    const result = await buildElectron({
-      ...fileConfig,
-      ...(api.config.electron.builder || {}),
-    });
+    const result = await buildElectron(
+      merge(fileConfig, api.config.electron.builder || {}),
+    );
 
     spinner.text = 'generating md5';
     spinner.start();
@@ -170,7 +170,7 @@ export default (api: IApi) => {
         history: {
           type: 'hash',
         },
-        publicPath: '../',
+        publicPath: initialValue.mpa ? './' : '../',
       };
     },
     stage: Infinity,

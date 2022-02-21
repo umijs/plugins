@@ -12,7 +12,6 @@ export class ElectronProcessManager {
   }
   start() {
     this.kill();
-    console.log(this.cwd);
     const childProc = proc.spawn(
       electron as unknown as string,
       args.inspect ? [`--inspect=${args.inspect}`, this.cwd] : [this.cwd],

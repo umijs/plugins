@@ -119,12 +119,17 @@ export const generateMd5 = (files: string[]): string[] => {
   return [];
 };
 
-type GenEntryFunction = (mode: 'development' | 'production') => string;
-export const getEntry: GenEntryFunction = (mode) => {
+type GenEntryFunction = (
+  mode: 'development' | 'production',
+  isMpa: boolean | undefined,
+) => string;
+export const getEntry: GenEntryFunction = (mode, isMpa = false) => {
   if (mode === 'development') {
     return `module.exports = 'http://localhost:${process.env.PORT || '8000'}'`;
   } else {
-    return `module.exports = \`file://\${require('path').resolve(__dirname,'./renderer/index.html')}\``;
+    return isMpa
+      ? `module.exports = \`file://\${require('path').resolve(__dirname,'./renderer/')}\``
+      : `module.exports = \`file://\${require('path').resolve(__dirname,'./renderer/index.html')}\``;
   }
 };
 
