@@ -20,6 +20,7 @@ export default (api: IApi) => {
           hook: joi.object({
             customFunctionName: joi.function(),
             customClassName: joi.function(),
+            customTypeName: joi.function(),
           }),
         });
         return joi.alternatives(joi.array().items(itemSchema), itemSchema);
