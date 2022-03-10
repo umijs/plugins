@@ -1,6 +1,6 @@
-import React,{ useState } from 'react';
+import React, { useContext, useState } from 'react';
 {{#Antd}}
-import { Menu, Dropdown } from 'antd';
+import { Menu, Dropdown, ConfigProvider } from 'antd';
 import { ClickParam } from 'antd/{{{antdFiles}}}/menu';
 import { DropDownProps } from 'antd/{{{antdFiles}}}/dropdown';
 {{/Antd}}
@@ -396,6 +396,7 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
   reload,
   ...restProps
 } = props;
+  const { direction } = useContext(ConfigProvider.ConfigContext);
   const [selectedLang, setSelectedLang] = useState(() => getLocale());
 
   const changeLang = ({ key }: ClickParam): void => {
@@ -449,7 +450,7 @@ export const SelectLang: React.FC<SelectLangProps> = (props) => {
   };
 
   return (
-    <HeaderDropdown overlay={langMenu} placement="bottomRight" {...restProps}>
+    <HeaderDropdown overlay={langMenu} placement={direction !== 'rtl' ? 'bottomRight' : 'bottomLeft'} {...restProps}>
       <span className={globalIconClassName} style={inlineStyle}>
         <i className="anticon" title={allLangUIConfig[selectedLang]?.title}>
           { icon ?
