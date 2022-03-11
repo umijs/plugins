@@ -7,6 +7,9 @@ import { IApi } from 'umi';
 import { qiankunStateFromMasterModelNamespace } from '../constants';
 import { SlaveOptions } from '../types';
 import { addSpecifyPrefixedRoute } from './addSpecifyPrefixedRoute';
+import { NextFunction, Request, Response } from '@umijs/types';
+import { createProxyMiddleware } from '@umijs/server';
+import { responseInterceptor } from 'http-proxy-middleware'; // beta版本注：由于目前 @umijs/server 没有导出 responseInterceptor 函数，所以这里只是临时导入作为 beta 版本测试，实际上线后需要修改 umi 的导出，而非再次引入 http-proxy-middleware
 
 export function isSlaveEnable(api: IApi) {
   const slaveCfg = api.userConfig?.qiankun?.slave;
@@ -213,7 +216,84 @@ export default function (api: IApi) {
     });
   });
 
+  api.addMiddlewares(async () => {
+    return async (req: Request, res: Response, next: NextFunction) => {
+      const masterEntry: string | undefined =
+        api.userConfig?.qiankun?.slave?.masterEntry;
+
+      return masterEntry
+        ? createProxyMiddleware(
+            (pathname) => pathname !== '/local-dev-server',
+            {
+              target: masterEntry,
+              secure: false,
+              ignorePath: true,
+              followRedirects: true,
+              changeOrigin: true,
+              selfHandleResponse: true,
+              onProxyRes: responseInterceptor(
+                async (responseBuffer: Buffer, _, req: Request) => {
+                  const originalHtml: string = responseBuffer.toString('utf8');
+                  const appName: string | undefined = api.pkg.name;
+                  const microAppEntry: string = getCurrentLocalDevServerEntry(
+                    api,
+                    req,
+                  );
+
+                  if (!appName) {
+                    api.logger.error(
+                      `[@umijs/plugin-qiankun]: Package Name is Empty.`,
+                    );
+                  }
+
+                  const html: string = originalHtml.replace(
+                    '<head>',
+                    `<head><script type="extra-qiankun-config">${JSON.stringify(
+                      {
+                        master: {
+                          apps: [
+                            {
+                              name: appName,
+                              entry: microAppEntry,
+                              extraSource: microAppEntry,
+                            },
+                          ],
+                          routes: [
+                            {
+                              microApp: appName,
+                              name: appName,
+                              path: '/' + appName,
+                              extraSource: microAppEntry,
+                            },
+                          ],
+                        },
+                      },
+                    )}</script>`,
+                  );
+
+                  return html;
+                },
+              ),
+              onError(err, _, res) {
+                api.logger.error(err);
+                res.end(
+                  `[@umijs/plugin-qiankun] proxy masterEntry \`${masterEntry}\` error`,
+                );
+              },
+            },
+          )(req, res, next)
+        : next();
+    };
+  });
+
   useLegacyMode(api);
+}
+
+function getCurrentLocalDevServerEntry(api: IApi, req: Request): string {
+  const port = api.getPort();
+  const hostname = req.hostname;
+  const protocol = req.protocol;
+  return `${protocol}://${hostname}${port ? ':' : ''}${port}/local-dev-server`;
 }
 
 function useLegacyMode(api: IApi) {

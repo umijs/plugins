@@ -43,6 +43,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.5",
     "address": "^1.1.2",
+    "http-proxy-middleware": "^2.0.3",
     "lodash": "^4.17.15",
     "path-to-regexp": "^1.7.0",
     "qiankun": "^2.2.1"

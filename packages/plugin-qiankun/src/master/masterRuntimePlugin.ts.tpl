@@ -66,6 +66,8 @@ function patchMicroAppRouteComponent(routes: IRouteProps[]) {
       }
     });
   }
+
+  return removeDuplicateRoutes(routes);
 }
 
 export async function render(oldRender: typeof noop) {
@@ -92,6 +94,8 @@ export async function render(oldRender: typeof noop) {
     // 设置新的 fetch
     masterOptions = { ...masterOptions, fetch: fetchWithCredentials };
   }
+
+  mergeExtraQiankunConfig(masterOptions);
 
   // 更新 master options
   setMasterOptions(masterOptions);
@@ -122,9 +126,114 @@ export async function render(oldRender: typeof noop) {
   }
 }
 
-export function patchRoutes({ routes }: { routes: IRouteProps[] }) {
+export function patchRoutes(config) {
   if (microAppRuntimeRoutes) {
-    patchMicroAppRouteComponent(routes);
+    const { routes } = config;
+    config.routes = patchMicroAppRouteComponent(routes);
+  }
+}
+
+function removeDuplicateApps(apps = [], extraAppsNameSet?: Set<any>) {
+  extraAppsNameSet ||= new Set(
+    apps.filter(({ extraSource }) => extraSource).map(({ name }) => name),
+  );
+
+  const newApps = apps.filter(app => {
+    const { name } = app;
+
+    if (!app.extraSource && extraAppsNameSet.has(name)) {
+      console.error(
+        `[@umijs/plugin-qiankun]: Encountered two microApps with the same appName, \`${name}\`. The original app configuration has been overwritten by current app.`,
+      );
+
+      return false;
+    }
+
+    return true;
+  });
+
+  return newApps;
+}
+
+function getExtraRoutesPathSet(
+  routes: MicroAppRoute[],
+  extraRoutesPathSet = new Set(),
+) {
+  for (let i = 0; i < routes?.length; ++i) {
+    const route = routes[i];
+    const { path, routes: subRoutes, extraSource } = route;
+
+    if (extraSource) {
+      extraRoutesPathSet.add(path);
+    }
+
+    getExtraRoutesPathSet(subRoutes, extraRoutesPathSet);
+  }
+
+  return extraRoutesPathSet;
+}
+
+function removeDuplicateRoutes(
+  routes: MicroAppRoute[],
+  extraRoutesPathSet?: Set<any>,
+) {
+  extraRoutesPathSet ||= getExtraRoutesPathSet(routes);
+  routes ||= [];
+
+  return routes.filter(route => {
+    const { path, routes: subRoutes, extraSource } = route;
+
+    if (!extraSource && extraRoutesPathSet.has(path)) {
+      console.error(
+        `[@umijs/plugin-qiankun]: Encountered two routes with the same path, \`${path}\`. The original route configuration has been overwritten by current route.`,
+      );
+
+      return false;
+    }
+
+    route.routes = removeDuplicateRoutes(subRoutes, extraRoutesPathSet);
+    return true;
+  });
+}
+
+function mergeExtraQiankunConfig(masterOptions: MasterOptions = {}) {
+  const extraQiankunConfigNode = document.querySelector(
+    'script[type=extra-qiankun-config]:not([consumed])',
+  );
+  const extraQiankunConfigJSON: string = extraQiankunConfigNode?.innerHTML;
+
+  let extraQiankunConfig;
+  try {
+    if (extraQiankunConfigJSON) {
+      extraQiankunConfig = JSON.parse(extraQiankunConfigJSON);
+    }
+  } catch {}
+
+  if (extraQiankunConfig) {
+    const {
+      apps: originalMasterApps = [],
+      routes: originalMasterRoutes = [],
+      ...othersOriginalMasterConfig
+    } = masterOptions;
+    const {
+      apps = [],
+      routes = [],
+      ...othersConfig
+    } = extraQiankunConfig.master as MasterOptions;
+
+    const mergedApps = [...originalMasterApps, ...apps];
+    const mergedRoutes = [...originalMasterRoutes, ...routes];
+
+    const mergedQiankunMasterConfig: MasterOptions = {
+      ...othersOriginalMasterConfig,
+      ...othersConfig,
+      apps: removeDuplicateApps(mergedApps),
+      routes: removeDuplicateRoutes(mergedRoutes),
+    };
+
+    Object.assign(masterOptions, mergedQiankunMasterConfig);
+
+    extraQiankunConfigNode.setAttribute('consumed', '');
   }
 }
 
@@ -193,13 +302,13 @@ async function useLegacyRegisterMode(
   registerMicroApps(
     apps.map(
       ({
-         name,
-         entry,
-         base,
-         history = masterHistoryType,
-         mountElementId = defaultMountContainerId,
-         props,
-       }) => {
+        name,
+        entry,
+        base,
+        history = masterHistoryType,
+        mountElementId = defaultMountContainerId,
+        props,
+      }) => {
         let matchedBase = base;
 
         return {
