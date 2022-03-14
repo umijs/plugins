@@ -232,7 +232,7 @@ export default function (api: IApi) {
               changeOrigin: true,
               selfHandleResponse: true,
               onProxyRes: responseInterceptor(
-                async (responseBuffer: Buffer, _, req: Request) => {
+                async (responseBuffer, _, req) => {
                   const originalHtml: string = responseBuffer.toString('utf8');
                   const appName: string | undefined = api.pkg.name;
                   const microAppEntry: string = getCurrentLocalDevServerEntry(

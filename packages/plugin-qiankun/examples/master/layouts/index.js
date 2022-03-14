@@ -31,7 +31,12 @@ export default class extends React.PureComponent {
   }
 
   render() {
-    const { location, children, base } = this.props;
+    const {
+      location,
+      children,
+      base,
+      route: { routes = [] },
+    } = this.props;
     const { name, apps } = base;
     const selectKey = '/' + location.pathname.split('/')[1];
     return (
@@ -48,19 +53,14 @@ export default class extends React.PureComponent {
             <Menu.Item key="/">
               <Link to="/">Home</Link>
             </Menu.Item>
-            {apps.map((app, index) => {
-              if (index === 2) {
-                return (
-                  <Menu.Item key={app.to}>
-                    <Link to="/app3/123">{app.name}</Link>
-                  </Menu.Item>
-                );
-              }
-              return (
-                <Menu.Item key={app.to}>
-                  <Link to={app.to}>{app.name}</Link>
+            {routes?.map((route) => {
+              let name = (route.name ?? route.path)?.replace('/', '');
+
+              return name ? (
+                <Menu.Item key={route.path}>
+                  <Link to={route.path}>{name}</Link>
                 </Menu.Item>
-              );
+              ) : null;
             })}
           </Menu>
         </Header>
