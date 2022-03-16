@@ -170,7 +170,7 @@ export default (api: IApi) => {
         history: {
           type: 'hash',
         },
-        publicPath: initialValue.mpa ? './' : '../',
+        publicPath: './',
       };
     },
     stage: Infinity,
