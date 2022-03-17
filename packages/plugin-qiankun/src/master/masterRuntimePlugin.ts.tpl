@@ -205,7 +205,7 @@ function mergeExtraQiankunConfig(masterOptions: MasterOptions) {
 
   let extraQiankunConfig: BaseIConfig | undefined = extraQiankunConfigJSON && JSON.parse(extraQiankunConfigJSON)
 
-  if (extraQiankunConfig) {
+  if (extraQiankunConfig?.master) {
     const {
       apps: originalMasterApps = [],
       routes: originalMasterRoutes = [],
@@ -214,6 +214,7 @@ function mergeExtraQiankunConfig(masterOptions: MasterOptions) {
     const {
       apps = [],
       routes = [],
+      prefetch,
       ...othersConfig
     } = extraQiankunConfig.master as MasterOptions;
 
@@ -226,6 +227,10 @@ function mergeExtraQiankunConfig(masterOptions: MasterOptions) {
       apps: removeDuplicateApps(mergedApps),
       routes: removeDuplicateRoutes(mergedRoutes),
     };
+
+    if (prefetch !== undefined) {
+      mergedQiankunMasterConfig.prefetch = prefetch
+    }
 
     Object.assign(masterOptions ?? {}, mergedQiankunMasterConfig);
 

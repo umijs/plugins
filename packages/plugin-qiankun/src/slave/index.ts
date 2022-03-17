@@ -218,71 +218,80 @@ export default function (api: IApi) {
 
   api.addMiddlewares(async () => {
     return async (req: Request, res: Response, next: NextFunction) => {
-      const masterEntry: string | undefined =
-        api.userConfig?.qiankun?.slave?.masterEntry;
+      const masterEntry =
+        api.config.qiankun && api.config.qiankun.slave?.masterEntry;
 
-      return masterEntry
-        ? createProxyMiddleware(
-            (pathname) => pathname !== '/local-dev-server',
-            {
-              target: masterEntry,
-              secure: false,
-              ignorePath: true,
-              followRedirects: true,
-              changeOrigin: true,
-              selfHandleResponse: true,
-              onProxyRes: responseInterceptor(
-                async (responseBuffer, _, req) => {
-                  const originalHtml: string = responseBuffer.toString('utf8');
-                  const appName: string | undefined = api.pkg.name;
-                  const microAppEntry: string = getCurrentLocalDevServerEntry(
-                    api,
-                    req,
-                  );
+      const [proxyToMasterEnable] =
+        (await api.applyPlugins({
+          key: 'shouldProxyToMaster',
+          type: api.ApplyPluginsType.modify,
+          initialValue: [true, req],
+        })) ?? [];
 
-                  if (!appName) {
-                    api.logger.error(
-                      `[@umijs/plugin-qiankun]: Package Name is Empty.`,
-                    );
-                  }
+      if (masterEntry && proxyToMasterEnable) {
+        return createProxyMiddleware(
+          (pathname) => pathname !== '/local-dev-server',
+          {
+            target: masterEntry,
+            secure: false,
+            ignorePath: true,
+            followRedirects: true,
+            changeOrigin: true,
+            selfHandleResponse: true,
+            onProxyRes: responseInterceptor(async (responseBuffer, _, req) => {
+              const originalHtml = responseBuffer.toString('utf8');
+              const appName = api.pkg.name;
+              const microAppEntry = getCurrentLocalDevServerEntry(api, req);
 
-                  const html: string = originalHtml.replace(
-                    '<head>',
-                    `<head><script type="extra-qiankun-config">${JSON.stringify(
-                      {
-                        master: {
-                          apps: [
-                            {
-                              name: appName,
-                              entry: microAppEntry,
-                              extraSource: microAppEntry,
-                            },
-                          ],
-                          routes: [
-                            {
-                              microApp: appName,
-                              name: appName,
-                              path: '/' + appName,
-                              extraSource: microAppEntry,
-                            },
-                          ],
-                        },
-                      },
-                    )}</script>`,
-                  );
-
-                  return html;
-                },
-              ),
-              onError(err, _, res) {
-                api.logger.error(err);
-                res.end(
-                  `[@umijs/plugin-qiankun] proxy masterEntry \`${masterEntry}\` error`,
+              if (!appName) {
+                api.logger.error(
+                  `[@umijs/plugin-qiankun]: Package Name is Empty.`,
                 );
-              },
+              }
+
+              const html = originalHtml.replace(
+                '<head>',
+                `<head><script type="extra-qiankun-config">${JSON.stringify({
+                  master: {
+                    apps: [
+                      {
+                        name: appName,
+                        entry: microAppEntry,
+                        extraSource: microAppEntry,
+                      },
+                    ],
+                    routes: [
+                      {
+                        microApp: appName,
+                        name: appName,
+                        path: '/' + appName,
+                        extraSource: microAppEntry,
+                      },
+                    ],
+                    prefetch: false,
+                  },
+                })}</script>`,
+              );
+
+              const response = await api.applyPlugins({
+                key: 'isMasterTernApp',
+                type: api.ApplyPluginsType.modify,
+                initialValue: html,
+              });
+
+              return response || html;
+            }),
+            onError(err, _, res) {
+              api.logger.error(err);
+              res.end(
+                `[@umijs/plugin-qiankun] proxy masterEntry \`${masterEntry}\` error`,
+              );
             },
-          )(req, res, next)
-        : next();
+          },
+        )(req, res, next);
+      }
+
+      return next();
     };
   });
 
