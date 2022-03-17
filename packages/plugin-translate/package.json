@@ -1,0 +1,77 @@
+{
+  "name": "umi-plugin-translate",
+  "main": "lib/index.js",
+  "version": "0.0.4",
+  "description": "translate",
+  "authors": {
+    "name": "ztao",
+    "email": "2092186738@qq.com"
+  },
+  "repository": "https://github.com/aiyuekuang/umi-plugin-translate.git",
+  "scripts": {
+    "start": "npm run build && cross-env APP_ROOT=example umi dev",
+    "build": "father-build",
+    "npm": "npm set registry https://registry.npmjs.org",
+    "fabu": "npm publish",
+    "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage",
+    "test:update": "umi-test --updateSnapshot"
+  },
+  "lint-staged": {
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write",
+      "git add"
+    ],
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "@testing-library/react": "^9.4.0",
+    "@testing-library/react-hooks": "^3.2.1",
+    "@types/jest": "^25.1.3",
+    "@types/node": "^13.7.7",
+    "@umijs/preset-ui": "^2.1.13",
+    "@umijs/test": "^3.0.10",
+    "@umijs/test-utils": "^1.0.0",
+    "babel-plugin-import": "^1.13.3",
+    "body-parser": "^1.18.2",
+    "cross-env": "^6.0.3",
+    "express": "^4.15.3",
+    "father-build": "^1.17.2",
+    "lerna": "^3.20.2",
+    "lint-staged": "^10.0.8",
+    "npm-run-all": "^4.1.5",
+    "pify": "^5.0.0",
+    "prettier": "^1.19.1",
+    "puppeteer": "^1.20.0",
+    "query-string": "^6.11.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-test-renderer": "^16.9.0",
+    "test-umi-plugin": "^0.1.0",
+    "umi": "^3.1.0",
+    "yorkie": "^2.0.0",
+    "path": "^0.12.7"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "@vitalets/google-translate-api": "^8.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/aiyuekuang/umijs-plugin-translate/issues"
+  },
+  "homepage": "https://github.com/aiyuekuang/umijs-plugin-translate#readme",
+  "keywords": [
+    "umi"
+  ],
+  "author": "ztao",
+  "license": "MIT"
+}
