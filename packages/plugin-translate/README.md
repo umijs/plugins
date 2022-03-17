@@ -53,7 +53,7 @@ const translate={
 
 - `suffix` 翻译文件的后缀名，一般在使用umi创建项目时，是有js或者ts两种方式的
 
-- `translateTypes` 输出翻译文件的对应表，一个对象代表一个语言
+- `translateTypes` 输出翻译文件的对应表，一个对象代表一个语言，[翻译语言参照](https://github.com/matheuss/google-translate-api/blob/master/languages.js)
 
 - `from` 输入的翻译类型（以哪种语言作为翻译的源），默认是中文
 
