@@ -230,7 +230,7 @@ export default function (api: IApi) {
         proxyToMasterEnabled?: boolean;
       };
 
-      if (masterEntry && proxyToMasterEnable) {
+      if (masterEntry && proxyToMasterEnabled) {
         return createProxyMiddleware(
           (pathname) => pathname !== '/local-dev-server',
           {
