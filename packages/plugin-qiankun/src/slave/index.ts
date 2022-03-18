@@ -221,7 +221,7 @@ export default function (api: IApi) {
       const masterEntry =
         api.config.qiankun && api.config.qiankun.slave?.masterEntry;
 
-      const { proxyToMasterEnable } = ((await api.applyPlugins({
+      const { proxyToMasterEnabled } = ((await api.applyPlugins({
         key: 'shouldProxyToMaster',
         type: api.ApplyPluginsType.modify,
         initialValue: { proxyToMasterEnable: true, req },
