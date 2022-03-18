@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.37.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.36.0...@umijs/plugin-qiankun@2.37.0) (2022-03-18)
+
+### Features
+
+- **plugin-qiankun:** 一行配置即可本地研发子应用时能够看到主子应用嵌套场面 ([#813](https://github.com/umijs/plugins/issues/813)) ([837b06b](https://github.com/umijs/plugins/commit/837b06b92b19d5b950022ec60ec0129983fb50e5))
+
 # [2.36.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.35.5...@umijs/plugin-qiankun@2.36.0) (2022-02-15)
 
 ### Bug Fixes
