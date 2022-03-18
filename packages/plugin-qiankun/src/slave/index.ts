@@ -226,8 +226,8 @@ export default function (api: IApi) {
         type: api.ApplyPluginsType.modify,
         initialValue: { proxyToMasterEnable: true, req },
       })) ?? {}) as {
-        req: Request;
-        proxyToMasterEnable: boolean;
+        req?: Request;
+        proxyToMasterEnable?: boolean;
       };
 
       if (masterEntry && proxyToMasterEnable) {
