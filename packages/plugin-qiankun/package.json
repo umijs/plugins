@@ -9,7 +9,8 @@
     "start:master": "cd examples/master && umi dev",
     "start:app1": "cd examples/app1 && umi dev",
     "start:app2": "cd examples/app2 && umi dev",
-    "start:app3": "cd examples/app3 && umi dev"
+    "start:app3": "cd examples/app3 && umi dev",
+    "start:app4": "cd examples/app4 && umi dev"
   },
   "files": [
     "lib",
@@ -43,6 +44,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.5",
     "address": "^1.1.2",
+    "http-proxy-middleware": "^2.0.3",
     "lodash": "^4.17.15",
     "path-to-regexp": "^1.7.0",
     "qiankun": "^2.2.1"

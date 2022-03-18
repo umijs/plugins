@@ -7,6 +7,9 @@ import { IApi } from 'umi';
 import { qiankunStateFromMasterModelNamespace } from '../constants';
 import { SlaveOptions } from '../types';
 import { addSpecifyPrefixedRoute } from './addSpecifyPrefixedRoute';
+import { NextFunction, Request, Response } from '@umijs/types';
+import { createProxyMiddleware } from '@umijs/server';
+import { responseInterceptor } from 'http-proxy-middleware'; // beta版本注：由于目前 @umijs/server 没有导出 responseInterceptor 函数，所以这里只是临时导入作为 beta 版本测试，实际上线后需要修改 umi 的导出，而非再次引入 http-proxy-middleware
 
 export function isSlaveEnable(api: IApi) {
   const slaveCfg = api.userConfig?.qiankun?.slave;
@@ -213,7 +216,96 @@ export default function (api: IApi) {
     });
   });
 
+  api.addMiddlewares(async () => {
+    return async (req: Request, res: Response, next: NextFunction) => {
+      const masterEntry =
+        api.config.qiankun && api.config.qiankun.slave?.masterEntry;
+
+      const { proxyToMasterEnabled } = ((await api.applyPlugins({
+        key: 'shouldProxyToMaster',
+        type: api.ApplyPluginsType.modify,
+        initialValue: { proxyToMasterEnabled: true, req },
+      })) ?? {}) as {
+        req?: Request;
+        proxyToMasterEnabled?: boolean;
+      };
+
+      if (masterEntry && proxyToMasterEnabled) {
+        return createProxyMiddleware(
+          (pathname) => pathname !== '/local-dev-server',
+          {
+            target: masterEntry,
+            secure: false,
+            ignorePath: true,
+            followRedirects: true,
+            changeOrigin: true,
+            selfHandleResponse: true,
+            onProxyRes: responseInterceptor(async (responseBuffer, _, req) => {
+              const originalHtml = responseBuffer.toString('utf8');
+              const appName = api.pkg.name;
+              const microAppEntry = getCurrentLocalDevServerEntry(api, req);
+
+              if (!appName) {
+                api.logger.error(
+                  `[@umijs/plugin-qiankun]: Package Name is Empty.`,
+                );
+              }
+
+              let html = originalHtml.replace(
+                '<head>',
+                `<head><script type="extra-qiankun-config">${JSON.stringify({
+                  master: {
+                    apps: [
+                      {
+                        name: appName,
+                        entry: microAppEntry,
+                        extraSource: microAppEntry,
+                      },
+                    ],
+                    routes: [
+                      {
+                        microApp: appName,
+                        name: appName,
+                        path: '/' + appName,
+                        extraSource: microAppEntry,
+                      },
+                    ],
+                    prefetch: false,
+                  },
+                })}</script>`,
+              );
+
+              html = await api.applyPlugins({
+                key: 'modifyMasterHTML',
+                type: api.ApplyPluginsType.modify,
+                initialValue: html,
+              });
+
+              return html;
+            }),
+            onError(err, _, res) {
+              api.logger.error(err);
+              res.set('content-type', 'text/plain; charset=UTF-8');
+              res.end(
+                `[@umijs/plugin-qiankun] 代理到 ${masterEntry} 时出错了，请尝试 ${masterEntry} 是否是可以正常访问的，然后重新启动项目试试。(注意如果出现跨域问题，请修改本地 host ，通过一个和主应用相同的一级域名的域名来访问 127.0.0.1)`,
+              );
+            },
+          },
+        )(req, res, next);
+      }
+
+      return next();
+    };
+  });
+
   useLegacyMode(api);
+}
+
+function getCurrentLocalDevServerEntry(api: IApi, req: Request): string {
+  const port = api.getPort();
+  const hostname = req.hostname;
+  const protocol = req.protocol;
+  return `${protocol}://${hostname}${port ? ':' : ''}${port}/local-dev-server`;
 }
 
 function useLegacyMode(api: IApi) {
