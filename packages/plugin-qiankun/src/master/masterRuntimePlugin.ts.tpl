@@ -145,7 +145,7 @@ function removeDuplicateApps(apps = new Array<App>(), extraAppsNameSet?: Set<str
 
     if (!app.extraSource && _extraAppsNameSet.has(name)) {
       console.error(
-        `[@umijs/plugin-qiankun]: Encountered two microApps with the same appName, \`${name}\`. The original app configuration has been overwritten by current app.`,
+        `[@umijs/plugin-qiankun]: Encountered two microApps with the same appName, ${name}. The original app configuration has been overwritten by current app.`,
       );
 
       return false;
@@ -186,7 +186,7 @@ function removeDuplicateRoutes(
 
     if (!extraSource && _extraRoutesPathSet.has(path)) {
       console.error(
-        `[@umijs/plugin-qiankun]: Encountered two routes with the same path, \`${path}\`. The original route configuration has been overwritten by current route.`,
+        `[@umijs/plugin-qiankun]: Encountered two routes with the same path, ${path}. The original route configuration has been overwritten by current route.`,
       );
 
       return false;

@@ -221,12 +221,14 @@ export default function (api: IApi) {
       const masterEntry =
         api.config.qiankun && api.config.qiankun.slave?.masterEntry;
 
-      const [proxyToMasterEnable] =
-        (await api.applyPlugins({
-          key: 'shouldProxyToMaster',
-          type: api.ApplyPluginsType.modify,
-          initialValue: [true, req],
-        })) ?? [];
+      const { proxyToMasterEnable } = ((await api.applyPlugins({
+        key: 'shouldProxyToMaster',
+        type: api.ApplyPluginsType.modify,
+        initialValue: { proxyToMasterEnable: true, req },
+      })) ?? {}) as {
+        req: Request;
+        proxyToMasterEnable: boolean;
+      };
 
       if (masterEntry && proxyToMasterEnable) {
         return createProxyMiddleware(
@@ -249,7 +251,7 @@ export default function (api: IApi) {
                 );
               }
 
-              const html = originalHtml.replace(
+              let html = originalHtml.replace(
                 '<head>',
                 `<head><script type="extra-qiankun-config">${JSON.stringify({
                   master: {
@@ -273,18 +275,19 @@ export default function (api: IApi) {
                 })}</script>`,
               );
 
-              const response = await api.applyPlugins({
-                key: 'isMasterTernApp',
+              html = await api.applyPlugins({
+                key: 'modifyMasterHTML',
                 type: api.ApplyPluginsType.modify,
                 initialValue: html,
               });
 
-              return response || html;
+              return html;
             }),
             onError(err, _, res) {
               api.logger.error(err);
+              res.set('content-type', 'text/plain; charset=UTF-8');
               res.end(
-                `[@umijs/plugin-qiankun] proxy masterEntry \`${masterEntry}\` error`,
+                `[@umijs/plugin-qiankun] 代理到 ${masterEntry} 时出错了，请尝试 ${masterEntry} 是否是可以正常访问的，然后重新启动项目试试。(注意如果出现跨域问题，请修改本地 host ，通过一个和主应用相同的一级域名的域名来访问 127.0.0.1)`,
               );
             },
           },
