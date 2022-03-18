@@ -227,7 +227,7 @@ export default function (api: IApi) {
         initialValue: { proxyToMasterEnabled: true, req },
       })) ?? {}) as {
         req?: Request;
-        proxyToMasterEnable?: boolean;
+        proxyToMasterEnabled?: boolean;
       };
 
       if (masterEntry && proxyToMasterEnable) {
