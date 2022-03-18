@@ -224,7 +224,7 @@ export default function (api: IApi) {
       const { proxyToMasterEnabled } = ((await api.applyPlugins({
         key: 'shouldProxyToMaster',
         type: api.ApplyPluginsType.modify,
-        initialValue: { proxyToMasterEnable: true, req },
+        initialValue: { proxyToMasterEnabled: true, req },
       })) ?? {}) as {
         req?: Request;
         proxyToMasterEnable?: boolean;
