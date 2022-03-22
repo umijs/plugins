@@ -192,10 +192,7 @@ function removeDuplicateRoutes(
       return false;
     }
 
-    if (route.routes) {
-      route.routes = removeDuplicateRoutes(subRoutes, _extraRoutesPathSet);
-    }
-    
+    route.routes = removeDuplicateRoutes(subRoutes, _extraRoutesPathSet);
     return true;
   });
 }
