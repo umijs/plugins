@@ -15,6 +15,7 @@ import { deferred } from './qiankunDefer.js';
 import { App, HistoryType, MasterOptions, MicroAppRoute } from './types';
 
 let microAppRuntimeRoutes: MicroAppRoute[];
+let extraQiankunConfigEnabled: boolean = false;
 
 async function getMasterRuntime() {
   const config = await plugin.applyPlugins({
@@ -67,7 +68,7 @@ function patchMicroAppRouteComponent(routes: IRouteProps[]): IRouteProps[] {
     });
   }
 
-  return removeDuplicateRoutes(routes);
+  return extraQiankunConfigEnabled ? removeDuplicateRoutes(routes) : routes;
 }
 
 export async function render(oldRender: typeof noop) {
@@ -208,7 +209,9 @@ function mergeExtraQiankunConfig(masterOptions: MasterOptions) {
 
   let extraQiankunConfig: BaseIConfig | undefined = extraQiankunConfigJSON && JSON.parse(extraQiankunConfigJSON)
 
-  if (extraQiankunConfig?.master) {
+  extraQiankunConfigEnabled = !!extraQiankunConfig?.master
+
+  if (extraQiankunConfigEnabled) {
     const {
       apps: originalMasterApps = [],
       routes: originalMasterRoutes = [],
