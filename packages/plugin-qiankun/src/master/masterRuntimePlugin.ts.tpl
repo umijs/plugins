@@ -28,7 +28,7 @@ async function getMasterRuntime() {
 }
 
 // modify route with "microApp" attribute to use real component
-function patchMicroAppRouteComponent(routes: IRouteProps[]): IRouteProps[] {
+function patchMicroAppRouteComponent(routes: IRouteProps[]) {
   const insertRoutes = microAppRuntimeRoutes.filter(r => r.insert || r.insertBefore || r.appendChildTo);
   // 先处理 insert 配置
   insertRoutes.forEach(route => {
@@ -66,8 +66,6 @@ function patchMicroAppRouteComponent(routes: IRouteProps[]): IRouteProps[] {
       }
     });
   }
-
-  return removeDuplicateRoutes(routes);
 }
 
 export async function render(oldRender: typeof noop) {
@@ -95,12 +93,20 @@ export async function render(oldRender: typeof noop) {
     masterOptions = { ...masterOptions, fetch: fetchWithCredentials };
   }
 
-  mergeExtraQiankunConfig(masterOptions);
+  const extraQiankunConfigNode = document.querySelector(
+    'script[type=extra-qiankun-config]:not([consumed])',
+  );
+  const extraQiankunConfigJSON: string | undefined = extraQiankunConfigNode?.innerHTML;
+  const extraQiankunConfig: BaseIConfig | undefined = extraQiankunConfigJSON && JSON.parse(extraQiankunConfigJSON);
+  if (extraQiankunConfig) {
+    masterOptions = mergeExtraQiankunConfig(masterOptions, extraQiankunConfig);
+    extraQiankunConfigNode.setAttribute('consumed', '');
+  }
 
   // 更新 master options
   setMasterOptions(masterOptions);
 
-  const { apps = [], routes, ...options } = masterOptions;
+  const { apps = [], routes, ...options } = getMasterOptions();
   microAppRuntimeRoutes = routes;
 
   // 主应用相关的配置注册完毕后即可开启渲染
@@ -126,116 +132,61 @@ export async function render(oldRender: typeof noop) {
   }
 }
 
-export function patchRoutes(routesContainer: {
-  routes: IRouteProps[]
-}) {
+export function patchRoutes({ routes }: { routes: IRouteProps[] }) {
   if (microAppRuntimeRoutes) {
-    const { routes } = routesContainer;
-    routesContainer.routes = patchMicroAppRouteComponent(routes);
+    patchMicroAppRouteComponent(routes);
   }
 }
 
-function removeDuplicateApps(apps = new Array<App>(), extraAppsNameSet?: Set<string>): App[] {
-  let _extraAppsNameSet = extraAppsNameSet || new Set<string>(
-    apps.filter(({ extraSource }) => extraSource).map(({ name }) => name),
-  );
+function mergeExtraQiankunConfig(masterOptions: MasterOptions, extraQiankunConfig: BaseIConfig): BaseIConfig {
+  function removeDuplicateApps(apps = new Array<App>(), extraAppsNameSet?: Set<string>): App[] {
+    let _extraAppsNameSet = extraAppsNameSet || new Set<string>(
+      apps.filter(({ extraSource }) => extraSource).map(({ name }) => name),
+    );
 
-  const newApps = apps.filter(app => {
-    const { name } = app;
+    const newApps = apps.filter(app => {
+      const { name } = app;
 
-    if (!app.extraSource && _extraAppsNameSet.has(name)) {
-      console.error(
-        `[@umijs/plugin-qiankun]: Encountered two microApps with the same appName, ${name}. The original app configuration has been overwritten by current app.`,
-      );
+      if (!app.extraSource && _extraAppsNameSet.has(name)) {
+        console.error(
+          `[@umijs/plugin-qiankun]: Encountered two microApps with the same appName, ${name}. The original app configuration has been overwritten by current app.`,
+        );
 
-      return false;
-    }
+        return false;
+      }
 
-    return true;
-  });
+      return true;
+    });
 
-  return newApps;
-}
+    return newApps;
+  }
+  const {
+    apps: originalMasterApps = [],
+    routes: originalMasterRoutes = [],
+    ...othersOriginalMasterConfig
+  } = masterOptions ?? {};
+  const {
+    apps = [],
+    routes = [],
+    prefetch,
+    ...othersConfig
+  } = extraQiankunConfig.master as MasterOptions;
 
-function getExtraRoutesPathSet(
-  routes: IRouteProps[],
-  extraRoutesPathSet = new Set<string>(),
-) {
-  for (let i = 0; i < routes?.length; ++i) {
-    const route = routes[i];
-    const { path, routes: subRoutes, extraSource } = route;
+  const mergedApps = [...originalMasterApps, ...apps];
+  const mergedRoutes = [...originalMasterRoutes, ...routes];
 
-    if (extraSource) {
-      extraRoutesPathSet.add(path);
-    }
+  const mergedQiankunMasterConfig: MasterOptions = {
+    ...othersOriginalMasterConfig,
+    ...othersConfig,
+    apps: removeDuplicateApps(mergedApps),
+    routes: mergedRoutes,
+  };
 
-    getExtraRoutesPathSet(subRoutes, extraRoutesPathSet);
+  if (prefetch !== undefined) {
+    mergedQiankunMasterConfig.prefetch = prefetch;
   }
 
-  return extraRoutesPathSet;
-}
-
-function removeDuplicateRoutes(
-  routes = new Array<IRouteProps>(),
-  extraRoutesPathSet?: Set<string>,
-): IRouteProps[] {
-  let _extraRoutesPathSet = extraRoutesPathSet || getExtraRoutesPathSet(routes);
-
-  return routes.filter(route => {
-    const { path, routes: subRoutes, extraSource } = route;
-
-    if (!extraSource && _extraRoutesPathSet.has(path)) {
-      console.error(
-        `[@umijs/plugin-qiankun]: Encountered two routes with the same path, ${path}. The original route configuration has been overwritten by current route.`,
-      );
-
-      return false;
-    }
-
-    route.routes = removeDuplicateRoutes(subRoutes, _extraRoutesPathSet);
-    return true;
-  });
-}
-
-function mergeExtraQiankunConfig(masterOptions: MasterOptions) {
-  const extraQiankunConfigNode = document.querySelector(
-    'script[type=extra-qiankun-config]:not([consumed])',
-  );
-  const extraQiankunConfigJSON: string | undefined = extraQiankunConfigNode?.innerHTML;
-
-  let extraQiankunConfig: BaseIConfig | undefined = extraQiankunConfigJSON && JSON.parse(extraQiankunConfigJSON)
-
-  if (extraQiankunConfig?.master) {
-    const {
-      apps: originalMasterApps = [],
-      routes: originalMasterRoutes = [],
-      ...othersOriginalMasterConfig
-    } = masterOptions ?? {};
-    const {
-      apps = [],
-      routes = [],
-      prefetch,
-      ...othersConfig
-    } = extraQiankunConfig.master as MasterOptions;
-
-    const mergedApps = [...originalMasterApps, ...apps];
-    const mergedRoutes = [...originalMasterRoutes, ...routes];
-
-    const mergedQiankunMasterConfig: MasterOptions = {
-      ...othersOriginalMasterConfig,
-      ...othersConfig,
-      apps: removeDuplicateApps(mergedApps),
-      routes: removeDuplicateRoutes(mergedRoutes),
-    };
-
-    if (prefetch !== undefined) {
-      mergedQiankunMasterConfig.prefetch = prefetch
-    }
-
-    Object.assign(masterOptions ?? {}, mergedQiankunMasterConfig);
-
-    extraQiankunConfigNode.setAttribute('consumed', '');
-  }
+  return mergedQiankunMasterConfig;
 }
 
 async function useLegacyRegisterMode(
