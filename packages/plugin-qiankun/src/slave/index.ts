@@ -237,52 +237,67 @@ export default function (api: IApi) {
             target: masterEntry,
             secure: false,
             ignorePath: true,
-            followRedirects: true,
+            followRedirects: false,
             changeOrigin: true,
             selfHandleResponse: true,
-            onProxyRes: responseInterceptor(async (responseBuffer, _, req) => {
-              const originalHtml = responseBuffer.toString('utf8');
-              const appName = api.pkg.name;
-              const microAppEntry = getCurrentLocalDevServerEntry(api, req);
+            onProxyRes: responseInterceptor(
+              async (responseBuffer, proxyRes, req) => {
+                if (proxyRes.statusCode === 302) {
+                  const redirectUrl = proxyRes.headers?.location || masterEntry;
 
-              if (!appName) {
-                api.logger.error(
-                  `[@umijs/plugin-qiankun]: Package Name is Empty.`,
+                  api.logger.info(
+                    '[@umijs/plugin-qiankun]',
+                    `redirect to ${redirectUrl}`,
+                  );
+
+                  return `<!DOCTYPE html><html lang="en"><head><script>window.location.replace('${encodeURIComponent(
+                    redirectUrl,
+                  )}');</script></head></html>`;
+                }
+
+                const originalHtml = responseBuffer.toString('utf8');
+                const appName = api.pkg.name;
+                const microAppEntry = getCurrentLocalDevServerEntry(api, req);
+
+                if (!appName) {
+                  api.logger.error(
+                    `[@umijs/plugin-qiankun]: Package Name is Empty.`,
+                  );
+                }
+
+                let html = originalHtml.replace(
+                  '<head>',
+                  `<head><script type="extra-qiankun-config">${JSON.stringify({
+                    master: {
+                      apps: [
+                        {
+                          name: appName,
+                          entry: microAppEntry,
+                          extraSource: microAppEntry,
+                        },
+                      ],
+                      routes: [
+                        {
+                          microApp: appName,
+                          name: appName,
+                          path: '/' + appName,
+                          extraSource: microAppEntry,
+                        },
+                      ],
+                      prefetch: false,
+                    },
+                  })}</script>`,
                 );
-              }
 
-              let html = originalHtml.replace(
-                '<head>',
-                `<head><script type="extra-qiankun-config">${JSON.stringify({
-                  master: {
-                    apps: [
-                      {
-                        name: appName,
-                        entry: microAppEntry,
-                        extraSource: microAppEntry,
-                      },
-                    ],
-                    routes: [
-                      {
-                        microApp: appName,
-                        name: appName,
-                        path: '/' + appName,
-                        extraSource: microAppEntry,
-                      },
-                    ],
-                    prefetch: false,
-                  },
-                })}</script>`,
-              );
+                html = await api.applyPlugins({
+                  key: 'modifyMasterHTML',
+                  type: api.ApplyPluginsType.modify,
+                  initialValue: html,
+                });
 
-              html = await api.applyPlugins({
-                key: 'modifyMasterHTML',
-                type: api.ApplyPluginsType.modify,
-                initialValue: html,
-              });
-
-              return html;
-            }),
+                return html;
+              },
+            ),
             onError(err, _, res) {
               api.logger.error(err);
               res.set('content-type', 'text/plain; charset=UTF-8');
