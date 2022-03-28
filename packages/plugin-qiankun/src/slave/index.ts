@@ -231,6 +231,12 @@ export default function (api: IApi) {
       };
 
       if (masterEntry && proxyToMasterEnabled) {
+        const appName = api.pkg.name;
+        assert(
+          appName,
+          '[@umijs/plugin-qiankun]: You should have name in package.json',
+        );
+
         return createProxyMiddleware(
           (pathname) => pathname !== '/local-dev-server',
           {
@@ -256,14 +262,7 @@ export default function (api: IApi) {
                 }
 
                 const originalHtml = responseBuffer.toString('utf8');
-                const appName = api.pkg.name;
                 const microAppEntry = getCurrentLocalDevServerEntry(api, req);
-
-                if (!appName) {
-                  api.logger.error(
-                    `[@umijs/plugin-qiankun]: Package Name is Empty.`,
-                  );
-                }
 
                 let html = originalHtml.replace(
                   '<head>',
