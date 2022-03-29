@@ -247,18 +247,15 @@ export default function (api: IApi) {
             changeOrigin: true,
             selfHandleResponse: true,
             onProxyRes: responseInterceptor(
-              async (responseBuffer, proxyRes, req) => {
+              async (responseBuffer, proxyRes, req, res) => {
                 if (proxyRes.statusCode === 302) {
                   const redirectUrl = proxyRes.headers?.location || masterEntry;
+                  const redirectMessage = `[@umijs/plugin-qiankun]: redirect to ${redirectUrl}`;
 
-                  api.logger.info(
-                    '[@umijs/plugin-qiankun]',
-                    `redirect to ${redirectUrl}`,
-                  );
-
-                  return `<!DOCTYPE html><html lang="en"><head><script>window.location.replace('${encodeURIComponent(
-                    redirectUrl,
-                  )}');</script></head></html>`;
+                  api.logger.info(redirectMessage);
+                  res.statusCode = 302;
+                  res.setHeader('location', redirectUrl);
+                  return redirectMessage;
                 }
 
                 const originalHtml = responseBuffer.toString('utf8');
