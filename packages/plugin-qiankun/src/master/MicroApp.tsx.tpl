@@ -129,7 +129,7 @@ export const MicroApp = forwardRef(
       if (!appConfig) {
         setComponentError(
           new Error(
-            `[@umijs/plugin-qiankun]: Can not find the configuration of ${name} app!`
+            `[@umijs/plugin-qiankun]: Can not find the configuration of ${name} app! Only [${apps.map((app: any) => app.name)}] are configured currently.`
           )
         );
       }
