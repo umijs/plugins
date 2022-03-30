@@ -29,6 +29,7 @@ import React, {
 // @ts-ignore
 import { History, useModel } from "umi";
 import { MasterOptions } from "./types";
+import { inspect } from "util";
 
 const qiankunStateForSlaveModelNamespace = "@@qiankunStateForSlave";
 
@@ -49,12 +50,12 @@ export type Props = {
   settings?: FrameworkConfiguration;
   base?: string;
   history?:
-    | "hash"
-    | "browser"
-    | "memory"
-    | HashHistory
-    | BrowserHistory
-    | MemoryHistory;
+  | "hash"
+  | "browser"
+  | "memory"
+  | HashHistory
+  | BrowserHistory
+  | MemoryHistory;
   getMatchedBase?: () => string;
   loader?: (loading: boolean) => React.ReactNode;
   errorBoundary?: (error: any) => React.ReactNode;
@@ -129,7 +130,7 @@ export const MicroApp = forwardRef(
       if (!appConfig) {
         setComponentError(
           new Error(
-            `[@umijs/plugin-qiankun]: Can not find the configuration of ${name} app! Only [${apps.map((app: any) => app.name)}] are configured currently.`
+            `[@umijs/plugin-qiankun]: Can not find the configuration of ${name} app! Currently, only the following apps are configured:\n${JSON.stringify(apps, null, 2)}`
           )
         );
       }
