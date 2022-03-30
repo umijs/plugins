@@ -249,7 +249,15 @@ export default function (api: IApi) {
             onProxyRes: responseInterceptor(
               async (responseBuffer, proxyRes, req, res) => {
                 if (proxyRes.statusCode === 302) {
-                  const redirectUrl = proxyRes.headers?.location || masterEntry;
+                  const hostname = (req as Request).hostname;
+                  const port = api.getPort();
+                  const goto = `${hostname}:${port}`;
+                  const redirectUrl =
+                    proxyRes.headers.location!.replace(
+                      encodeURIComponent(new URL(masterEntry).hostname),
+                      encodeURIComponent(goto),
+                    ) || masterEntry;
+
                   const redirectMessage = `[@umijs/plugin-qiankun]: redirect to ${redirectUrl}`;
 
                   api.logger.info(redirectMessage);
