@@ -13,7 +13,7 @@ export default (api: IApi) => {
     },
   });
   const { analytics = {} } = api.userConfig;
-  const { baidu = false, ga = GA_KEY, gtag = false } = analytics || {};
+  const { baidu = false, ga = GA_KEY } = analytics || {};
   api.logger.log('insert analytics');
 
   const baiduTpl = (code: string) => {
@@ -84,18 +84,19 @@ export default (api: IApi) => {
       ]);
     }
     if (ga) {
-      api.addHTMLScripts(() => [
-        {
-          content: gaTpl(ga),
-        },
-      ]);
-    }
-    if (gtag) {
-      api.addHTMLHeadScripts(() => [
-        {
-          content: gtagTpl(gtag),
-        },
-      ]);
+      if (ga.startsWith("G")) {
+        api.addHTMLHeadScripts(() => [
+          {
+            content: gtagTpl(ga),
+          },
+        ]);
+      } else {
+        api.addHTMLScripts(() => [
+          {
+            content: gaTpl(ga),
+          },
+        ]);
+      }
     }
   }
 };
