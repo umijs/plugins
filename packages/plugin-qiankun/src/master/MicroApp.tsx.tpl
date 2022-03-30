@@ -29,7 +29,6 @@ import React, {
 // @ts-ignore
 import { History, useModel } from "umi";
 import { MasterOptions } from "./types";
-import { inspect } from "util";
 
 const qiankunStateForSlaveModelNamespace = "@@qiankunStateForSlave";
 
