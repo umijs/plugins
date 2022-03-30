@@ -13,7 +13,7 @@ export default (api: IApi) => {
     },
   });
   const { analytics = {} } = api.userConfig;
-  const { baidu = false, ga = GA_KEY, gtag } = analytics || {};
+  const { baidu = false, ga = GA_KEY, gtag = false } = analytics || {};
   api.logger.log('insert analytics');
 
   const baiduTpl = (code: string) => {
