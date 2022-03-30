@@ -13,7 +13,7 @@ export default (api: IApi) => {
     },
   });
   const { analytics = {} } = api.userConfig;
-  const { baidu = false, ga = GA_KEY } = analytics || {};
+  const { baidu = false, ga = GA_KEY, gtag } = analytics || {};
   api.logger.log('insert analytics');
 
   const baiduTpl = (code: string) => {
@@ -49,6 +49,24 @@ export default (api: IApi) => {
   `;
   };
 
+  const gtagTpl = (code: string) => {
+    return `
+    (function(){
+      if (!location.port) {
+        var gtagScript = document.createElement("script");
+        gtagScript.async = true;
+        gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=${code}";
+        var scr = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(gtagScript, scr);
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '${code}');
+      }
+    })();
+  `;
+  };
+
   if (baidu) {
     api.addHTMLHeadScripts(() => [
       {
@@ -69,6 +87,13 @@ export default (api: IApi) => {
       api.addHTMLScripts(() => [
         {
           content: gaTpl(ga),
+        },
+      ]);
+    }
+    if (gtag) {
+      api.addHTMLHeadScripts(() => [
+        {
+          content: gtagTpl(gtag),
         },
       ]);
     }
