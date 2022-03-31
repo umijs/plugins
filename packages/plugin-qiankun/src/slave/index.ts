@@ -231,58 +231,77 @@ export default function (api: IApi) {
       };
 
       if (masterEntry && proxyToMasterEnabled) {
+        const appName = api.pkg.name;
+        assert(
+          appName,
+          '[@umijs/plugin-qiankun]: You should have name in package.json',
+        );
+
         return createProxyMiddleware(
           (pathname) => pathname !== '/local-dev-server',
           {
             target: masterEntry,
             secure: false,
             ignorePath: true,
-            followRedirects: true,
+            followRedirects: false,
             changeOrigin: true,
             selfHandleResponse: true,
-            onProxyRes: responseInterceptor(async (responseBuffer, _, req) => {
-              const originalHtml = responseBuffer.toString('utf8');
-              const appName = api.pkg.name;
-              const microAppEntry = getCurrentLocalDevServerEntry(api, req);
+            onProxyRes: responseInterceptor(
+              async (responseBuffer, proxyRes, req, res) => {
+                if (proxyRes.statusCode === 302) {
+                  const hostname = (req as Request).hostname;
+                  const port = api.getPort();
+                  const goto = `${hostname}:${port}`;
+                  const redirectUrl =
+                    proxyRes.headers.location!.replace(
+                      encodeURIComponent(new URL(masterEntry).hostname),
+                      encodeURIComponent(goto),
+                    ) || masterEntry;
 
-              if (!appName) {
-                api.logger.error(
-                  `[@umijs/plugin-qiankun]: Package Name is Empty.`,
+                  const redirectMessage = `[@umijs/plugin-qiankun]: redirect to ${redirectUrl}`;
+
+                  api.logger.info(redirectMessage);
+                  res.statusCode = 302;
+                  res.setHeader('location', redirectUrl);
+                  return redirectMessage;
+                }
+
+                const originalHtml = responseBuffer.toString('utf8');
+                const microAppEntry = getCurrentLocalDevServerEntry(api, req);
+
+                let html = originalHtml.replace(
+                  '<head>',
+                  `<head><script type="extra-qiankun-config">${JSON.stringify({
+                    master: {
+                      apps: [
+                        {
+                          name: appName,
+                          entry: microAppEntry,
+                          extraSource: microAppEntry,
+                        },
+                      ],
+                      routes: [
+                        {
+                          microApp: appName,
+                          name: appName,
+                          path: '/' + appName,
+                          extraSource: microAppEntry,
+                        },
+                      ],
+                      prefetch: false,
+                    },
+                  })}</script>`,
                 );
-              }
 
-              let html = originalHtml.replace(
-                '<head>',
-                `<head><script type="extra-qiankun-config">${JSON.stringify({
-                  master: {
-                    apps: [
-                      {
-                        name: appName,
-                        entry: microAppEntry,
-                        extraSource: microAppEntry,
-                      },
-                    ],
-                    routes: [
-                      {
-                        microApp: appName,
-                        name: appName,
-                        path: '/' + appName,
-                        extraSource: microAppEntry,
-                      },
-                    ],
-                    prefetch: false,
-                  },
-                })}</script>`,
-              );
+                html = await api.applyPlugins({
+                  key: 'modifyMasterHTML',
+                  type: api.ApplyPluginsType.modify,
+                  initialValue: html,
+                });
 
-              html = await api.applyPlugins({
-                key: 'modifyMasterHTML',
-                type: api.ApplyPluginsType.modify,
-                initialValue: html,
-              });
-
-              return html;
-            }),
+                return html;
+              },
+            ),
             onError(err, _, res) {
               api.logger.error(err);
               res.set('content-type', 'text/plain; charset=UTF-8');
