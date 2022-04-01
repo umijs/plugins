@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.37.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.37.1...@umijs/plugin-qiankun@2.37.2) (2022-04-01)
+
+### Bug Fixes
+
+- **plugin-qiankun:** 修复重定向问题 ([#822](https://github.com/umijs/plugins/issues/822)) ([78a04d6](https://github.com/umijs/plugins/commit/78a04d64e3ee408c1ea4f2782d2c366442fefd61))
+
 ## [2.37.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.37.0...@umijs/plugin-qiankun@2.37.1) (2022-03-24)
 
 ### Bug Fixes
