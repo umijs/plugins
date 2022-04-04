@@ -227,9 +227,7 @@ app.model({ namespace: '${basename(path, extname(path))}', ...Model${lodash.uppe
   });
 
   // Runtime Plugin
-  api.addRuntimePlugin(() =>
-    hasModels ? [join(api.paths.absTmpPath!, 'plugin-dva/runtime.tsx')] : [],
-  );
+  api.addRuntimePlugin(() => (hasModels ? ['../plugin-dva/runtime.tsx'] : []));
   api.addRuntimePluginKey(() => (hasModels ? ['dva'] : []));
 
   // 导出内容
