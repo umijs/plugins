@@ -74,9 +74,9 @@ export const localeInfo: {[key: string]: any} = {
 export const addLocale = (
   name: string,
   messages: Object,
-  extraLocales: {
-    momentLocale:string;
-    antd:string
+  extraLocales?: {
+    momentLocale: string;
+    antd: string;
   },
 ) => {
   if (!name) {
