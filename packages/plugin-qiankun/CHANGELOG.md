@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.36.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.35.5...@umijs/plugin-qiankun@2.36.0) (2022-02-15)
+
+### Bug Fixes
+
+- **qiankun:** 修复类型问题 ([#799](https://github.com/umijs/plugins/issues/799)) ([e81f1db](https://github.com/umijs/plugins/commit/e81f1dbba7062e76304a0224a0bef6ac0a62ffa4))
+
+### Features
+
+- **qiankun:** 微应用支持 insertBefore 路由([#796](https://github.com/umijs/plugins/issues/796)) ([a50cd83](https://github.com/umijs/plugins/commit/a50cd83fabefb164cdbe57ae8bbb1e9bc274f58e))
+
+## [2.35.5](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.35.4...@umijs/plugin-qiankun@2.35.5) (2022-02-08)
+
+**Note:** Version bump only for package @umijs/plugin-qiankun
+
 ## [2.35.4](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.35.3...@umijs/plugin-qiankun@2.35.4) (2021-12-14)
 
 ### Bug Fixes
