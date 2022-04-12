@@ -30,7 +30,6 @@ function getTSNode(node: any) {
 }
 
 export function isValidModel({ content }: { content: string }) {
-  const { parser } = utils;
   const ast = parser.parse(content, {
     sourceType: 'module',
     plugins: [
@@ -44,6 +43,7 @@ export function isValidModel({ content }: { content: string }) {
       'objectRestSpread',
       'optionalChaining',
       'decorators-legacy',
+      'jsx',
     ],
   });
 
