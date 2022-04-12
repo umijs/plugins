@@ -30,15 +30,6 @@ export function getModels(opts: {
       const isJsx = /.(j|t)sx$/.test(f);
       // TODO: fs cache for performance
       try {
-        console.log(
-          f,
-          isValidModel(
-            {
-              content: readFileSync(f, 'utf-8'),
-            },
-            isJsx,
-          ),
-        );
         return isValidModel(
           {
             content: readFileSync(f, 'utf-8'),

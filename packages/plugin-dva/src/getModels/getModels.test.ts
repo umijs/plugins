@@ -62,9 +62,25 @@ test('getModels with opts.extraModels and opts.skipModelValidate', () => {
   ]);
 });
 
-test('parser error when has jsx', () => {
+// test('parser error when has jsx', () => {
+//   const base = join(fixtures, 'jsx');
+//   const filePath = join(base, 'a.jsx');
+//   expect(() => {
+//     getModels({
+//       base,
+//       cwd: __dirname,
+//       skipModelValidate: false,
+//     });
+//   }).toThrow(
+//     `Dva model ${utils.winPath(
+//       relative(__dirname, filePath),
+//     )} parse failed, SyntaxError: Unterminated regular expression. (3:26)`,
+//   );
+// });
+
+test('parser error when ambiguous with jsx', () => {
   const base = join(fixtures, 'jsx');
-  const filePath = join(base, 'a.jsx');
+  const filePath = join(base, 'b.jsx');
   expect(() => {
     getModels({
       base,
@@ -74,6 +90,6 @@ test('parser error when has jsx', () => {
   }).toThrow(
     `Dva model ${utils.winPath(
       relative(__dirname, filePath),
-    )} parse failed, SyntaxError: Unterminated regular expression. (3:26)`,
+    )} parse failed, SyntaxError: Unterminated JSX contents. (5:21)  Maybe you use type assertions that would be ambiguous with JSX`,
   );
 });
