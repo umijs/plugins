@@ -27,16 +27,32 @@ export function getModels(opts: {
       // 允许通过配置下跳过 Model 校验
       if (opts.skipModelValidate) return true;
 
+      const isJsx = /.(j|t)sx$/.test(f);
       // TODO: fs cache for performance
       try {
-        return isValidModel({
-          content: readFileSync(f, 'utf-8'),
-        });
+        console.log(
+          f,
+          isValidModel(
+            {
+              content: readFileSync(f, 'utf-8'),
+            },
+            isJsx,
+          ),
+        );
+        return isValidModel(
+          {
+            content: readFileSync(f, 'utf-8'),
+          },
+          isJsx,
+        );
       } catch (error) {
         throw new Error(
           `Dva model ${utils.winPath(
             relative(opts.cwd, f),
-          )} parse failed, ${error}`,
+          )} parse failed, ${error}  ${
+            isJsx &&
+            'Maybe you use type assertions that would be ambiguous with JSX'
+          }`,
         );
       }
     });
