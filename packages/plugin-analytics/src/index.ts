@@ -49,6 +49,24 @@ export default (api: IApi) => {
   `;
   };
 
+  const gtagTpl = (code: string) => {
+    return `
+    (function(){
+      if (!location.port) {
+        var gtagScript = document.createElement("script");
+        gtagScript.async = true;
+        gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=${code}";
+        var scr = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(gtagScript, scr);
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '${code}');
+      }
+    })();
+  `;
+  };
+
   if (baidu) {
     api.addHTMLHeadScripts(() => [
       {
@@ -66,11 +84,19 @@ export default (api: IApi) => {
       ]);
     }
     if (ga) {
-      api.addHTMLScripts(() => [
-        {
-          content: gaTpl(ga),
-        },
-      ]);
+      if (ga.startsWith("G")) {
+        api.addHTMLHeadScripts(() => [
+          {
+            content: gtagTpl(ga),
+          },
+        ]);
+      } else {
+        api.addHTMLScripts(() => [
+          {
+            content: gaTpl(ga),
+          },
+        ]);
+      }
     }
   }
 };

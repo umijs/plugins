@@ -43,6 +43,7 @@ export type SlaveOptions = {
   shouldNotModifyDefaultBase?: boolean;
   // library name 是否增加 -[name] 应对多 chunk 场景
   shouldNotAddLibraryChunkName?: boolean;
+  masterEntry?: string;
 };
 
 declare module '@umijs/types' {

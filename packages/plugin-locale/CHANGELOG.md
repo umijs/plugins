@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.2](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.15.1...@umijs/plugin-locale@0.15.2) (2022-03-10)
+
+### Bug Fixes
+
+- **plugin-locale:** use navigator.cookieEnabled to determine whether localStorage can be used. ([#809](https://github.com/umijs/plugins/issues/809)) ([deea875](https://github.com/umijs/plugins/commit/deea8755bf38d328436a491e996bcf6159011783))
+
 ## [0.15.1](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.15.0...@umijs/plugin-locale@0.15.1) (2021-11-12)
 
 **Note:** Version bump only for package @umijs/plugin-locale

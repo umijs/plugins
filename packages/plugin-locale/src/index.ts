@@ -229,9 +229,7 @@ export default (api: IApi) => {
   });
 
   // Runtime Plugin
-  api.addRuntimePlugin(() =>
-    join(paths.absTmpPath!, 'plugin-locale/runtime.tsx'),
-  );
+  api.addRuntimePlugin(() => '../plugin-locale/runtime.tsx');
 
   // Modify entry js
   api.addEntryCodeAhead(() =>

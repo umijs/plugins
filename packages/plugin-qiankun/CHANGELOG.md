@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.37.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.37.1...@umijs/plugin-qiankun@2.37.2) (2022-04-01)
+
+### Bug Fixes
+
+- **plugin-qiankun:** 修复重定向问题 ([#822](https://github.com/umijs/plugins/issues/822)) ([78a04d6](https://github.com/umijs/plugins/commit/78a04d64e3ee408c1ea4f2782d2c366442fefd61))
+
+## [2.37.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.37.0...@umijs/plugin-qiankun@2.37.1) (2022-03-24)
+
+### Bug Fixes
+
+- **qiankun:** 修复合并路由丢失的问题 ([#819](https://github.com/umijs/plugins/issues/819)) ([dad0e9a](https://github.com/umijs/plugins/commit/dad0e9ad8f465c7c82bf9f8bb1d763ec7faa2612))
+
+# [2.37.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.36.0...@umijs/plugin-qiankun@2.37.0) (2022-03-18)
+
+### Features
+
+- **plugin-qiankun:** 一行配置即可本地研发子应用时能够看到主子应用嵌套场面 ([#813](https://github.com/umijs/plugins/issues/813)) ([837b06b](https://github.com/umijs/plugins/commit/837b06b92b19d5b950022ec60ec0129983fb50e5))
+
 # [2.36.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.35.5...@umijs/plugin-qiankun@2.36.0) (2022-02-15)
 
 ### Bug Fixes

@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved, import/extensions */
 
 import '@@/plugin-qiankun/qiankunRootExports.js';
-import { IRouteProps } from '@umijs/types';
+import { IRouteProps, BaseIConfig } from '@umijs/types';
 import assert from 'assert';
 import { prefetchApps, registerMicroApps, start } from 'qiankun';
 // @ts-ignore
@@ -97,10 +97,20 @@ export async function render(oldRender: typeof noop) {
     masterOptions = { ...masterOptions, fetch: fetchWithCredentials };
   }
 
+  const extraQiankunConfigNode = document.querySelector(
+    'script[type=extra-qiankun-config]:not([consumed])',
+  );
+  const extraQiankunConfigJSON: string | undefined = extraQiankunConfigNode?.innerHTML;
+  const extraQiankunConfig: BaseIConfig | undefined = extraQiankunConfigJSON && JSON.parse(extraQiankunConfigJSON);
+  if (extraQiankunConfig) {
+    masterOptions = mergeExtraQiankunConfig(masterOptions, extraQiankunConfig);
+    extraQiankunConfigNode.setAttribute('consumed', '');
+  }
+
   // 更新 master options
   setMasterOptions(masterOptions);
 
-  const { apps = [], routes, ...options } = masterOptions;
+  const { apps = [], routes, ...options } = getMasterOptions();
   microAppRuntimeRoutes = routes;
 
   // 主应用相关的配置注册完毕后即可开启渲染
@@ -130,6 +140,57 @@ export function patchRoutes({ routes }: { routes: IRouteProps[] }) {
   if (microAppRuntimeRoutes) {
     patchMicroAppRouteComponent(routes);
   }
+}
+
+function mergeExtraQiankunConfig(masterOptions: MasterOptions, extraQiankunConfig: BaseIConfig): BaseIConfig {
+  function removeDuplicateApps(apps = new Array<App>(), extraAppsNameSet?: Set<string>): App[] {
+    let _extraAppsNameSet = extraAppsNameSet || new Set<string>(
+      apps.filter(({ extraSource }) => extraSource).map(({ name }) => name),
+    );
+
+    const newApps = apps.filter(app => {
+      const { name } = app;
+
+      if (!app.extraSource && _extraAppsNameSet.has(name)) {
+        console.error(
+          `[@umijs/plugin-qiankun]: Encountered two microApps with the same appName, ${name}. The original app configuration has been overwritten by current app.`,
+        );
+
+        return false;
+      }
+
+      return true;
+    });
+
+    return newApps;
+  }
+  const {
+    apps: originalMasterApps = [],
+    routes: originalMasterRoutes = [],
+    ...othersOriginalMasterConfig
+  } = masterOptions ?? {};
+  const {
+    apps = [],
+    routes = [],
+    prefetch,
+    ...othersConfig
+  } = extraQiankunConfig.master as MasterOptions;
+
+  const mergedApps = [...originalMasterApps, ...apps];
+  const mergedRoutes = [...originalMasterRoutes, ...routes];
+
+  const mergedQiankunMasterConfig: MasterOptions = {
+    ...othersOriginalMasterConfig,
+    ...othersConfig,
+    apps: removeDuplicateApps(mergedApps),
+    routes: mergedRoutes,
+  };
+
+  if (prefetch !== undefined) {
+    mergedQiankunMasterConfig.prefetch = prefetch;
+  }
+
+  return mergedQiankunMasterConfig;
 }
 
 async function useLegacyRegisterMode(
@@ -197,13 +258,13 @@ async function useLegacyRegisterMode(
   registerMicroApps(
     apps.map(
       ({
-         name,
-         entry,
-         base,
-         history = masterHistoryType,
-         mountElementId = defaultMountContainerId,
-         props,
-       }) => {
+        name,
+        entry,
+        base,
+        history = masterHistoryType,
+        mountElementId = defaultMountContainerId,
+        props,
+      }) => {
         let matchedBase = base;
 
         return {

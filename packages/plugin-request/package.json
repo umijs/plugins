@@ -28,7 +28,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@ahooksjs/use-request": "^2.0.0",
+    "@ahooksjs/use-request": "^3.2.0",
     "umi-request": "^1.2.14"
   }
 }
