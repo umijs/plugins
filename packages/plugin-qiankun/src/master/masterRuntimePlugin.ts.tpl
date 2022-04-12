@@ -107,7 +107,7 @@ export async function render(oldRender: typeof noop) {
   // 更新 master options
   setMasterOptions(masterOptions);
 
-  const { apps = [], routes, ...options } = getMasterOptions();
+  const { apps = [], routes, menus, ...options } = getMasterOptions();
   microAppRuntimeRoutes = routes;
   microAppRuntimeMenus = menus;
 
