@@ -152,7 +152,8 @@ export function layout(initConfig) {
   return {
     ...initConfig,
     patchMenus: function (menus, initialInfo) {
-      if (_.isArray(microAppRuntimeMenus) && microAppRuntimeMenus.length > 0) { // 
+      // 尝试使用站点菜单配置
+      if (_.isArray(microAppRuntimeMenus) && microAppRuntimeMenus.length > 0) { 
         loopMenusAndDoSomeThing(microAppRuntimeMenus, (menuItem, key) => {
           menuItem.key = key; // 给菜单项唯一key
           if (menuItem.target) { // 处理外链
