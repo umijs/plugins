@@ -10,6 +10,18 @@ Array [
   },
   Object {
     "access": "canReadAdminPage",
+    "children": Array [
+      Object {
+        "access": "canReadAdminList",
+        "path": "/adminList",
+        "unaccessible": false,
+      },
+      Object {
+        "access": "canReadAdminDetail",
+        "path": "/adminDetail",
+        "unaccessible": true,
+      },
+    ],
     "path": "/admin",
     "routes": Array [
       Object {
@@ -27,6 +39,13 @@ Array [
   },
   Object {
     "access": "canReadUser",
+    "children": Array [
+      Object {
+        "access": "canReadUserDetail",
+        "path": "/userDetail",
+        "unaccessible": false,
+      },
+    ],
     "path": "/user",
     "routes": Array [
       Object {
@@ -39,6 +58,18 @@ Array [
   },
   Object {
     "access": "canReadOrder",
+    "children": Array [
+      Object {
+        "access": "canReadOrderAudit",
+        "path": "/orderAudit",
+        "unaccessible": true,
+      },
+      Object {
+        "access": "canReadOrderCancellation",
+        "path": "/orderCancellation",
+        "unaccessible": true,
+      },
+    ],
     "path": "/order",
     "routes": Array [
       Object {
@@ -73,10 +104,23 @@ Array [
   Object {
     "access": "canReadAdminPage",
     "path": "/admin",
+    "routes": Array [],
     "unaccessible": true,
   },
   Object {
     "access": "canReadUser",
+    "children": Array [
+      Object {
+        "access": "canReadOrderAudit",
+        "path": "/orderAudit",
+        "unaccessible": true,
+      },
+      Object {
+        "access": "canReadOrderAudit",
+        "path": "/orderCancellation",
+        "unaccessible": true,
+      },
+    ],
     "path": "/order",
     "routes": Array [
       Object {

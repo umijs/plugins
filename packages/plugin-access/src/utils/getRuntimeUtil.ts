@@ -11,7 +11,7 @@ export default (strictMode: boolean = false) =>
       .concat(childrenList as any)
       .map((resultRoute: IRoute) => {
         const childList = resultRoute.children || resultRoute[oldChildrenPropsName];
-        if (childList && childList?.map) {
+        if (childList && childList?.length) {
           return {
             ...resultRoute,
             children: childList?.map((route: any) => ({ ...route })),
