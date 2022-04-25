@@ -2,12 +2,11 @@
 # yarn lockfile v1
 
 
-"@ahooksjs/use-request@^3.2.0":
-  version "3.0.0-alpha.0"
-  resolved "https://registry.npmmirror.com/@ahooksjs/use-request/-/use-request-3.0.0-alpha.0.tgz#16c2426503239e431cc51dfe309f5aabbd1aab7d"
-  integrity sha512-S3GXHfOwCeIdRwGcJtmJdx6Y/B5JCnp/l6oDzlK9O3RP7BTWldgNNbNky2t2YdCiYQFY29v6yCveEy0QvsOrWg==
+"@ahooksjs/use-request@^2.8.0":
+  version "2.8.15"
+  resolved "https://registry.npmmirror.com/@ahooksjs/use-request/-/use-request-2.8.15.tgz#daa32a8395ba75e8deb9f4fde4e221a4a8f525db"
+  integrity sha512-xhVaM4fyIiAMdVFuuU5i3CFUdFa/IblF+fvITVMFaUEO3w/V5tVCAF6WIA3T03n1/RPuzRkA7Ao1PFtSGtGelw==
   dependencies:
-    core-js "^2.6.12"
     lodash.debounce "^4.0.8"
     lodash.throttle "^4.1.1"
 
@@ -6505,7 +6504,7 @@ core-js@^1.0.0:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
   integrity sha1-ZSKUwUZR2yj6k70tX/KYOk8IxjY=
 
-core-js@^2.4.0, core-js@^2.6.12:
+core-js@^2.4.0:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
   integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
