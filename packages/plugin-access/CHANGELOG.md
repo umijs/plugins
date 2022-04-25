@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.1](https://github.com/umijs/plugins/compare/@umijs/plugin-access@2.5.0...@umijs/plugin-access@2.5.1) (2022-04-25)
+
+### Bug Fixes
+
+- **access:** fix access no work error ([#836](https://github.com/umijs/plugins/issues/836)) ([9dccf1b](https://github.com/umijs/plugins/commit/9dccf1b49ed4449d766297225bd662d942f6827e))
+
 # [2.5.0](https://github.com/umijs/plugins/compare/@umijs/plugin-access@2.4.2...@umijs/plugin-access@2.5.0) (2021-12-14)
 
 ### Features

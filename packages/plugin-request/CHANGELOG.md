@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.8.1...@umijs/plugin-request@2.9.0) (2022-04-25)
+
+### Bug Fixes
+
+- **access:** fix access no work error ([#836](https://github.com/umijs/plugins/issues/836)) ([9dccf1b](https://github.com/umijs/plugins/commit/9dccf1b49ed4449d766297225bd662d942f6827e))
+
+### Features
+
+- **request:** BizError 返回 request ([#774](https://github.com/umijs/plugins/issues/774)) ([9adcb73](https://github.com/umijs/plugins/commit/9adcb73767a6bab65eb57fbdb14cc1191607879f))
+
 ## [2.8.1](https://github.com/umijs/plugins/compare/@umijs/plugin-request@2.8.0...@umijs/plugin-request@2.8.1) (2021-12-14)
 
 ### Bug Fixes

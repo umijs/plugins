@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.15.2...@umijs/plugin-locale@0.16.0) (2022-04-25)
+
+### Bug Fixes
+
+- **locale:** addLocale type ([#830](https://github.com/umijs/plugins/issues/830)) ([12a4aa0](https://github.com/umijs/plugins/commit/12a4aa05ed16af6df816cc139cdbb91bf31e0f56))
+- **locale:** fix addRuntimePlugin use absolute path ([#826](https://github.com/umijs/plugins/issues/826)) ([b7506e6](https://github.com/umijs/plugins/commit/b7506e60df96be98506cc1818e6ce1a5540ba959))
+
+### Features
+
+- **locale:** 完善 RTL 支持 ([#812](https://github.com/umijs/plugins/issues/812)) ([f2df4fe](https://github.com/umijs/plugins/commit/f2df4fee23f6f58ef1c779a1782d58deb19e92d3))
+
 ## [0.15.2](https://github.com/umijs/plugins/compare/@umijs/plugin-locale@0.15.1...@umijs/plugin-locale@0.15.2) (2022-03-10)
 
 ### Bug Fixes

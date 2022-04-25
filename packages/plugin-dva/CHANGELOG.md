@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.2](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.13.1...@umijs/plugin-dva@0.13.2) (2022-04-25)
+
+### Bug Fixes
+
+- **locale:** fix addRuntimePlugin use absolute path ([#826](https://github.com/umijs/plugins/issues/826)) ([b7506e6](https://github.com/umijs/plugins/commit/b7506e60df96be98506cc1818e6ce1a5540ba959))
+
 ## [0.13.1](https://github.com/umijs/plugins/compare/@umijs/plugin-dva@0.13.0...@umijs/plugin-dva@0.13.1) (2021-12-14)
 
 ### Bug Fixes
