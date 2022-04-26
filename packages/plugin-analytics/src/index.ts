@@ -57,7 +57,7 @@ export default (api: IApi) => {
         gtagScript.async = true;
         gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=${code}";
         var scr = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(gtagScript, scr);
+        scr.parentNode.insertBefore(gtagScript, scr);
         window.dataLayer = window.dataLayer || [];
         function gtag() {dataLayer.push(arguments);}
         gtag('js', new Date());
