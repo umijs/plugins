@@ -22,6 +22,14 @@ export type MicroAppRoute = {
   microApp: string;
 } & Record<string, any>;
 
+export type Menu = {
+  children?: Menu[],
+  name?: string,
+  icon?: string,
+  path?: string,
+  target?: string,
+} & Record<string, any>;
+
 export type MasterOptions = {
   enable?: boolean;
   apps?: App[];
