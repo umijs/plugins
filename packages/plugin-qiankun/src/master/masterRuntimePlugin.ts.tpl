@@ -146,7 +146,7 @@ function checkDuplicateApps(apps: App[]) {
   for (const { name } of apps) {
     if (appsNameSet.has(name)) {
       console.error(
-        `[@umijs/plugin-qiankun]: Encountered two microApps with the same appName, ${name}. Your current apps configuration is :\n${JSON.stringify(apps, null, 2)}`,
+        `[@umijs/plugin-qiankun]: Encountered two microApps with the same name ${name}. Your current apps configuration is :\n${JSON.stringify(apps, null, 2)}`,
       );
     } else {
       appsNameSet.add(name);
