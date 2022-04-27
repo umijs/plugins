@@ -109,6 +109,9 @@ export async function render(oldRender: typeof noop) {
   const { apps = [], routes, ...options } = getMasterOptions();
   microAppRuntimeRoutes = routes;
 
+  // 检查是否因为用户本地的配置的 app ，导致 app 冲突
+  checkDuplicateApps(apps);
+
   // 主应用相关的配置注册完毕后即可开启渲染
   oldRender();
 
@@ -135,6 +138,19 @@ export async function render(oldRender: typeof noop) {
 export function patchRoutes({ routes }: { routes: IRouteProps[] }) {
   if (microAppRuntimeRoutes) {
     patchMicroAppRouteComponent(routes);
+  }
+}
+
+function checkDuplicateApps(apps: App[]) {
+  const appsNameSet = new Set<String>();
+  for (const { name } of apps) {
+    if (appsNameSet.has(name)) {
+      console.error(
+        `[@umijs/plugin-qiankun]: Encountered two microApps with the same name ${name}. Your current apps configuration is :\n${JSON.stringify(apps, null, 2)}`,
+      );
+    } else {
+      appsNameSet.add(name);
+    }
   }
 }
 
