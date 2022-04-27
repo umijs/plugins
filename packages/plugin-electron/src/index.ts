@@ -108,7 +108,7 @@ export default (api: IApi) => {
       console.log();
       console.log(
         '[umi electron] 打包时间过长，请尝试添加以下镜像到 .npmrc 中：\n' +
-          'electron-mirror=https://registry.npmmirror.com/binary.html?path=electron/\n' +
+          'electron-mirror=https://registry.npmmirror.com/-/binary/electron/\n' +
           'electron-builder-binaries-mirror=https://registry.npmmirror.com/binary.html?path=electron-builder-binaries/',
       );
       console.log();

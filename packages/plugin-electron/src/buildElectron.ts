@@ -21,7 +21,6 @@ export const buildElectron = (customBuilderConfig?: Configuration) => {
     targets: createTargets(targets),
     config: lodash.merge(
       {
-        electronVersion: '14.0.0',
         directories: { output: '../dist' },
       } as Configuration,
       {

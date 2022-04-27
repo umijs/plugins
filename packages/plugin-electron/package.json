@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-electron",
-  "version": "0.1.0-8",
+  "version": "0.1.0-9",
   "description": "@umijs/plugin-electron",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
