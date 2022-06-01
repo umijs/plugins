@@ -1,14 +1,21 @@
 import { existsSync, readFileSync } from 'fs';
-import path, { join, resolve } from 'path';
-import { TMP_DIR } from './constants';
+import path, { resolve } from 'path';
+import { TMP_DIR, TMP_DIR_PRODUCTION } from './constants';
 // @ts-ignore
 import build from 'father-build';
 import fatherBuildArgs from './config/father';
+
+export type Mode = 'development' | 'production';
+
+export const getTmpDir = (mode: Mode) => {
+  return mode === 'development' ? TMP_DIR : TMP_DIR_PRODUCTION;
+};
 
 type FatherBuildCliOpts = {
   configPath?: string;
   src?: string;
   output?: string;
+  mode: Mode;
 };
 
 export type WatchReturnType = {
@@ -25,12 +32,15 @@ class FatherBuildCli {
     this.opts = {
       configPath: opts.configPath,
       src: opts.src || resolve(process.cwd(), 'src', 'main'),
-      output: opts.output || resolve(process.cwd(), TMP_DIR, 'main'),
+      output:
+        opts.output || resolve(process.cwd(), getTmpDir(opts.mode), 'main'),
+      mode: opts.mode,
     };
   }
   private getBuildArgs = () => {
+    console.log('get father build args,mode: ', this.opts.mode);
     return {
-      ...fatherBuildArgs,
+      ...fatherBuildArgs(this.opts.mode),
       silent: true,
       src: this.opts.src,
       output: this.opts.output,

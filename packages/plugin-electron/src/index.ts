@@ -1,7 +1,12 @@
 import { IApi } from 'umi';
 import { join } from 'path';
 import ora from 'ora';
-import { FatherBuildCli, WatchReturnType } from './fatherBuild';
+import {
+  FatherBuildCli,
+  getTmpDir,
+  Mode,
+  WatchReturnType,
+} from './fatherBuild';
 import { ElectronProcessManager } from './electronManager';
 import {
   buildVersion,
@@ -13,7 +18,6 @@ import {
 } from './utils';
 import { buildElectron } from './buildElectron';
 import { existsSync } from 'fs';
-import { TMP_DIR } from './constants';
 import { merge } from 'lodash';
 
 export default (api: IApi) => {
@@ -55,27 +59,31 @@ export default (api: IApi) => {
     if (!isFirstDevDone) {
       return;
     }
+
+    const currentMode: Mode = 'development';
+
     const spinner = ora({
       prefixText: '[umi electron]',
       text: 'starting dev...\n',
     }).start();
     const { src = 'src/main' } = api.config.electron;
     spinner.text = 'generate version.json...\n';
-    buildVersion();
+    buildVersion(currentMode);
 
     spinner.text = 'generate env.json...\n';
-    generateEnvJson();
+    generateEnvJson(currentMode);
     const electronManager = new ElectronProcessManager(
       join(process.cwd(), './.electron'),
     );
     const fatherBuildCli = new FatherBuildCli({
       src,
       configPath: join(__dirname, './config/father.js'),
+      mode: 'development',
     });
     fatherBuildWatcher = await fatherBuildCli.watch({
       onBuildComplete: () => {
         spinner.text = 'generate package.json...\n';
-        regeneratePackageJson();
+        regeneratePackageJson(currentMode);
         spinner.succeed('done~');
         electronManager?.start();
       },
@@ -84,7 +92,7 @@ export default (api: IApi) => {
       },
     });
     spinner.text = 'generate entry file of development mode...\n';
-    generateEntryFile(getEntry('development', !!api.config.mpa));
+    generateEntryFile(getEntry('development', !!api.config.mpa), currentMode);
     isFirstDevDone = false;
   });
 
@@ -97,10 +105,13 @@ export default (api: IApi) => {
       return;
     }
 
+    const currentMode: Mode = 'production';
+
     const { src = 'src/main' } = api.config.electron;
     const fatherBuildCli = new FatherBuildCli({
       src,
       configPath: join(__dirname, './config/father.js'),
+      mode: currentMode,
     });
 
     // 打包超过五分钟则提示
@@ -135,16 +146,16 @@ export default (api: IApi) => {
     await fatherBuildCli?.build();
 
     spinner.text = 'build entry.js';
-    generateEntryFile(getEntry('production', !!api.config.mpa));
+    generateEntryFile(getEntry('production', !!api.config.mpa), currentMode);
 
     spinner.text = 'build version.json';
-    buildVersion();
+    buildVersion(currentMode);
 
     spinner.text = 'generate env.json\n';
-    generateEnvJson();
+    generateEnvJson(currentMode);
 
     spinner.text = 'regenerate package.json';
-    regeneratePackageJson();
+    regeneratePackageJson(currentMode);
 
     spinner.succeed(
       'Preparations have been completed, ready to start electron-builder',
@@ -166,7 +177,7 @@ export default (api: IApi) => {
     fn: (initialValue) => {
       return {
         ...initialValue,
-        outputPath: `./${TMP_DIR}/renderer`,
+        outputPath: `./${getTmpDir('production')}/renderer`,
         history: {
           type: 'hash',
         },

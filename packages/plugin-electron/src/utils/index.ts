@@ -3,8 +3,8 @@ import fs, { existsSync, mkdirSync, writeFileSync } from 'fs';
 import path, { join, resolve } from 'path';
 import { spawnSync } from 'child_process';
 import { EOL } from 'os';
-import { TMP_DIR } from '../constants';
 import { DependenciesJson } from '../types';
+import { getTmpDir, Mode } from '../fatherBuild';
 
 type LogFunctionType = (...args: string[]) => string;
 
@@ -52,9 +52,9 @@ export const createVersionFile = (): {
   };
 };
 
-export const buildVersion = (): void => {
+export const buildVersion = (mode: Mode): void => {
   const { filename, fileContent } = createVersionFile();
-  const outputPath = resolve(process.cwd(), TMP_DIR);
+  const outputPath = resolve(process.cwd(), getTmpDir(mode));
   if (!existsSync(outputPath)) {
     mkdirSync(outputPath, { recursive: true });
   }
@@ -63,16 +63,16 @@ export const buildVersion = (): void => {
   });
 };
 
-export const generateEntryFile = (fileContent: string): void => {
-  const outputPath = join(process.cwd(), TMP_DIR);
+export const generateEntryFile = (fileContent: string, mode: Mode): void => {
+  const outputPath = join(process.cwd(), getTmpDir(mode));
   if (!existsSync(outputPath)) {
     mkdirSync(outputPath, { recursive: true });
   }
   writeFileSync(join(outputPath, 'entry.js'), fileContent);
 };
 
-export const generateEnvJson = () => {
-  const outputPath = join(process.cwd(), TMP_DIR);
+export const generateEnvJson = (mode: Mode) => {
+  const outputPath = join(process.cwd(), getTmpDir(mode));
   if (!existsSync(outputPath)) {
     mkdirSync(outputPath, { recursive: true });
   }
@@ -133,10 +133,10 @@ export const getEntry: GenEntryFunction = (mode, isMpa = false) => {
   }
 };
 
-export const regeneratePackageJson = () => {
+export const regeneratePackageJson = (mode: Mode) => {
   const userDependencies: DependenciesJson = require(join(
     process.cwd(),
-    `${TMP_DIR}/dependencies.json`,
+    `${getTmpDir(mode)}/dependencies.json`,
   ));
   const originPkgJson = require(join(process.cwd(), './package.json'));
   const { dependencies = {}, devDependencies = {} } = originPkgJson;
@@ -161,7 +161,7 @@ export const regeneratePackageJson = () => {
     originDependencies['electron'] || '*';
 
   fs.writeFileSync(
-    join(process.cwd(), './.electron/package.json'),
+    join(process.cwd(), `${getTmpDir(mode)}/package.json`),
     JSON.stringify(originPkgJson, undefined, 2),
     'utf-8',
   );

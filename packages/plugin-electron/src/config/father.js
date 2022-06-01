@@ -2,16 +2,23 @@ const { resolve } = require('path');
 const { writeFileSync } = require('fs');
 const { getPkgName } = require('../utils/getPkgName');
 
+const TMP_DIR = '.electron';
+const TMP_DIR_PRODUCTION = '.electron-production';
+
+const getTmpDir = (mode) => {
+  return mode === 'development' ? TMP_DIR : TMP_DIR_PRODUCTION;
+};
+
 const deps = new Set(); // 搜集所有依赖
 const depsOfFile = {}; // 搜集文件依赖
 const filesOfDep = {}; // 搜集依赖所在文件
 /**
- *
+ * @param {'production' | 'development'} mode
  * @param {Set} toGenerateDeps
  */
-const generateDeps = (toGenerateDeps) => {
+const generateDeps = (mode, toGenerateDeps) => {
   writeFileSync(
-    resolve(process.cwd(), '.electron/dependencies.json'),
+    resolve(process.cwd(), `${getTmpDir(mode)}/dependencies.json`),
     JSON.stringify(
       {
         all: Array.from(toGenerateDeps),
@@ -34,7 +41,7 @@ const generateDeps = (toGenerateDeps) => {
   );
 };
 
-export default {
+export default (mode) => ({
   entry: resolve(process.cwd(), 'src/main/index.ts'),
   cjs: {
     type: 'babel',
@@ -59,9 +66,9 @@ export default {
           }
           filesOfDep[finalDepName].add(filename);
           depsOfFile[filename].add(finalDepName);
-          generateDeps(deps);
+          generateDeps(mode, deps);
         },
       },
     ],
   ],
-};
+});

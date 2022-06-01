@@ -7,6 +7,7 @@ import {
 } from 'electron-builder';
 import lodash from 'lodash';
 import { join } from 'path';
+import { TMP_DIR_PRODUCTION } from './constants';
 
 const builderConfig = require('./config/electron-builder.config');
 export const buildElectron = (customBuilderConfig?: Configuration) => {
@@ -35,6 +36,6 @@ export const buildElectron = (customBuilderConfig?: Configuration) => {
       builderConfig as unknown as Configuration,
       customBuilderConfig || {},
     ),
-    projectDir: join(process.cwd(), './.electron'),
+    projectDir: join(process.cwd(), TMP_DIR_PRODUCTION),
   });
 };
