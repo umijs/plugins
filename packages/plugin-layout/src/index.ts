@@ -118,6 +118,13 @@ export default (api: IApi) => {
   api.modifyDefaultConfig((config) => {
     // @ts-ignore
     config.title = false;
+    
+    // layout/style.less 依赖 antd 的变量表，此处注入预置 less 变量
+    // 用于兼容 antd@4.17.0 后的版本，因为 es/style/themes/default.less 依赖 @root-entry-name
+    // 不直接用 dist/antd.variable.less 是为了兼容之前的版本
+    config.theme ??= {};
+    config.theme['root-entry-name'] = 'variable';
+    
     return config;
   });
 
