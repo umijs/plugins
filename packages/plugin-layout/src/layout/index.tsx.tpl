@@ -79,7 +79,11 @@ const BasicLayout = (props: any) => {
       logo={logo}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (menuItemProps.isUrl) {
-          return defaultDom;
+          return (
+            <a href={menuItemProps.path} target="_blank">
+              {defaultDom}
+            </a>
+          );
         }
         if (menuItemProps.path && location.pathname !== menuItemProps.path) {
           return (
