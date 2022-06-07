@@ -15,7 +15,9 @@ export default {
     },
   },
   qiankun: {
-    master: {},
+    master: {
+      appNameKeyAlias: 'id'
+    },
   },
   routes: [
     {
