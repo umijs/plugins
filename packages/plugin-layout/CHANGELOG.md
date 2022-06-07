@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.18.3](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.18.2...@umijs/plugin-layout@0.18.3) (2022-06-07)
+
+### Bug Fixes
+
+- **layout:** root-entry-name variable error ([#862](https://github.com/umijs/plugins/issues/862)) ([1203730](https://github.com/umijs/plugins/commit/1203730e36e670ca48d576e126fab07c7f53f7fc))
+
 ## [0.18.2](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.18.1...@umijs/plugin-layout@0.18.2) (2021-12-31)
 
 ### Bug Fixes

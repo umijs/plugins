@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.38.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.37.2...@umijs/plugin-qiankun@2.38.0) (2022-06-07)
+
+### Features
+
+- **qiankun:** 检查是否因为用户本地的配置的 app ，导致 app 冲突 ([#839](https://github.com/umijs/plugins/issues/839)) ([b3a05ee](https://github.com/umijs/plugins/commit/b3a05ee8be65804443a8cf70cbca782dc5d60cfd))
+
 ## [2.37.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.37.1...@umijs/plugin-qiankun@2.37.2) (2022-04-01)
 
 ### Bug Fixes
