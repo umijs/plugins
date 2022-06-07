@@ -9,7 +9,8 @@ export default {
       },
     },
     {
-      name: 'app2',
+      // name: 'app2',
+      id: 'app2id',
       entry: 'http://localhost:8002/app2',
       to: '/app2',
       props: {
