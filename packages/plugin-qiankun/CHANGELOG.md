@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.39.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.38.0...@umijs/plugin-qiankun@2.39.0) (2022-06-07)
+
+### Features
+
+- 支持为 MicroApp 配置 name 键的别名 ([#863](https://github.com/umijs/plugins/issues/863)) ([b7dbe19](https://github.com/umijs/plugins/commit/b7dbe193bde8058bfd805c50032abb50c458939c))
+
 # [2.38.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.37.2...@umijs/plugin-qiankun@2.38.0) (2022-06-07)
 
 ### Features
