@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.39.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.39.1...@umijs/plugin-qiankun@2.39.2) (2022-06-08)
+
+### Bug Fixes
+
+- **qiankun:** 兼容已经使用 alias 作为 props 使用的场景 ([#866](https://github.com/umijs/plugins/issues/866)) ([7e4f46f](https://github.com/umijs/plugins/commit/7e4f46f5994ba7abf6f71dc20b3a768e67d27219))
+
 ## [2.39.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.39.0...@umijs/plugin-qiankun@2.39.1) (2022-06-08)
 
 **Note:** Version bump only for package @umijs/plugin-qiankun
