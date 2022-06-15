@@ -94,7 +94,15 @@ export default function (api: IApi) {
 
     api.writeTmpFile({
       path: 'plugin-qiankun/MicroApp.tsx',
-      content: readFileSync(join(__dirname, 'MicroApp.tsx.tpl'), 'utf-8'),
+      content: utils.Mustache.render(
+        readFileSync(join(__dirname, 'MicroApp.tsx.tpl'), 'utf-8'),
+        {
+          lodashConcatPath: winPath(require.resolve('lodash/concat')),
+          lodashMergeWithPath: winPath(require.resolve('lodash/mergeWith')),
+          lodashNoopPath: winPath(require.resolve('lodash/noop')),
+          qiankunPath: winPath(require.resolve('qiankun')),
+        },
+      ),
     });
 
     api.writeTmpFile({
@@ -107,15 +115,21 @@ export default function (api: IApi) {
 
     api.writeTmpFile({
       path: 'plugin-qiankun/masterRuntimePlugin.ts',
-      content: readFileSync(
-        join(__dirname, 'masterRuntimePlugin.ts.tpl'),
-        'utf-8',
+      content: utils.Mustache.render(
+        readFileSync(join(__dirname, 'masterRuntimePlugin.ts.tpl'), 'utf-8'),
+        {
+          qiankunPath: winPath(require.resolve('qiankun')),
+        },
       ),
     });
 
+    const pathToRegexpPath = winPath(require.resolve('path-to-regexp'));
     api.writeTmpFile({
       path: 'plugin-qiankun/common.ts',
-      content: readFileSync(join(__dirname, '../../src/common.ts'), 'utf-8'),
+      content: readFileSync(
+        join(__dirname, '../../src/common.ts'),
+        'utf-8',
+      ).replace(/path-to-regexp/g, pathToRegexpPath),
     });
     api.writeTmpFile({
       path: 'plugin-qiankun/constants.ts',

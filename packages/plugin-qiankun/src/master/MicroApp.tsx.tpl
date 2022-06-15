@@ -9,15 +9,15 @@ import {
   HashHistoryBuildOptions,
   MemoryHistoryBuildOptions,
 } from "history-with-query";
-import concat from "lodash/concat";
-import mergeWith from "lodash/mergeWith";
-import noop from "lodash/noop";
+import concat from "{{{ lodashConcatPath }}}";
+import mergeWith from "{{{ lodashMergeWithPath }}}";
+import noop from "{{{ lodashNoopPath }}}";
 import {
   FrameworkConfiguration,
   loadMicroApp,
   MicroApp as MicroAppType,
   prefetchApps,
-} from "qiankun";
+} from "{{{ qiankunPath }}}";
 import React, {
   forwardRef,
   Ref,
@@ -257,10 +257,12 @@ export const MicroApp = forwardRef(
       (propsFromParams.autoSetLoading
         ? (loading) => <MicroAppLoader loading={loading} />
         : null);
+    
+    const wrapperStyle = { position: "relative" }
 
     return Boolean(microAppLoader) || Boolean(microAppErrorBoundary) ? (
       <div
-        style={{ position: "relative" }}
+        style={wrapperStyle}
         className={`${wrapperClassName || ''} qiankun-micro-app`}
       >
         {Boolean(microAppLoader) && microAppLoader(loading)}
