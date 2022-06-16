@@ -1,6 +1,6 @@
 /* eslint-disable quotes */
 import { readFileSync } from 'fs';
-import { join } from 'path';
+import { join, dirname } from 'path';
 // eslint-disable-next-line import/no-unresolved
 import { IApi, utils } from 'umi';
 import {
@@ -78,6 +78,9 @@ export default function (api: IApi) {
     const { master: options } = api.config?.qiankun || {};
     const masterHistoryType = (history && history?.type) || defaultHistoryType;
     const base = api.config.base || '/';
+    const qiankunPath = api.config.externals?.qiankun
+      ? 'qiankun'
+      : winPath(dirname(require.resolve('qiankun/package')));
 
     api.writeTmpFile({
       path: 'plugin-qiankun/masterOptions.js',
@@ -97,10 +100,8 @@ export default function (api: IApi) {
       content: utils.Mustache.render(
         readFileSync(join(__dirname, 'MicroApp.tsx.tpl'), 'utf-8'),
         {
-          lodashConcatPath: winPath(require.resolve('lodash/concat')),
-          lodashMergeWithPath: winPath(require.resolve('lodash/mergeWith')),
-          lodashNoopPath: winPath(require.resolve('lodash/noop')),
-          qiankunPath: winPath(require.resolve('qiankun')),
+          lodashPath: winPath(dirname(require.resolve('lodash/package'))),
+          qiankunPath,
         },
       ),
     });
@@ -118,12 +119,14 @@ export default function (api: IApi) {
       content: utils.Mustache.render(
         readFileSync(join(__dirname, 'masterRuntimePlugin.ts.tpl'), 'utf-8'),
         {
-          qiankunPath: winPath(require.resolve('qiankun')),
+          qiankunPath,
         },
       ),
     });
 
-    const pathToRegexpPath = winPath(require.resolve('path-to-regexp'));
+    const pathToRegexpPath = winPath(
+      dirname(require.resolve('path-to-regexp/package')),
+    );
     api.writeTmpFile({
       path: 'plugin-qiankun/common.ts',
       content: readFileSync(

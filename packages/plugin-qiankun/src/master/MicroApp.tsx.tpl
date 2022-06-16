@@ -9,9 +9,9 @@ import {
   HashHistoryBuildOptions,
   MemoryHistoryBuildOptions,
 } from "history-with-query";
-import concat from "{{{ lodashConcatPath }}}";
-import mergeWith from "{{{ lodashMergeWithPath }}}";
-import noop from "{{{ lodashNoopPath }}}";
+import concat from "{{{ lodashPath }}}/concat";
+import mergeWith from "{{{ lodashPath }}}/mergeWith";
+import noop from "{{{ lodashPath }}}/noop";
 import {
   FrameworkConfiguration,
   loadMicroApp,
