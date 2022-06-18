@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.3](https://github.com/umijs/plugins/compare/@umijs/plugin-openapi@1.3.2...@umijs/plugin-openapi@1.3.3) (2022-06-18)
+
+### Bug Fixes
+
+- **openapi:** use swagger-ui-dist ([0113920](https://github.com/umijs/plugins/commit/01139205b6fafb10b64c3fd8622db284ecc09fd3))
+
 ## [1.3.2](https://github.com/umijs/plugins/compare/@umijs/plugin-openapi@1.3.1...@umijs/plugin-openapi@1.3.2) (2021-11-01)
 
 **Note:** Version bump only for package @umijs/plugin-openapi
