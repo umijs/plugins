@@ -6,7 +6,7 @@ Official umi plugins and presets.
 
 ## Plugins
 
-[plugins list](https://umijs.org/plugins/preset-react)
+[plugins list](https://v3.umijs.org/plugins/preset-react)
 
 - plugin-access，权限管理
 - plugin-analytics，统计管理
