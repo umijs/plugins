@@ -258,7 +258,7 @@ export const MicroApp = forwardRef(
         ? (loading) => <MicroAppLoader loading={loading} />
         : null);
     
-    const wrapperStyle = { position: "relative" }
+    const wrapperStyle = { position: "relative" };
 
     return Boolean(microAppLoader) || Boolean(microAppErrorBoundary) ? (
       <div
