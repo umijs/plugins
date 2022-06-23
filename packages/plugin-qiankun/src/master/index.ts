@@ -1,6 +1,6 @@
 /* eslint-disable quotes */
 import { readFileSync } from 'fs';
-import { join } from 'path';
+import { join, dirname } from 'path';
 // eslint-disable-next-line import/no-unresolved
 import { IApi, utils } from 'umi';
 import {
@@ -78,6 +78,9 @@ export default function (api: IApi) {
     const { master: options } = api.config?.qiankun || {};
     const masterHistoryType = (history && history?.type) || defaultHistoryType;
     const base = api.config.base || '/';
+    const qiankunPath = api.config.externals?.qiankun
+      ? 'qiankun'
+      : winPath(dirname(require.resolve('qiankun/package')));
 
     api.writeTmpFile({
       path: 'plugin-qiankun/masterOptions.js',
@@ -94,7 +97,13 @@ export default function (api: IApi) {
 
     api.writeTmpFile({
       path: 'plugin-qiankun/MicroApp.tsx',
-      content: readFileSync(join(__dirname, 'MicroApp.tsx.tpl'), 'utf-8'),
+      content: utils.Mustache.render(
+        readFileSync(join(__dirname, 'MicroApp.tsx.tpl'), 'utf-8'),
+        {
+          lodashPath: winPath(dirname(require.resolve('lodash/package'))),
+          qiankunPath,
+        },
+      ),
     });
 
     api.writeTmpFile({
@@ -107,15 +116,23 @@ export default function (api: IApi) {
 
     api.writeTmpFile({
       path: 'plugin-qiankun/masterRuntimePlugin.ts',
-      content: readFileSync(
-        join(__dirname, 'masterRuntimePlugin.ts.tpl'),
-        'utf-8',
+      content: utils.Mustache.render(
+        readFileSync(join(__dirname, 'masterRuntimePlugin.ts.tpl'), 'utf-8'),
+        {
+          qiankunPath,
+        },
       ),
     });
 
+    const pathToRegexpPath = winPath(
+      dirname(require.resolve('path-to-regexp/package')),
+    );
     api.writeTmpFile({
       path: 'plugin-qiankun/common.ts',
-      content: readFileSync(join(__dirname, '../../src/common.ts'), 'utf-8'),
+      content: readFileSync(
+        join(__dirname, '../../src/common.ts'),
+        'utf-8',
+      ).replace(/path-to-regexp/g, pathToRegexpPath),
     });
     api.writeTmpFile({
       path: 'plugin-qiankun/constants.ts',

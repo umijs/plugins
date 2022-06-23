@@ -3,7 +3,7 @@
 import '@@/plugin-qiankun/qiankunRootExports.js';
 import { IRouteProps, BaseIConfig } from '@umijs/types';
 import assert from 'assert';
-import { prefetchApps, registerMicroApps, start } from 'qiankun';
+import { prefetchApps, registerMicroApps, start } from '{{{ qiankunPath }}}';
 // @ts-ignore
 import { ApplyPluginsType, getMicroAppRouteComponent, plugin } from 'umi';
 
