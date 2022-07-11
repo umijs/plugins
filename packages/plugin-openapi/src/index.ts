@@ -149,7 +149,7 @@ export default App;
     }
 
     await generateService({
-      projectName: pageConfig.name.split('/').pop(),
+      projectName: pageConfig?.name?.split('/')?.pop() || '/',
       ...openAPIConfig,
       serversPath: serversFolder,
       mockFolder,
