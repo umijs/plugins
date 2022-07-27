@@ -141,8 +141,9 @@ export default function (api: IApi) {
 
       const protocol = process.env.HTTPS ? 'https' : 'http';
       // 变更 webpack-dev-server websocket 默认监听地址
-      process.env.SOCKET_SERVER = `${protocol}://${localHostname}:${port}/`;
-
+      if (process.env.SOCKET_SERVER === 'undefined') {
+        process.env.SOCKET_SERVER = `${protocol}://${localHostname}:${port}/`;
+      }
       // 开启了 devSourceMap 配置，默认为 true
       if (api.config.qiankun && api.config.qiankun.slave!.devSourceMap) {
         // 禁用 devtool，启用 SourceMapDevToolPlugin
