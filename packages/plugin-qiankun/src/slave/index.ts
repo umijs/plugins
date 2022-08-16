@@ -1,6 +1,5 @@
 import address from 'address';
 import assert from 'assert';
-import cheerio from 'cheerio';
 import { readFileSync } from 'fs';
 import { isEqual, isString } from 'lodash';
 import { join } from 'path';
@@ -243,7 +242,7 @@ export default function (api: IApi) {
           {
             target: masterEntry,
             secure: false,
-            ignorePath: false,
+            ignorePath: true,
             followRedirects: false,
             changeOrigin: true,
             selfHandleResponse: true,
@@ -269,11 +268,36 @@ export default function (api: IApi) {
 
                 const originalHtml = responseBuffer.toString('utf8');
                 const microAppEntry = getCurrentLocalDevServerEntry(api, req);
-                const html = handleOriginalHtml(
-                  api,
-                  microAppEntry,
-                  originalHtml,
+
+                let html = originalHtml.replace(
+                  '<head>',
+                  `<head><script type="extra-qiankun-config">${JSON.stringify({
+                    master: {
+                      apps: [
+                        {
+                          name: appName,
+                          entry: microAppEntry,
+                          extraSource: microAppEntry,
+                        },
+                      ],
+                      routes: [
+                        {
+                          microApp: appName,
+                          name: appName,
+                          path: '/' + appName,
+                          extraSource: microAppEntry,
+                        },
+                      ],
+                      prefetch: false,
+                    },
+                  })}</script>`,
                 );
+
+                html = await api.applyPlugins({
+                  key: 'modifyMasterHTML',
+                  type: api.ApplyPluginsType.modify,
+                  initialValue: html,
+                });
 
                 return html;
               },
@@ -301,65 +325,6 @@ function getCurrentLocalDevServerEntry(api: IApi, req: Request): string {
   const hostname = req.hostname;
   const protocol = req.protocol;
   return `${protocol}://${hostname}${port ? ':' : ''}${port}/local-dev-server`;
-}
-
-// 处理代理请求到的 html
-function handleOriginalHtml(
-  api: IApi,
-  microAppEntry: string,
-  originalHtml: string,
-) {
-  const appName = api.pkg.name;
-  assert(
-    appName,
-    '[@umijs/plugin-qiankun]: You should have name in package.json',
-  );
-  const $ = cheerio.load(originalHtml);
-
-  // 插入 extra-qiankun-config
-  $('head').prepend(
-    `<script type="extra-qiankun-config">${JSON.stringify({
-      master: {
-        apps: [
-          {
-            name: appName,
-            entry: microAppEntry,
-            extraSource: microAppEntry,
-          },
-        ],
-        routes: [
-          {
-            microApp: appName,
-            name: appName,
-            path: '/' + appName,
-            extraSource: microAppEntry,
-          },
-        ],
-        prefetch: false,
-      },
-    })}</script>`,
-  );
-  // 判断是否为微前端主应用本地研发，如果是则替换本地资源; 此处 config.qiankun 肯定存在
-  if ((api.config.qiankun as any).master?.enable) {
-    $('script[entry]').replaceWith('<script src="/umi.js"></script>');
-    const $links = $('head').find('link');
-    Array($links.length)
-      .fill(0)
-      .forEach((_, index) => {
-        const hrefVal = $links[index]?.attribs?.href || '';
-        if (/umi\S*css/.test(hrefVal)) {
-          $(`link[href=${hrefVal}]`).replaceWith(
-            '<link rel="stylesheet" href="/umi.css"></link>',
-          );
-        }
-      });
-  }
-
-  return api.applyPlugins({
-    key: 'modifyMasterHTML',
-    type: api.ApplyPluginsType.modify,
-    initialValue: $.html(),
-  });
 }
 
 function useLegacyMode(api: IApi) {
