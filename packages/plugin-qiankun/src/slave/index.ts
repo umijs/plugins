@@ -242,7 +242,7 @@ export default function (api: IApi) {
           {
             target: masterEntry,
             secure: false,
-            ignorePath: true,
+            ignorePath: false,
             followRedirects: false,
             changeOrigin: true,
             selfHandleResponse: true,
