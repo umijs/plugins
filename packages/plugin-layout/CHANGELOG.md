@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.18.4](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.18.3...@umijs/plugin-layout@0.18.4) (2022-08-22)
+
+### Bug Fixes
+
+- **layout:** unuse less var ([09014ea](https://github.com/umijs/plugins/commit/09014ead2aecb0cec4380e63cd19a7adb6d713c1))
+
 ## [0.18.3](https://github.com/umijs/plugins/compare/@umijs/plugin-layout@0.18.2...@umijs/plugin-layout@0.18.3) (2022-06-07)
 
 ### Bug Fixes

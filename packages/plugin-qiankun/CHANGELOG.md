@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.40.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.39.2...@umijs/plugin-qiankun@2.40.0) (2022-08-22)
+
+### Bug Fixes
+
+- **plugin-qiankun:** deps reoslve error when using pnpm ([#869](https://github.com/umijs/plugins/issues/869)) ([193a3d6](https://github.com/umijs/plugins/commit/193a3d66c9f70727d60bcac69565a4221d7010ef))
+
+### Features
+
+- **plugin-qiankun:** 支持 qiankun 主应用本地研发 ([#891](https://github.com/umijs/plugins/issues/891)) ([cd366e6](https://github.com/umijs/plugins/commit/cd366e6d756b1aa5ba91d39211bac578d0897694))
+
 ## [2.39.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.39.1...@umijs/plugin-qiankun@2.39.2) (2022-06-08)
 
 ### Bug Fixes
