@@ -16,6 +16,21 @@ interface IAntdOpts {
 export default (api: IApi) => {
   const opts: IAntdOpts = api.userConfig.antd;
   const useBabelPluginImport = opts?.disableBabelPluginImport !== true;
+
+  let pkgPath: string;
+  let antdVersion = '4.0.0';
+  let techUIVersion = '1.0.0';
+  try {
+    pkgPath = dirname(require.resolve('antd/package.json'));
+    antdVersion = require(`${pkgPath}/package.json`).version;
+
+    const techUiPkgPath = dirname(
+      require.resolve('@alipay/tech-ui/package.json'),
+    );
+
+    techUIVersion = require(`${techUiPkgPath}/package.json`).version;
+  } catch (e) {}
+
   api.describe({
     config: {
       schema(joi) {
@@ -29,6 +44,7 @@ export default (api: IApi) => {
     },
   });
   api.modifyBabelPresetOpts((opts) => {
+    if (antdVersion.startsWith('5')) return opts;
     const imps = [];
     if (useBabelPluginImport) {
       imps.push({
@@ -117,9 +133,10 @@ export default (api: IApi) => {
       },
     });
     // Runtime Plugin
-    api.addRuntimePlugin(() => [
-      join(api.paths.absTmpPath!, 'plugin-antd/runtime.tsx'),
-    ]);
+    api.addRuntimePlugin(() => {
+      if (antdVersion.startsWith('5')) return [];
+      return [join(api.paths.absTmpPath!, 'plugin-antd/runtime.tsx')];
+    });
     api.addRuntimePluginKey(() => ['antd']);
   }
 };
