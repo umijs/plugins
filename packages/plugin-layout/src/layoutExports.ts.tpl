@@ -1,10 +1,10 @@
-import { BasicLayoutProps } from '@ant-design/pro-layout';
+import { ProLayoutProps } from '@ant-design/pro-layout';
 import { Models } from '@@/plugin-model/useModel';
 
 export type RunTimeLayoutConfig = (
   initData: Models<'@@initialState'>,
-) => BasicLayoutProps & {
-  childrenRender?: (dom: JSX.Element, props: BasicLayoutProps) => React.ReactNode,
+) => ProLayoutProps & {
+  childrenRender?: (dom: JSX.Element, props: ProLayoutProps) => React.ReactNode,
   unAccessible?: JSX.Element,
   noFound?: JSX.Element,
 };

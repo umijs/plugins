@@ -2,7 +2,7 @@ import React, { useState,useMemo } from 'react';
 // @ts-ignore
 import { Link, useModel, history{{#hasAccess}}, traverseModifyRoutes, useAccess {{/hasAccess}} } from 'umi';
 import ProLayout, {
-  BasicLayoutProps,
+  ProLayoutProps,
 } from "@ant-design/pro-layout";
 import './style.less';
 // @ts-ignore
@@ -37,11 +37,11 @@ const BasicLayout = (props: any) => {
   },[location?.pathname, props?.route?.routes]);
 
   // layout 是否渲染相关
-  const layoutRestProps: BasicLayoutProps & {
+  const layoutRestProps: ProLayoutProps & {
     rightContentRender?:
       | false
       | ((
-          props: BasicLayoutProps,
+          props: ProLayoutProps,
           dom: React.ReactNode,
           config: any,
         ) => React.ReactNode);
