@@ -19,16 +19,15 @@ export default (api: IApi) => {
 
   let pkgPath: string;
   let antdVersion = '4.0.0';
-  let techUIVersion = '1.0.0';
+  let proComponentsVersion = '2.0.0';
   try {
     pkgPath = dirname(require.resolve('antd/package.json'));
     antdVersion = require(`${pkgPath}/package.json`).version;
 
     const techUiPkgPath = dirname(
-      require.resolve('@alipay/tech-ui/package.json'),
+      require.resolve('@ant-design/pro-components/package.json'),
     );
-
-    techUIVersion = require(`${techUiPkgPath}/package.json`).version;
+    proComponentsVersion = require(`${techUiPkgPath}/package.json`).version;
   } catch (e) {}
 
   api.describe({
@@ -98,6 +97,7 @@ export default (api: IApi) => {
 
   api.addProjectFirstLibraries(() => {
     const imps = [];
+    if (antdVersion.startsWith('5')) return [];
     if (useBabelPluginImport) {
       imps.push({
         name: 'antd',
@@ -106,6 +106,22 @@ export default (api: IApi) => {
     }
     return imps;
   });
+
+  api.addEntryImportsAhead(() => {
+    // 旧版本的 antd 和 tech-ui 同时使用时，因为 babel-import 没有打开，所以样式会不加载
+    const isNewTechUI =
+      antdVersion.startsWith('4') && proComponentsVersion.startsWith('2');
+
+    if (isNewTechUI) {
+      return [
+        {
+          source: 'antd/dist/antd.less',
+        },
+      ];
+    }
+    return [];
+  });
+
   if (opts?.config) {
     api.onGenerateFiles({
       fn() {
