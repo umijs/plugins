@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.2](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.15.1...@umijs/plugin-antd@0.15.2) (2022-08-23)
+
+### Bug Fixes
+
+- **antd:** support antd@5 ([a54e058](https://github.com/umijs/plugins/commit/a54e0584bf8dae002b90b53801373c2c6249132c))
+
 ## [0.15.1](https://github.com/umijs/plugins/compare/@umijs/plugin-antd@0.15.0...@umijs/plugin-antd@0.15.1) (2022-08-22)
 
 ### Bug Fixes
