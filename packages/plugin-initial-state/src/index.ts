@@ -12,6 +12,7 @@ import {
   RELATIVE_EXPORT_PATH,
 } from './constants';
 import { readFileSync } from 'fs';
+import codeFrame from '@umijs/deps/compiled/babel/code-frame';
 
 const { winPath, getFile } = utils;
 
@@ -65,7 +66,22 @@ export default (api: IApi) => {
     });
 
     const relEntryFile = relative(api.paths.cwd!, entryFile || '');
-    const enable = shouldPluginEnable(entryFile);
+    let enable = false;
+
+    try {
+      enable = shouldPluginEnable(entryFile);
+    } catch (e) {
+      const error: any = e;
+      api.logger.error(`parse ${entryFile} Failed`);
+      if (error.loc && entryFile) {
+        const code = readFileSync(entryFile, 'utf-8');
+        const frame = codeFrame(code, error.loc.line, error.loc.column + 1, {
+          highlightCode: true,
+        });
+        console.log(frame);
+      }
+      throw e;
+    }
 
     api.writeTmpFile({
       path: RELATIVE_MODEL_PATH,
