@@ -86,8 +86,9 @@ export default function (api: IApi) {
 
   api.modifyPublicPathStr((publicPathStr) => {
     const { runtimePublicPath } = api.config;
-    const { shouldNotModifyRuntimePublicPath } = (api.config.qiankun || {})
-      .slave!;
+    const { shouldNotModifyRuntimePublicPath } = (
+      api.config.qiankun || {}
+    ).slave!;
 
     if (runtimePublicPath === true && !shouldNotModifyRuntimePublicPath) {
       return `window.__INJECTED_PUBLIC_PATH_BY_QIANKUN__ || "${
@@ -246,6 +247,7 @@ export default function (api: IApi) {
             followRedirects: false,
             changeOrigin: true,
             selfHandleResponse: true,
+            // @ts-ignore
             onProxyRes: responseInterceptor(
               async (responseBuffer, proxyRes, req, res) => {
                 if (proxyRes.statusCode === 302) {
