@@ -10,6 +10,7 @@ import {
 } from '../constants';
 import modifyRoutes from './modifyRoutes';
 import { hasExportWithName } from './utils';
+import codeFrame from '@umijs/deps/compiled/babel/code-frame';
 
 const { getFile, winPath } = utils;
 
@@ -51,10 +52,25 @@ export default function (api: IApi) {
   });
   if (appFile) {
     const exportName = 'useQiankunStateForSlave';
-    const hasExport = hasExportWithName({
-      name: exportName,
-      filePath: appFile.path,
-    });
+
+    let hasExport = false;
+    try {
+      hasExport = hasExportWithName({
+        name: exportName,
+        filePath: appFile.path,
+      });
+    } catch (e) {
+      const error: any = e;
+      api.logger.error(`parse ${appFile.path} Failed`);
+      if (error.loc && appFile.path) {
+        const code = readFileSync(appFile.path, 'utf-8');
+        const frame = codeFrame(code, error.loc.line, error.loc.column + 1, {
+          highlightCode: true,
+        });
+        console.log(frame);
+      }
+      throw e;
+    }
 
     if (hasExport) {
       api.addRuntimePluginKey(() => exportName);
