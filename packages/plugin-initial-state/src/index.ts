@@ -72,8 +72,8 @@ export default (api: IApi) => {
       enable = shouldPluginEnable(entryFile);
     } catch (e) {
       const error: any = e;
-      api.logger.error(`parse ${entryFile} Failed`);
       if (error.loc && entryFile) {
+        api.logger.error(`parse ${entryFile} Failed`);
         const code = readFileSync(entryFile, 'utf-8');
         const frame = codeFrame(code, error.loc.line, error.loc.column + 1, {
           highlightCode: true,
