@@ -28,7 +28,7 @@ export default (api: IApi) => {
         [BundlerConfigType.csr]: {
           minify: true,
           target,
-          format
+          format,
         },
         [BundlerConfigType.ssr]: {
           target: 'node10',
