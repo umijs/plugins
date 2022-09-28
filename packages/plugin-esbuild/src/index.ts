@@ -19,11 +19,12 @@ export default (api: IApi) => {
 
   api.modifyBundleConfig((memo, { type }) => {
     if (memo.optimization) {
-      const { target = 'es2015' } = api.config.esbuild || {};
+      const { target = 'es2015', format } = api.config.esbuild || {};
       const optsMap = {
         [BundlerConfigType.csr]: {
           minify: true,
           target,
+          format
         },
         [BundlerConfigType.ssr]: {
           target: 'node10',
