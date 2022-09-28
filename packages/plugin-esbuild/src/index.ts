@@ -12,8 +12,8 @@ export default (api: IApi) => {
             joi.array().items(joi.string()),
           ),
           format: joi.alternatives(
-            joi.string(),
-            joi.array().items(joi.string()),
+             joi.string().valid('iife', 'cjs', 'esm')
+             joi.array().items(joi.string()),
           ),
         });
       },
