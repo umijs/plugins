@@ -11,6 +11,10 @@ export default (api: IApi) => {
             joi.string(),
             joi.array().items(joi.string()),
           ),
+          format: joi.alternatives(
+            joi.string(),
+            joi.array().items(joi.string()),
+          ),
         });
       },
     },
