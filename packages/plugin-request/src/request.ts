@@ -166,6 +166,11 @@ const getRequestMethod = () => {
       }
       errorInfo = error.info;
 
+      // skipUserAbortError == true && showType = 0, you can close message by default, and no side effect for other errors, it's necessary for user abort requests.
+      if (error.name === 'AbortError' && error?.request?.options?.skipUserAbortError) {
+        errorInfo = errorAdaptor(error.name);
+      }
+
       if (errorInfo) {
         const errorMessage = errorInfo?.errorMessage;
         const errorCode = errorInfo?.errorCode;
