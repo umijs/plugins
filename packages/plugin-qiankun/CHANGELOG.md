@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.41.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.40.0...@umijs/plugin-qiankun@2.41.0) (2022-10-24)
+
+### Features
+
+- prefetch 增加 threshold 配置，避免低端机场景 prefetch 造成的 oom ([#909](https://github.com/umijs/plugins/issues/909)) ([8d00657](https://github.com/umijs/plugins/commit/8d0065702230a1fec3b74453907901bc88c4aaf3))
+
 # [2.40.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.39.2...@umijs/plugin-qiankun@2.40.0) (2022-08-22)
 
 ### Bug Fixes
