@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.42.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.41.0...@umijs/plugin-qiankun@2.42.0) (2022-12-15)
+
+### Features
+
+- **qiankun:** microApp add default className ([#916](https://github.com/umijs/plugins/issues/916)) ([5c39478](https://github.com/umijs/plugins/commit/5c394781f58a81cf001b9b54f66069d3b67d3455))
+
 # [2.41.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.40.0...@umijs/plugin-qiankun@2.41.0) (2022-10-24)
 
 ### Features
