@@ -25,7 +25,7 @@
     "preact": "^10.5.7"
   },
   "peerDependencies": {
-    "umi": "3.x"
+    "umi": ">= 3"
   },
   "publishConfig": {
     "access": "public"

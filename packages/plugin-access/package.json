@@ -24,7 +24,7 @@
   "peerDependencies": {
     "@umijs/plugin-initial-state": "2.x",
     "@umijs/plugin-model": "2.x",
-    "umi": "3.x"
+    "umi": ">= 3"
   },
   "publishConfig": {
     "access": "public"
