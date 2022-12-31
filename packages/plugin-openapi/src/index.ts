@@ -40,7 +40,7 @@ export default (api: IApi) => {
   }
 
   // 增加中间件
-  api.addMiddewares(() => {
+  api.addMiddlewares(() => {
     return serveStatic(openAPIFilesPath);
   });
 
@@ -66,7 +66,7 @@ const App = () => {
       dom_id: '#swagger-ui',
     });
   }, [value]);
-  
+
   return (
     <div
       style={{
