@@ -252,12 +252,16 @@ export default function (api: IApi) {
                   const hostname = (req as Request).hostname;
                   const port = api.getPort();
                   const goto = `${hostname}:${port}`;
-                  const redirectUrl =
-                    proxyRes.headers.location!.replace(
-                      encodeURIComponent(new URL(masterEntry).hostname),
-                      encodeURIComponent(goto),
-                    ) || masterEntry;
-
+                  const locationUrl = proxyRes.headers.location || '';
+                  // 只替换 search 参数的部分
+                  const [originAndPath, searchParams] = locationUrl.split('?');
+                  const searchHandled = searchParams
+                    ? `?${searchParams.replace(
+                        encodeURIComponent(new URL(masterEntry).hostname),
+                        encodeURIComponent(goto),
+                      )}`
+                    : '';
+                  const redirectUrl = `${originAndPath}${searchHandled}`;
                   const redirectMessage = `[@umijs/plugin-qiankun]: redirect to ${redirectUrl}`;
 
                   api.logger.info(redirectMessage);
