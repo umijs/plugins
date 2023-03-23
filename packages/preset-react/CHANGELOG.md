@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.32](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.30...@umijs/preset-react@1.8.32) (2023-03-23)
+
+### Bug Fixes
+
+- **preset-react:** use locale 0.15.2 for check cookieEnable ([#929](https://github.com/umijs/plugins/issues/929)) ([d4d747c](https://github.com/umijs/plugins/commit/d4d747cf3c4e9e95a183cad956d1daab30dbec6b))
+
 ## [1.8.30](https://github.com/umijs/plugins/compare/@umijs/preset-react@1.8.29...@umijs/preset-react@1.8.30) (2021-11-23)
 
 **Note:** Version bump only for package @umijs/preset-react
