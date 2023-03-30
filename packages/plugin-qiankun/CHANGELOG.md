@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.43.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.43.0...@umijs/plugin-qiankun@2.43.1) (2023-03-30)
+
+### Bug Fixes
+
+- **qiankun:** 兼容微应用在 updating 阶段触发 unmount 导致的报错 ([#932](https://github.com/umijs/plugins/issues/932)) ([e330a92](https://github.com/umijs/plugins/commit/e330a9288a3e1ec8aeef368b321d2a2012062151))
+
 # [2.43.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.42.0...@umijs/plugin-qiankun@2.43.0) (2023-03-30)
 
 ### Bug Fixes
