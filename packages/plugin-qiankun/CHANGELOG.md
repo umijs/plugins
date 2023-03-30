@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.43.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.42.0...@umijs/plugin-qiankun@2.43.0) (2023-03-30)
+
+### Bug Fixes
+
+- 修复登录地址替换不正确的 bug ([#924](https://github.com/umijs/plugins/issues/924)) ([43b5e69](https://github.com/umijs/plugins/commit/43b5e691d8f970f726c516d91efcfbfcd09a4d4d))
+
+### Features
+
+- **qiankun:** 支持在应用配置中配置微应用 settings ([#922](https://github.com/umijs/plugins/issues/922)) ([c7b5e25](https://github.com/umijs/plugins/commit/c7b5e251d28272e594c15d63d3800c504280de7b))
+
 # [2.42.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.41.0...@umijs/plugin-qiankun@2.42.0) (2022-12-15)
 
 ### Features
