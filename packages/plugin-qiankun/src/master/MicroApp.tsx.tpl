@@ -10,6 +10,7 @@ import {
   MemoryHistoryBuildOptions,
 } from "history-with-query";
 import concat from "{{{ lodashPath }}}/concat";
+import isEqual from "{{{ lodashPath }}}/isEqual";
 import mergeWith from "{{{ lodashPath }}}/mergeWith";
 import noop from "{{{ lodashPath }}}/noop";
 import {
@@ -70,6 +71,15 @@ function unmountMicroApp(microApp?: MicroAppType) {
   if (microApp) {
     microApp.mountPromise.then(() => microApp.unmount());
   }
+}
+
+function useDeepCompare<T>(value: T): T {
+  const ref = useRef<T>(value);
+  if (!isEqual(value, ref.current)) {
+    ref.current = value;
+  }
+
+  return ref.current;
 }
 
 let noneMounted = true;
@@ -252,7 +262,7 @@ export const MicroApp = forwardRef(
       }
 
       return noop;
-    }, Object.values({ ...stateForSlave, ...propsFromParams }));
+    }, [useDeepCompare({ ...stateForSlave, ...propsFromParams })]);
 
     // 未配置自定义 loader 且开启了 autoSetLoading 场景下，使用插件默认的 loader，否则使用自定义 loader
     const microAppLoader =
