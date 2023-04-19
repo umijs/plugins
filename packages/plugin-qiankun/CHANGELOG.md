@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.43.2](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.43.1...@umijs/plugin-qiankun@2.43.2) (2023-04-19)
+
+### Bug Fixes
+
+- **qiankun:** update deps 需要做 deep compare 避免频繁更新 ([#934](https://github.com/umijs/plugins/issues/934)) ([fe56ad0](https://github.com/umijs/plugins/commit/fe56ad025167a4c4e99c7a95ed568eaf2fdc684d))
+
 ## [2.43.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.43.0...@umijs/plugin-qiankun@2.43.1) (2023-03-30)
 
 ### Bug Fixes
