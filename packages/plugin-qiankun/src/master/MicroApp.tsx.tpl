@@ -16,7 +16,7 @@ import noop from "{{{ lodashPath }}}/noop";
 import {
   FrameworkConfiguration,
   loadMicroApp,
-  MicroApp as MicroAppType,
+  MicroApp as MicroAppTypeDefinition,
   prefetchApps,
 } from "{{{ qiankunPath }}}";
 import React, {
@@ -67,10 +67,14 @@ export type Props = {
   className?: string;
 } & Record<string, any>;
 
-function unmountMicroApp(microApp?: MicroAppType) {
-  if (microApp) {
-    microApp.mountPromise.then(() => microApp.unmount());
-  }
+type MicroAppType = MicroAppTypeDefinition & {
+  _unmounting?: boolean;
+  _updatingPromise?: Promise<void>;
+  _updatingTimestamp?: number;
+};
+
+function unmountMicroApp(microApp: MicroAppType) {
+  microApp.mountPromise.then(() => microApp.unmount());
 }
 
 function useDeepCompare<T>(value: T): T {
@@ -136,8 +140,6 @@ export const MicroApp = forwardRef(
 
     const containerRef = useRef<HTMLDivElement>();
     const microAppRef = useRef<MicroAppType>();
-    const updatingPromise = useRef<Promise<any>>();
-    const updatingTimestamp = useRef(Date.now());
 
     useImperativeHandle(componentRef, () => microAppRef.current);
 
@@ -215,20 +217,28 @@ export const MicroApp = forwardRef(
         }
       );
 
-      return () => unmountMicroApp(microAppRef.current);
+      return () => {
+        const microApp = microAppRef.current;
+        if (microApp) {
+          // 微应用 unmount 是异步的，中间的流转状态不能确定，所有需要一个标志位来确保 unmount 开始之后不会再触发 update
+          microApp._unmounting = true;
+          unmountMicroApp(microApp);
+        }
+      };
     }, [name]);
 
     useEffect(() => {
       const microApp = microAppRef.current;
       if (microApp) {
-        if (!updatingPromise.current) {
+        if (!microApp._updatingPromise) {
           // 初始化 updatingPromise 为 microApp.mountPromise，从而确保后续更新是在应用 mount 完成之后
-          updatingPromise.current = microApp.mountPromise;
+          microApp._updatingPromise = microApp.mountPromise;
+          microApp._updatingTimestamp = Date.now();
         } else {
           // 确保 microApp.update 调用是跟组件状态变更顺序一致的，且后一个微应用更新必须等待前一个更新完成
-          updatingPromise.current = updatingPromise.current.then(() => {
+          microApp._updatingPromise = microApp._updatingPromise.then(() => {
             const canUpdate = (microApp?: MicroAppType) =>
-              microApp?.update && microApp.getStatus() === "MOUNTED";
+              microApp?.update && microApp.getStatus() === "MOUNTED" && !microApp._unmounting;
             if (canUpdate(microApp)) {
               const props = {
                 ...propsFromConfig,
@@ -238,7 +248,8 @@ export const MicroApp = forwardRef(
               };
 
               if (process.env.NODE_ENV === "development") {
-                if (Date.now() - updatingTimestamp.current < 200) {
+                const updatingTimestamp = microApp._updatingTimestamp!;
+                if (Date.now() - updatingTimestamp < 200) {
                   console.warn(
                     `[@umijs/plugin-qiankun] It seems like microApp ${name} is updating too many times in a short time(200ms), you may need to do some optimization to avoid the unnecessary re-rendering.`
                   );
@@ -248,7 +259,7 @@ export const MicroApp = forwardRef(
                   `[@umijs/plugin-qiankun] MicroApp ${name} is updating with props: `,
                   props
                 );
-                updatingTimestamp.current = Date.now();
+                microApp._updatingTimestamp = Date.now();
               }
 
               // 返回 microApp.update 形成链式调用
