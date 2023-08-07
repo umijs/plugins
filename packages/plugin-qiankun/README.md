@@ -1,8 +1,8 @@
 # @umijs/plugin-qiankun
 
-> umi plugin for [qiankun](https://qiankun.umijs.org/).
+> umi plugin for [qiankun](https://v3.umijs.org/).
 
-See our website [@umijs/plugin-qiankun](https://umijs.org/plugins/plugin-qiankun) for more information.
+See our website [@umijs/plugin-qiankun](https://v3.umijs.org/plugins/plugin-qiankun) for more information.
 
 ## Install
 
