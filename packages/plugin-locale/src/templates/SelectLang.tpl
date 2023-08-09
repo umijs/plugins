@@ -192,7 +192,7 @@ const defaultLangUConfigMap = {
     title: 'Nyelv'
   },
   'hy-AM': {
-    lang: 'hu-HU',
+    lang: 'hy-AM',
     label: 'Հայերեն',
     icon: '🇦🇲',
     title: 'Լեզու'
@@ -228,7 +228,7 @@ const defaultLangUConfigMap = {
     title: 'Ziman'
   },
   'kn-IN': {
-    lang: 'zh-TW',
+    lang: 'kn-IN',
     label: 'ಕನ್ನಡ',
     icon: '🇮🇳',
     title: 'ಭಾಷೆ'
