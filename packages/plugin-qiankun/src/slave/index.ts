@@ -101,7 +101,8 @@ export default function (api: IApi) {
   api.chainWebpack((config, { webpack }) => {
     assert(api.pkg.name, 'You should have name in package.json');
 
-    const { shouldNotAddLibraryChunkName } = (api.config.qiankun || {}).slave!;
+    const { shouldNotAddLibraryChunkName = true } = (api.config.qiankun || {})
+      .slave!;
 
     config.output
       .libraryTarget('umd')
