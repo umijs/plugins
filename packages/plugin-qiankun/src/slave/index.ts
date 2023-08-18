@@ -101,7 +101,9 @@ export default function (api: IApi) {
   api.chainWebpack((config, { webpack }) => {
     assert(api.pkg.name, 'You should have name in package.json');
 
-    const { shouldNotAddLibraryChunkName = true } = (api.config.qiankun || {})
+    // 默认不修改 library chunk 的 name，从而确保可以通过 window[appName] 访问到导出
+    // mfsu 关闭的时候才可以修改，否则可能导致配合 mfsu 时，子应用的 umd chunk 无法被正确加载
+    const { shouldNotAddLibraryChunkName = !Boolean(api.config.mfsu)  } = (api.config.qiankun || {})
       .slave!;
 
     config.output
