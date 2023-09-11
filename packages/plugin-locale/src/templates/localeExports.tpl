@@ -159,7 +159,7 @@ export const getLocale = () => {
   // please clear localStorage if you change the baseSeparator config
   // because changing will break the app
   const lang =
-    navigator.cookieEnabled && typeof localStorage !== 'undefined' && useLocalStorage
+    navigator && navigator.cookieEnabled && typeof localStorage !== 'undefined' && useLocalStorage && window
       ? window.localStorage.getItem('umi_locale')
       : '';
   // support baseNavigator, default true
@@ -202,16 +202,16 @@ export const setLocale = (lang: string, realReload: boolean = true) => {
 
   const updater = () => {
     if (getLocale() !== lang) {
-      if (navigator.cookieEnabled && typeof window.localStorage !== 'undefined' && useLocalStorage) {
+      if (navigator && navigator.cookieEnabled && window && typeof window.localStorage !== 'undefined' && useLocalStorage) {
         window.localStorage.setItem('umi_locale', lang || '');
       }
       setIntl(lang);
       if (realReload) {
-        window.location.reload();
+        window && window.location.reload();
       } else {
         event.emit(LANG_CHANGE_EVENT, lang);
         // chrome 不支持这个事件。所以人肉触发一下
-        if (window.dispatchEvent) {
+        if (window && window.dispatchEvent) {
           const event = new Event('languagechange');
           window.dispatchEvent(event);
         }
