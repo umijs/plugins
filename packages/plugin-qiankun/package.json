@@ -33,7 +33,9 @@
   "bugs": "http://github.com/umijs/plugins/issues",
   "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-qiankun#readme",
   "peerDependencies": {
-    "umi": "^3.2.21"
+    "umi": "^3.2.21",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "publishConfig": {
     "access": "public"
