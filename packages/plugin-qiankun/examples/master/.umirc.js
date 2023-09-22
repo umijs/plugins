@@ -16,7 +16,7 @@ export default {
   },
   qiankun: {
     master: {
-      appNameKeyAlias: 'id'
+      appNameKeyAlias: 'id',
     },
   },
   routes: [
@@ -37,6 +37,7 @@ export default {
           },
           microAppProps: {
             autoSetLoading: true,
+            autoCaptureError: true,
             className: 'appClassName',
             wrapperClassName: 'wrapperClass',
           },
