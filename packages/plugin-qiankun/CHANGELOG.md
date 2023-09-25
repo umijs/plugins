@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.44.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.43.3...@umijs/plugin-qiankun@2.44.0) (2023-09-25)
+
+### Features
+
+- **qiankun:** 默认 library 不加上 chunk 名 ([#948](https://github.com/umijs/plugins/issues/948)) ([5bfe007](https://github.com/umijs/plugins/commit/5bfe0074fe88d3e91cf359a02bffb8062d827988))
+
 ## [2.43.3](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.43.2...@umijs/plugin-qiankun@2.43.3) (2023-04-21)
 
 ### Bug Fixes

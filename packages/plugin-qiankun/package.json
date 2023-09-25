@@ -1,6 +1,6 @@
 {
   "name": "@umijs/plugin-qiankun",
-  "version": "2.43.3",
+  "version": "2.44.0",
   "description": "umi plugin for qiankun",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -33,9 +33,9 @@
   "bugs": "http://github.com/umijs/plugins/issues",
   "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-qiankun#readme",
   "peerDependencies": {
-    "umi": "^3.2.21",
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react-dom": ">=16.8.0",
+    "umi": "^3.2.21"
   },
   "publishConfig": {
     "access": "public"

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.4](https://github.com/umijs/plugins/compare/@umijs/plugin-analytics@0.2.3...@umijs/plugin-analytics@0.2.4) (2023-09-25)
+
+### Bug Fixes
+
+- gtag script error ([#838](https://github.com/umijs/plugins/issues/838)) ([9a2b0ec](https://github.com/umijs/plugins/commit/9a2b0ece85b4fe4ba21d24002ead40fc0026c2ae))
+
 ## [0.2.3](https://github.com/umijs/plugins/compare/@umijs/plugin-analytics@0.2.2...@umijs/plugin-analytics@0.2.3) (2022-04-25)
 
 **Note:** Version bump only for package @umijs/plugin-analytics
