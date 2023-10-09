@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.44.1](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.44.0...@umijs/plugin-qiankun@2.44.1) (2023-10-09)
+
+### Bug Fixes
+
+- **qiankun:** 线上环境忽略 mfsu 配置 ([#955](https://github.com/umijs/plugins/issues/955)) ([7dc661e](https://github.com/umijs/plugins/commit/7dc661e38d43c9428782fbfb1e6c9395f3c636af))
+
 # [2.44.0](https://github.com/umijs/plugins/compare/@umijs/plugin-qiankun@2.43.3...@umijs/plugin-qiankun@2.44.0) (2023-09-25)
 
 ### Features
