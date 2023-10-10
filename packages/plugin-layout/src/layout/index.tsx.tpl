@@ -76,7 +76,7 @@ const BasicLayout = (props: any) => {
           : undefined
       }
       formatMessage={userConfig?.formatMessage}
-      logo={logo}
+      logo={userConfig?.logo || logo}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (menuItemProps.isUrl) {
           return defaultDom;
