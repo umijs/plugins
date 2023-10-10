@@ -149,7 +149,8 @@ export default App;
     }
 
     await generateService({
-      projectName: pageConfig.name.split('/').pop(),
+      // projectName处理package.json没有name的情况
+      projectName: pageConfig?.name?.split('/')?.pop() || '/',
       ...openAPIConfig,
       serversPath: serversFolder,
       mockFolder,
