@@ -251,6 +251,12 @@ const defaultLangUConfigMap = {
     icon: '🇲🇰',
     title: 'Јазик'
   },
+  'mm-MM': {
+    lang: 'mm-MM',
+    label: 'မြန်မာ',
+    icon: '🇲🇲',
+    title: 'ဘာသာစကား'
+  },
   'mn-MN': {
     lang: 'mn-MN',
     label: 'Монгол хэл',
