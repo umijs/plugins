@@ -81,7 +81,7 @@ export const getLocaleList = async (
     addAntdLocales,
   } = opts;
   const localeFileMath = new RegExp(
-    `^([a-z]{2})${separator}?([A-Z]{2})?\.(js|json|ts)$`,
+    `^([a-zA-Z]{0,})${separator}?([a-zA-Z]{0,})?\.(js|json|ts)$`,
   );
 
   const localeFiles = glob
