@@ -23,7 +23,16 @@ let render = noop;
 let hasMountedAtLeastOnce = false;
 
 export default () => defer.promise;
-export const clientRenderOptsStack: any[] = [];
+
+const unsafe_clientRenderOptsStack: any[] = []; // 对于尚未更新到这次提交(https://github.com/umijs/umi/pull/6702)的umijs版本的适配，以后应该删掉 
+const clientRenderOptsMap: any = {};
+export function getClientRenderOpts(appId?: number) {
+  if (typeof appId === 'number') {
+    return appId in clientRenderOptsMap ? { ...clientRenderOptsMap[appId] } : undefined
+  } else {
+    return unsafe_clientRenderOptsStack.pop();
+  }
+}
 
 function normalizeHistory(
   history?: 'string' | Record<string, any>,
@@ -64,7 +73,7 @@ export function genBootstrap(oldRender: typeof noop) {
   };
 }
 
-export function genMount(mountElementId: string) {
+export function genMount(mountElementId: string, appId: number) {
   return async (props?: any) => {
     // props 有值时说明应用是通过 lifecycle 被主应用唤醒的，而不是独立运行时自己 mount
     if (typeof props !== 'undefined') {
@@ -108,7 +117,8 @@ export function genMount(mountElementId: string) {
         },
       };
 
-      clientRenderOptsStack.push(clientRenderOpts);
+      unsafe_clientRenderOptsStack.push(clientRenderOpts);
+      clientRenderOptsMap[appId] = clientRenderOpts;
     }
 
     // 第一次 mount defer 被 resolve 后umi 会自动触发 render，非第一次 mount 则需手动触发
@@ -133,7 +143,7 @@ export function genUpdate() {
   };
 }
 
-export function genUnmount(mountElementId: string) {
+export function genUnmount(mountElementId: string, appId: number) {
   return async (props: any) => {
     const container = props?.container
       ? props.container.querySelector(`#${mountElementId}`)
@@ -144,5 +154,7 @@ export function genUnmount(mountElementId: string) {
 
     const slaveRuntime = await getSlaveRuntime();
     if (slaveRuntime.unmount) await slaveRuntime.unmount(props);
+
+    delete clientRenderOptsMap[appId];
   };
 }

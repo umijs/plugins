@@ -174,12 +174,25 @@ export default function (api: IApi) {
         '{ genMount as qiankun_genMount, genBootstrap as qiankun_genBootstrap, genUnmount as qiankun_genUnmount, genUpdate as qiankun_genUpdate }',
     };
   });
+
+  api.addEntryCodeAhead(
+    () =>
+      `
+    const appId = window.appId = 'appId' in window ? window.appId + 1 : 0;
+    try {
+      pluginArgs.appId = appId;
+    } catch {
+      console.error(\`[@umijs/plugin-qiankun]: Cannot find pluginArgs object in current scope, plugin-qiankun will use an insecure way to handle the clientRenderOpts, see https://github.com/umijs/plugins/pull/629 for more information. \`);
+    }
+      `,
+  );
+
   api.addEntryCode(
     () =>
       `
     export const bootstrap = qiankun_genBootstrap(clientRender);
-    export const mount = qiankun_genMount('${api.config.mountElementId}');
-    export const unmount = qiankun_genUnmount('${api.config.mountElementId}');
+    export const mount = qiankun_genMount('${api.config.mountElementId}', appId);
+    export const unmount = qiankun_genUnmount('${api.config.mountElementId}', appId);
     export const update = qiankun_genUpdate();
 
     if (!window.__POWERED_BY_QIANKUN__) {
