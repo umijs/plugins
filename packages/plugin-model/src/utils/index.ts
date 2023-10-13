@@ -2,6 +2,7 @@ import path from 'path';
 import { EOL } from 'os';
 import { readFileSync } from 'fs';
 import { utils } from 'umi';
+import codeFrame from '@umijs/deps/compiled/babel/code-frame';
 
 const { t, parser, traverse, winPath } = utils;
 export type ModelItem =
@@ -122,10 +123,24 @@ export const genModels = (imports: string[], absSrcPath: string) => {
     new Set(list).size !== list.length;
 
   const raw = contents.map((ele, index) => {
-    const ast = parser.parse(ele.content, {
-      sourceType: 'module',
-      plugins: ['jsx', 'typescript'],
-    });
+    let ast: ReturnType<typeof parser.parse> | null = null;
+
+    try {
+      ast = parser.parse(ele.content, {
+        sourceType: 'module',
+        plugins: ['jsx', 'typescript'],
+      });
+    } catch (e) {
+      if (e.loc) {
+        const frame = codeFrame(ele.content, e.loc.line, e.loc.column + 1, {
+          highlightCode: true,
+        });
+        console.log(`parse ${absSrcPath[index]} failed`);
+        console.log(frame);
+      }
+
+      throw e;
+    }
 
     const use: string[] = [];
 
@@ -163,26 +178,40 @@ export const isValidHook = (filePath: string) => {
   const isTSX = path.extname(filePath) === '.tsx';
   const content = readFileSync(filePath, { encoding: 'utf-8' }).toString();
 
-  const ast = parser.parse(content, {
-    sourceType: 'module',
-    plugins: [
-      // .ts 不能加 jsx，因为里面可能有 `<Type>{}` 这种写法
-      // .tsx, .js, .jsx 可以加
-      isTS ? false : 'jsx',
-      // 非 ts 不解析 typescript
-      isTS || isTSX ? 'typescript' : false,
-      // 支持更多语法
-      'classProperties',
-      'dynamicImport',
-      'exportDefaultFrom',
-      'exportNamespaceFrom',
-      'functionBind',
-      'nullishCoalescingOperator',
-      'objectRestSpread',
-      'optionalChaining',
-      'decorators-legacy',
-    ].filter(Boolean) as utils.parser.ParserPlugin[],
-  });
+  let ast: ReturnType<typeof parser.parse> | null = null;
+
+  try {
+    ast = parser.parse(content, {
+      sourceType: 'module',
+      plugins: [
+        // .ts 不能加 jsx，因为里面可能有 `<Type>{}` 这种写法
+        // .tsx, .js, .jsx 可以加
+        isTS ? false : 'jsx',
+        // 非 ts 不解析 typescript
+        isTS || isTSX ? 'typescript' : false,
+        // 支持更多语法
+        'classProperties',
+        'dynamicImport',
+        'exportDefaultFrom',
+        'exportNamespaceFrom',
+        'functionBind',
+        'nullishCoalescingOperator',
+        'objectRestSpread',
+        'optionalChaining',
+        'decorators-legacy',
+      ].filter(Boolean) as utils.parser.ParserPlugin[],
+    });
+  } catch (e) {
+    if (e.loc) {
+      const frame = codeFrame(content, e.loc.line, e.loc.column + 1, {
+        highlightCode: true,
+      });
+      console.log(`parse ${filePath} failed`);
+      console.log(frame);
+    }
+
+    throw e;
+  }
   let valid = false;
   let identifierName = '';
   traverse.default(ast, {

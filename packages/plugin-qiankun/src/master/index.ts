@@ -10,6 +10,8 @@ import {
 } from '../constants';
 import modifyRoutes from './modifyRoutes';
 import { hasExportWithName } from './utils';
+// @ts-ignore
+import codeFrame from '@umijs/deps/compiled/babel/code-frame';
 
 const { getFile, winPath } = utils;
 
@@ -51,10 +53,25 @@ export default function (api: IApi) {
   });
   if (appFile) {
     const exportName = 'useQiankunStateForSlave';
-    const hasExport = hasExportWithName({
-      name: exportName,
-      filePath: appFile.path,
-    });
+
+    let hasExport = false;
+    try {
+      hasExport = hasExportWithName({
+        name: exportName,
+        filePath: appFile.path,
+      });
+    } catch (e) {
+      const error: any = e;
+      api.logger.error(`parse ${appFile.path} Failed`);
+      if (error.loc && appFile.path) {
+        const code = readFileSync(appFile.path, 'utf-8');
+        const frame = codeFrame(code, error.loc.line, error.loc.column + 1, {
+          highlightCode: true,
+        });
+        console.log(frame);
+      }
+      throw e;
+    }
 
     if (hasExport) {
       api.addRuntimePluginKey(() => exportName);
@@ -148,7 +165,7 @@ export default function (api: IApi) {
       // 开启了 antd 插件的时候，使用 antd 的 loader 组件，否则提示用户必须设置一个自定义的 loader 组件
       content: api.hasPlugins(['@umijs/plugin-antd'])
         ? readFileSync(join(__dirname, 'AntdLoader.tsx.tpl'), 'utf-8')
-        : `export default function Loader() { console.warn(\`[@umijs/plugin-qiankun]: Seems like you'r not using @umijs/plugin-antd, you need to provide a custom loader or set autoSetLoading false to shut down this warning!\`); return null; }`,
+        : `export default function Loader() { console.warn(\`[@umijs/plugin-qiankun]: Seems like you're not using @umijs/plugin-antd, you need to provide a custom loader or set autoSetLoading false to shut down this warning!\`); return null; }`,
     });
     api.writeTmpFile({
       path: 'plugin-qiankun/ErrorBoundary.tsx',
