@@ -220,6 +220,11 @@ export default function (api: IApi) {
       path: 'plugin-qiankun/lifecycles.ts',
       content: readFileSync(join(__dirname, 'lifecycles.ts.tpl'), 'utf-8'),
     });
+
+    api.writeTmpFile({
+      path: 'plugin-qiankun/MicroAppLink.tsx',
+      content: readFileSync(join(__dirname, 'MicroAppLink.tsx.tpl'), 'utf-8'),
+    });
   });
 
   api.addMiddlewares(async () => {
