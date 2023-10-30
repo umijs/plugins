@@ -9,11 +9,11 @@ See our website [@umijs/plugin-stylus](https://umijs.org/plugins/plugin-stylus) 
 Using npm:
 
 ```bash
-$ npm install --save-dev @umijs/plugin-stylus
+$ npm install --save-dev @umijs/plugin-stylus stylus stylus-loader
 ```
 
 or using yarn:
 
 ```bash
-$ yarn add @umijs/plugin-stylus --dev
+$ yarn add @umijs/plugin-stylus stylus stylus-loader --dev
 ```
