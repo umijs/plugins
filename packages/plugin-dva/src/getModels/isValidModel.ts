@@ -29,8 +29,7 @@ function getTSNode(node: any) {
   }
 }
 
-export function isValidModel({ content }: { content: string }) {
-  const { parser } = utils;
+export function isValidModel({ content }: { content: string }, isJsx = false) {
   const ast = parser.parse(content, {
     sourceType: 'module',
     plugins: [
@@ -44,7 +43,7 @@ export function isValidModel({ content }: { content: string }) {
       'objectRestSpread',
       'optionalChaining',
       'decorators-legacy',
-    ],
+    ].concat(isJsx ? ['jsx'] : []),
   });
 
   let isDvaModel = false;

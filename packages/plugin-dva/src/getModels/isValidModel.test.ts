@@ -86,3 +86,23 @@ export default foo(model, { namespace: 'foo' });
     }),
   ).toEqual(false);
 });
+
+test('isValidModel with jsx', () => {
+  expect(
+    isValidModel(
+      {
+        content: `
+const t = () => <div/>;
+export default {
+  reducers: {
+    add(){
+      t();
+    }
+  }
+}
+`,
+      },
+      true,
+    ),
+  ).toEqual(true);
+});
