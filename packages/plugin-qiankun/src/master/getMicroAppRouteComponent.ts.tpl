@@ -15,21 +15,25 @@ export function getMicroAppRouteComponent(opts: {
     const { url, path } = match;
 
     // 默认取静态配置的 base
-    let umiConfigBase = base === '/' ? '' : base;
-
+    let umiConfigBase = base;
     {{#runtimeHistory}}
     // 存在 getCreateHistoryOptions 说明当前应用开启了 runtimeHistory，此时取运行时的 history 配置的 basename
     const { basename = '/' } = getCreateHistoryOptions();
-    umiConfigBase = basename === '/' ? '' : basename;
+    umiConfigBase = basename;
     {{/runtimeHistory}}
 
+    // 去除 base 末尾的 '/'
+    umiConfigBase = removeLastSlash(umiConfigBase)
+
     let runtimeMatchedBase =
-      umiConfigBase + (url.endsWith('/') ? url.substr(0, url.length - 1) : url);
+      umiConfigBase + url;
 
     {{#dynamicRoot}}
     // @see https://github.com/umijs/umi/blob/master/packages/preset-built-in/src/plugins/commands/htmlUtils.ts#L102
     runtimeMatchedBase = window.routerBase || location.pathname.split('/').slice(0, -(path.split('/').length - 1)).concat('').join('/');
     {{/dynamicRoot}}
+
+    runtimeMatchedBase = removeLastSlash(runtimeMatchedBase)
 
     const componentProps = {
       name: appName,
@@ -41,4 +45,8 @@ export function getMicroAppRouteComponent(opts: {
   };
 
   return RouteComponent;
+}
+
+export function removeLastSlash(path: string) {
+  return path.replace(/\/$/g, '');
 }
