@@ -1,0 +1,33 @@
+{
+  "name": "@umijs/plugin-lodash",
+  "version": "0.0.1",
+  "description": "lodash dynamic import plugin",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/umijs/plugins"
+  },
+  "keywords": [
+    "umi"
+  ],
+  "authors": [
+    "phobal <phobal@126.com> (https://github.com/phobal)"
+  ],
+  "license": "MIT",
+  "bugs": "http://github.com/umijs/plugins/issues",
+  "homepage": "https://github.com/umijs/plugins/tree/master/packages/plugin-lodash#readme",
+  "peerDependencies": {
+    "umi": "3.x"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
+  }
+}
